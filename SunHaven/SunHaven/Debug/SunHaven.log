@@ -1,0 +1,18 @@
+﻿  TitleScene.cpp
+C:\Users\psh95\OneDrive\바탕 화면\상현\공부\게임프로그래밍\Team Portfolio\SunHaven\SunHaven\GImage.h(137,14): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
+C:\Users\psh95\OneDrive\바탕 화면\상현\공부\게임프로그래밍\Team Portfolio\SunHaven\SunHaven\GImage.h(137,14): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\psh95\OneDrive\바탕 화면\상현\공부\게임프로그래밍\Team Portfolio\SunHaven\SunHaven\GImage.h(138,14): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
+C:\Users\psh95\OneDrive\바탕 화면\상현\공부\게임프로그래밍\Team Portfolio\SunHaven\SunHaven\GImage.h(138,14): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\psh95\OneDrive\바탕 화면\상현\공부\게임프로그래밍\Team Portfolio\SunHaven\SunHaven\GImage.h(139,18): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
+C:\Users\psh95\OneDrive\바탕 화면\상현\공부\게임프로그래밍\Team Portfolio\SunHaven\SunHaven\GImage.h(139,18): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\psh95\OneDrive\바탕 화면\상현\공부\게임프로그래밍\Team Portfolio\SunHaven\SunHaven\GImage.h(140,18): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
+C:\Users\psh95\OneDrive\바탕 화면\상현\공부\게임프로그래밍\Team Portfolio\SunHaven\SunHaven\GImage.h(140,18): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\psh95\OneDrive\바탕 화면\상현\공부\게임프로그래밍\Team Portfolio\SunHaven\SunHaven\GImage.h(150,14): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
+C:\Users\psh95\OneDrive\바탕 화면\상현\공부\게임프로그래밍\Team Portfolio\SunHaven\SunHaven\GImage.h(150,14): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\psh95\OneDrive\바탕 화면\상현\공부\게임프로그래밍\Team Portfolio\SunHaven\SunHaven\GImage.h(151,14): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
+C:\Users\psh95\OneDrive\바탕 화면\상현\공부\게임프로그래밍\Team Portfolio\SunHaven\SunHaven\GImage.h(151,14): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\psh95\OneDrive\바탕 화면\상현\공부\게임프로그래밍\Team Portfolio\SunHaven\SunHaven\GImage.h(152,18): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
+C:\Users\psh95\OneDrive\바탕 화면\상현\공부\게임프로그래밍\Team Portfolio\SunHaven\SunHaven\GImage.h(152,18): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\psh95\OneDrive\바탕 화면\상현\공부\게임프로그래밍\Team Portfolio\SunHaven\SunHaven\GImage.h(153,18): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
+C:\Users\psh95\OneDrive\바탕 화면\상현\공부\게임프로그래밍\Team Portfolio\SunHaven\SunHaven\GImage.h(153,18): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  SunHaven.vcxproj -> C:\Users\psh95\OneDrive\바탕 화면\상현\공부\게임프로그래밍\Team Portfolio\SunHaven\Debug\SunHaven.exe
