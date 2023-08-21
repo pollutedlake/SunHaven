@@ -32,6 +32,9 @@
     <Filter Include="Scenes">
       <UniqueIdentifier>{a49e1d89-40f3-448c-8836-2ccb4cdfef09}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes">
+      <UniqueIdentifier>{321076cc-cbcd-481f-ab0b-df7d68029067}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Stdafx.cpp">
@@ -66,6 +69,12 @@
       <Filter>Scenes</Filter>
     </ClCompile>
     <ClCompile Include="WinMain.cpp" />
+    <ClCompile Include="MapToolScene.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>ManagerClass</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Stdafx.h">
@@ -107,6 +116,12 @@
     </ClInclude>
     <ClInclude Include="TitleScene.h">
       <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="MapToolScene.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>ManagerClass</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -140,6 +140,7 @@ ID2D1HwndRenderTarget* _ID2DRanderTarget = nullptr;*/
 #include "FontManager.h"
 #include "SoundManager.h"
 #include "SceneManager.h"
+#include "Camera.h"
 
 // # 싱글톤 #
 #define RND RandomFunction::getSingleton()
@@ -148,17 +149,19 @@ ID2D1HwndRenderTarget* _ID2DRanderTarget = nullptr;*/
 #define FONTMANAGER FontManager::getSingleton()
 #define SOUNDMANAGER SoundManager::getSingleton()
 #define SCENEMANAGER SceneManager::getSingleton()
+#define CAMERA Camera::getSingleton();
 
-// # 매크로 # (윈도우창 초기화)
 #define WINNAME					(LPTSTR)(TEXT("WindowsAPI"))
-#define WINSTART_X				400
-#define WINSTART_Y				100
+#define WINSTART_X				0
+#define WINSTART_Y				0
 #define WINSIZE_X				1280
-#define WINSIZE_Y				800
+#define WINSIZE_Y				720
+#define MYWINSIZE_X				GetSystemMetrics(SM_CXSCREEN)
+#define MYWINSIZE_Y				GetSystemMetrics(SM_CYSCREEN)
+#define TILEWIDTH				
+#define TILEHEIGHT				
 
 #define PI                       3.141592
-// WS_CAPTION : 타이틀바를 가지기 위한 옵션
-// WS_SYSMENU : 제목 표시줄에 컨트롤 메뉴 상자 창
 #define WINSTYLE				WS_CAPTION | WS_SYSMENU
 
 // # 매크로 함수 # (클래스에서 동적할당된 부분 해제)
