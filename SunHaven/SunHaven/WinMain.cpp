@@ -42,8 +42,8 @@ int APIENTRY WinMain(HINSTANCE hInstance,
         WINSTYLE,            // 윈도우 스타일
         WINSTART_X,                            // 윈도우 화면 X 좌표
         WINSTART_Y,                            // 윈도우 화면 Y 좌표
-        WINSIZE_X,                            // 윈도우 화면 가로 크기
-        WINSIZE_Y,                            // 윈도우 화면 세로 크기
+        MYWINSIZE_X,                            // 윈도우 화면 가로 크기
+        MYWINSIZE_Y,                            // 윈도우 화면 세로 크기
         NULL,                           // 부모 윈도우 -> GetDsktopWindow
         (HMENU)NULL,                    // 메뉴 핸들
         hInstance,                      // 인스턴스 지정
@@ -51,7 +51,7 @@ int APIENTRY WinMain(HINSTANCE hInstance,
                                         // ㄴ 필요에 의해서 사용하기도 하지만 지금은 NULL
     );
 
-    setWindowSize(WINSTART_X, WINSTART_Y, WINSIZE_X, WINSIZE_Y);
+    setWindowSize(WINSTART_X, WINSTART_Y, MYWINSIZE_X, MYWINSIZE_Y);
 
     ShowWindow(_hWnd, nCmdShow);
     if (FAILED(_mg->init()))

@@ -10,7 +10,7 @@ HRESULT TitleScene::init(void)
 	{
 		_rc[i] = RectMake(0, 400 + i * 53, 290, 70);
 	}
-
+	cout << MYWINSIZE_X << "\t" << MYWINSIZE_Y << endl;
 	return S_OK;
 }
 
@@ -37,12 +37,12 @@ void TitleScene::render(void)
 
 	IMAGEMANAGER->alphaRender("TITLE_MENU", getMemDC(), 0, 400, 0, 0, IMAGEMANAGER->findImage("TITLE_MENU")->getWidth(), 16, 150);
 
-	for (int i = 0; i < 35; i++)
+	for (int i = 0; i < 20; i++)
 	{
-		IMAGEMANAGER->alphaRender("TITLE_MENU", getMemDC(), 0, 416 + i * 4, 0, 16, IMAGEMANAGER->findImage("TITLE_MENU")->getWidth(), 8, 150);
+		IMAGEMANAGER->alphaRender("TITLE_MENU", getMemDC(), 0, 416 + i * 8, 0, 16, IMAGEMANAGER->findImage("TITLE_MENU")->getWidth(), 8, 150);
 	}
 
-	IMAGEMANAGER->alphaRender("TITLE_MENU", getMemDC(), 0, 560, 0, 24, IMAGEMANAGER->findImage("TITLE_MENU")->getWidth(), 16, 150);
+	IMAGEMANAGER->alphaRender("TITLE_MENU", getMemDC(), 0, 576, 0, 24, IMAGEMANAGER->findImage("TITLE_MENU")->getWidth(), 16, 150);
 
 	FONTMANAGER->textOut(getMemDC(), 60, 410, "ÇÑÄÄ ¸»¶û¸»¶û Bold", 35, 500, "ÇÃ·¹ÀÌ", strlen("ÇÃ·¹ÀÌ"), RGB(255, 255, 255));
 	FONTMANAGER->textOut(getMemDC(), 60, 470, "ÇÑÄÄ ¸»¶û¸»¶û Bold", 35, 500, "¸Ê Åø", strlen("¸Ê Åø"), RGB(255, 255, 255));

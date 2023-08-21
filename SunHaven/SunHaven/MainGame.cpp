@@ -25,7 +25,7 @@ void MainGame::update(void)
 
 void MainGame::render(void)
 {
-	PatBlt(getMemDC(), 0, 0, WINSIZE_X, WINSIZE_Y, BLACKNESS);
+	PatBlt(getMemDC(), 0, 0, MYWINSIZE_X, MYWINSIZE_Y, BLACKNESS);
 	SCENEMANAGER->render();
-	this->getBackBuffer()->render(getHDC(), 0, 0);
+	this->getBackBuffer()->render(getHDC(), 0, 0, MYWINSIZE_X, MYWINSIZE_Y, 0, 0, WINSIZE_X, WINSIZE_Y);
 }

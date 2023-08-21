@@ -100,7 +100,7 @@ float Camera::getXScreen(float x)
 	return MYWINSIZE_X * x / WINSIZE_X;
 }
 
-float Camera::getYScree(float y)
+float Camera::getYScreen(float y)
 {
 	return MYWINSIZE_Y * y / WINSIZE_Y;
 }

@@ -8,7 +8,7 @@ HRESULT Resources::init(void)
 		1280, 720);	// 배경
 
 	IMAGEMANAGER->addImage("TITLE_MENU", "Resources/Images/Title/Title_Menu.bmp",
-		145 * 2, 40 * 1,
+		145 * 2, 40,
 		true, RGB(255, 0, 255));	// 메뉴
 
 	IMAGEMANAGER->addImage("TITLE_MENU", "Resources/Images/Title/Title_Menu.bmp",
