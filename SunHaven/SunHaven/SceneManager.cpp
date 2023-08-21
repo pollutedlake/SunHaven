@@ -2,10 +2,12 @@
 #include "SceneManager.h"
 #include "GameNode.h"
 #include "TitleScene.h"
+#include "MapToolScene.h"
 
 HRESULT SceneManager::init(void)
 {
     SCENEMANAGER->addScene("Title", new TitleScene);
+    SCENEMANAGER->addScene("MapTool", new MapToolScene);
     _currentScene = nullptr;
     return S_OK;
 }

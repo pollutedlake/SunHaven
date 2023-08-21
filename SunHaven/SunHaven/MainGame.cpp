@@ -6,8 +6,7 @@ HRESULT MainGame::init(void)
 	GameNode::init(true);
 	_resources = new Resources;
 	_resources->init();
-	SCENEMANAGER->init();
-	SCENEMANAGER->changeScene("Title");
+	SCENEMANAGER->changeScene("MapTool");
 	ShowCursor(false);
 	return S_OK;
 }
@@ -25,7 +24,8 @@ void MainGame::update(void)
 
 void MainGame::render(void)
 {
-	PatBlt(getMemDC(), 0, 0, MYWINSIZE_X, MYWINSIZE_Y, BLACKNESS);
+	PatBlt(getMemDC(), 0, 0, MYWINSIZE_X, MYWINSIZE_Y, WHITENESS);
 	SCENEMANAGER->render();
+	TIMEMANAGER->render(getMemDC());
 	this->getBackBuffer()->render(getHDC(), 0, 0, MYWINSIZE_X, MYWINSIZE_Y, 0, 0, WINSIZE_X, WINSIZE_Y);
 }

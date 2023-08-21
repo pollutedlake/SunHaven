@@ -10,6 +10,9 @@ class MapToolScene : public GameNode
 {
 private:
 	Tile _tileMap[100][100];
+	char _tileSizeChar[20];
+	bool _input;
+	int _tileMapSize;
 
 public:
 	HRESULT init(void);

@@ -141,6 +141,7 @@ ID2D1HwndRenderTarget* _ID2DRanderTarget = nullptr;*/
 #include "SoundManager.h"
 #include "SceneManager.h"
 #include "Camera.h"
+#include "TimeManager.h"
 
 // # ΩÃ±€≈Ê #
 #define RND RandomFunction::getSingleton()
@@ -150,6 +151,7 @@ ID2D1HwndRenderTarget* _ID2DRanderTarget = nullptr;*/
 #define SOUNDMANAGER SoundManager::getSingleton()
 #define SCENEMANAGER SceneManager::getSingleton()
 #define CAMERA Camera::getSingleton()
+#define TIMEMANAGER TimeManager::getSingleton()
 
 #define WINNAME					(LPTSTR)(TEXT("WindowsAPI"))
 #define WINSTART_X				0
@@ -158,6 +160,8 @@ ID2D1HwndRenderTarget* _ID2DRanderTarget = nullptr;*/
 #define WINSIZE_Y				720
 #define MYWINSIZE_X				1280//GetSystemMetrics(SM_CXSCREEN)
 #define MYWINSIZE_Y				720//GetSystemMetrics(SM_CYSCREEN)
+#define TILEWIDTH				24
+#define TILEHEIGHT				24
 
 #define PI                       3.141592
 #define WINSTYLE				WS_CAPTION | WS_SYSMENU

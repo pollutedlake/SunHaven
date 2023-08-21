@@ -21,7 +21,7 @@ void TitleScene::release(void)
 void TitleScene::update(void)
 {
 	_bgAlpha += 5.0f;
-
+	TIMEMANAGER->update();
 	if (_bgAlpha >= 255) _bgAlpha = 255;
 }
 

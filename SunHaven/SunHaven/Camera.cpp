@@ -95,6 +95,16 @@ POINT Camera::worldToCamera(POINT point)
 	return PointMake(WINSIZE_X / 2 - (_position.x - point.x), WINSIZE_Y / 2 - (_position.y - point.y));
 }
 
+float Camera::worldToCameraX(float x)
+{
+	return WINSIZE_X / 2 - (_position.x - x);
+}
+
+float Camera::worldToCameraY(float y)
+{
+	return WINSIZE_Y / 2 - (_position.y - y);
+}
+
 float Camera::getXScreen(float x)
 {
 	return MYWINSIZE_X * x / WINSIZE_X;

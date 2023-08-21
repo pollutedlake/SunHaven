@@ -35,6 +35,9 @@
     <Filter Include="Classes">
       <UniqueIdentifier>{321076cc-cbcd-481f-ab0b-df7d68029067}</UniqueIdentifier>
     </Filter>
+    <Filter Include="FrameWork\Timer">
+      <UniqueIdentifier>{3a5db535-7173-4600-aa77-8292fa5b00a5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Stdafx.cpp">
@@ -74,6 +77,12 @@
     </ClCompile>
     <ClCompile Include="Camera.cpp">
       <Filter>ManagerClass</Filter>
+    </ClCompile>
+    <ClCompile Include="TimeManager.cpp">
+      <Filter>ManagerClass</Filter>
+    </ClCompile>
+    <ClCompile Include="Timer.cpp">
+      <Filter>FrameWork\Timer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -122,6 +131,12 @@
     </ClInclude>
     <ClInclude Include="Camera.h">
       <Filter>ManagerClass</Filter>
+    </ClInclude>
+    <ClInclude Include="TimeManager.h">
+      <Filter>ManagerClass</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.h">
+      <Filter>FrameWork\Timer</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
