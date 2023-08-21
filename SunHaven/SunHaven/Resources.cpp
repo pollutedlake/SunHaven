@@ -14,7 +14,14 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addImage("TITLE_MENU", "Resources/Images/Title/Title_Menu.bmp",
 		145 * 1, 40 * 1,
 		true, RGB(255, 0, 255));	// 메뉴 클릭
+	IMAGEMANAGER->addImage("Cursor", "Resources/Images/UI/Cursor.bmp",
+		32, 32,
+		true, RGB(255, 0, 255));
 
+
+	IMAGEMANAGER->addImage("Tile1", "Resources/Images/Tile/Tile1.bmp",
+		24, 24,
+		true, RGB(255, 0, 255));
 
 
 	return S_OK;

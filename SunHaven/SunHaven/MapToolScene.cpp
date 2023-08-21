@@ -9,8 +9,13 @@ HRESULT MapToolScene::init(void)
 	}
 	memset(_tileSizeChar, '\0', sizeof(char) * sizeof(_tileSizeChar) / sizeof(_tileSizeChar[0]));
 	_input = true;
+	_tileBuffer = IMAGEMANAGER->addImage("TileBuffer", 100 * TILEWIDTH, 100 * TILEHEIGHT);
+	CAMERA->init();
 	CAMERA->setPosition({ WINSIZE_X / 2, WINSIZE_Y / 2 });
 	_tileMapSize = 100;
+	CAMERA->setLimitRight(_tileMapSize * TILEWIDTH - TILEWIDTH / 2);
+	CAMERA->setLimitBottom(_tileMapSize * TILEHEIGHT - TILEHEIGHT / 2);
+	_cameraPos = {0, 0};
 	return S_OK;
 }
 
@@ -20,7 +25,33 @@ void MapToolScene::release(void)
 
 void MapToolScene::update(void)
 {
- CAMERA->update();
+	CAMERA->update();
+	if (KEYMANAGER->isStayKeyDown(VK_UP))
+	{
+		_cameraPos.y -= 10;
+	}
+	else if (KEYMANAGER->isStayKeyDown(VK_DOWN))
+	{
+		_cameraPos.y += 10;
+
+	}
+	else if (KEYMANAGER->isStayKeyDown(VK_LEFT))
+	{
+		_cameraPos.x -= 10;
+	}
+	else if (KEYMANAGER->isStayKeyDown(VK_RIGHT))
+	{
+		_cameraPos.x += 10;
+	}
+	
+	if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
+	{
+		if (_ptMouse.x > 50 && _ptMouse.x < 850)
+		{
+			_tileMap[(_ptMouse.y - 50 + _cameraPos.y) / TILEHEIGHT][(_ptMouse.x - 50 + _cameraPos.x) / TILEWIDTH]._image = IMAGEMANAGER->findImage("Tile1");
+			cout << (_ptMouse.x - 50 + _cameraPos.x) / TILEWIDTH << "\t" << (_ptMouse.y - 50 + _cameraPos.y) / TILEHEIGHT << endl;
+		}
+	}
 }
 
 void MapToolScene::render(void)
@@ -33,16 +64,18 @@ void MapToolScene::render(void)
 		{
 			if (_tileMap[i][j]._image == nullptr)
 			{
-				DrawRectMake(getMemDC(), RectMakeCenter(CAMERA->worldToCameraX(j * TILEWIDTH + TILEWIDTH / 2), CAMERA->worldToCameraY(i * TILEHEIGHT + TILEHEIGHT / 2), TILEWIDTH, TILEHEIGHT));
+				DrawRectMake(_tileBuffer->getMemDC(), RectMakeCenter(j * TILEWIDTH + TILEWIDTH / 2, i * TILEHEIGHT + TILEHEIGHT / 2, TILEWIDTH, TILEHEIGHT));
 			}
 			else
 			{
-				_tileMap[i][j]._image->render(getMemDC(), CAMERA->worldToCameraX( j * TILEWIDTH), CAMERA->worldToCameraY( i * TILEHEIGHT));
+				_tileMap[i][j]._image->render(_tileBuffer->getMemDC(), j * TILEWIDTH, i * TILEHEIGHT);
 			}
 		}
 	}
 	SelectObject(getMemDC(), oldPen);
 	DeleteObject(myPen);
+	_tileBuffer->render(getMemDC(), 50, 50, 800, 600, _cameraPos.x, _cameraPos.y, 800, 600);
+	IMAGEMANAGER->findImage("Cursor")->render(getMemDC(), _ptMouse.x, _ptMouse.y);
 	//for (int i = 0; i < _tileSize; i++)
 	//{
 	//	for (int j = 0; j < _tileSize; j++)
