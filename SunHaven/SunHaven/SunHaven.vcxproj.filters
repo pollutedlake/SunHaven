@@ -75,6 +75,9 @@
     <ClCompile Include="Camera.cpp">
       <Filter>ManagerClass</Filter>
     </ClCompile>
+    <ClCompile Include="GPImage.cpp">
+      <Filter>FrameWork\GImage</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Stdafx.h">
@@ -123,5 +126,19 @@
     <ClInclude Include="Camera.h">
       <Filter>ManagerClass</Filter>
     </ClInclude>
+    <ClInclude Include="GPImage.h">
+      <Filter>FrameWork\GImage</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="SunHaven.rc">
+      <Filter>리소스 파일</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="cursor1.cur">
+      <Filter>리소스 파일</Filter>
+    </None>
   </ItemGroup>
 </Project>
