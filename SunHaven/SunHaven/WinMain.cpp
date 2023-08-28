@@ -20,6 +20,10 @@ int APIENTRY WinMain(HINSTANCE hInstance,
 
     _hInstance = hInstance;
 
+    GdiplusStartupInput gdiplusStartupInput;
+    ULONG_PTR           gdiplusToken;
+    GdiplusStartup(&gdiplusToken, &gdiplusStartupInput, NULL);
+
     WNDCLASS wndClass;
 
     wndClass.cbClsExtra = 0;                                                    // 클래스 여분 메모리
@@ -67,6 +71,8 @@ int APIENTRY WinMain(HINSTANCE hInstance,
         TranslateMessage(&message);
         DispatchMessage(&message);
     }
+
+    GdiplusShutdown(gdiplusToken);
 
     _mg->release();
     UnregisterClass(WINNAME, hInstance);

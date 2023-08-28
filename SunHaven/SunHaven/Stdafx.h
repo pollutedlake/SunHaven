@@ -23,7 +23,7 @@
 //#include "targetver.h"					// OS에 맞게 코드를 변환해줌
 // 거의 사용되지 않는 내용을 Windows 헤더에서 제외합니다.
 // ㄴGDI+를 사용하려면 헤더파일에서 꺼내와야 한다.
-//#include <ole2.h>
+#include <ole2.h>
 #define WIN32_LEAN_AND_MEAN
 #pragma comment(linker,"/entry:WinMainCRTStartup /subsystem:console")
 

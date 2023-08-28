@@ -9,7 +9,9 @@ private:
 	float _bgAlpha;		// 배경 알파
 	float _menuAlpha;	// 배경 메뉴 알파
 
-	RECT _rc[3];
+	bitset<10> _isDone;
+
+	RECT _rc[3];		// 플레이 누르지 않았을 때
 
 public:
 	HRESULT init(void);

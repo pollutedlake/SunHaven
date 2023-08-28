@@ -95,6 +95,26 @@ GImage* ImageManager::addFrameImage(string strKey, const char* fileName, float x
 	return img;
 }
 
+GPImage* ImageManager::addGPFrameImage(string strKey, char* fileName, int destX, int destY, int maxFrameX, int maxFrameY, bool isTrans, COLORREF color, Gdiplus::RotateFlipType rotateFlipType)
+{
+	GPImage* img = findGPImage(strKey);
+
+	if (img) return img;
+
+	img = new GPImage;
+
+	if (FAILED(img->init(fileName, destX, destY, maxFrameX, maxFrameY, isTrans, color, rotateFlipType)))
+	{
+		SAFE_DELETE(img);
+
+		return NULL;
+	}
+
+	_mGPImageList.insert(make_pair(strKey, img));
+
+	return nullptr;
+}
+
 GImage* ImageManager::findImage(string strKey)
 {
 	auto key = _mImageList.find(strKey);
@@ -103,6 +123,19 @@ GImage* ImageManager::findImage(string strKey)
 	{
 		return key->second;
 	}
+	return nullptr;
+}
+
+GPImage* ImageManager::findGPImage(string strKey)
+{
+	auto key = _mGPImageList.find(strKey);
+
+	// 검색한 키를 찾은 경우
+	if (key != _mGPImageList.end())
+	{
+		return key->second;
+	}
+
 	return nullptr;
 }
 
@@ -137,6 +170,21 @@ bool ImageManager::deleteAll()
 		}
 	}
 	_mImageList.clear();
+	mapGPImageIter GPiter = _mGPImageList.begin();
+	for (; GPiter != _mGPImageList.end();)
+	{
+		if (GPiter->second != NULL)
+		{
+			GPiter->second->release();
+			SAFE_DELETE(GPiter->second);
+			GPiter = _mGPImageList.erase(GPiter);
+		}
+		else
+		{
+			++GPiter;
+		}
+	}
+	_mGPImageList.clear();
 	return true;
 }
 
@@ -204,6 +252,13 @@ void ImageManager::frameRender(string strKey, HDC hdc, int destX, int destY, int
 {
 	GImage* img = findImage(strKey);
 	if (img) img->frameRender(hdc, destX, destY, destWidth, destHeight, currentFrameX, currentFrameY);
+}
+
+void ImageManager::GPFrameRender(string strKey, HDC hdc, int destX, int destY, float wRatio, float hRatio, int currentFrameX, int currentFrameY, Gdiplus::InterpolationMode _imode, int angle)
+{
+	GPImage* img = findGPImage(strKey);
+
+	if (img) img->GPFrameRender(hdc, destX, destY, wRatio, hRatio, currentFrameX, currentFrameY, _imode, angle);
 }
 
 void ImageManager::alphaFrameRender(string strKey, HDC hdc, int destX, int destY, int currentFrameX, int currentFrameY, BYTE alpha)
