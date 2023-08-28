@@ -1,164 +1,179 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="리소스 파일">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
+    <ClCompile Include="MainGame.cpp" />
+    <ClCompile Include="Resources.cpp" />
+    <ClCompile Include="WinMain.cpp" />
+    <ClCompile Include="FrameWork\Animation\Animation.cpp">
+      <Filter>FrameWork\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="Class\Camera.cpp">
+      <Filter>Class</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\DynusScene.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\FarmScene.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Manager\FontManager.cpp">
+      <Filter>Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="FrameWork\GameNode\GameNode.cpp">
+      <Filter>FrameWork\GameNode</Filter>
+    </ClCompile>
+    <ClCompile Include="FrameWork\GImage\GImage.cpp">
+      <Filter>FrameWork\GImage</Filter>
+    </ClCompile>
+    <ClCompile Include="FrameWork\GPImage\GPImage.cpp">
+      <Filter>FrameWork\GPImage</Filter>
+    </ClCompile>
+    <ClCompile Include="Manager\ImageManager.cpp">
+      <Filter>Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Manager\KeyManager.cpp">
+      <Filter>Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\MapToolScene.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Manager\SceneManager.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\ShopScene.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="FrameWork\PCH\Stdafx.cpp">
+      <Filter>FrameWork\PCH</Filter>
+    </ClCompile>
+    <ClCompile Include="Manager\SoundManager.cpp">
+      <Filter>Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Manager\TimeManager.cpp">
+      <Filter>Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="FrameWork\Timer\Timer.cpp">
+      <Filter>FrameWork\Timer</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\TitleScene.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\TownScene.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="FrameWork\Utility\Utils.cpp">
+      <Filter>FrameWork\Utility</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="MainGame.h" />
+    <ClInclude Include="Resources.h" />
+    <ClInclude Include="FrameWork\Animation\Animation.h">
+      <Filter>FrameWork\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="Class\Camera.h">
+      <Filter>Class</Filter>
+    </ClInclude>
+    <ClInclude Include="FrameWork\Utility\CommonMacroFunction.h">
+      <Filter>FrameWork\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\DynusScene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\FarmScene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Manager\FontManager.h">
+      <Filter>Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="FrameWork\GameNode\GameNode.h">
+      <Filter>FrameWork\GameNode</Filter>
+    </ClInclude>
+    <ClInclude Include="FrameWork\GImage\GImage.h">
+      <Filter>FrameWork\GImage</Filter>
+    </ClInclude>
+    <ClInclude Include="FrameWork\GPImage\GPImage.h">
+      <Filter>FrameWork\GPImage</Filter>
+    </ClInclude>
+    <ClInclude Include="Manager\ImageManager.h">
+      <Filter>Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Manager\KeyManager.h">
+      <Filter>Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\MapToolScene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Manager\SceneManager.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="FrameWork\Utility\RandomFunction.h">
+      <Filter>FrameWork\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\ShopScene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="FrameWork\SingletonBase\SingletonBase.h">
+      <Filter>FrameWork\SingletonBase</Filter>
+    </ClInclude>
+    <ClInclude Include="FrameWork\PCH\Stdafx.h">
+      <Filter>FrameWork\PCH</Filter>
+    </ClInclude>
+    <ClInclude Include="Manager\SoundManager.h">
+      <Filter>Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Manager\TimeManager.h">
+      <Filter>Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="FrameWork\Timer\Timer.h">
+      <Filter>FrameWork\Timer</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\TitleScene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\TownScene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="FrameWork\Utility\Utils.h">
+      <Filter>FrameWork\Utility</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
     <Filter Include="FrameWork">
-      <UniqueIdentifier>{c0985f1f-9cf4-4636-8fc9-e75a8ce9de1c}</UniqueIdentifier>
+      <UniqueIdentifier>{15d6fe40-000a-46ad-a7c9-1009d23861ff}</UniqueIdentifier>
     </Filter>
     <Filter Include="FrameWork\PCH">
-      <UniqueIdentifier>{e093699c-ce18-42bf-ac2c-6baebd918e90}</UniqueIdentifier>
+      <UniqueIdentifier>{8c37e851-4e62-41e1-93ea-7732029bb9fe}</UniqueIdentifier>
     </Filter>
-    <Filter Include="FrameWork\GameCore">
-      <UniqueIdentifier>{85258453-144a-4b18-820a-87238d0fe789}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ManagerClass">
-      <UniqueIdentifier>{387f59f7-31b2-46f7-be6e-4e206f7d6ebe}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="FrameWork\GImage">
-      <UniqueIdentifier>{a51a3c40-590a-4b54-8906-d79d5b194e48}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="FrameWork\DesignPattern">
-      <UniqueIdentifier>{6a722d04-0b89-44ce-aee3-62e63cec4e43}</UniqueIdentifier>
+    <Filter Include="FrameWork\SingletonBase">
+      <UniqueIdentifier>{0962e03e-c4a3-4ca2-84e2-3f55886c6626}</UniqueIdentifier>
     </Filter>
     <Filter Include="FrameWork\Utility">
-      <UniqueIdentifier>{0df2a929-09ac-463a-90fd-4b7622f94a07}</UniqueIdentifier>
+      <UniqueIdentifier>{ea268e37-c011-480d-9f43-eb125bf77085}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resources">
-      <UniqueIdentifier>{6009a7cb-ce1b-4944-af17-c7c6a16afcf6}</UniqueIdentifier>
+    <Filter Include="FrameWork\GameNode">
+      <UniqueIdentifier>{446fcf28-aea4-4324-84ba-6f9c5ffcbd37}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Scenes">
-      <UniqueIdentifier>{a49e1d89-40f3-448c-8836-2ccb4cdfef09}</UniqueIdentifier>
+    <Filter Include="Manager">
+      <UniqueIdentifier>{8cfa63bb-e249-4ee1-9432-d625500ee63b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Classes">
-      <UniqueIdentifier>{321076cc-cbcd-481f-ab0b-df7d68029067}</UniqueIdentifier>
+    <Filter Include="FrameWork\GImage">
+      <UniqueIdentifier>{80cf313b-21c7-412c-a717-6296db003b69}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FrameWork\GPImage">
+      <UniqueIdentifier>{dbeaf4f9-155b-4d0b-9424-4325089cb97f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Class">
+      <UniqueIdentifier>{42fb1f39-7ebd-468f-8956-516aa699cda0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FrameWork\Animation">
+      <UniqueIdentifier>{21f8195d-bd65-4bd3-be2c-4ecc72d7f082}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene">
+      <UniqueIdentifier>{1e02d9bb-a82d-4858-a0b3-56ab8573976f}</UniqueIdentifier>
     </Filter>
     <Filter Include="FrameWork\Timer">
-      <UniqueIdentifier>{3a5db535-7173-4600-aa77-8292fa5b00a5}</UniqueIdentifier>
+      <UniqueIdentifier>{3ad3bb0a-fe43-4469-8be8-b505ebdb3e74}</UniqueIdentifier>
     </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="Stdafx.cpp">
-      <Filter>FrameWork\PCH</Filter>
-    </ClCompile>
-    <ClCompile Include="GameNode.cpp">
-      <Filter>FrameWork\GameCore</Filter>
-    </ClCompile>
-    <ClCompile Include="MainGame.cpp" />
-    <ClCompile Include="ImageManager.cpp">
-      <Filter>ManagerClass</Filter>
-    </ClCompile>
-    <ClCompile Include="GImage.cpp">
-      <Filter>FrameWork\GImage</Filter>
-    </ClCompile>
-    <ClCompile Include="KeyManager.cpp">
-      <Filter>ManagerClass</Filter>
-    </ClCompile>
-    <ClCompile Include="FontManager.cpp">
-      <Filter>ManagerClass</Filter>
-    </ClCompile>
-    <ClCompile Include="SceneManager.cpp">
-      <Filter>ManagerClass</Filter>
-    </ClCompile>
-    <ClCompile Include="SoundManager.cpp">
-      <Filter>ManagerClass</Filter>
-    </ClCompile>
-    <ClCompile Include="Resources.cpp">
-      <Filter>Resources</Filter>
-    </ClCompile>
-    <ClCompile Include="TitleScene.cpp">
-      <Filter>Scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="WinMain.cpp" />
-    <ClCompile Include="MapToolScene.cpp">
-      <Filter>Scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="Camera.cpp">
-      <Filter>ManagerClass</Filter>
-    </ClCompile>
-<<<<<<< HEAD
-    <ClCompile Include="GPImage.cpp">
-      <Filter>FrameWork\GImage</Filter>
-=======
-    <ClCompile Include="TimeManager.cpp">
-      <Filter>ManagerClass</Filter>
-    </ClCompile>
-    <ClCompile Include="Timer.cpp">
-      <Filter>FrameWork\Timer</Filter>
->>>>>>> PSH
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Stdafx.h">
-      <Filter>FrameWork\PCH</Filter>
-    </ClInclude>
-    <ClInclude Include="GameNode.h">
-      <Filter>FrameWork\GameCore</Filter>
-    </ClInclude>
-    <ClInclude Include="MainGame.h" />
-    <ClInclude Include="ImageManager.h">
-      <Filter>ManagerClass</Filter>
-    </ClInclude>
-    <ClInclude Include="GImage.h">
-      <Filter>FrameWork\GImage</Filter>
-    </ClInclude>
-    <ClInclude Include="SingletonBase.h">
-      <Filter>FrameWork\DesignPattern</Filter>
-    </ClInclude>
-    <ClInclude Include="CommonMacroFunction.h">
-      <Filter>FrameWork\Utility</Filter>
-    </ClInclude>
-    <ClInclude Include="RandomFunction.h">
-      <Filter>FrameWork\Utility</Filter>
-    </ClInclude>
-    <ClInclude Include="KeyManager.h">
-      <Filter>ManagerClass</Filter>
-    </ClInclude>
-    <ClInclude Include="FontManager.h">
-      <Filter>ManagerClass</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneManager.h">
-      <Filter>ManagerClass</Filter>
-    </ClInclude>
-    <ClInclude Include="SoundManager.h">
-      <Filter>ManagerClass</Filter>
-    </ClInclude>
-    <ClInclude Include="Resources.h">
-      <Filter>Resources</Filter>
-    </ClInclude>
-    <ClInclude Include="TitleScene.h">
-      <Filter>Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="MapToolScene.h">
-      <Filter>Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="Camera.h">
-      <Filter>ManagerClass</Filter>
-    </ClInclude>
-<<<<<<< HEAD
-    <ClInclude Include="GPImage.h">
-      <Filter>FrameWork\GImage</Filter>
-    </ClInclude>
-    <ClInclude Include="resource.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="SunHaven.rc">
-      <Filter>리소스 파일</Filter>
-    </ResourceCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="cursor1.cur">
-      <Filter>리소스 파일</Filter>
-    </None>
-=======
-    <ClInclude Include="TimeManager.h">
-      <Filter>ManagerClass</Filter>
-    </ClInclude>
-    <ClInclude Include="Timer.h">
-      <Filter>FrameWork\Timer</Filter>
-    </ClInclude>
->>>>>>> PSH
   </ItemGroup>
 </Project>
