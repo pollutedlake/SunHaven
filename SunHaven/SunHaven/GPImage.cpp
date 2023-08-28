@@ -60,7 +60,6 @@ void GPImage::GPFrameRender(HDC hdc, int destX, int destY, float wRatio, float h
 {
 	Gdiplus::InterpolationMode imode = _imode;	// 보간 모드
 
-
 	_gdiInfo->currentFrameX = currentFrameX;
 	_gdiInfo->currentFrameY = currentFrameY;
 

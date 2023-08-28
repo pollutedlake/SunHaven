@@ -6,6 +6,8 @@ HRESULT TitleScene::init(void)
 	_bgAlpha = 0.0f;
 	_menuAlpha = 150.0f;
 
+	_yOffset = 0.0f;
+
 	for (int i = 0; i < 3; i++)
 	{
 		_rc[i] = RectMake(0, 400 + i * 59, 290, 59);
@@ -26,8 +28,16 @@ void TitleScene::release(void)
 void TitleScene::update(void)
 {
 	_bgAlpha += 5.0f;
-	TIMEMANAGER->update();
 	if (_bgAlpha >= 255) _bgAlpha = 255;
+
+	// _yOffset 값에 따라 이미지를 위아래로 움직이도록 설정
+	static float yOffsetDirection = 1.0f;
+	_yOffset += 0.2f * yOffsetDirection;
+
+	if (_yOffset >= 5.0f || _yOffset <= -5.0f)
+	{
+		yOffsetDirection *= -1.0f;
+	}
 
 	for (int i = 0; i < 3; i++)
 	{
@@ -84,14 +94,19 @@ void TitleScene::update(void)
 
 void TitleScene::render(void)
 {
-	IMAGEMANAGER->render("TITLE", getMemDC(), 0, 0);
-	
+	IMAGEMANAGER->render("TITLE", getMemDC(), 0, 0, 225, 0, MYWINSIZE_X, MYWINSIZE_Y);	// 클리핑
+	IMAGEMANAGER->GPFrameRender("TITLE_LOGO", getMemDC(),
+		265, 70 + _yOffset, 0.28, 0.28,
+		IMAGEMANAGER->findGPImage("TITLE_LOGO")->getFrameX(), IMAGEMANAGER->findGPImage("TITLE_LOGO")->getFrameY(),
+		InterpolationModeNearestNeighbor, 0);
+
 	/*for (int i = 0; i < 3; i++)
 	{
 		DrawRectMake(getMemDC(), _rc[i]);
 	}*/
 	//IMAGEMANAGER->alphaRender("TITLE_MENU", getMemDC(), 0, 400, 0, 0, IMAGEMANAGER->findImage("TITLE_MENU")->getWidth(), 40, 150);
 
+	// 메뉴 바탕 알파 클리핑
 	IMAGEMANAGER->alphaRender("TITLE_MENU", getMemDC(), 0, 400, 0, 0, IMAGEMANAGER->findImage("TITLE_MENU")->getWidth(), 16, 150);
 
 	for (int i = 0; i < 18; i++)
@@ -127,5 +142,5 @@ void TitleScene::render(void)
 		FONTMANAGER->textOut(getMemDC(), 60, 530, "한컴 말랑말랑 Bold", 35, 600, "뒤로", strlen("뒤로"), RGB(255, 255, 255));
 	}
 
-	IMAGEMANAGER->render("CURSOR", getMemDC(), _ptMouse.x, _ptMouse.y);
+	IMAGEMANAGER->render("Cursor", getMemDC(), _ptMouse.x, _ptMouse.y);
 }
