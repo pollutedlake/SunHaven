@@ -79,6 +79,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>$(SolutionDir)\SunHaven\FrameWork\PCH;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -144,19 +145,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-<<<<<<< HEAD
-    <ClCompile Include="Dynus.cpp" />
-    <ClCompile Include="Bullets.cpp" />
-    <ClCompile Include="Camera.cpp" />
-    <ClCompile Include="Enemy.cpp" />
-    <ClCompile Include="EnemyManager.cpp" />
-    <ClCompile Include="FontManager.cpp" />
-    <ClCompile Include="GameNode.cpp" />
-    <ClCompile Include="GImage.cpp" />
-    <ClCompile Include="GPImage.cpp" />
-    <ClCompile Include="ImageManager.cpp" />
-    <ClCompile Include="KeyManager.cpp" />
-=======
+    <ClCompile Include="Class\Dynus.cpp" />
+    <ClCompile Include="Class\Bullets.cpp" />
+    <ClCompile Include="Class\Enemy.cpp" />
+    <ClCompile Include="Class\EnemyManager.cpp" />
     <ClCompile Include="Scene\FarmScene.cpp" />
     <ClCompile Include="Scene\DynusScene.cpp" />
     <ClCompile Include="FrameWork\Animation\Animation.cpp" />
@@ -167,7 +159,6 @@
     <ClCompile Include="FrameWork\GPImage\GPImage.cpp" />
     <ClCompile Include="Manager\ImageManager.cpp" />
     <ClCompile Include="Manager\KeyManager.cpp" />
->>>>>>> main
     <ClCompile Include="MainGame.cpp" />
     <ClCompile Include="Scene\MapToolScene.cpp" />
     <ClCompile Include="Resources.cpp" />
@@ -183,20 +174,10 @@
     <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>
-<<<<<<< HEAD
-    <ClInclude Include="Dynus.h" />
-    <ClInclude Include="Bullets.h" />
-    <ClInclude Include="Camera.h" />
-    <ClInclude Include="CommonMacroFunction.h" />
-    <ClInclude Include="Enemy.h" />
-    <ClInclude Include="EnemyManager.h" />
-    <ClInclude Include="FontManager.h" />
-    <ClInclude Include="GameNode.h" />
-    <ClInclude Include="GImage.h" />
-    <ClInclude Include="GPImage.h" />
-    <ClInclude Include="ImageManager.h" />
-    <ClInclude Include="KeyManager.h" />
-=======
+    <ClInclude Include="Class\Dynus.h" />
+    <ClInclude Include="Class\Bullets.h" />
+    <ClInclude Include="Class\Enemy.h" />
+    <ClInclude Include="Class\EnemyManager.h" />
     <ClInclude Include="Scene\FarmScene.h" />
     <ClInclude Include="Scene\DynusScene.h" />
     <ClInclude Include="FrameWork\Animation\Animation.h" />
@@ -208,7 +189,6 @@
     <ClInclude Include="FrameWork\GPImage\GPImage.h" />
     <ClInclude Include="Manager\ImageManager.h" />
     <ClInclude Include="Manager\KeyManager.h" />
->>>>>>> main
     <ClInclude Include="MainGame.h" />
     <ClInclude Include="Scene\MapToolScene.h" />
     <ClInclude Include="FrameWork\Utility\RandomFunction.h" />
