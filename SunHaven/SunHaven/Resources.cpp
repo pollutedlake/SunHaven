@@ -42,10 +42,10 @@ HRESULT Resources::init(void)
 
 	// ====================ShopScene====================
 	// invenImage
-	IMAGEMANAGER->addImage("invenBG", "Resources/Images/Inventory/invenBG.png", 405, 290);
-	IMAGEMANAGER->addImage("player_bg", "Resources/Images/Inventory/player_bg.png", 184, 224);
-	/*IMAGEMANAGER->addImage("bg_backpack_items", "Resources/Images/Inventory/bg_backpack_items.png", 379, 226);
-	IMAGEMANAGER->addImage("player_bg_name_banner", "Resources/Images/Inventory/player_bg_name_banner.bmp", 405, 290,true,RGB(255,0,255));*/
+	IMAGEMANAGER->addImage("invenBG", "Resources/Images/Inventory/invenBG.bmp", WINSIZE_X/2, WINSIZE_Y/2);
+	IMAGEMANAGER->addImage("player_bg", "Resources/Images/Inventory/player_bg.bmp", WINSIZE_X / 6, WINSIZE_Y / 2 - 80);
+	IMAGEMANAGER->addImage("bg_backpack_items", "Resources/Images/Inventory/bg_backpack_items.bmp", 379, 226);
+	IMAGEMANAGER->addImage("player_bg_name_banner", "Resources/Images/Inventory/player_bg_name_banner.bmp", 405, 290,true,RGB(255,0,255));
 	// shopImage
 
 	// Sound
