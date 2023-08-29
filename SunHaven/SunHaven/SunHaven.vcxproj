@@ -72,6 +72,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>$(IncludePath);$(SolutionDir)/SunHaven/FrameWork/PCH</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -90,6 +91,8 @@
       <ConformanceMode>false</ConformanceMode>
       <PrecompiledHeader>Create</PrecompiledHeader>
       <PrecompiledHeaderFile>Stdafx.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>
+      </PrecompiledHeaderOutputFile>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -141,34 +144,56 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="FontManager.cpp" />
-    <ClCompile Include="GameNode.cpp" />
-    <ClCompile Include="GImage.cpp" />
-    <ClCompile Include="ImageManager.cpp" />
-    <ClCompile Include="KeyManager.cpp" />
+    <ClCompile Include="Scene\FarmScene.cpp" />
+    <ClCompile Include="Scene\DynusScene.cpp" />
+    <ClCompile Include="FrameWork\Animation\Animation.cpp" />
+    <ClCompile Include="Class\Camera.cpp" />
+    <ClCompile Include="Manager\FontManager.cpp" />
+    <ClCompile Include="FrameWork\GameNode\GameNode.cpp" />
+    <ClCompile Include="FrameWork\GImage\GImage.cpp" />
+    <ClCompile Include="FrameWork\GPImage\GPImage.cpp" />
+    <ClCompile Include="Manager\ImageManager.cpp" />
+    <ClCompile Include="Manager\KeyManager.cpp" />
     <ClCompile Include="MainGame.cpp" />
+    <ClCompile Include="Scene\MapToolScene.cpp" />
     <ClCompile Include="Resources.cpp" />
-    <ClCompile Include="SceneManager.cpp" />
-    <ClCompile Include="SoundManager.cpp" />
-    <ClCompile Include="Stdafx.cpp" />
-    <ClCompile Include="TitleScene.cpp" />
+    <ClCompile Include="Manager\SceneManager.cpp" />
+    <ClCompile Include="Manager\SoundManager.cpp" />
+    <ClCompile Include="FrameWork\PCH\Stdafx.cpp" />
+    <ClCompile Include="Manager\TimeManager.cpp" />
+    <ClCompile Include="FrameWork\Timer\Timer.cpp" />
+    <ClCompile Include="Scene\TitleScene.cpp" />
+    <ClCompile Include="Scene\ShopScene.cpp" />
+    <ClCompile Include="Scene\TownScene.cpp" />
+    <ClCompile Include="FrameWork\Utility\Utils.cpp" />
     <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CommonMacroFunction.h" />
-    <ClInclude Include="FontManager.h" />
-    <ClInclude Include="GameNode.h" />
-    <ClInclude Include="GImage.h" />
-    <ClInclude Include="ImageManager.h" />
-    <ClInclude Include="KeyManager.h" />
+    <ClInclude Include="Scene\FarmScene.h" />
+    <ClInclude Include="Scene\DynusScene.h" />
+    <ClInclude Include="FrameWork\Animation\Animation.h" />
+    <ClInclude Include="Class\Camera.h" />
+    <ClInclude Include="FrameWork\Utility\CommonMacroFunction.h" />
+    <ClInclude Include="Manager\FontManager.h" />
+    <ClInclude Include="FrameWork\GameNode\GameNode.h" />
+    <ClInclude Include="FrameWork\GImage\GImage.h" />
+    <ClInclude Include="FrameWork\GPImage\GPImage.h" />
+    <ClInclude Include="Manager\ImageManager.h" />
+    <ClInclude Include="Manager\KeyManager.h" />
     <ClInclude Include="MainGame.h" />
-    <ClInclude Include="RandomFunction.h" />
+    <ClInclude Include="Scene\MapToolScene.h" />
+    <ClInclude Include="FrameWork\Utility\RandomFunction.h" />
     <ClInclude Include="Resources.h" />
-    <ClInclude Include="SceneManager.h" />
-    <ClInclude Include="SingletonBase.h" />
-    <ClInclude Include="SoundManager.h" />
-    <ClInclude Include="Stdafx.h" />
-    <ClInclude Include="TitleScene.h" />
+    <ClInclude Include="Manager\SceneManager.h" />
+    <ClInclude Include="FrameWork\SingletonBase\SingletonBase.h" />
+    <ClInclude Include="Manager\SoundManager.h" />
+    <ClInclude Include="Manager\TimeManager.h" />
+    <ClInclude Include="FrameWork\Timer\Timer.h" />
+    <ClInclude Include="Scene\TitleScene.h" />
+    <ClInclude Include="FrameWork\PCH\Stdafx.h" />
+    <ClInclude Include="Scene\ShopScene.h" />
+    <ClInclude Include="Scene\TownScene.h" />
+    <ClInclude Include="FrameWork\Utility\Utils.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
