@@ -13,7 +13,7 @@ GPImage::~GPImage()
 {
 }
 
-HRESULT GPImage::init(char* fileName, int destX, int destY, int maxFrameX, int maxFrameY, bool isTrans, COLORREF color, Gdiplus::RotateFlipType rotateFlipType)
+HRESULT GPImage::init(char* fileName, int destX, int destY, int maxFrameX, int maxFrameY, bool isTrans, COLORREF lowColor, COLORREF highColor, Gdiplus::RotateFlipType rotateFlipType)
 {
 	USES_CONVERSION;
 
@@ -23,11 +23,14 @@ HRESULT GPImage::init(char* fileName, int destX, int destY, int maxFrameX, int m
 
 	_gdiInfo = new GDI_INFO;
 	WCHAR* wstr = A2W(fileName);
-	_gdiImg = new Gdiplus::Image(wstr);
+	_gdiImg = Image::FromFile(wstr);
 
 	_gdiInfo = new GDI_INFO;
 	_gdiInfo->x = destX;
 	_gdiInfo->y = destY;
+	_gdiInfo->hMemDC = CreateCompatibleDC(hdc);
+	_gdiInfo->hBit = (HBITMAP)CreateCompatibleBitmap(hdc, _gdiImg->GetWidth(), _gdiImg->GetHeight());
+	_gdiInfo->hOBit = (HBITMAP)SelectObject(_gdiInfo->hMemDC, _gdiInfo->hBit);
 	_gdiInfo->width = _gdiImg->GetWidth();
 	_gdiInfo->height = _gdiImg->GetHeight();
 	_gdiInfo->currentFrameX = 0;
@@ -39,7 +42,30 @@ HRESULT GPImage::init(char* fileName, int destX, int destY, int maxFrameX, int m
 	_gdiImg->RotateFlip(rotateFlipType);
 
 	_isTrans = isTrans;
-	_transColor = color;
+
+	Gdiplus::InterpolationMode imode = InterpolationModeNearestNeighbor;
+
+	Gdiplus::ImageAttributes imageAttr;
+	if (_isTrans) imageAttr.SetColorKey(lowColor, highColor);
+
+	_gdiRender = new Gdiplus::Graphics(_gdiInfo->hMemDC);
+
+	_gdiRender->SetInterpolationMode(imode);
+	_gdiRender->DrawImage
+	(
+		_gdiImg,
+		Gdiplus::Rect
+		(
+			0, 0,
+			_gdiInfo->width,
+			_gdiInfo->height
+		),
+		0, 0,
+		_gdiInfo->width, _gdiInfo->height,
+		Gdiplus::UnitPixel, &imageAttr);
+
+	SAFE_DELETE(_gdiRender);
+
 
 	ReleaseDC(_hWnd, hdc);
 	return S_OK;
@@ -58,9 +84,6 @@ void GPImage::release(void)
 
 void GPImage::GPFrameRender(HDC hdc, int destX, int destY, float wRatio, float hRatio, int currentFrameX, int currentFrameY, Gdiplus::InterpolationMode _imode, int angle)
 {
-	Gdiplus::InterpolationMode imode = _imode;	
-
-
 	_gdiInfo->currentFrameX = currentFrameX;
 	_gdiInfo->currentFrameY = currentFrameY;
 
@@ -74,33 +97,18 @@ void GPImage::GPFrameRender(HDC hdc, int destX, int destY, float wRatio, float h
 		_gdiInfo->currentFrameY = _gdiInfo->maxFrameY;
 	}
 
-
-	Gdiplus::ImageAttributes imageAttr;
-	if (_isTrans) imageAttr.SetColorKey(_transColor, _transColor);
-
-	_gdiRender = new Gdiplus::Graphics(hdc);
-
-	Gdiplus::Graphics graphics(hdc);
-
-	Gdiplus::Matrix mat;
-	mat.RotateAt(angle, Gdiplus::PointF(float(destX), float(destY)));
-	_gdiRender->SetTransform(&mat);
-
-	_gdiRender->SetInterpolationMode(imode);
-	_gdiRender->DrawImage
+	GdiTransparentBlt
 	(
-		_gdiImg,
-		Gdiplus::Rect
-		(
-			destX,
-			destY,
-			_gdiInfo->frameWidth * wRatio,
-			_gdiInfo->frameHeight * hRatio
-		),
+		hdc,
+		destX,
+		destY,
+		_gdiInfo->frameWidth * wRatio,
+		_gdiInfo->frameHeight * hRatio,
+		_gdiInfo->hMemDC,
 		_gdiInfo->currentFrameX * _gdiInfo->frameWidth,
 		_gdiInfo->currentFrameY * _gdiInfo->frameHeight,
-		_gdiInfo->frameWidth, _gdiInfo->frameHeight,
-		Gdiplus::UnitPixel, &imageAttr);
-
-	SAFE_DELETE(_gdiRender);
+		_gdiInfo->frameWidth,
+		_gdiInfo->frameHeight,
+		RGB(0, 0, 0)
+	);
 }

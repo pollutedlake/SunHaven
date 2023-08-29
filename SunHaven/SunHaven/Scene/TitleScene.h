@@ -9,6 +9,8 @@ private:
 	float _menuAlpha;	// 배경 메뉴 알파
 	float _yOffset;
 
+	float _FrameTick;
+
 	bitset<10> _isDone;
 
 	RECT _rc[3];		// 플레이 누르지 않았을 때

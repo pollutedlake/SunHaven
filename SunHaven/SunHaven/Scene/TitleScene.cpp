@@ -141,6 +141,4 @@ void TitleScene::render(void)
         FONTMANAGER->textOut(getMemDC(), 60, 470, "한컴 말랑말랑 Bold", 35, 600, "캐릭터 불러오기", strlen("캐릭터 불러오기"), RGB(255, 255, 255));
         FONTMANAGER->textOut(getMemDC(), 60, 530, "한컴 말랑말랑 Bold", 35, 600, "뒤로", strlen("뒤로"), RGB(255, 255, 255));
     }
-
-    IMAGEMANAGER->render("Cursor", getMemDC(), _ptMouse.x, _ptMouse.y);
 }
