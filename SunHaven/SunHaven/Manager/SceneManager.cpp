@@ -3,11 +3,13 @@
 #include "../FrameWork/GameNode/GameNode.h"
 #include "../Scene/TitleScene.h"
 #include "../Scene/MapToolScene.h"
+#include "../Scene/DynusScene.h"
 
 HRESULT SceneManager::init(void)
 {
     SCENEMANAGER->addScene("Title", new TitleScene);
     SCENEMANAGER->addScene("MapTool", new MapToolScene);
+    SCENEMANAGER->addScene("Dynus", new DynusScene);
     _currentScene = nullptr;
     return S_OK;
 }

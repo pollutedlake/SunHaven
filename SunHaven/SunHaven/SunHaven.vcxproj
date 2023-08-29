@@ -145,10 +145,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Class\Dynus.cpp" />
-    <ClCompile Include="Class\Bullets.cpp" />
-    <ClCompile Include="Class\Enemy.cpp" />
-    <ClCompile Include="Class\EnemyManager.cpp" />
+    <ClCompile Include="Class\Boss\Dynus.cpp" />
+    <ClCompile Include="Class\Bullets\Bullets.cpp" />
+    <ClCompile Include="Class\Enemy\Enemy.cpp" />
+    <ClCompile Include="Class\Enemy\EnemyManager.cpp" />
+    <ClCompile Include="Class\Enemy\FlameImp.cpp" />
+    <ClCompile Include="Class\Enemy\MagmaBug.cpp" />
     <ClCompile Include="Scene\FarmScene.cpp" />
     <ClCompile Include="Scene\DynusScene.cpp" />
     <ClCompile Include="FrameWork\Animation\Animation.cpp" />
@@ -171,13 +173,17 @@
     <ClCompile Include="Scene\ShopScene.cpp" />
     <ClCompile Include="Scene\TownScene.cpp" />
     <ClCompile Include="FrameWork\Utility\Utils.cpp" />
+    <ClCompile Include="Class\Enemy\SteelSlug.cpp" />
+    <ClCompile Include="Class\Enemy\TrapWeed.cpp" />
     <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Class\Dynus.h" />
-    <ClInclude Include="Class\Bullets.h" />
-    <ClInclude Include="Class\Enemy.h" />
-    <ClInclude Include="Class\EnemyManager.h" />
+    <ClInclude Include="Class\Boss\Dynus.h" />
+    <ClInclude Include="Class\Bullets\Bullets.h" />
+    <ClInclude Include="Class\Enemy\Enemy.h" />
+    <ClInclude Include="Class\Enemy\EnemyManager.h" />
+    <ClInclude Include="Class\Enemy\FlameImp.h" />
+    <ClInclude Include="Class\Enemy\MagmaBug.h" />
     <ClInclude Include="Scene\FarmScene.h" />
     <ClInclude Include="Scene\DynusScene.h" />
     <ClInclude Include="FrameWork\Animation\Animation.h" />
@@ -203,6 +209,8 @@
     <ClInclude Include="Scene\ShopScene.h" />
     <ClInclude Include="Scene\TownScene.h" />
     <ClInclude Include="FrameWork\Utility\Utils.h" />
+    <ClInclude Include="Class\Enemy\SteelSlug.h" />
+    <ClInclude Include="Class\Enemy\TrapWeed.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

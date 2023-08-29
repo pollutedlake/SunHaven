@@ -73,6 +73,7 @@ void TitleScene::update(void)
                     switch (i)
                     {
                     case 0:
+                        //SCENEMANAGER->changeScene("DynusScene");
 
                         break;
 

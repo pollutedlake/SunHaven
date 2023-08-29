@@ -2,8 +2,6 @@
 #pragma once
 #include "../FrameWork/GameNode/GameNode.h"
 
-#define DEGREE_RADIAN(_deg)		(PI * (_deg) / 180.f)
-
 class TitleScene : public GameNode
 {
 private:
