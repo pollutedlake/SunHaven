@@ -1,5 +1,5 @@
 #pragma once
-#include "GameNode.h"
+#include "FrameWork/GameNode/GameNode.h"
 #include "Resources.h"
 
 class MainGame : public GameNode
