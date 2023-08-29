@@ -2,10 +2,12 @@
 #include "FrameWork/GameNode/GameNode.h"
 #include "Resources.h"
 
+
 class MainGame : public GameNode
 {
 private:
 	Resources* _resources;
+	
 
 public:
 	virtual HRESULT init(void);
