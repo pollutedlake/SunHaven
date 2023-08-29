@@ -64,6 +64,7 @@
     <ClCompile Include="FrameWork\Utility\Utils.cpp">
       <Filter>FrameWork\Utility</Filter>
     </ClCompile>
+    <ClCompile Include="Class\Inventory.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainGame.h" />
@@ -137,6 +138,7 @@
     <ClInclude Include="FrameWork\Utility\Utils.h">
       <Filter>FrameWork\Utility</Filter>
     </ClInclude>
+    <ClInclude Include="Class\Inventory.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="FrameWork">
