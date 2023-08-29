@@ -23,7 +23,7 @@ HRESULT GPImage::init(char* fileName, int destX, int destY, int maxFrameX, int m
 
 	_gdiInfo = new GDI_INFO;
 	WCHAR* wstr = A2W(fileName);
-	_gdiImg = Image::FromFile(wstr);
+	_gdiImg = new Bitmap(wstr);
 
 	_gdiInfo = new GDI_INFO;
 	_gdiInfo->x = destX;
@@ -43,31 +43,31 @@ HRESULT GPImage::init(char* fileName, int destX, int destY, int maxFrameX, int m
 
 	_isTrans = isTrans;
 
-	Gdiplus::InterpolationMode imode = InterpolationModeNearestNeighbor;
+	//Gdiplus::InterpolationMode imode = InterpolationModeNearestNeighbor;
 
-	Gdiplus::ImageAttributes imageAttr;
-	if (_isTrans) imageAttr.SetColorKey(lowColor, highColor);
+	//Gdiplus::ImageAttributes imageAttr;
+	//if (_isTrans) imageAttr.SetColorKey(lowColor, highColor);
 
-	_gdiRender = new Gdiplus::Graphics(_gdiInfo->hMemDC);
+	//_gdiRender = new Gdiplus::Graphics(_gdiInfo->hMemDC);
 
-	_gdiRender->SetInterpolationMode(imode);
-	_gdiRender->DrawImage
-	(
-		_gdiImg,
-		Gdiplus::Rect
-		(
-			0, 0,
-			_gdiInfo->width,
-			_gdiInfo->height
-		),
-		0, 0,
-		_gdiInfo->width, _gdiInfo->height,
-		Gdiplus::UnitPixel, &imageAttr);
+	//_gdiRender->SetInterpolationMode(imode);
+	//_gdiRender->DrawImage
+	//(
+	//	_gdiImg,
+	//	Gdiplus::Rect
+	//	(
+	//		0, 0,
+	//		_gdiInfo->width,
+	//		_gdiInfo->height
+	//	),
+	//	0, 0,
+	//	_gdiInfo->width, _gdiInfo->height,
+	//	Gdiplus::UnitPixel, &imageAttr);
 
-	SAFE_DELETE(_gdiRender);
+	//SAFE_DELETE(_gdiRender);
 
 
-	ReleaseDC(_hWnd, hdc);
+	//ReleaseDC(_hWnd, hdc);
 	return S_OK;
 }
 
@@ -97,7 +97,7 @@ void GPImage::GPFrameRender(HDC hdc, int destX, int destY, float wRatio, float h
 		_gdiInfo->currentFrameY = _gdiInfo->maxFrameY;
 	}
 
-	GdiTransparentBlt
+	/*GdiTransparentBlt
 	(
 		hdc,
 		destX,
@@ -110,5 +110,32 @@ void GPImage::GPFrameRender(HDC hdc, int destX, int destY, float wRatio, float h
 		_gdiInfo->frameWidth,
 		_gdiInfo->frameHeight,
 		RGB(0, 0, 0)
-	);
+	);*/
+
+	Gdiplus::InterpolationMode imode = InterpolationModeNearestNeighbor;
+
+	Gdiplus::ImageAttributes imageAttr;
+
+	
+
+	_gdiRender = new Gdiplus::Graphics(hdc);
+
+	_gdiRender->SetInterpolationMode(imode);
+	_gdiRender->DrawImage
+	(
+		_gdiImg,
+		Gdiplus::Rect
+		(
+			destX, destY,
+			_gdiInfo->frameWidth * wRatio,
+			_gdiInfo->frameHeight * hRatio
+		),
+		_gdiInfo->frameWidth * currentFrameX, _gdiInfo->frameHeight * currentFrameY,
+		_gdiInfo->frameWidth, _gdiInfo->frameHeight,
+		Gdiplus::UnitPixel, &imageAttr);
+
+	SAFE_DELETE(_gdiRender);
+
+
+	ReleaseDC(_hWnd, hdc);
 }

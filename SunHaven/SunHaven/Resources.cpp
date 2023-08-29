@@ -5,7 +5,7 @@ HRESULT Resources::init(void)
 {
 	// ====================TitleScene====================
 	// Image
-	IMAGEMANAGER->addGPFrameImage("TitleLogo", "Resources/Images/UI/TitleLogo.png",
+	IMAGEMANAGER->addGPFrameImage("TitleLogo", "Resources/Images/UI/TitleLogoTest.png",
 		0, 0,
 		1, 1,
 		false, NULL, NULL, RotateNoneFlipNone);   // 타이틀 로고
@@ -29,9 +29,16 @@ HRESULT Resources::init(void)
 
 	// ====================MapToolScene====================
 	// Image
-	IMAGEMANAGER->addImage("Tile1", "Resources/Images/Tile/Tile1.bmp",
-		24, 24,
-		true, RGB(255, 0, 255));
+	char key[64];
+	char fileName[64];
+	for (int i = 1; i <= 100; i++)
+	{
+		wsprintf(key, "Tile%d", i);
+		wsprintf(fileName, "Resources/Images/Tile/Tile%d.bmp", i);
+		IMAGEMANAGER->addImage(key, fileName,
+			24, 24);
+	}
+	IMAGEMANAGER->addImage("FarmLayer", "Resources/Images/Tile/FarmLayer.bmp", 2184, 1800);
 	// Sound
 
 	// ====================DynusScene====================

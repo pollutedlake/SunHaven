@@ -176,4 +176,7 @@
       <UniqueIdentifier>{3ad3bb0a-fe43-4469-8be8-b505ebdb3e74}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Stdafx.pch" />
+  </ItemGroup>
 </Project>
