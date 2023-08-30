@@ -21,10 +21,6 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addImage("Cursor", "Resources/Images/UI/Cursor.bmp",
 		32, 32,
 		true, RGB(255, 0, 255));	// 커서
-	IMAGEMANAGER->addGPFrameImage("FrameDropTest", "Resources/Images/FrameDropTest.png",
-		0, 0,
-		35, 1,
-		true, RGB(0, 0, 0), RGB(128, 128, 128), RotateNoneFlipNone);   // 타이틀 로고
 	// Sound
 
 	// ====================MapToolScene====================
@@ -44,7 +40,9 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addImage("ScrollBar", "Resources/Images/UI/ScrollBar.bmp", 15, 40, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("ScrollBarTrack", "Resources/Images/UI/ScrollBarTrack.bmp", 10, 232, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("LeftButton", "Resources/Images/UI/LeftButton.bmp", 60, 20, 3, 1, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("RightButton", "Resources/Images/UI/RightButton.bmp", 20, 20, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("RightButton", "Resources/Images/UI/RightButton.bmp", 60, 20, 3, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("Button1", "Resources/Images/UI/Button1.bmp", 300, 22, 3, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("LayerShowButton", "Resources/Images/UI/LayerShowButton.bmp", 54, 17, 2, 1, true, RGB(255, 0, 255));
 	// Sound
 
 	// ====================DynusScene====================

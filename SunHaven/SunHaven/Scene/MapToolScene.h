@@ -17,9 +17,8 @@ class Button;
 class MapToolScene : public GameNode
 {
 private:
-	FILE* _fp;
 	GImage* _tileMapBuffer;
-	Tile _tileMap[5][100][100];
+	Tile _tileMap[6][100][100];
 	int _tileMapSize;
 
 	GImage* _tilesBuffer;
@@ -35,15 +34,24 @@ private:
 	int _layer;
 	int _curTiles;
 
+	bool _showLayer[5];
+
 public:
 	HRESULT init(void);
 	void release(void);
 	void update(void);
 	void render(void);
 
-	void changeLayer(int layerN);
+	void changeLayer(int layer);
+
+	void prevTiles(void) { _curTiles--; if (_curTiles < 0) _curTiles = 4; }
+	void nextTiles(void) { _curTiles++; if (_curTiles > 4) _curTiles = 0; }
+
+	void toggleShowLayer(int layer);
+
+	void saveMaps();
+	void loadLayers();
 
 	MapToolScene() {}
 	~MapToolScene() {}
 };
-

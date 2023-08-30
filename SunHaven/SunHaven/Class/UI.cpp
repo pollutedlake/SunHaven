@@ -1,76 +1,186 @@
 #include "Stdafx.h"
 #include "UI.h"
 
-HRESULT Button::init(void)
+HRESULT NormalButton::init(void)
 {
 	return S_OK;
 }
 
-HRESULT Button::init(float x, float y, int width, int height, char* imageName, void(*onClick)())
+HRESULT NormalButton::init(float x, float y, int width, int height, char* imageName, function<void(int)> onClick, char* str, COLORREF color, int fontSize, int offsetY)
 {
+	_x = x;
+	_y = y;
+	_width = width;
+	_height = height;
+	_image = IMAGEMANAGER->findImage(imageName);
+	_onClick = move(onClick);
+	_click = false;
+	_frameX = 0;
+	_frameY = 0;
+	_onCusor = false;
+	_rc = RectMakeCenter(_x, _y, _width, _height);
+	strcpy_s(_str, 64, str);
+	_color = color;
+	_fontSize = fontSize;
+	_offsetY = offsetY;
 	return S_OK;
 }
 
-void Button::release(void)
+void NormalButton::release(void)
 {
 }
 
-void Button::update(void)
+void NormalButton::update(void)
 {
-	if (PtInRect(&_rc, _ptMouse))
+	if (PtInRect(&_rc, _ptMouse) && !_click)
 	{
 		_onCusor = true;
-		_image->setFrameX(1);
+		_frameX = 1;
 	}
-	else
+	else if(!_click)
 	{
 		_onCusor = false;
-		_image->setFrameX(0);
+		_frameX = 0;
 	}
-	
-	if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON) && _onCusor)
+}
+
+void NormalButton::render(void)
+{
+	_image->frameRender(getMemDC(), _rc.left, _rc.top, _width, _height, _frameX, _frameY);
+	if(_fontSize != NULL)
+	{
+		SetTextAlign(getMemDC(), TA_CENTER);
+		FONTMANAGER->textOut(getMemDC(), _x, _y + _offsetY, "배달의민족 을지로체", _fontSize, 100, _str, strlen(_str), _color);
+		SetTextAlign(getMemDC(), TA_LEFT);
+	}
+}
+
+void NormalButton::buttonDown()
+{
+	if (_onCusor)
 	{
 		_click = true;
-		_image->setFrameX(2);
+		_frameX = 2;
 	}
-	if (KEYMANAGER->isStayKeyDown(VK_LBUTTON) && _click)
-	{
-		_image->setFrameX(2);
-	}
-	if (KEYMANAGER->isOnceKeyUp(VK_LBUTTON) && _click)
+}
+
+void NormalButton::buttonUp(int num)
+{
+	if (_click)
 	{
 		_click = false;
-		_image->setFrameX(1);
-		if(_onCusor)
+		_frameX = 0;
+		if (_onCusor)
 		{
-			/*if(_onClick != nullptr)
+			if (_onClick != nullptr)
 			{
-				_onClick();
-			}*/
+				_onClick(num);
+			}
 		}
 	}
 }
 
-void Button::render(void)
+NormalButton::NormalButton()
 {
-	_image->frameRender(getMemDC(), _rc.left, _rc.top, _width, _height, _image->getFrameX(), 0);
+
 }
 
-Button::Button() : _x(0.0f), _y(0.0f), _width(0), _height(0), _click(false), _onCusor(false)
+HRESULT ToggleButton::init(void)
+{
+	return S_OK;
+}
+
+HRESULT ToggleButton::init(float x, float y, int width, int height, char* imageName, function<void(int)> onClick, bool toggle)//char* str, COLORREF color, int fontSize, int offsetY)
+{
+	_x = x;
+	_y = y;
+	_width = width;
+	_height = height;
+	_image = IMAGEMANAGER->findImage(imageName);
+	_onClick = move(onClick);
+	_click = false;
+	if(toggle)
+	{
+		_frameX = 0;
+	}
+	else
+	{
+		_frameX = 1;
+	}
+	_frameY = 0;
+	_onCusor = false;
+	_rc = RectMakeCenter(_x, _y, _width, _height);
+	return S_OK;
+}
+
+void ToggleButton::release(void)
+{
+	
+}
+
+void ToggleButton::update(void)
+{
+	if (PtInRect(&_rc, _ptMouse) && !_click)
+	{
+		_onCusor = true;
+	}
+	else if (!_click)
+	{
+		_onCusor = false;
+	}
+}
+
+void ToggleButton::render(void)
+{
+	_image->frameRender(getMemDC(), _rc.left, _rc.top, _width, _height, _frameX, _frameY);
+}
+
+void ToggleButton::buttonDown()
+{
+	if (_onCusor)
+	{
+		_click = true;
+	}
+}
+
+void ToggleButton::buttonUp(int num)
+{
+	if (_click)
+	{
+		_click = false;
+		_frameX++;
+		if (_frameX > _image->getMaxFrameX())
+		{
+			_frameX = 0;
+		}
+		if (_onCusor)
+		{
+			if (_onClick != nullptr)
+			{
+				_onClick(num);
+			}
+		}
+	}
+}
+
+ToggleButton::ToggleButton()
 {
 }
 
-//void UI::addButton(float x, float y, int width, int height, char* imageName, void(*onClick)(int* num))
-//{
-//	Button button;
-//	button._x = x;
-//	button._y = y;
-//	button._image = IMAGEMANAGER->findImage(imageName);
-//	button._onClick2 = onClick;
-//	button._click = false;
-//	button._onCusor = false;
-//	button.width = width;
-//	button.height = height;
-//	button._rc = RectMakeCenter(button._x, button._y, button.width, button.height);
-//	_vButton.push_back(button);
-//}
+HRESULT Button::init(float x, float y, int width, int height, char* imageName, function<void(int)> onClick, char* str, COLORREF color, int fontSize, int offsetY)
+{
+	return E_NOTIMPL;
+}
+
+HRESULT Button::init(float x, float y, int width, int height, char* imageName, function<void(int)> onClick, bool toggle)
+{
+	return E_NOTIMPL;
+}
+
+void Button::buttonDown()
+{
+}
+
+void Button::buttonUp(int num)
+{
+}
