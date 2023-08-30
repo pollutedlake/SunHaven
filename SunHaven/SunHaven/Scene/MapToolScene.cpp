@@ -161,7 +161,7 @@ void MapToolScene::render(void)
 	{
 		for (int j = 0; j < _tileMapSize; j++)
 		{
-			if (TILEWIDTH * (j + 1) < _cameraPos.x - MapToolWidth / 2 || TILEWIDTH * i > _cameraPos.x + MapToolWidth / 2)
+			if (TILEWIDTH * (j + 1) < _cameraPos.x - MapToolWidth / 2 || TILEWIDTH * j > _cameraPos.x + MapToolWidth / 2)
 			{
 				continue;
 			}

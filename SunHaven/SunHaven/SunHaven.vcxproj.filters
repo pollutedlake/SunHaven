@@ -180,21 +180,14 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Stdafx.pch" />
-    <None Include="Debug\SunHaven.exe.recipe" />
-    <None Include="Debug\SunHaven.ilk" />
-    <None Include="Debug\SunHaven.pch" />
     <None Include="Debug\vc142.idb" />
     <None Include="Debug\vc142.pdb" />
     <None Include="Debug\SunHaven.tlog\CL.command.1.tlog" />
     <None Include="Debug\SunHaven.tlog\CL.read.1.tlog" />
     <None Include="Debug\SunHaven.tlog\CL.write.1.tlog" />
     <None Include="Debug\SunHaven.tlog\link.command.1.tlog" />
-    <None Include="Debug\SunHaven.tlog\link.delete.1.tlog" />
     <None Include="Debug\SunHaven.tlog\link.read.1.tlog" />
     <None Include="Debug\SunHaven.tlog\link.write.1.tlog" />
-    <None Include="Debug\SunHaven.tlog\rc.command.1.tlog" />
-    <None Include="Debug\SunHaven.tlog\rc.read.1.tlog" />
-    <None Include="Debug\SunHaven.tlog\rc.write.1.tlog" />
     <None Include="Debug\SunHaven.tlog\SunHaven.lastbuildstate" />
   </ItemGroup>
   <ItemGroup>
@@ -223,10 +216,8 @@
     <Object Include="Debug\Timer.obj" />
     <Object Include="Debug\TitleScene.obj" />
     <Object Include="Debug\TownScene.obj" />
+    <Object Include="Debug\UI.obj" />
     <Object Include="Debug\Utils.obj" />
     <Object Include="Debug\WinMain.obj" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Debug\SunHaven.res" />
   </ItemGroup>
 </Project>
