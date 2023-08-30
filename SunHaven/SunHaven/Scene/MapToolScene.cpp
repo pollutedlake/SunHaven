@@ -1,16 +1,25 @@
 // ¹Ú»óÇö
 #include "Stdafx.h"
 #include "MapToolScene.h"
+#include "../Class/UI.h"
 
 HRESULT MapToolScene::init(void)
 {
-	for (int i = 0; i < 100; i++)
+	_layer = 0;
+	_curTiles = 0;
+	for(int i = 0; i < 5; i++)
 	{
-		ZeroMemory(&_tileMap, sizeof(_tileMap[0]) * 100);
+		for (int j = 0; j < 100; j++)
+		{
+			ZeroMemory(&_tileMap, sizeof(_tileMap[i][j]) * 100);
+		}
 	}
-	for (int i = 0; i < 10; i++)
+	for(int i = 0; i < 5; i++)
 	{
-		ZeroMemory(&_tileMap, sizeof(_tileMap[0]) * 10);
+		for (int j = 0; j < 10; j++)
+		{
+			ZeroMemory(&_tiles, sizeof(_tiles[i][j]) * 10);
+		}
 	}
 	for (int i = 0; i < 10; i++)
 	{
@@ -18,8 +27,8 @@ HRESULT MapToolScene::init(void)
 		{
 			char _tileName[64];
 			wsprintf(_tileName, "Tile%d", i * 10 + (j + 1));
-			_tiles[i][j]._image = IMAGEMANAGER->findImage(_tileName);
-			_tiles[i][j]._tile = 10 * i + j + 1;
+			_tiles[_curTiles][i][j]._image = IMAGEMANAGER->findImage(_tileName);
+			_tiles[_curTiles][i][j]._tile = 10 * i + j + 1;
 		}
 	}
 	memset(_tileSizeChar, '\0', sizeof(char) * sizeof(_tileSizeChar) / sizeof(_tileSizeChar[0]));
@@ -32,12 +41,17 @@ HRESULT MapToolScene::init(void)
 	CAMERA->setLimitRight(_tileMapSize * TILEWIDTH - MapToolWidth / 2);
 	CAMERA->setLimitBottom(_tileMapSize * TILEHEIGHT - MapToolHeight / 2);
 	_cameraPos = { MapToolWidth / 2, MapToolHeight  / 2};
-	_layer = 0;
+	Button* button;
+	button->init();
+	_vButton.push_back(button);
+
+	
 	return S_OK;
 }
 
 void MapToolScene::release(void)
 {
+
 }
 
 void MapToolScene::update(void)
@@ -65,7 +79,7 @@ void MapToolScene::update(void)
 	{
 		if (_ptMouse.x > 900 && _ptMouse.x < 900 + 240)
 		{
-			_selectTile = _tiles[(_ptMouse.y - 50) / TILEHEIGHT][(_ptMouse.x - 900) / TILEWIDTH];
+			_selectTile = _tiles[_curTiles][(_ptMouse.y - 50) / TILEHEIGHT][(_ptMouse.x - 900) / TILEWIDTH];
 		}
 	}
 	if (KEYMANAGER->isStayKeyDown(VK_LBUTTON))
@@ -147,13 +161,13 @@ void MapToolScene::render(void)
 	{
 		for (int j = 0; j < 10; j++)
 		{
-			if (_tiles[i][j]._image == nullptr)
+			if (_tiles[_curTiles][i][j]._image == nullptr)
 			{
 				DrawRectMake(_tilesBuffer->getMemDC(), RectMakeCenter(j * TILEWIDTH + TILEWIDTH / 2, i * TILEHEIGHT + TILEHEIGHT / 2, TILEWIDTH, TILEHEIGHT));
 			}
 			else
 			{
-				_tiles[i][j]._image->render(_tilesBuffer->getMemDC(),  j * TILEWIDTH , i * TILEHEIGHT);
+				_tiles[_curTiles][i][j]._image->render(_tilesBuffer->getMemDC(),  j * TILEWIDTH , i * TILEHEIGHT);
 			}
 		}
 	}
@@ -198,4 +212,9 @@ void MapToolScene::render(void)
 	//		_image->render(getMemDC(), _ptMouse.x - _offset.x, _ptMouse.y - _offset.y, _tileWidth, _tileHeight, 0, 0, _image->getWidth(), _image->getHeight());
 	//	}
 	//}
+}
+
+void MapToolScene::changeLayer(int layerN)
+{
+	_layer = layerN;
 }
