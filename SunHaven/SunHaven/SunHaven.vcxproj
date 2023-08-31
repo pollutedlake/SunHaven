@@ -146,6 +146,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Class\Inventory.cpp" />
+    <ClCompile Include="Class\Item.cpp" />
     <ClCompile Include="Scene\FarmScene.cpp" />
     <ClCompile Include="Scene\DynusScene.cpp" />
     <ClCompile Include="FrameWork\Animation\Animation.cpp" />
@@ -172,6 +173,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Class\Inventory.h" />
+    <ClInclude Include="Class\Item.h" />
     <ClInclude Include="Scene\FarmScene.h" />
     <ClInclude Include="Scene\DynusScene.h" />
     <ClInclude Include="FrameWork\Animation\Animation.h" />
@@ -197,6 +199,9 @@
     <ClInclude Include="Scene\ShopScene.h" />
     <ClInclude Include="Scene\TownScene.h" />
     <ClInclude Include="FrameWork\Utility\Utils.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Stdafx.pch" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

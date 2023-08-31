@@ -5,7 +5,10 @@ struct inventoryList
 {
 	GImage* _invenList;
 	RECT _rc;
+	bool _draw;
 };
+
+
 
 
 class Inventory : public GameNode

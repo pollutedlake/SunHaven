@@ -65,6 +65,7 @@
       <Filter>FrameWork\Utility</Filter>
     </ClCompile>
     <ClCompile Include="Class\Inventory.cpp" />
+    <ClCompile Include="Class\Item.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainGame.h" />
@@ -139,6 +140,7 @@
       <Filter>FrameWork\Utility</Filter>
     </ClInclude>
     <ClInclude Include="Class\Inventory.h" />
+    <ClInclude Include="Class\Item.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="FrameWork">
@@ -177,5 +179,8 @@
     <Filter Include="FrameWork\Timer">
       <UniqueIdentifier>{3ad3bb0a-fe43-4469-8be8-b505ebdb3e74}</UniqueIdentifier>
     </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Stdafx.pch" />
   </ItemGroup>
 </Project>
