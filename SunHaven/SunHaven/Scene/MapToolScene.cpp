@@ -192,7 +192,23 @@ void MapToolScene::render(void)
 		}
 	}
 	_tileMapBuffer->render(getMemDC(), 50, 50);
-	//IMAGEMANAGER->findImage("FarmLayer")->alphaRender(getMemDC(), 50, 50, MapToolWidth, MapToolHeight, _cameraPos.x - MapToolWidth / 2, _cameraPos.y - MapToolHeight / 2, MapToolWidth, MapToolHeight, 128);
+	char text[64];
+	wsprintf(text, "FarmLayer%d", _layer + 1);
+	switch (_layer)
+	{
+		case 1:
+			IMAGEMANAGER->findImage(text)->alphaRender(getMemDC(), 50, 50, MapToolWidth, MapToolHeight, _cameraPos.x - MapToolWidth / 2, _cameraPos.y - MapToolHeight / 2, MapToolWidth, MapToolHeight, 128);
+		break;
+		case 2:
+			IMAGEMANAGER->findImage(text)->alphaRender(getMemDC(), 50, 50, MapToolWidth, MapToolHeight, _cameraPos.x - MapToolWidth / 2, _cameraPos.y - MapToolHeight / 2, MapToolWidth, MapToolHeight, 128);
+			break;
+		case 3:
+			IMAGEMANAGER->findImage(text)->alphaRender(getMemDC(), 50, 50, MapToolWidth, MapToolHeight, _cameraPos.x - MapToolWidth / 2, _cameraPos.y - MapToolHeight / 2, MapToolWidth, MapToolHeight, 128);
+			break;
+		case 4:
+			IMAGEMANAGER->findImage(text)->alphaRender(getMemDC(), 50, 50, MapToolWidth, MapToolHeight, _cameraPos.x - MapToolWidth / 2, _cameraPos.y - MapToolHeight / 2, MapToolWidth, MapToolHeight, 128);
+			break;
+	}
 
 	// 선택할 수 있는 타일들
 	for (int i = 0; i < 10; i++)

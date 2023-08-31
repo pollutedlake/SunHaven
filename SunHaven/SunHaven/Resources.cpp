@@ -34,7 +34,10 @@ HRESULT Resources::init(void)
 		IMAGEMANAGER->addImage(key, fileName,
 			24, 24);
 	}
-	IMAGEMANAGER->addImage("FarmLayer", "Resources/Images/Tile/FarmLayer.bmp", 2184, 1800);
+	IMAGEMANAGER->addImage("FarmLayer2", "Resources/Images/Tile/FarmLayer2.bmp", 2184, 1824, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("FarmLayer3", "Resources/Images/Tile/FarmLayer3.bmp", 2184, 1800, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("FarmLayer4", "Resources/Images/Tile/FarmLayer4.bmp", 2232, 1968, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("FarmLayer5", "Resources/Images/Tile/FarmLayer5.bmp", 408, 1752, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("ScrollUpButton", "Resources/Images/UI/ScrollUpButton.bmp", 48, 16, 3, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("ScrollDownButton", "Resources/Images/UI/ScrollUpButton.bmp", 48, 16, 3, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("ScrollBar", "Resources/Images/UI/ScrollBar.bmp", 15, 40, true, RGB(255, 0, 255));
