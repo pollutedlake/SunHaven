@@ -58,7 +58,7 @@ private:
 	LPIMAGE_INFO	_blendImage;		
 
 public:
-	HRESULT init(int width, int height);
+	HRESULT init(int width, int height, bool isTrans = false, COLORREF transColor = RGB(0, 0, 0));
 	HRESULT init(const DWORD resID, int width, int height, bool isTrans = false, COLORREF transColor = RGB(0, 0, 0));
 	HRESULT init(const char* fileName, int width, int height, bool isTrans = false, COLORREF transColor = RGB(0, 0, 0));
 	HRESULT init(const char* fileName, float x, float y, int width, int height, bool isTrans = false, COLORREF transColor = RGB(0, 0, 0));

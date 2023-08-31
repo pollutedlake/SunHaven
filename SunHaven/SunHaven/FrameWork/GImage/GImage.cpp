@@ -9,7 +9,7 @@ GImage::GImage() : _imageInfo(nullptr), _fileName(nullptr), _isTrans(false), _tr
 
 }
 
-HRESULT GImage::init(int width, int height)
+HRESULT GImage::init(int width, int height, bool isTrans, COLORREF transColor)
 {
 	if (_imageInfo != nullptr) this->release();
 
@@ -27,8 +27,8 @@ HRESULT GImage::init(int width, int height)
 
 	_fileName = nullptr;
 
-	_isTrans = false;
-	_transColor = RGB(0, 0, 0);
+	_isTrans = isTrans;
+	_transColor = transColor;
 
 	if (_imageInfo->hBit == 0)
 	{

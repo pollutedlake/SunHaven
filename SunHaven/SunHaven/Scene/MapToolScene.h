@@ -34,6 +34,11 @@ private:
 	int _layer;
 	int _curTiles;
 
+	RECT _cursorRC;
+	RECT _selectRC;
+
+	POINT _exPtMouse;
+
 	bool _showLayer[5];
 
 public:

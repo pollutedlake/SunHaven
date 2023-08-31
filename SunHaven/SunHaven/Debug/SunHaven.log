@@ -1,35 +1,18 @@
-﻿  Resources.cpp
-C:\Users\psh95\OneDrive\바탕 화면\상현\공부\게임프로그래밍\PSH\SunHaven\SunHaven\FrameWork\GImage\GImage.h(116,14): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\psh95\OneDrive\바탕 화면\상현\공부\게임프로그래밍\PSH\SunHaven\SunHaven\FrameWork\GImage\GImage.h(116,14): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\psh95\OneDrive\바탕 화면\상현\공부\게임프로그래밍\PSH\SunHaven\SunHaven\FrameWork\GImage\GImage.h(117,14): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\psh95\OneDrive\바탕 화면\상현\공부\게임프로그래밍\PSH\SunHaven\SunHaven\FrameWork\GImage\GImage.h(117,14): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\psh95\OneDrive\바탕 화면\상현\공부\게임프로그래밍\PSH\SunHaven\SunHaven\FrameWork\GImage\GImage.h(118,18): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\psh95\OneDrive\바탕 화면\상현\공부\게임프로그래밍\PSH\SunHaven\SunHaven\FrameWork\GImage\GImage.h(118,18): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\psh95\OneDrive\바탕 화면\상현\공부\게임프로그래밍\PSH\SunHaven\SunHaven\FrameWork\GImage\GImage.h(119,18): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\psh95\OneDrive\바탕 화면\상현\공부\게임프로그래밍\PSH\SunHaven\SunHaven\FrameWork\GImage\GImage.h(119,18): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\psh95\OneDrive\바탕 화면\상현\공부\게임프로그래밍\PSH\SunHaven\SunHaven\FrameWork\GImage\GImage.h(128,14): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\psh95\OneDrive\바탕 화면\상현\공부\게임프로그래밍\PSH\SunHaven\SunHaven\FrameWork\GImage\GImage.h(128,14): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\psh95\OneDrive\바탕 화면\상현\공부\게임프로그래밍\PSH\SunHaven\SunHaven\FrameWork\GImage\GImage.h(129,14): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\psh95\OneDrive\바탕 화면\상현\공부\게임프로그래밍\PSH\SunHaven\SunHaven\FrameWork\GImage\GImage.h(129,14): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\psh95\OneDrive\바탕 화면\상현\공부\게임프로그래밍\PSH\SunHaven\SunHaven\FrameWork\GImage\GImage.h(130,18): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\psh95\OneDrive\바탕 화면\상현\공부\게임프로그래밍\PSH\SunHaven\SunHaven\FrameWork\GImage\GImage.h(130,18): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\psh95\OneDrive\바탕 화면\상현\공부\게임프로그래밍\PSH\SunHaven\SunHaven\FrameWork\GImage\GImage.h(131,18): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\psh95\OneDrive\바탕 화면\상현\공부\게임프로그래밍\PSH\SunHaven\SunHaven\FrameWork\GImage\GImage.h(131,18): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-  MapToolScene.cpp
-C:\Users\psh95\OneDrive\바탕 화면\상현\공부\게임프로그래밍\PSH\SunHaven\SunHaven\FrameWork\GImage\GImage.h(116,14): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\psh95\OneDrive\바탕 화면\상현\공부\게임프로그래밍\PSH\SunHaven\SunHaven\FrameWork\GImage\GImage.h(116,14): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\psh95\OneDrive\바탕 화면\상현\공부\게임프로그래밍\PSH\SunHaven\SunHaven\FrameWork\GImage\GImage.h(117,14): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\psh95\OneDrive\바탕 화면\상현\공부\게임프로그래밍\PSH\SunHaven\SunHaven\FrameWork\GImage\GImage.h(117,14): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\psh95\OneDrive\바탕 화면\상현\공부\게임프로그래밍\PSH\SunHaven\SunHaven\FrameWork\GImage\GImage.h(118,18): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\psh95\OneDrive\바탕 화면\상현\공부\게임프로그래밍\PSH\SunHaven\SunHaven\FrameWork\GImage\GImage.h(118,18): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\psh95\OneDrive\바탕 화면\상현\공부\게임프로그래밍\PSH\SunHaven\SunHaven\FrameWork\GImage\GImage.h(119,18): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\psh95\OneDrive\바탕 화면\상현\공부\게임프로그래밍\PSH\SunHaven\SunHaven\FrameWork\GImage\GImage.h(119,18): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\psh95\OneDrive\바탕 화면\상현\공부\게임프로그래밍\PSH\SunHaven\SunHaven\FrameWork\GImage\GImage.h(128,14): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\psh95\OneDrive\바탕 화면\상현\공부\게임프로그래밍\PSH\SunHaven\SunHaven\FrameWork\GImage\GImage.h(128,14): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\psh95\OneDrive\바탕 화면\상현\공부\게임프로그래밍\PSH\SunHaven\SunHaven\FrameWork\GImage\GImage.h(129,14): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\psh95\OneDrive\바탕 화면\상현\공부\게임프로그래밍\PSH\SunHaven\SunHaven\FrameWork\GImage\GImage.h(129,14): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\psh95\OneDrive\바탕 화면\상현\공부\게임프로그래밍\PSH\SunHaven\SunHaven\FrameWork\GImage\GImage.h(130,18): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\psh95\OneDrive\바탕 화면\상현\공부\게임프로그래밍\PSH\SunHaven\SunHaven\FrameWork\GImage\GImage.h(130,18): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\psh95\OneDrive\바탕 화면\상현\공부\게임프로그래밍\PSH\SunHaven\SunHaven\FrameWork\GImage\GImage.h(131,18): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\psh95\OneDrive\바탕 화면\상현\공부\게임프로그래밍\PSH\SunHaven\SunHaven\FrameWork\GImage\GImage.h(131,18): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-  SunHaven.vcxproj -> C:\Users\psh95\OneDrive\바탕 화면\상현\공부\게임프로그래밍\PSH\SunHaven\Debug\SunHaven.exe
+﻿  MapToolScene.cpp
+C:\Users\psh95\Desktop\상현\GameAcademy\PSH\SunHaven\SunHaven\FrameWork\GImage\GImage.h(116,14): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
+C:\Users\psh95\Desktop\상현\GameAcademy\PSH\SunHaven\SunHaven\FrameWork\GImage\GImage.h(116,14): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\psh95\Desktop\상현\GameAcademy\PSH\SunHaven\SunHaven\FrameWork\GImage\GImage.h(117,14): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
+C:\Users\psh95\Desktop\상현\GameAcademy\PSH\SunHaven\SunHaven\FrameWork\GImage\GImage.h(117,14): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\psh95\Desktop\상현\GameAcademy\PSH\SunHaven\SunHaven\FrameWork\GImage\GImage.h(118,18): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
+C:\Users\psh95\Desktop\상현\GameAcademy\PSH\SunHaven\SunHaven\FrameWork\GImage\GImage.h(118,18): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\psh95\Desktop\상현\GameAcademy\PSH\SunHaven\SunHaven\FrameWork\GImage\GImage.h(119,18): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
+C:\Users\psh95\Desktop\상현\GameAcademy\PSH\SunHaven\SunHaven\FrameWork\GImage\GImage.h(119,18): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\psh95\Desktop\상현\GameAcademy\PSH\SunHaven\SunHaven\FrameWork\GImage\GImage.h(128,14): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
+C:\Users\psh95\Desktop\상현\GameAcademy\PSH\SunHaven\SunHaven\FrameWork\GImage\GImage.h(128,14): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\psh95\Desktop\상현\GameAcademy\PSH\SunHaven\SunHaven\FrameWork\GImage\GImage.h(129,14): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
+C:\Users\psh95\Desktop\상현\GameAcademy\PSH\SunHaven\SunHaven\FrameWork\GImage\GImage.h(129,14): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\psh95\Desktop\상현\GameAcademy\PSH\SunHaven\SunHaven\FrameWork\GImage\GImage.h(130,18): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
+C:\Users\psh95\Desktop\상현\GameAcademy\PSH\SunHaven\SunHaven\FrameWork\GImage\GImage.h(130,18): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\psh95\Desktop\상현\GameAcademy\PSH\SunHaven\SunHaven\FrameWork\GImage\GImage.h(131,18): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
+C:\Users\psh95\Desktop\상현\GameAcademy\PSH\SunHaven\SunHaven\FrameWork\GImage\GImage.h(131,18): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  SunHaven.vcxproj -> C:\Users\psh95\Desktop\상현\GameAcademy\PSH\SunHaven\Debug\SunHaven.exe

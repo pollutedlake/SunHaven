@@ -27,17 +27,20 @@ HRESULT Resources::init(void)
 	// Image
 	char key[64];
 	char fileName[64];
-	for (int i = 1; i <= 100; i++)
+	for(int j = 1; j <= 5; j++)
 	{
-		wsprintf(key, "Tile%d", i);
-		wsprintf(fileName, "Resources/Images/Tile/Tile%d.bmp", i);
-		IMAGEMANAGER->addImage(key, fileName,
-			24, 24);
+		for (int i = 1; i <= 100; i++)
+		{
+			wsprintf(key, "Tile%d-%d", j, i);
+			wsprintf(fileName, "Resources/Images/Tile/Tile%d-%d.bmp", j, i);
+			IMAGEMANAGER->addImage(key, fileName,
+				24, 24, true, RGB(255, 255, 255));
+		}
 	}
-	IMAGEMANAGER->addImage("FarmLayer2", "Resources/Images/Tile/FarmLayer2.bmp", 2184, 1824, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("FarmLayer3", "Resources/Images/Tile/FarmLayer3.bmp", 2184, 1800, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("FarmLayer4", "Resources/Images/Tile/FarmLayer4.bmp", 2232, 1968, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("FarmLayer5", "Resources/Images/Tile/FarmLayer5.bmp", 408, 1752, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("FarmLayer2", "Resources/Images/Tile/FarmLayer2.bmp", 2184, 2400, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("FarmLayer3", "Resources/Images/Tile/FarmLayer3.bmp", 2184, 2400, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("FarmLayer4", "Resources/Images/Tile/FarmLayer4.bmp", 2184, 2400, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("FarmLayer5", "Resources/Images/Tile/FarmLayer5.bmp", 2184, 2400, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("ScrollUpButton", "Resources/Images/UI/ScrollUpButton.bmp", 48, 16, 3, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("ScrollDownButton", "Resources/Images/UI/ScrollUpButton.bmp", 48, 16, 3, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("ScrollBar", "Resources/Images/UI/ScrollBar.bmp", 15, 40, true, RGB(255, 0, 255));

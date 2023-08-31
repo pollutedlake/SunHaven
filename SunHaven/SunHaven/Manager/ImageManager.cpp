@@ -11,13 +11,13 @@ void ImageManager::release(void)
 	deleteAll();
 }
 
-GImage* ImageManager::addImage(string strKey, int width, int height)
+GImage* ImageManager::addImage(string strKey, int width, int height, bool isTrans, COLORREF transColor)
 {
 	GImage* img = findImage(strKey);
 	if (img) return img;
 
 	img = new GImage;
-	if (FAILED(img->init(width, height)))
+	if (FAILED(img->init(width, height, isTrans, transColor)))
 	{
 		SAFE_DELETE(img);
 		return NULL;

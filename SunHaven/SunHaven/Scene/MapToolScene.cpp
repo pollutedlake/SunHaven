@@ -27,19 +27,22 @@ HRESULT MapToolScene::init(void)
 		_showLayer[i] = false;
 	}
 	_showLayer[0] = true;
-	for (int i = 0; i < 10; i++)
+	for(int k = 0; k < 5; k++)
 	{
-		for(int j = 0; j < 10; j++)
+		for (int i = 0; i < 10; i++)
 		{
-			char _tileName[64];
-			wsprintf(_tileName, "Tile%d", i * 10 + (j + 1));
-			_tiles[_curTiles][i][j]._image = IMAGEMANAGER->findImage(_tileName);
-			_tiles[_curTiles][i][j]._tile = 10 * i + j + 1;
+			for (int j = 0; j < 10; j++)
+			{
+				char _tileName[64];
+				wsprintf(_tileName, "Tile%d-%d", k + 1, i * 10 + (j + 1));
+				_tiles[k][i][j]._image = IMAGEMANAGER->findImage(_tileName);
+				_tiles[k][i][j]._tile = (k + 1) * 1000 + 10 * i + j + 1;
+			}
 		}
 	}
 	memset(_tileSizeChar, '\0', sizeof(char) * sizeof(_tileSizeChar) / sizeof(_tileSizeChar[0]));
 	_input = true;
-	_tileMapBuffer = IMAGEMANAGER->addImage("TileMapBuffer", MapToolWidth, MapToolHeight);
+	_tileMapBuffer = IMAGEMANAGER->addImage("TileMapBuffer", MapToolWidth, MapToolHeight, true, RGB(255, 255, 255));
 	_tilesBuffer = IMAGEMANAGER->addImage("TilesBuffer", TILEWIDTH * 10, TILEHEIGHT  * 10);
 	CAMERA->init();
 	CAMERA->setPosition({ WINSIZE_X / 2, WINSIZE_Y / 2 });
@@ -72,6 +75,10 @@ HRESULT MapToolScene::init(void)
 		button->init(950.0f, 350.0f + 50.0f * i, 54, 34, "LayerShowButton", bind(&MapToolScene::toggleShowLayer, this, i), _showLayer[i]);
 		_vButton.push_back(button);
 	}
+
+	_cursorRC = {NULL, NULL, NULL, NULL};
+	_selectRC = { NULL, NULL, NULL, NULL };
+	_exPtMouse = {NULL, NULL};
 	return S_OK;
 }
 
@@ -111,12 +118,30 @@ void MapToolScene::update(void)
 		_cameraPos.x += 10;
 	}
 	
+	RECT rc, rc2;
+	rc = RectMake(900, 50, TILEWIDTH * 10, TILEHEIGHT * 10);
+	rc2 = RectMake(50, 50, MapToolWidth, MapToolHeight);
+	if (PtInRect(&rc, _ptMouse))
+	{
+		_cursorRC = RectMake(900 + ((_ptMouse.x - 900) / TILEWIDTH) * TILEWIDTH, 50 + ((_ptMouse.y - 50) / TILEHEIGHT) * TILEHEIGHT, TILEWIDTH, TILEHEIGHT);
+	}
+	else if (PtInRect(&rc2, _ptMouse))
+	{
+		_cursorRC = RectMake(50 + ((_ptMouse.x - 50) / TILEWIDTH) * TILEWIDTH, 50 + ((_ptMouse.y - 50) / TILEHEIGHT) * TILEHEIGHT, TILEWIDTH, TILEHEIGHT);
+	}
+	else
+	{
+		_cursorRC = RectMake( NULL, NULL, NULL, NULL );
+	}
+
+
 	// 마우스 왼쪽 버튼 입력
 	if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
 	{
-		if (_ptMouse.x > 900 && _ptMouse.x < 900 + 240)
+		if (PtInRect(&rc, _ptMouse))
 		{
 			_selectTile = _tiles[_curTiles][(_ptMouse.y - 50) / TILEHEIGHT][(_ptMouse.x - 900) / TILEWIDTH];
+			_selectRC = _cursorRC;
 		}
 		for (_viButton = _vButton.begin(); _viButton != _vButton.end(); ++_viButton)
 		{
@@ -125,7 +150,7 @@ void MapToolScene::update(void)
 	}
 	if (KEYMANAGER->isStayKeyDown(VK_LBUTTON))
 	{
-		if (_ptMouse.x > 50 && _ptMouse.x < MapToolWidth + 50)
+		if (PtInRect(&rc2, _ptMouse))
 		{
 			_tileMap[_layer][(_ptMouse.y - 50 + _cameraPos.y - MapToolHeight / 2) / TILEHEIGHT][(_ptMouse.x - 50 + _cameraPos.x - MapToolWidth / 2) / TILEWIDTH] = _selectTile;
 			cout << (_ptMouse.x - 50 + _cameraPos.x - MapToolWidth / 2) / TILEWIDTH << "\t" << (_ptMouse.y - 50 + _cameraPos.y - MapToolHeight / 2) / TILEHEIGHT << endl;
@@ -138,6 +163,28 @@ void MapToolScene::update(void)
 			(*_viButton)->buttonUp(NULL);
 		}
 	}
+
+	if (KEYMANAGER->isOnceKeyDown(VK_RBUTTON))
+	{
+		if (PtInRect(&rc, _ptMouse))
+		{
+			_exPtMouse = _ptMouse;
+		}
+	}
+	if (KEYMANAGER->isStayKeyDown(VK_RBUTTON))
+	{
+		if (PtInRect(&rc, _ptMouse))
+		{
+			_selectRC = RectMake(min((_ptMouse.x - 900) / TILEWIDTH, (_exPtMouse.x - 900) / TILEWIDTH) * TILEWIDTH + 900,
+				min((_ptMouse.y - 50) / TILEHEIGHT, (_exPtMouse.y - 50) / TILEHEIGHT) * TILEHEIGHT + 50,
+				(abs((_ptMouse.x - 900) / TILEWIDTH - (_exPtMouse.x - 900) / TILEWIDTH) + 1) * TILEWIDTH,
+				(abs((_ptMouse.y - 50) / TILEHEIGHT - (_exPtMouse.y - 50) / TILEHEIGHT) + 1) * TILEHEIGHT);
+		}
+	}
+	/*if (KEYMANAGER->isOnceKeyUp(VK_RBUTTON))
+	{
+		_selectRC = _cursorRC;
+	}*/
 	
 	// 세이브
 	if (KEYMANAGER->isOnceKeyDown('S') || KEYMANAGER->isOnceKeyDown('s'))
@@ -156,38 +203,36 @@ void MapToolScene::render(void)
 {
 	// 타일맵 렌더
 	PatBlt(_tileMapBuffer->getMemDC(), 0, 0, MapToolWidth, MapToolHeight, WHITENESS);
-	ZeroMemory(&_tileMap[5], sizeof(_tileMap[0]));
-	for (int i = 0; i < _tileMapSize; i++)
+	for (int i = 0; i <= 100; i++)
 	{
-		for (int j = 0; j < _tileMapSize; j++)
+		LineMake(_tileMapBuffer->getMemDC(), - (_cameraPos.x - MapToolWidth / 2), TILEHEIGHT * i - (_cameraPos.y - MapToolHeight / 2), 
+			TILEWIDTH * 100 - (_cameraPos.x - MapToolWidth / 2), TILEHEIGHT * i - (_cameraPos.y - MapToolHeight / 2));
+		LineMake(_tileMapBuffer->getMemDC(), TILEWIDTH * i - (_cameraPos.x - MapToolWidth / 2), - (_cameraPos.y - MapToolHeight / 2),
+		TILEWIDTH * i - (_cameraPos.x - MapToolWidth / 2), TILEHEIGHT * 100 - (_cameraPos.y - MapToolHeight / 2));
+	}
+	ZeroMemory(&_tileMap[5], sizeof(_tileMap[0]));
+	for(int k= 0; k <5; k++)
+	{
+		if (!_showLayer[k])
 		{
-			if (TILEWIDTH * (j + 1) < _cameraPos.x - MapToolWidth / 2 || TILEWIDTH * j > _cameraPos.x + MapToolWidth / 2)
+			continue;
+		}
+		for (int i = 0; i < _tileMapSize; i++)
+		{
+			for (int j = 0; j < _tileMapSize; j++)
 			{
-				continue;
-			}
-			if (TILEWIDTH * (i + 1) < _cameraPos.y - MapToolHeight / 2 || TILEHEIGHT * i > _cameraPos.y + MapToolHeight / 2)
-			{
-				continue;
-			}
-			for (int k = 4; k >= 0; k--)
-			{
-				if (!_showLayer[k])
+				if (TILEWIDTH * (j + 1) < _cameraPos.x - MapToolWidth / 2 || TILEWIDTH * j > _cameraPos.x + MapToolWidth / 2)
 				{
 					continue;
 				}
-				if(_tileMap[k][i][j]._tile > 0)
+				if (TILEWIDTH * (i + 1) < _cameraPos.y - MapToolHeight / 2 || TILEHEIGHT * i > _cameraPos.y + MapToolHeight / 2)
 				{
-					_tileMap[5][i][j] = _tileMap[k][i][j];
-					break;
+					continue;
 				}
-			}
-			if (_tileMap[5][i][j]._image == nullptr)
-			{
-				DrawRectMake(_tileMapBuffer->getMemDC(), RectMakeCenter(j * TILEWIDTH + TILEWIDTH / 2 - (_cameraPos.x - MapToolWidth / 2), i * TILEHEIGHT + TILEHEIGHT / 2 - (_cameraPos.y - MapToolHeight / 2), TILEWIDTH, TILEHEIGHT));
-			}
-			else
-			{
-				_tileMap[5][i][j]._image->render(_tileMapBuffer->getMemDC(), j * TILEWIDTH - (_cameraPos.x - MapToolWidth / 2), i * TILEHEIGHT - (_cameraPos.y - MapToolHeight / 2));
+				if (_tileMap[k][i][j]._image != nullptr)
+				{
+					_tileMap[k][i][j]._image->render(_tileMapBuffer->getMemDC(), j * TILEWIDTH - (_cameraPos.x - MapToolWidth / 2), i * TILEHEIGHT - (_cameraPos.y - MapToolHeight / 2));
+				}
 			}
 		}
 	}
@@ -197,16 +242,16 @@ void MapToolScene::render(void)
 	switch (_layer)
 	{
 		case 1:
-			IMAGEMANAGER->findImage(text)->alphaRender(getMemDC(), 50, 50, MapToolWidth, MapToolHeight, _cameraPos.x - MapToolWidth / 2, _cameraPos.y - MapToolHeight / 2, MapToolWidth, MapToolHeight, 128);
+			IMAGEMANAGER->findImage(text)->alphaRender(getMemDC(), 50 - (_cameraPos.x - MapToolWidth / 2), 50 - (_cameraPos.y - MapToolHeight / 2), 128);
 		break;
 		case 2:
-			IMAGEMANAGER->findImage(text)->alphaRender(getMemDC(), 50, 50, MapToolWidth, MapToolHeight, _cameraPos.x - MapToolWidth / 2, _cameraPos.y - MapToolHeight / 2, MapToolWidth, MapToolHeight, 128);
+			IMAGEMANAGER->findImage(text)->alphaRender(getMemDC(), 50 - (_cameraPos.x - MapToolWidth / 2), 50 - (_cameraPos.y - MapToolHeight / 2), 128);
 			break;
 		case 3:
-			IMAGEMANAGER->findImage(text)->alphaRender(getMemDC(), 50, 50, MapToolWidth, MapToolHeight, _cameraPos.x - MapToolWidth / 2, _cameraPos.y - MapToolHeight / 2, MapToolWidth, MapToolHeight, 128);
+			IMAGEMANAGER->findImage(text)->alphaRender(getMemDC(), 50 - (_cameraPos.x - MapToolWidth / 2), 50 - (_cameraPos.y - MapToolHeight / 2), 128);
 			break;
 		case 4:
-			IMAGEMANAGER->findImage(text)->alphaRender(getMemDC(), 50, 50, MapToolWidth, MapToolHeight, _cameraPos.x - MapToolWidth / 2, _cameraPos.y - MapToolHeight / 2, MapToolWidth, MapToolHeight, 128);
+			IMAGEMANAGER->findImage(text)->alphaRender(getMemDC(), 50 - (_cameraPos.x - MapToolWidth / 2), 50 - (_cameraPos.y - MapToolHeight / 2), 128);
 			break;
 	}
 
@@ -233,45 +278,20 @@ void MapToolScene::render(void)
 		(*_viButton)->render();
 	}
 
+	HPEN cursorPen = CreatePen(PS_SOLID, 2, RGB(255, 0, 0));
+	HPEN selectPen = CreatePen(PS_SOLID, 2, RGB(255, 255, 0));
+	HPEN oldPen = (HPEN)SelectObject(getMemDC(), cursorPen);
+	HBRUSH oldBrush = (HBRUSH)SelectObject(getMemDC(), (HBRUSH)GetStockObject(NULL_BRUSH));
+	DrawRectMake(getMemDC(), _cursorRC);
+	SelectObject(getMemDC(), selectPen);
+	DrawRectMake(getMemDC(), _selectRC);
+	SelectObject(getMemDC(), oldBrush);
+	SelectObject(getMemDC(), oldPen);
+	DeleteObject(cursorPen);
+	DeleteObject(selectPen);
+
 	// 마우스 커서
 	IMAGEMANAGER->findImage("Cursor")->render(getMemDC(), _ptMouse.x, _ptMouse.y);
-	//for (int i = 0; i < _tileSize; i++)
-	//{
-	//	for (int j = 0; j < _tileSize; j++)
-	//	{
-	//		if (_tileMap[i].test(j))
-	//		{
-	//			//FillRect(getMemDC(), &RectMakeCenter(_tileWidth * j + _tileWidth / 2, _tileHeight * i + _tileHeight / 2, _tileWidth, _tileHeight), WHITE_BRUSH);
-	//			_image->render(getMemDC(), _tileWidth * j, _tileHeight * i, _tileWidth, _tileHeight, 0, 0, _image->getWidth(), _image->getHeight());
-	//		}
-	//	}
-	//}
-	//HPEN myPen = CreatePen(CW_DEFAULT, 1, RGB(255, 255, 255));
-	//HPEN oldPen = (HPEN)SelectObject(getMemDC(), myPen);
-	//for (int i = 0; i < _tileSize; i++)
-	//{
-	//	LineMake(getMemDC(), _tileWidth * (i + 1), 0, _tileWidth * (i + 1), _tileHeight * _tileSize);
-	//}
-	//for (int i = 0; i < _tileSize; i++)
-	//{
-	//	LineMake(getMemDC(), 0, _tileHeight * (i + 1), _tileWidth * _tileSize, _tileHeight * (i + 1));
-	//}
-	//SelectObject(getMemDC(), oldPen);
-	//DeleteObject(myPen);
-	//if (_input)
-	//{
-	//	HBRUSH inputBrush = CreateSolidBrush(RGB(255, 0, 255));
-	//	FillRect(getMemDC(), &RectMakeCenter(WINSIZE_X / 2, WINSIZE_Y / 2, 400, 200), inputBrush);
-	//	FillRect(getMemDC(), &RectMakeCenter(WINSIZE_X / 2, WINSIZE_Y / 2, 200, 50), WHITE_BRUSH);
-	//	TextOut(getMemDC(), WINSIZE_X / 2 - 100, WINSIZE_Y / 2, _tileSizeChar, strlen(_tileSizeChar));
-	//}
-	//else
-	//{
-	//	if (KEYMANAGER->isStayKeyDown(VK_LBUTTON) && _click)
-	//	{
-	//		_image->render(getMemDC(), _ptMouse.x - _offset.x, _ptMouse.y - _offset.y, _tileWidth, _tileHeight, 0, 0, _image->getWidth(), _image->getHeight());
-	//	}
-	//}
 }
 
 void MapToolScene::changeLayer(int layerN)
@@ -319,8 +339,9 @@ void MapToolScene::loadLayers()
 				for (int k = 0; k < 100; k++)
 				{
 					fscanf_s(_fp, "%d ", &_tileMap[i][j][k]._tile);
+					//_tileMap[i][j][k]._tile += 1000;
 					char key[64];
-					wsprintf(key, "Tile%d", _tileMap[i][j][k]._tile);
+					wsprintf(key, "Tile%d-%d", _tileMap[i][j][k]._tile / 1000, _tileMap[i][j][k]._tile % 1000);
 					_tileMap[i][j][k]._image = IMAGEMANAGER->findImage(key);
 				}
 				fscanf_s(_fp, "\n");
