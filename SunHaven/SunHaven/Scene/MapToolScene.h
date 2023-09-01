@@ -49,8 +49,8 @@ public:
 
 	void changeLayer(int layer);
 
-	void prevTiles(void) { _curTiles--; if (_curTiles < 0) _curTiles = 4; }
-	void nextTiles(void) { _curTiles++; if (_curTiles > 4) _curTiles = 0; }
+	void prevTiles(void) { _curTiles--; if (_curTiles < 0) _curTiles = 4; PatBlt(_tilesBuffer->getMemDC(), 0, 0, TILEWIDTH * 10, TILEHEIGHT * 10, WHITENESS); }
+	void nextTiles(void) { _curTiles++; if (_curTiles > 4) _curTiles = 0; PatBlt(_tilesBuffer->getMemDC(), 0, 0, TILEWIDTH * 10, TILEHEIGHT * 10, WHITENESS); }
 
 	void toggleShowLayer(int layer);
 

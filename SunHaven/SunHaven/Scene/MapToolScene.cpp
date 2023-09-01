@@ -181,10 +181,6 @@ void MapToolScene::update(void)
 				(abs((_ptMouse.y - 50) / TILEHEIGHT - (_exPtMouse.y - 50) / TILEHEIGHT) + 1) * TILEHEIGHT);
 		}
 	}
-	/*if (KEYMANAGER->isOnceKeyUp(VK_RBUTTON))
-	{
-		_selectRC = _cursorRC;
-	}*/
 	
 	// ¼¼ÀÌºê
 	if (KEYMANAGER->isOnceKeyDown('S') || KEYMANAGER->isOnceKeyDown('s'))
