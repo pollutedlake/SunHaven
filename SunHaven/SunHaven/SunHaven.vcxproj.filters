@@ -180,8 +180,46 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Stdafx.pch" />
+    <None Include="Debug\SunHaven.pch" />
+    <None Include="Debug\vc142.idb" />
+    <None Include="Debug\vc142.pdb" />
+    <None Include="Debug\SunHaven.tlog\CL.command.1.tlog" />
+    <None Include="Debug\SunHaven.tlog\CL.read.1.tlog" />
+    <None Include="Debug\SunHaven.tlog\CL.write.1.tlog" />
+    <None Include="Debug\SunHaven.tlog\link.command.1.tlog" />
+    <None Include="Debug\SunHaven.tlog\link.delete.1.tlog" />
+    <None Include="Debug\SunHaven.tlog\link.read.1.tlog" />
+    <None Include="Debug\SunHaven.tlog\link.write.1.tlog" />
+    <None Include="Debug\SunHaven.tlog\SunHaven.lastbuildstate" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="FarmMap.txt" />
+    <Text Include="Debug\SunHaven.log" />
+  </ItemGroup>
+  <ItemGroup>
+    <Object Include="Debug\Animation.obj" />
+    <Object Include="Debug\Camera.obj" />
+    <Object Include="Debug\DynusScene.obj" />
+    <Object Include="Debug\FarmScene.obj" />
+    <Object Include="Debug\FontManager.obj" />
+    <Object Include="Debug\GameNode.obj" />
+    <Object Include="Debug\GImage.obj" />
+    <Object Include="Debug\GPImage.obj" />
+    <Object Include="Debug\ImageManager.obj" />
+    <Object Include="Debug\KeyManager.obj" />
+    <Object Include="Debug\MainGame.obj" />
+    <Object Include="Debug\MapToolScene.obj" />
+    <Object Include="Debug\Resources.obj" />
+    <Object Include="Debug\SceneManager.obj" />
+    <Object Include="Debug\ShopScene.obj" />
+    <Object Include="Debug\SoundManager.obj" />
+    <Object Include="Debug\Stdafx.obj" />
+    <Object Include="Debug\TimeManager.obj" />
+    <Object Include="Debug\Timer.obj" />
+    <Object Include="Debug\TitleScene.obj" />
+    <Object Include="Debug\TownScene.obj" />
+    <Object Include="Debug\UI.obj" />
+    <Object Include="Debug\Utils.obj" />
+    <Object Include="Debug\WinMain.obj" />
   </ItemGroup>
 </Project>

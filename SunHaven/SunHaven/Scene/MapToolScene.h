@@ -5,29 +5,45 @@
 #define MapToolWidth	800
 #define MapToolHeight	600
 
+enum TileType
+{
+	Normal,
+	CANTGO,
+	STAIRS
+};
 
 struct Tile
 {
 	GImage* _image = nullptr;
 	int _tile = 0;
+	TileType _type;
 };
 
-class Button;
+class NormalButton;
+class ToggleButton;
+class RadioButton;
 
 class MapToolScene : public GameNode
 {
 private:
 	GImage* _tileMapBuffer;
 	Tile _tileMap[6][100][100];
+	
 	int _tileMapSize;
 
 	GImage* _tilesBuffer;
 	Tile _tiles[5][20][20];
 
-	vector<Button*> _vButton;
-	vector<Button*>::iterator _viButton;
+	GImage* _collisionBuffer;
 
-	Tile _selectTile;
+	vector<NormalButton*> _vNormalButton;
+	vector<NormalButton*>::iterator _viNormalButton;
+	vector<ToggleButton*> _vToggleButton;
+	vector<ToggleButton*>::iterator _viToggleButton;
+	vector<RadioButton*> _vRadioButton;
+	vector<RadioButton*>::iterator _viRadioButton;
+
+	Tile _selectTiles[MapToolWidth / TILEWIDTH + 1][MapToolHeight / TILEHEIGHT + 1];
 	POINT _cameraPos;
 	char _tileSizeChar[20];
 	bool _input;
@@ -36,10 +52,15 @@ private:
 
 	RECT _cursorRC;
 	RECT _selectRC;
+	RECT _tilesRC;
+	RECT _mapToolRC;
+	RECT _exCursorRC;
 
-	POINT _exPtMouse;
+	int _selectTilesRow;
+	int _selectTilesCol;
 
-	bool _showLayer[5];
+	bool _showLayer[6];
+	bool _copyMapTool;
 
 public:
 	HRESULT init(void);
@@ -49,10 +70,12 @@ public:
 
 	void changeLayer(int layer);
 
-	void prevTiles(void) { _curTiles--; if (_curTiles < 0) _curTiles = 4; PatBlt(_tilesBuffer->getMemDC(), 0, 0, TILEWIDTH * 10, TILEHEIGHT * 10, WHITENESS); }
-	void nextTiles(void) { _curTiles++; if (_curTiles > 4) _curTiles = 0; PatBlt(_tilesBuffer->getMemDC(), 0, 0, TILEWIDTH * 10, TILEHEIGHT * 10, WHITENESS); }
-
+	void prevTiles(void);
+	void nextTiles(void);
+	void erase(void);
 	void toggleShowLayer(int layer);
+
+	void copyTiles(void);
 
 	void saveMaps();
 	void loadLayers();
