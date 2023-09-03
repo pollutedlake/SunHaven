@@ -6,6 +6,7 @@ struct inventoryList
 	GImage* _imageInvenList;
 	RECT _rc;
 	bool _draw;
+	int _category;
 };
 
 
@@ -19,6 +20,9 @@ private:
 	RECT _playerBG;
 	RECT _playerName;
 	RECT _itemListBG;
+	DWORD _lastItemTime;
+	int _getItem;
+	int _selectedItem;
 
 	vector<inventoryList> _vInvenList;
 	vector<inventoryList>::iterator _viInvenList;

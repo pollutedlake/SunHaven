@@ -17,7 +17,7 @@ void ShopScene::release(void)
 
 void ShopScene::update(void)
 {
-
+	_temp->update();
 }
 
 void ShopScene::render(void)
