@@ -1,4 +1,7 @@
-﻿  Inventory.cpp
+﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppCommon.targets(39,5): warning MSB4211: "IntermediateOutputPath" 속성에 처음으로 값이 설정되고 있지만 이미 "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppCommon.targets(38,5)"에서 사용되었습니다.
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.BuildSteps.Targets(30,5): warning MSB4211: "DebugType" 속성에 처음으로 값이 설정되고 있지만 이미 "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.BuildSteps.Targets(29,5)"에서 사용되었습니다.
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets(373,5): warning MSB4211: "CleanFile" 속성에 처음으로 값이 설정되고 있지만 이미 "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppCommon.targets(38,5)"에서 사용되었습니다.
+  Inventory.cpp
 C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(116,14): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
 C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(116,14): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
 C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(117,14): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
@@ -15,114 +18,7 @@ C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(130,18): warn
 C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(130,18): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
 C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(131,18): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
 C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(131,18): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-  FarmScene.cpp
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(116,14): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(116,14): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(117,14): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(117,14): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(118,18): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(118,18): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(119,18): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(119,18): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(128,14): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(128,14): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(129,14): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(129,14): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(130,18): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(130,18): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(131,18): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(131,18): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-  DynusScene.cpp
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(116,14): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(116,14): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(117,14): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(117,14): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(118,18): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(118,18): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(119,18): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(119,18): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(128,14): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(128,14): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(129,14): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(129,14): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(130,18): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(130,18): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(131,18): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(131,18): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-  Animation.cpp
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(116,14): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(116,14): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(117,14): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(117,14): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(118,18): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(118,18): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(119,18): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(119,18): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(128,14): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(128,14): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(129,14): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(129,14): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(130,18): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(130,18): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(131,18): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(131,18): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-  Camera.cpp
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(116,14): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(116,14): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(117,14): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(117,14): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(118,18): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(118,18): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(119,18): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(119,18): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(128,14): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(128,14): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(129,14): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(129,14): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(130,18): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(130,18): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(131,18): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(131,18): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-  FontManager.cpp
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(116,14): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(116,14): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(117,14): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(117,14): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(118,18): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(118,18): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(119,18): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(119,18): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(128,14): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(128,14): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(129,14): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(129,14): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(130,18): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(130,18): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(131,18): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(131,18): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\Manager\FontManager.cpp(28,47): warning C4267: '인수': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\Manager\FontManager.cpp(55,47): warning C4267: '인수': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\Manager\FontManager.cpp(117,127): warning C4267: '인수': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\Manager\FontManager.cpp(122,125): warning C4267: '인수': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\Manager\FontManager.cpp(155,62): warning C4267: '인수': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\Manager\FontManager.cpp(221,92): warning C4267: '인수': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-  GameNode.cpp
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(116,14): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(116,14): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(117,14): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(117,14): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(118,18): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(118,18): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(119,18): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(119,18): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(128,14): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(128,14): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(129,14): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(129,14): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(130,18): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(130,18): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(131,18): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(131,18): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\1\Desktop\KSU\SunHaven\SunHaven\Class\Inventory.cpp(17,17): warning C4101: 'temp' :참조되지 않은 지역 변수입니다.
   GImage.cpp
 C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(116,14): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
 C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(116,14): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
@@ -178,74 +74,6 @@ C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GPImage\GPImage.cpp(30,16): w
 C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GPImage\GPImage.cpp(86,15): warning C4244: '인수': 'int'에서 'Gdiplus::REAL'(으)로 변환하면서 데이터가 손실될 수 있습니다.
 C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GPImage\GPImage.cpp(98,26): warning C4244: '인수': 'float'에서 'INT'(으)로 변환하면서 데이터가 손실될 수 있습니다.
 C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GPImage\GPImage.cpp(97,25): warning C4244: '인수': 'float'에서 'INT'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-  ImageManager.cpp
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(116,14): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(116,14): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(117,14): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(117,14): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(118,18): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(118,18): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(119,18): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(119,18): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(128,14): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(128,14): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(129,14): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(129,14): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(130,18): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(130,18): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(131,18): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(131,18): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-  KeyManager.cpp
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(116,14): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(116,14): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(117,14): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(117,14): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(118,18): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(118,18): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(119,18): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(119,18): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(128,14): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(128,14): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(129,14): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(129,14): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(130,18): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(130,18): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(131,18): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(131,18): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-  MainGame.cpp
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(116,14): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(116,14): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(117,14): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(117,14): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(118,18): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(118,18): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(119,18): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(119,18): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(128,14): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(128,14): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(129,14): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(129,14): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(130,18): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(130,18): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(131,18): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(131,18): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-  MapToolScene.cpp
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(116,14): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(116,14): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(117,14): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(117,14): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(118,18): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(118,18): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(119,18): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(119,18): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(128,14): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(128,14): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(129,14): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(129,14): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(130,18): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(130,18): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(131,18): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(131,18): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
   Resources.cpp
 C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(116,14): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
 C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(116,14): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
@@ -419,59 +247,6 @@ C:\Users\1\Desktop\KSU\SunHaven\SunHaven\Manager\FontManager.h(7,7): message : '
 C:\Users\1\Desktop\KSU\SunHaven\SunHaven\Scene\TitleScene.cpp(142,134): error C2664: 'void FontManager::textOut(HDC,int,int,char *,int,int,char *,int,COLORREF)': 인수 4을(를) 'const char [19]'에서 'char *'(으)로 변환할 수 없습니다.
 C:\Users\1\Desktop\KSU\SunHaven\SunHaven\Scene\TitleScene.cpp(142,51): message : 문자열 리터럴로부터의 변환은 const 한정자가 손실됩니다(/Zc:strictStrings 참조).
 C:\Users\1\Desktop\KSU\SunHaven\SunHaven\Manager\FontManager.h(7,7): message : 'FontManager::textOut' 선언을 참조하십시오.
-  코드를 생성하고 있습니다...
-  컴파일하고 있습니다...
-  ShopScene.cpp
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(116,14): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(116,14): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(117,14): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(117,14): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(118,18): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(118,18): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(119,18): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(119,18): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(128,14): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(128,14): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(129,14): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(129,14): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(130,18): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(130,18): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(131,18): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(131,18): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-  TownScene.cpp
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(116,14): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(116,14): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(117,14): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(117,14): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(118,18): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(118,18): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(119,18): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(119,18): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(128,14): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(128,14): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(129,14): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(129,14): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(130,18): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(130,18): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(131,18): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(131,18): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-  Utils.cpp
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(116,14): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(116,14): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(117,14): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(117,14): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(118,18): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(118,18): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(119,18): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(119,18): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(128,14): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(128,14): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(129,14): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(129,14): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(130,18): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(130,18): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(131,18): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(131,18): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
   WinMain.cpp
 C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(116,14): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
 C:\Users\1\Desktop\KSU\SunHaven\SunHaven\FrameWork\GImage\GImage.h(116,14): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.

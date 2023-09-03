@@ -3,7 +3,7 @@
 
 struct inventoryList
 {
-	GImage* _invenList;
+	GImage* _imageInvenList;
 	RECT _rc;
 	bool _draw;
 };

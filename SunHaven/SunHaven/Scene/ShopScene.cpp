@@ -12,13 +12,16 @@ HRESULT ShopScene::init(void)
 
 void ShopScene::release(void)
 {
+
 }
 
 void ShopScene::update(void)
 {
+
 }
 
 void ShopScene::render(void)
 {
 	_temp->render();
+	IMAGEMANAGER->render("Cursor", getMemDC(), _ptMouse.x, _ptMouse.y);
 }
