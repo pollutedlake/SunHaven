@@ -89,6 +89,7 @@ void Inventory::update(void)
 		if (index != -1 && _vInvenList[index]._draw)
 		{
 			_selectedItem = index;
+			_vInvenList[index]._draw = false;
 		}
 		else
 		{
