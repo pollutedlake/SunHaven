@@ -22,6 +22,8 @@ HRESULT GameNode::init(bool managerInit)
         SOUNDMANAGER->init();
         SCENEMANAGER->init();
         TIMEMANAGER->init();
+        INIDATA->init();
+        //JSONSAVELOADER->init();
     }
     return S_OK;
 }
@@ -38,6 +40,10 @@ void GameNode::release(void)
         SOUNDMANAGER->releaseSingleton();
         TIMEMANAGER->release();
         TIMEMANAGER->releaseSingleton();
+        INIDATA->release();
+        INIDATA->releaseSingleton();
+        //JSONSAVELOADER->release();
+        //JSONSAVELOADER->releaseSingleton();
     }
     ReleaseDC(_hWnd, _hdc);
 }

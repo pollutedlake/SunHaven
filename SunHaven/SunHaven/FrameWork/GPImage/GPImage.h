@@ -60,7 +60,7 @@ private:
 	bool					_isTrans;
 	COLORREF				_transColor;
 public:
-	HRESULT init(char* fileName, int destX, int destY, int maxFrameX, int maxFrameY, bool isTrans, COLORREF lowColor, COLORREF highColor, Gdiplus::RotateFlipType rotateFlipType = Gdiplus::RotateNoneFlipNone);
+	HRESULT init(char* fileName, int destX, int destY, int maxFrameX, int maxFrameY, bool isTrans, COLORREF color, Gdiplus::RotateFlipType rotateFlipType = Gdiplus::RotateNoneFlipNone);
 	void release(void);
 	void GPFrameRender(HDC hdc, int destX, int destY, float wRatio, float hRatio, int currentFrameX, int currentFrameY, Gdiplus::InterpolationMode _imode, int angle = 0);
 

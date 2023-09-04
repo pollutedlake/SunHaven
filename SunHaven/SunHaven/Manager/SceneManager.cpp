@@ -5,8 +5,9 @@
 #include "../Scene/MapToolScene.h"
 #include "../Scene/TownScene.h"
 #include "../Scene/FarmScene.h"
-
+#include "../Scene/DynusScene.h"
 #include "../Scene/ShopScene.h"
+
 HRESULT SceneManager::init(void)
 {
     SCENEMANAGER->addScene("Title", new TitleScene);
@@ -14,6 +15,7 @@ HRESULT SceneManager::init(void)
     SCENEMANAGER->addScene("Town", new TownScene);
     SCENEMANAGER->addScene("Shop", new ShopScene);
     SCENEMANAGER->addScene("Farm", new FarmScene);
+    SCENEMANAGER->addScene("Dynus", new DynusScene);
     _currentScene = nullptr;
     return S_OK;
 }

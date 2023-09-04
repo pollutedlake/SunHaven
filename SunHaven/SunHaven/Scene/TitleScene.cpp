@@ -73,6 +73,7 @@ void TitleScene::update(void)
                     switch (i)
                     {
                     case 0:
+                        //SCENEMANAGER->changeScene("DynusScene");
 
                         break;
 
@@ -122,7 +123,7 @@ void TitleScene::render(void)
         if (PtInRect(&_rc[i], _ptMouse))
         {
             IMAGEMANAGER->GPFrameRender("TitleButton", getMemDC(),
-                50, 410 + i * 59, 2.2, 2,
+                50, 408 + i * 59, 2.2, 2,
                 IMAGEMANAGER->findGPImage("TitleButton")->getFrameX(), IMAGEMANAGER->findGPImage("TitleButton")->getFrameY(),
                 InterpolationModeNearestNeighbor, 0);
         }
@@ -130,16 +131,16 @@ void TitleScene::render(void)
 
     if (_isDone.test(0))
     {
-        FONTMANAGER->textOut(getMemDC(), 60, 410, "한컴 말랑말랑 Bold", 35, 600, "플레이", strlen("플레이"), RGB(255, 255, 255));
-        FONTMANAGER->textOut(getMemDC(), 60, 470, "한컴 말랑말랑 Bold", 35, 600, "맵 툴", strlen("맵 툴"), RGB(255, 255, 255));
-        FONTMANAGER->textOut(getMemDC(), 60, 530, "한컴 말랑말랑 Bold", 35, 600, "나가기", strlen("나가기"), RGB(255, 255, 255));
+        FONTMANAGER->textOut(getMemDC(), 60, 411, "배달의민족 을지로체", 35, 500, "플레이", strlen("플레이"), RGB(255, 255, 255));
+        FONTMANAGER->textOut(getMemDC(), 60, 471, "배달의민족 을지로체", 35, 500, "맵 툴", strlen("맵 툴"), RGB(255, 255, 255));
+        FONTMANAGER->textOut(getMemDC(), 60, 531, "배달의민족 을지로체", 35, 500, "나가기", strlen("나가기"), RGB(255, 255, 255));
     }
 
     else if (_isDone.test(1))
     {
-        FONTMANAGER->textOut(getMemDC(), 60, 410, "한컴 말랑말랑 Bold", 35, 600, "새로운 캐릭터", strlen("새로운 캐릭터"), RGB(255, 255, 255));
-        FONTMANAGER->textOut(getMemDC(), 60, 470, "한컴 말랑말랑 Bold", 35, 600, "캐릭터 불러오기", strlen("캐릭터 불러오기"), RGB(255, 255, 255));
-        FONTMANAGER->textOut(getMemDC(), 60, 530, "한컴 말랑말랑 Bold", 35, 600, "뒤로", strlen("뒤로"), RGB(255, 255, 255));
+        FONTMANAGER->textOut(getMemDC(), 60, 411, "배달의민족 을지로체", 35, 500, "새로운 캐릭터", strlen("새로운 캐릭터"), RGB(255, 255, 255));
+        FONTMANAGER->textOut(getMemDC(), 60, 471, "배달의민족 을지로체", 35, 500, "캐릭터 불러오기", strlen("캐릭터 불러오기"), RGB(255, 255, 255));
+        FONTMANAGER->textOut(getMemDC(), 60, 531, "배달의민족 을지로체", 35, 500, "뒤로", strlen("뒤로"), RGB(255, 255, 255));
     }
 
     IMAGEMANAGER->render("Cursor", getMemDC(), _ptMouse.x, _ptMouse.y);

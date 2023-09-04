@@ -20,5 +20,8 @@ public:
 	void release(void);
 	void update(void);
 	void render(void);
+
+	TitleScene() {}
+	~TitleScene() {}
 };
 

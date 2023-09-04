@@ -13,7 +13,7 @@ GPImage::~GPImage()
 {
 }
 
-HRESULT GPImage::init(char* fileName, int destX, int destY, int maxFrameX, int maxFrameY, bool isTrans, COLORREF lowColor, COLORREF highColor, Gdiplus::RotateFlipType rotateFlipType)
+HRESULT GPImage::init(char* fileName, int destX, int destY, int maxFrameX, int maxFrameY, bool isTrans, COLORREF color, Gdiplus::RotateFlipType rotateFlipType)
 {
 	USES_CONVERSION;
 
