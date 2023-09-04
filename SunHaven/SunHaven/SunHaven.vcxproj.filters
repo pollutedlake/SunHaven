@@ -222,4 +222,8 @@
     <Object Include="Debug\Utils.obj" />
     <Object Include="Debug\WinMain.obj" />
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="FarmMap.bmp" />
+    <Image Include="FarmMapCollision.bmp" />
+  </ItemGroup>
 </Project>
