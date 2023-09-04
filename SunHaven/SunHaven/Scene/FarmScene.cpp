@@ -28,7 +28,7 @@ void FarmScene::update(void)
 {
 	_player->update();
 	_camera->setPosition(_player->getPlayerPosition());
-	_player->setPlayerRect(_camera->worldToCamera(_player->getPlayerPosition()));
+	//_player->setPlayerRect(_camera->worldToCamera(_player->getPlayerPosition()));
 }
 
 void FarmScene::render(void)
