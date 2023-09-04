@@ -1,6 +1,21 @@
 // ¹Î¿ë½Ä
 #pragma once
-class FarmScene
+#include "../FrameWork/GameNode/GameNode.h"
+#include "../Player/Player.h"
+
+
+class FarmScene : public GameNode
 {
+private:
+	Player* _player;
+
+public:
+	HRESULT init(void);
+	void release(void);
+	void update(void);
+	void render(void);
+
+	FarmScene() {}
+	~FarmScene() {}
 };
 

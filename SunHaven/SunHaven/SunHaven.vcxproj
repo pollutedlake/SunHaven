@@ -146,6 +146,7 @@
   <ItemGroup>
     <ClCompile Include="Class\Inventory.cpp" />
     <ClCompile Include="Class\Item.cpp" />
+    <ClCompile Include="Player\Player.cpp" />
     <ClCompile Include="Scene\FarmScene.cpp" />
     <ClCompile Include="Scene\DynusScene.cpp" />
     <ClCompile Include="FrameWork\Animation\Animation.cpp" />
@@ -174,6 +175,7 @@
   <ItemGroup>
     <ClInclude Include="Class\Inventory.h" />
     <ClInclude Include="Class\Item.h" />
+    <ClInclude Include="Player\Player.h" />
     <ClInclude Include="Scene\FarmScene.h" />
     <ClInclude Include="Scene\DynusScene.h" />
     <ClInclude Include="FrameWork\Animation\Animation.h" />
