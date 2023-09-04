@@ -1,69 +1,201 @@
 #include "Stdafx.h"
-#include "SoundManager.h"
+#include "../Manager/SoundManager.h"
+
+SoundManager::SoundManager() : _system(nullptr),
+_channel(nullptr),
+_sound(nullptr)
+{
+
+}
+
 
 HRESULT SoundManager::init(void)
 {
-    //! Do Nothing
+	System_Create(&_system);
 
-    return S_OK;
+	_system->init(totalSoundChannel, FMOD_INIT_NORMAL, 0);
+
+	_sound = new Sound * [totalSoundChannel];
+	_channel = new Channel * [totalSoundChannel];
+
+	
+	memset(_sound, 0, sizeof(Sound*) * (totalSoundChannel));
+	memset(_channel, 0, sizeof(Channel*) * (totalSoundChannel));
+
+	return S_OK;
 }
 
-void SoundManager::addMp3FileWithKey(string key, string fileName)
+void SoundManager::release(void)
 {
-    string first = "open \"";
-    string end = "\" type mpegvideo alias ";
-    string finalQuery = first + fileName + end + key;
-    const char* str = finalQuery.c_str();
+	if (_channel != nullptr || _sound != nullptr)
+	{
+		for (int i = 0; i < totalSoundChannel; i++)
+		{
+			if (_channel != nullptr)
+			{
+				if (_channel[i]) _channel[i]->stop();
+			}
 
-    // mciSendString() : 장치에 특정 명령어를 전송하여 구동시키는 함수
-    // ㄴ 문자열 명령어, 반환값을 알려줄 명령어, 반환될 길이, 핸들콜백
-    mciSendString(str, NULL, 0, NULL);
+			if (_sound != nullptr)
+			{
+				if (_sound[i]) _sound[i]->release();
+			}
+		}
+	}
+
+	SAFE_DELETE_ARRAY(_channel);
+	SAFE_DELETE_ARRAY(_sound);
+
+	if (_system != nullptr)
+	{
+		_system->release();
+		_system->close();
+	}
+
 }
 
-void SoundManager::addWaveFileWithKey(string key, string fileName)
+void SoundManager::update(void)
 {
-    string first = "open \"";
-    string end = "\" type waveautio alias ";
-    string finalQuery = first + fileName + end + key;
-    const char* str = finalQuery.c_str();
-
-    // mciSendString() : 장치에 특정 명령어를 전송하여 구동시키는 함수
-    // ㄴ 문자열 명령어, 반환값을 알려줄 명령어, 반환될 길이, 핸들콜백
-    mciSendString(str, NULL, 0, NULL);
+	
+	_system->update();
 }
 
-void SoundManager::playEffectSoundWave(char* fileName)
+void SoundManager::addSound(string keyName, string soundName, bool background, bool loop)
 {
-    /*
-    // PlaySound() : TEXT("파일 이름.wav"),
-    // 파일명을 시용하면 NULL != 해당 인스턴스 핸들
-    // fdwSount (옵션 | 옵션 | 옵션)
+	if (loop)
+	{
+		if (background)
+		{
+			_system->createStream(soundName.c_str(), FMOD_LOOP_NORMAL, 0, &_sound[_mTotalSounds.size()]);
+		}
+		
+		else
+		{
+			_system->createSound(soundName.c_str(), FMOD_LOOP_NORMAL, 0, &_sound[_mTotalSounds.size()]);
 
-    SND_ASYNC : 재생하면서 다음코드를 실행
-    ㄴ 비동기 플래그
+			
+		}
 
-    SND_LOOP : 반복 재생
+	}
+	else
+	{
+		
+		_system->createSound(soundName.c_str(), FMOD_DEFAULT, 0, &_sound[_mTotalSounds.size()]);
+	}
 
-    SND_NODEFAULT : 지정한 경로에 파일이 없어도 경고음을 재생하지 않는다.
-    */
-    PlaySound(fileName, NULL, SND_ASYNC);
+	_mTotalSounds.insert(make_pair(keyName, &_sound[_mTotalSounds.size()]));
+
 }
 
-void SoundManager::playSoundWithKey(string key)
+void SoundManager::play(string keyName, float volume)
 {
-    string first = "play ";
-    string finalQuery = first + key;
+	arrSoundsIter iter = _mTotalSounds.begin();
 
-    const char* str = finalQuery.c_str();
-    mciSendString(str, NULL, 0, NULL);
+	int count = 0;
+
+	for (iter; iter != _mTotalSounds.end(); ++iter, count++)
+	{
+		if (keyName == iter->first)
+		{
+			_system->playSound(FMOD_CHANNEL_FREE, *iter->second, false, &_channel[count]);
+			_channel[count]->setVolume(volume);
+			break;
+		}
+	}
+
+
 }
 
-void SoundManager::stopMp3WithKey(string key)
+void SoundManager::stop(string keyName)
 {
-    string first = "stop ";
-    string finalQuery = "";
-    finalQuery = first + key;
+	arrSoundsIter iter = _mTotalSounds.begin();
 
-    const char* str = finalQuery.c_str();
-    mciSendString(str, NULL, 0, NULL);
+	int count = 0;
+
+	for (iter; iter != _mTotalSounds.end(); ++iter, count++)
+	{
+		if (keyName == iter->first)
+		{
+
+			_channel[count]->stop();
+			break;
+		}
+	}
+
+
 }
+
+void SoundManager::pause(string keyName)
+{
+	arrSoundsIter iter = _mTotalSounds.begin();
+
+	int count = 0;
+
+	for (iter; iter != _mTotalSounds.end(); ++iter, count++)
+	{
+		if (keyName == iter->first)
+		{
+
+			_channel[count]->setPaused(true);
+			break;
+		}
+	}
+
+}
+
+void SoundManager::resume(string keyName)
+{
+	arrSoundsIter iter = _mTotalSounds.begin();
+
+	int count = 0;
+
+	for (iter; iter != _mTotalSounds.end(); ++iter, count++)
+	{
+		if (keyName == iter->first)
+		{
+
+			_channel[count]->setPaused(false);
+			break;
+		}
+	}
+}
+
+bool SoundManager::isPlaySound(string keyName)
+{
+	arrSoundsIter iter = _mTotalSounds.begin();
+
+	bool isPlay;
+	int count = 0;
+
+	for (iter; iter != _mTotalSounds.end(); ++iter, count++)
+	{
+		if (keyName == iter->first)
+		{
+
+			_channel[count]->isPlaying(&isPlay);
+			break;
+		}
+	}
+	return isPlay;
+}
+
+bool SoundManager::isPauseSound(string keyName)
+{
+	arrSoundsIter iter = _mTotalSounds.begin();
+
+	bool isPause;
+	int count = 0;
+
+	for (iter; iter != _mTotalSounds.end(); ++iter, count++)
+	{
+		if (keyName == iter->first)
+		{
+
+			_channel[count]->isPlaying(&isPause);
+			break;
+		}
+	}
+	return isPause;
+
+}
+

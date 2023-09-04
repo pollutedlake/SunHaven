@@ -73,7 +73,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
     <IncludePath>$(IncludePath);$(SolutionDir)/SunHaven/FrameWork/PCH;C:\Users\ksy29\Documents\새 폴더\SunHaven\SunHaven\JsonCPP\include\json</IncludePath>
-    <LibraryPath>C:\Users\ksy29\Documents\새 폴더\SunHaven\SunHaven\JsonCPP\lib_json;$(LibraryPath)</LibraryPath>
+    <LibraryPath>C:\Users\ksy29\Documents\새 폴더\SunHaven\SunHaven\JsonCPP\lib_json;$(SolutionDir)/SunHaven/lib/FMOD;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -97,6 +97,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -196,6 +197,13 @@
     <ClInclude Include="Class\Enemy\MagmaBug.h" />
     <ClInclude Include="DataScene.h" />
     <ClInclude Include="Class\Data\JsonSaveLoader.h" />
+    <ClInclude Include="inc\FMOD\fmod.h" />
+    <ClInclude Include="inc\FMOD\fmod.hpp" />
+    <ClInclude Include="inc\FMOD\fmod_codec.h" />
+    <ClInclude Include="inc\FMOD\fmod_dsp.h" />
+    <ClInclude Include="inc\FMOD\fmod_errors.h" />
+    <ClInclude Include="inc\FMOD\fmod_memoryinfo.h" />
+    <ClInclude Include="inc\FMOD\fmod_output.h" />
     <ClInclude Include="Json\json.h" />
     <ClInclude Include="Class\Data\INIData.h" />
     <ClInclude Include="Class\Enemy\Player_Temp.h" />
@@ -246,11 +254,15 @@
     <None Include="Debug\SunHaven.tlog\SunHaven.lastbuildstate" />
     <None Include="Debug\vc142.idb" />
     <None Include="Debug\vc142.pdb" />
+    <None Include="fmodex.dll" />
+    <None Include="fmodex64.dll" />
+    <None Include="fmodexL.dll" />
     <None Include="Stdafx.pch" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Debug\SunHaven.log" />
     <Text Include="FarmMap.txt" />
+    <Text Include="lib\FMOD\which library do I use.txt" />
   </ItemGroup>
   <ItemGroup>
     <Object Include="Debug\Animation.obj" />
@@ -281,6 +293,16 @@
   <ItemGroup>
     <Image Include="FarmMap.bmp" />
     <Image Include="FarmMapCollision.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="lib\FMOD\fmodex64_vc.lib" />
+    <Library Include="lib\FMOD\fmodexL64_vc.lib" />
+    <Library Include="lib\FMOD\fmodexL_bc.lib" />
+    <Library Include="lib\FMOD\fmodexL_lcc.lib" />
+    <Library Include="lib\FMOD\fmodexL_vc.lib" />
+    <Library Include="lib\FMOD\fmodex_bc.lib" />
+    <Library Include="lib\FMOD\fmodex_lcc.lib" />
+    <Library Include="lib\FMOD\fmodex_vc.lib" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
