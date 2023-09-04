@@ -1,14 +1,19 @@
-// ±è¼ºÀÇ
 #pragma once
 #include "../FrameWork/GameNode/GameNode.h"
-#include "../Class/Inventory.h"
+
+struct itemp 
+{
+
+	int Value;
+
+};
 
 
-class ShopScene : public GameNode
+class Item : public GameNode
 {
 
 private:
-	Inventory* _temp;
+
 
 public:
 	HRESULT init(void);
@@ -16,7 +21,7 @@ public:
 	void update(void);
 	void render(void);
 
-	ShopScene() {}
-	~ShopScene(){}
+	Item(){}
+	~Item(){}
 };
 

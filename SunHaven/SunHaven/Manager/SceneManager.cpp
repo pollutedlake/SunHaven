@@ -5,11 +5,13 @@
 #include "../Scene/MapToolScene.h"
 #include "../Scene/TownScene.h"
 
+#include "../Scene/ShopScene.h"
 HRESULT SceneManager::init(void)
 {
     SCENEMANAGER->addScene("Title", new TitleScene);
     SCENEMANAGER->addScene("MapTool", new MapToolScene);
     SCENEMANAGER->addScene("Town", new TownScene);
+    SCENEMANAGER->addScene("Shop", new ShopScene);
     _currentScene = nullptr;
     return S_OK;
 }

@@ -143,4 +143,6 @@ void TitleScene::render(void)
     }
 
     IMAGEMANAGER->render("Cursor", getMemDC(), _ptMouse.x, _ptMouse.y);
+
+  
 }

@@ -65,6 +65,8 @@
       <Filter>FrameWork\Utility</Filter>
     </ClCompile>
     <ClCompile Include="Class\UI.cpp" />
+    <ClCompile Include="Class\Inventory.cpp" />
+    <ClCompile Include="Class\Item.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainGame.h" />
@@ -139,6 +141,8 @@
       <Filter>FrameWork\Utility</Filter>
     </ClInclude>
     <ClInclude Include="Class\UI.h" />
+    <ClInclude Include="Class\Inventory.h" />
+    <ClInclude Include="Class\Item.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="FrameWork">
