@@ -9,7 +9,10 @@ private:
 	Animation* _playerMoveAnim;
 	RECT _playerRC;
 
+	RECT _miniRC[4];
+
 	float _x, _y;
+
 
 public:
 	HRESULT init(float x, float y);

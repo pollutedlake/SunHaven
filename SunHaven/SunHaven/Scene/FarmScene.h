@@ -8,6 +8,7 @@ class FarmScene : public GameNode
 {
 private:
 	Player* _player;
+	GImage* _bg;
 
 public:
 	HRESULT init(void);
