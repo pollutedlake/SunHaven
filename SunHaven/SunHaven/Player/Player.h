@@ -26,7 +26,17 @@ public:
 	void UseCrossBow();
 
 	POINT getPlayerPosition() { return PointMake((int)_x, (int)_y); }
-	void setPlayerPosition(POINT position);
+
+	void setPlayerPosition(POINT position)
+	{
+		_x = position.x;
+		_y = position.y;
+	}
+
+	void worldToCamera(POINT position)
+	{
+		_playerRC = RectMakeCenter(position.x, position.y, 50, 50);
+	}
 
 	Player() {}
 	~Player() {}

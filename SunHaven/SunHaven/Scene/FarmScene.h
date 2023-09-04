@@ -10,6 +10,8 @@ private:
 	Player* _player;
 	GImage* _bg;
 
+	Camera* _camera;
+
 public:
 	HRESULT init(void);
 	void release(void);
