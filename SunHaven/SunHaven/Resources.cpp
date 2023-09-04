@@ -42,8 +42,14 @@ HRESULT Resources::init(void)
 		true, RGB(255, 0, 255));	// 레이어
 
 	IMAGEMANAGER->addImage("StarShader", "Resources/Images/Layer/StarShader.bmp",
+		960, 400);	// 별 배경 테스트
+
+	IMAGEMANAGER->addImage("StarShaderTest", "Resources/Images/Layer/StarShaderTest.bmp",
 		960, 720,
-		true, RGB(255, 0, 255));	// 차오르는 별 배경
+		true, RGB(255, 0, 255));	// 별 배경 테스트
+
+	IMAGEMANAGER->addImage("BlueStarFill", "Resources/Images/Layer/BlueStarFill.bmp",
+		402, 402);	// 파란 별
 
 	IMAGEMANAGER->addImage("DynusWing", "Resources/Images/Boss/DynusWing.bmp",
 		257, 169,
@@ -54,8 +60,32 @@ HRESULT Resources::init(void)
 		1, 1,
 		false, NULL, RotateNoneFlipNone);   // 다이너스 탄
 
+	IMAGEMANAGER->addImage("DynusOrb2", "Resources/Images/Boss/DynusOrb.bmp",
+		10 * 2, 10 * 2,
+		true, RGB(255, 0, 255));	// 다이너스 탄 (알파 X)
 
+	IMAGEMANAGER->addGPFrameImage("DynusBeam", "Resources/Images/Boss/DynusBeam.png",
+		0, 0,
+		1, 1,
+		false, NULL, RotateNoneFlipNone);   // 다이너스 빔
 
+	IMAGEMANAGER->addFrameImage("Shadeclow_Idle", "Resources/Images/Enemy/Ghost/Ghost_Idle.bmp",
+		0, 0,
+		160 * 2, 80 * 2,
+		4, 2,
+		true, RGB(255, 0, 255));	// 다이너스 소환 몬스터 고스트
+
+	IMAGEMANAGER->addFrameImage("Shadeclow_Attack", "Resources/Images/Enemy/Ghost/Ghost_Attack.bmp",
+		0, 0,
+		440, 80,
+		11, 2,
+		true, RGB(255, 0, 255));	// 다이너스 소환 몬스터 고스트
+
+	IMAGEMANAGER->addFrameImage("Shadeclow_Die", "Resources/Images/Enemy/Ghost/Ghost_Die.bmp",
+		0, 0,
+		560, 80,
+		14, 2,
+		true, RGB(255, 0, 255));	// 다이너스 소환 몬스터 고스트
 
 	// Sound
 

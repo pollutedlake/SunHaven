@@ -2,14 +2,16 @@
 #include "Enemy.h"
 
 Enemy::Enemy(void) : _rc(RectMake(0, 0, 0, 0)),
+					_imageName(""),
 					_currentFrameX(0),
 					_currentFrameY(0),
 					_x(0.0f),
 					_y(0.0f),
 					_worldTimeCount(0.0f),
-					_rndTimeCount(0.0f),
-					_rndFireCount(0.0f),
-					_bulletFireCount(0.0f)
+					_timeCount(0.0f),
+					_fireCount(0.0f),
+					_bulletFireCount(0.0f),
+					_isLeft(false)
 {
 }
 
@@ -20,18 +22,19 @@ HRESULT Enemy::init(void)
 	return S_OK;
 }
 
-HRESULT Enemy::init(const char* imageName, POINT position)
+HRESULT Enemy::init(POINT position)
 {
 	_x = position.x;
 	_y = position.y;
 
 	_worldTimeCount = GetTickCount();
-	_rndTimeCount = RND->getFromFloatTo(50, 150);
+	_timeCount = 100;
 
 	_bulletFireCount = TIMEMANAGER->getWorldTime();
-	_rndFireCount = RND->getFromFloatTo(0.5f, 4.5f);
+	_fireCount = 2.5f;
 
-	_image = IMAGEMANAGER->findImage(imageName);;
+	_imageName = "Shadeclow_Idle";
+	_image = IMAGEMANAGER->findImage(_imageName);
 	_rc = RectMakeCenter(_x, _y,
 		_image->getFrameWidth(), _image->getFrameHeight());
 
@@ -55,21 +58,35 @@ void Enemy::render(void)
 	animation();
 }
 
-// X: 적마다 움직임이 다르다 -> 상속을 전재한 클래스인데.. -> 자식 구현
 void Enemy::move(void)
 {
 
 }
 
+void Enemy::attack(void)
+{
+}
+
 void Enemy::draw(void)
 {
+	if (KEYMANAGER->isToggleKey('H'))
+	{
+		HBRUSH myBrush = (HBRUSH)GetStockObject(NULL_BRUSH);
+		HBRUSH oldBrush = (HBRUSH)SelectObject(getMemDC(), myBrush);
+
+		DrawRectMake(getMemDC(), _rc);
+
+		SelectObject(getMemDC(), oldBrush);
+		DeleteObject(myBrush);
+	}
+
 	_image->frameRender(getMemDC(), _x, _y,
 		_currentFrameX, _currentFrameY);
 }
 
 void Enemy::animation(void)
 {
-	if (_rndTimeCount + _worldTimeCount <= GetTickCount())
+	/*if (_rndTimeCount + _worldTimeCount <= GetTickCount())
 	{
 		_worldTimeCount = GetTickCount();
 		_currentFrameX++;
@@ -78,15 +95,15 @@ void Enemy::animation(void)
 		{
 			_currentFrameX = 0;
 		}
-	}
+	}*/
 }
 
 bool Enemy::bulletCountFire(void)
 {
-	if (_rndFireCount + _bulletFireCount <= TIMEMANAGER->getWorldTime())
+	if (_fireCount + _bulletFireCount <= TIMEMANAGER->getWorldTime())
 	{
 		_bulletFireCount = TIMEMANAGER->getWorldTime();
-		_rndFireCount = RND->getFromFloatTo(2.0f, 6.0f);
+		_fireCount = 2.5f;
 
 		return true;
 	}

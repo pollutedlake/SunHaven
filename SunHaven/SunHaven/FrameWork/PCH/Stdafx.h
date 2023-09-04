@@ -6,8 +6,14 @@
 #pragma comment(linker,"/entry:WinMainCRTStartup /subsystem:console")
 
 #pragma comment (lib, "msimg32.lib")
+//#pragma comment (lib, "JsonCPP/lib_json/json_vc71_libmtd.lib")
+
 
 #include <windows.h>
+
+// 외부 헤더파일
+//#include "../../JsonCPP/include/json/json.h"
+
 
 #include <stdlib.h>
 #include <malloc.h>
@@ -25,6 +31,9 @@
 #include<string.h>
 #include <algorithm>
 #include <functional>
+#include <fstream>
+#include <queue>
+#include <deque>
 #include <unordered_map>
 #include<cassert>
 #include<bitset>
@@ -60,8 +69,11 @@ ID2D1HwndRenderTarget* _ID2DRanderTarget = nullptr;*/
 #include "../../Manager/SoundManager.h"
 #include "../../Manager/TimeManager.h"
 #include "../../Manager/SceneManager.h"
+#include "../../Class/Data/INIData.h"
+//#include "../../Class/Data/JsonSaveLoader.h"
 #include "../../Class/Camera.h"
 #include "../Utility/Utils.h"
+
 using namespace MY_UTIL;
 
 // # 싱글톤 #
@@ -72,6 +84,8 @@ using namespace MY_UTIL;
 #define SOUNDMANAGER SoundManager::getSingleton()
 #define TIMEMANAGER TimeManager::getSingleton()
 #define SCENEMANAGER SceneManager::getSingleton()
+#define INIDATA INIData::getSingleton()
+//#define JSONSAVELOADER JsonSaveLoader::getSingleton()
 #define CAMERA Camera::getSingleton()
 
 // # 매크로 # (윈도우창 초기화)

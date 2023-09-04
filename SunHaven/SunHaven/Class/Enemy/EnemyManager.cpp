@@ -1,16 +1,16 @@
 #include "stdafx.h"
 #include "EnemyManager.h"
-//#include "Enemy.h"
-//#include "Enemy2.h"
-//#include "Enemy3.h"
+#include "Shadeclaw.h"
 //#include "Rocket.h"
+#include "../Enemy/Player_Temp.h"
 
 HRESULT EnemyManager::init(void)
 {
 	setEnemy();
 
-	_bullet = new Bullet;
-	_bullet->init("적 미사일", 30, 1000);
+	/*_bullet = new Bullet;
+
+	_bullet->init("bullet", 100, 1000.0f);*/
 
 	return S_OK;
 }
@@ -24,8 +24,8 @@ void EnemyManager::release(void)
 		SAFE_DELETE(*_viEnemy);
 	}
 
-	_bullet->release();
-	SAFE_DELETE(_bullet);
+	//_bullet->release();
+	//SAFE_DELETE(_bullet);
 }
 
 void EnemyManager::update(void)
@@ -35,9 +35,9 @@ void EnemyManager::update(void)
 		(*_viEnemy)->update();
 	}
 
-	EnemyBulletFire();
-	_bullet->update();
-	collision();
+	//EnemyBulletFire();
+	//_bullet->update();
+	//collision();
 }
 
 void EnemyManager::render(void)
@@ -50,6 +50,15 @@ void EnemyManager::render(void)
 
 void EnemyManager::setEnemy(void)
 {
+	/*for (int i = 0; i < 2; i++)
+	{
+		Enemy* shadeclaw;
+		shadeclaw = new Enemy;
+		shadeclaw->init("Shadeclow_Idle", PointMake(500 + i * 100, 200));
+		_vEnemy.push_back(shadeclaw);
+	}*/
+
+
 	/*for (int i = 0; i < 3; i++)
 	{
 		for (int j = 0; j < 5; j++)
@@ -76,6 +85,17 @@ void EnemyManager::setEnemy(void)
 		jellyFish->init("해파리", PointMake(CENTER_X + 600 * cos(DEGREE_RADIAN(12 * i)), CENTER_Y - 700 + 600 * sin(DEGREE_RADIAN(12 * i))));
 		_vEnemy.push_back(jellyFish);
 	}*/
+}
+
+void EnemyManager::spawnShadeclaw(void)
+{
+	for (int i = 0; i < 2; i++)
+	{
+		Enemy* shadeclaw;
+		shadeclaw = new Shadeclaw;
+		shadeclaw->init(PointMake(500 + i * 100, 300));
+		_vEnemy.push_back(shadeclaw);
+	}
 }
 
 void EnemyManager::removeEnemy(int arrNum)

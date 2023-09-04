@@ -72,7 +72,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(IncludePath);$(SolutionDir)/SunHaven/FrameWork/PCH</IncludePath>
+    <IncludePath>$(IncludePath);$(SolutionDir)/SunHaven/FrameWork/PCH;C:\Users\ksy29\Documents\새 폴더\SunHaven\SunHaven\JsonCPP\include\json</IncludePath>
+    <LibraryPath>C:\Users\ksy29\Documents\새 폴더\SunHaven\SunHaven\JsonCPP\lib_json;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -92,12 +93,12 @@
       <ConformanceMode>false</ConformanceMode>
       <PrecompiledHeader>Create</PrecompiledHeader>
       <PrecompiledHeaderFile>Stdafx.h</PrecompiledHeaderFile>
-      <PrecompiledHeaderOutputFile>
-      </PrecompiledHeaderOutputFile>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>$(CoreLibraryDependencies);json_vc71_libmtd.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -147,10 +148,15 @@
   <ItemGroup>
     <ClCompile Include="Class\Boss\Dynus.cpp" />
     <ClCompile Include="Class\Bullets\Bullets.cpp" />
+    <ClCompile Include="Class\Enemy\Collision.cpp" />
     <ClCompile Include="Class\Enemy\Enemy.cpp" />
     <ClCompile Include="Class\Enemy\EnemyManager.cpp" />
     <ClCompile Include="Class\Enemy\FlameImp.cpp" />
     <ClCompile Include="Class\Enemy\MagmaBug.cpp" />
+    <ClCompile Include="DataScene.cpp" />
+    <ClCompile Include="Class\Data\JsonSaveLoader.cpp" />
+    <ClCompile Include="Class\Data\INIData.cpp" />
+    <ClCompile Include="Class\Enemy\Player_Temp.cpp" />
     <ClCompile Include="Scene\FarmScene.cpp" />
     <ClCompile Include="Scene\DynusScene.cpp" />
     <ClCompile Include="FrameWork\Animation\Animation.cpp" />
@@ -175,6 +181,7 @@
     <ClCompile Include="FrameWork\Utility\Utils.cpp" />
     <ClCompile Include="Class\Enemy\SteelSlug.cpp" />
     <ClCompile Include="Class\Enemy\TrapWeed.cpp" />
+    <ClCompile Include="Class\Enemy\Shadeclaw.cpp" />
     <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -184,6 +191,11 @@
     <ClInclude Include="Class\Enemy\EnemyManager.h" />
     <ClInclude Include="Class\Enemy\FlameImp.h" />
     <ClInclude Include="Class\Enemy\MagmaBug.h" />
+    <ClInclude Include="DataScene.h" />
+    <ClInclude Include="Class\Data\JsonSaveLoader.h" />
+    <ClInclude Include="Json\json.h" />
+    <ClInclude Include="Class\Data\INIData.h" />
+    <ClInclude Include="Class\Enemy\Player_Temp.h" />
     <ClInclude Include="Scene\FarmScene.h" />
     <ClInclude Include="Scene\DynusScene.h" />
     <ClInclude Include="FrameWork\Animation\Animation.h" />
@@ -211,6 +223,10 @@
     <ClInclude Include="FrameWork\Utility\Utils.h" />
     <ClInclude Include="Class\Enemy\SteelSlug.h" />
     <ClInclude Include="Class\Enemy\TrapWeed.h" />
+    <ClInclude Include="Class\Enemy\Shadeclaw.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Stdafx.pch" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

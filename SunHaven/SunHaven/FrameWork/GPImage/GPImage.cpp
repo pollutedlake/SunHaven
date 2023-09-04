@@ -26,7 +26,7 @@ HRESULT GPImage::init(char* fileName, int destX, int destY, int maxFrameX, int m
 	_gdiImg = new Gdiplus::Image(wstr);
 
 	_gdiInfo = new GDI_INFO;
-	_gdiInfo->x = destX;
+	_gdiInfo->x = destX;	
 	_gdiInfo->y = destY;
 	_gdiInfo->width = _gdiImg->GetWidth();
 	_gdiInfo->height = _gdiImg->GetHeight();

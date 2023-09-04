@@ -1,9 +1,10 @@
 #pragma once
 #include "../GameNode/GameNode.h"
-#include "../Boss/Dynus.h"
+//#include "../Boss/Dynus.h"
 #include "../Enemy/Enemy.h"
 #include "../Bullets/Bullets.h"
 
+class Player_Temp;
 class EnemyManager : public GameNode
 {
 private:
@@ -15,7 +16,7 @@ private:
 	viEnemy _viEnemy;
 
 	Bullet* _bullet;
-	//Rocket* _rocket;
+	Player_Temp* _player;
 
 public:
 	HRESULT init(void);
@@ -24,6 +25,7 @@ public:
 	void render(void);
 
 	void setEnemy(void);
+	void spawnShadeclaw(void);
 	void removeEnemy(int arrNum);
 
 	void EnemyBulletFire(void);
@@ -31,7 +33,7 @@ public:
 
 	vector<Enemy*> getEnemys(void) { return _vEnemy; }
 	Bullet* getBullet(void) { return _bullet; }
-	//void setRocketMemoryAddress(Rocket* rk) { _rocket = rk; }
+	void setPlayerMemoryAddress(Player_Temp* player) { _player = player; }
 
 	/*float getCenterX() { return _centerX; }
 	void setCenterX(float centerX) { _centerX = centerX; }
