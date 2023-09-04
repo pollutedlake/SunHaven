@@ -46,8 +46,8 @@ int APIENTRY WinMain(HINSTANCE hInstance,
         WINSTYLE,          
         WINSTART_X,        
         WINSTART_Y,        
-        MYWINSIZE_X,       
-        MYWINSIZE_Y,       
+        WINSIZE_X,       
+        WINSIZE_Y,       
         NULL,              
         (HMENU)NULL,       
         hInstance,         
@@ -55,7 +55,7 @@ int APIENTRY WinMain(HINSTANCE hInstance,
                            
     );
 
-    setWindowSize(WINSTART_X, WINSTART_Y, MYWINSIZE_X, MYWINSIZE_Y);
+    setWindowSize(WINSTART_X, WINSTART_Y, WINSIZE_X, WINSIZE_Y);
 
     ShowWindow(_hWnd, nCmdShow);
     if (FAILED(_mg->init()))

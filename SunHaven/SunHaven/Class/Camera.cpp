@@ -11,6 +11,7 @@ HRESULT Camera::init(void)
 
 void Camera::release(void)
 {
+	
 }
 
 void Camera::update(void)
@@ -103,14 +104,4 @@ float Camera::worldToCameraX(float x)
 float Camera::worldToCameraY(float y)
 {
 	return WINSIZE_Y / 2 - (_position.y - y);
-}
-
-float Camera::getXScreen(float x)
-{
-	return MYWINSIZE_X * x / WINSIZE_X;
-}
-
-float Camera::getYScreen(float y)
-{
-	return MYWINSIZE_Y * y / WINSIZE_Y;
 }

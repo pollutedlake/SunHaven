@@ -16,8 +16,6 @@ HRESULT TitleScene::init(void)
     _isDone.reset();
     _isDone.set(0, true);
 
-    cout << MYWINSIZE_X << "\t" << MYWINSIZE_Y << endl;
-
     return S_OK;
 }
 
@@ -95,7 +93,7 @@ void TitleScene::update(void)
 
 void TitleScene::render(void)
 {
-    IMAGEMANAGER->render("TitleBG", getMemDC(), 0, 0, 225, 0, MYWINSIZE_X, MYWINSIZE_Y);   // 클리핑
+    IMAGEMANAGER->render("TitleBG", getMemDC(), 0, 0, 225, 0, WINSIZE_X, WINSIZE_Y);   // 클리핑
     IMAGEMANAGER->GPFrameRender("TitleLogo", getMemDC(),
         265, 70 + _yOffset, 0.28, 0.28,
         IMAGEMANAGER->findGPImage("TitleLogo")->getFrameX(), IMAGEMANAGER->findGPImage("TitleLogo")->getFrameY(),

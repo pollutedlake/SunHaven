@@ -51,7 +51,7 @@ void DynusScene::render(void)
 	//IMAGEMANAGER->render("StarShader", getMemDC(), 0, 400);
 	IMAGEMANAGER->render("StarShaderTest", getMemDC(), 0, 0);
 	//IMAGEMANAGER->alphaRender("BlueStarFill", getMemDC(), 0, 0, 200);
-	IMAGEMANAGER->render("DynusLayer0", getMemDC(), 0, 0, 30, 95, MYWINSIZE_X, MYWINSIZE_Y);
+	IMAGEMANAGER->render("DynusLayer0", getMemDC(), 0, 0, 30, 95, WINSIZE_X, WINSIZE_Y);
 	_dynus->render();
 	_player->render();
 	_em->render();

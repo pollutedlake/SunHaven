@@ -46,10 +46,6 @@ HRESULT MapToolScene::init(void)
 	_tileMapBuffer = IMAGEMANAGER->addImage("TileMapBuffer", TILEWIDTH * _tileMapSize, TILEWIDTH * _tileMapSize, true, RGB(255, 255, 255));
 	_tilesBuffer = IMAGEMANAGER->addImage("TilesBuffer", TILEWIDTH * 10, TILEHEIGHT  * 10);
 	_collisionBuffer = IMAGEMANAGER->addImage("CollisionBuffer", TILEWIDTH * _tileMapSize, TILEWIDTH * _tileMapSize, true,  RGB(0, 0, 0));
-	CAMERA->init();
-	CAMERA->setPosition({ WINSIZE_X / 2, WINSIZE_Y / 2 });
-	CAMERA->setLimitRight(_tileMapSize * TILEWIDTH - MapToolWidth / 2);
-	CAMERA->setLimitBottom(_tileMapSize * TILEHEIGHT - MapToolHeight / 2);
 	_cameraPos = { MapToolWidth / 2, MapToolHeight  / 2};
 
 	NormalButton* nomalButton = new NormalButton;
@@ -124,7 +120,6 @@ void MapToolScene::release(void)
 
 void MapToolScene::update(void)
 {
-	CAMERA->update();
 	for (_viNormalButton = _vNormalButton.begin(); _viNormalButton != _vNormalButton.end(); ++_viNormalButton)
 	{
 		(*_viNormalButton)->update();

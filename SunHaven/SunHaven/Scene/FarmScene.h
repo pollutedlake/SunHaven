@@ -2,12 +2,14 @@
 #pragma once
 #include "../FrameWork/GameNode/GameNode.h"
 #include "../Player/Player.h"
-
+#include "../Class/Camera.h"
 
 class FarmScene : public GameNode
 {
 private:
 	Player* _player;
+	GImage* _bg;
+	Camera* _camera;
 
 public:
 	HRESULT init(void);

@@ -71,7 +71,6 @@ ID2D1HwndRenderTarget* _ID2DRanderTarget = nullptr;*/
 #include "../../Manager/SceneManager.h"
 #include "../../Class/Data/INIData.h"
 //#include "../../Class/Data/JsonSaveLoader.h"
-#include "../../Class/Camera.h"
 #include "../Utility/Utils.h"
 
 using namespace MY_UTIL;
@@ -86,7 +85,6 @@ using namespace MY_UTIL;
 #define SCENEMANAGER SceneManager::getSingleton()
 #define INIDATA INIData::getSingleton()
 //#define JSONSAVELOADER JsonSaveLoader::getSingleton()
-#define CAMERA Camera::getSingleton()
 
 // # 매크로 # (윈도우창 초기화)
 #define WINNAME					(LPTSTR)(TEXT("WindowsAPI"))
@@ -96,8 +94,6 @@ using namespace MY_UTIL;
 #define WINSIZE_Y				720
 #define CENTER_X				WINSIZE_X / 2
 #define CENTER_Y				WINSIZE_Y / 2
-#define MYWINSIZE_X				1280
-#define MYWINSIZE_Y				720
 #define TILEWIDTH				24
 #define TILEHEIGHT				24
 
