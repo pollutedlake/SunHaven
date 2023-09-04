@@ -1,8 +1,32 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
+    <ClCompile Include="Class\Boss\Dynus.cpp" />
+    <ClCompile Include="Class\Bullets\Bullets.cpp" />
+    <ClCompile Include="Class\Enemy\Enemy.cpp" />
+    <ClCompile Include="Class\Enemy\EnemyManager.cpp" />
+    <ClCompile Include="Scene\FarmScene.cpp" />
+    <ClCompile Include="Scene\DynusScene.cpp" />
+    <ClCompile Include="FrameWork\Animation\Animation.cpp" />
+    <ClCompile Include="Class\Camera.cpp" />
+    <ClCompile Include="Manager\FontManager.cpp" />
+    <ClCompile Include="FrameWork\GameNode\GameNode.cpp" />
+    <ClCompile Include="FrameWork\GImage\GImage.cpp" />
+    <ClCompile Include="FrameWork\GPImage\GPImage.cpp" />
+    <ClCompile Include="Manager\ImageManager.cpp" />
+    <ClCompile Include="Manager\KeyManager.cpp" />
     <ClCompile Include="MainGame.cpp" />
+    <ClCompile Include="Scene\MapToolScene.cpp" />
     <ClCompile Include="Resources.cpp" />
+    <ClCompile Include="Manager\SceneManager.cpp" />
+    <ClCompile Include="Manager\SoundManager.cpp" />
+    <ClCompile Include="FrameWork\PCH\Stdafx.cpp" />
+    <ClCompile Include="Manager\TimeManager.cpp" />
+    <ClCompile Include="FrameWork\Timer\Timer.cpp" />
+    <ClCompile Include="Scene\TitleScene.cpp" />
+    <ClCompile Include="Scene\ShopScene.cpp" />
+    <ClCompile Include="Scene\TownScene.cpp" />
+    <ClCompile Include="FrameWork\Utility\Utils.cpp" />
     <ClCompile Include="WinMain.cpp" />
     <ClCompile Include="FrameWork\Animation\Animation.cpp">
       <Filter>FrameWork\Animation</Filter>
@@ -70,7 +94,24 @@
     <ClCompile Include="Player\Player.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Class\Boss\Dynus.h" />
+    <ClInclude Include="Class\Bullets\Bullets.h" />
+    <ClInclude Include="Class\Enemy\Enemy.h" />
+    <ClInclude Include="Class\Enemy\EnemyManager.h" />
+    <ClInclude Include="Scene\FarmScene.h" />
+    <ClInclude Include="Scene\DynusScene.h" />
+    <ClInclude Include="FrameWork\Animation\Animation.h" />
+    <ClInclude Include="Class\Camera.h" />
+    <ClInclude Include="FrameWork\Utility\CommonMacroFunction.h" />
+    <ClInclude Include="Manager\FontManager.h" />
+    <ClInclude Include="FrameWork\GameNode\GameNode.h" />
+    <ClInclude Include="FrameWork\GImage\GImage.h" />
+    <ClInclude Include="FrameWork\GPImage\GPImage.h" />
+    <ClInclude Include="Manager\ImageManager.h" />
+    <ClInclude Include="Manager\KeyManager.h" />
     <ClInclude Include="MainGame.h" />
+    <ClInclude Include="Scene\MapToolScene.h" />
+    <ClInclude Include="FrameWork\Utility\RandomFunction.h" />
     <ClInclude Include="Resources.h" />
     <ClInclude Include="FrameWork\Animation\Animation.h">
       <Filter>FrameWork\Animation</Filter>
@@ -147,42 +188,7 @@
     <ClInclude Include="Player\Player.h" />
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="FrameWork">
-      <UniqueIdentifier>{15d6fe40-000a-46ad-a7c9-1009d23861ff}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="FrameWork\PCH">
-      <UniqueIdentifier>{8c37e851-4e62-41e1-93ea-7732029bb9fe}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="FrameWork\SingletonBase">
-      <UniqueIdentifier>{0962e03e-c4a3-4ca2-84e2-3f55886c6626}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="FrameWork\Utility">
-      <UniqueIdentifier>{ea268e37-c011-480d-9f43-eb125bf77085}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="FrameWork\GameNode">
-      <UniqueIdentifier>{446fcf28-aea4-4324-84ba-6f9c5ffcbd37}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Manager">
-      <UniqueIdentifier>{8cfa63bb-e249-4ee1-9432-d625500ee63b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="FrameWork\GImage">
-      <UniqueIdentifier>{80cf313b-21c7-412c-a717-6296db003b69}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="FrameWork\GPImage">
-      <UniqueIdentifier>{dbeaf4f9-155b-4d0b-9424-4325089cb97f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Class">
-      <UniqueIdentifier>{42fb1f39-7ebd-468f-8956-516aa699cda0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="FrameWork\Animation">
-      <UniqueIdentifier>{21f8195d-bd65-4bd3-be2c-4ecc72d7f082}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Scene">
-      <UniqueIdentifier>{1e02d9bb-a82d-4858-a0b3-56ab8573976f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="FrameWork\Timer">
-      <UniqueIdentifier>{3ad3bb0a-fe43-4469-8be8-b505ebdb3e74}</UniqueIdentifier>
-    </Filter>
+    <None Include="Stdafx.pch" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Stdafx.pch" />

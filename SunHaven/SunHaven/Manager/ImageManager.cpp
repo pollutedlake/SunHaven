@@ -95,7 +95,7 @@ GImage* ImageManager::addFrameImage(string strKey, const char* fileName, float x
 	return img;
 }
 
-GPImage* ImageManager::addGPFrameImage(string strKey, char* fileName, int destX, int destY, int maxFrameX, int maxFrameY, bool isTrans, COLORREF lowColor, COLORREF highColor, Gdiplus::RotateFlipType rotateFlipType)
+GPImage* ImageManager::addGPFrameImage(string strKey, char* fileName, int destX, int destY, int maxFrameX, int maxFrameY, bool isTrans, COLORREF color, Gdiplus::RotateFlipType rotateFlipType)
 {
 	GPImage* img = findGPImage(strKey);
 
@@ -103,7 +103,7 @@ GPImage* ImageManager::addGPFrameImage(string strKey, char* fileName, int destX,
 
 	img = new GPImage;
 
-	if (FAILED(img->init(fileName, destX, destY, maxFrameX, maxFrameY, isTrans, lowColor, highColor, rotateFlipType)))
+	if (FAILED(img->init(fileName, destX, destY, maxFrameX, maxFrameY, isTrans, color, rotateFlipType)))
 	{
 		cout << strKey << endl;
 		SAFE_DELETE(img);
