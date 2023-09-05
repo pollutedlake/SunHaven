@@ -14,14 +14,42 @@ HRESULT Player::init(float x, float y)
 		_playerImage->getHeight(),
 		48, 52);
 
-	_playerMoveAnim->setFPS(7);
+	_playerMoveAnim->setFPS(4);
 
 	_playerRC = RectMakeCenter(_x, _y,
 		_playerMoveAnim->getFrameWidth(),
 		_playerMoveAnim->getFrameHeight());
 
-	/*_playerRC = RectMakeCenter(_x,_y,
-		50,50);*/
+	_isCollisionLeft = _isCollisionRight =
+		_isCollisionTop =_isCollisionBottom = false;
+	_moveSpeed = 2.0f;
+
+
+
+
+
+
+
+	_fireball = IMAGEMANAGER->addImage("파이어볼",
+		"Resources/Images/Player/Fireball.bmp",
+		288, 40, true, RGB(255, 0, 255));
+	_fireballAnim = new Animation;
+	_fireballAnim->init(_fireball->getWidth(),
+		_fireball->getHeight(),
+		48, 20);
+
+	_fireballAnim->setFPS(8);
+
+	_fireballRC = RectMakeCenter(_x, _y,
+		_fireballAnim->getFrameWidth(),
+		_fireballAnim->getFrameHeight());
+
+	_fireballAnim->setPlayFrame(0, 5, false, true);
+
+
+
+
+
 
 
 	_miniRC[0] = RectMake(_playerRC.left, _playerRC.top - 3, 3, 3);
@@ -47,24 +75,39 @@ void Player::update(void)
 		_playerMoveAnim->AniStart();
 	}
 
+
+
+	COLORREF stairCol =
+		GetPixel(IMAGEMANAGER->findImage("충돌")->getMemDC(),
+			_x, _y);
+	
+
 	if (KEYMANAGER->isStayKeyDown(VK_LEFT))
 	{
-		_x -= 3;
+		_x -= _moveSpeed;
+		if (stairCol == RGB(2, 62, 156))
+		{
+			_y -= _moveSpeed;
+		}
 		_playerMoveAnim->setPlayFrame(5, 9, false, true);
 	}
 	else if (KEYMANAGER->isStayKeyDown(VK_RIGHT))
 	{
-		_x += 3;
+		_x += _moveSpeed;
+		if (stairCol == RGB(2, 62, 156))
+		{
+			_y += _moveSpeed;
+		}
 		_playerMoveAnim->setPlayFrame(15, 19, false, true);
 	}
 	else if (KEYMANAGER->isStayKeyDown(VK_UP))
 	{
-		_y -= 3;
+		_y -= _moveSpeed;
 		_playerMoveAnim->setPlayFrame(10, 14, false, true);
 	}
 	else if (KEYMANAGER->isStayKeyDown(VK_DOWN))
 	{
-		_y += 3;
+		_y += _moveSpeed;
 		_playerMoveAnim->setPlayFrame(0, 4, false, true);
 	}
 	else
@@ -72,67 +115,103 @@ void Player::update(void)
 		_playerMoveAnim->AniStop();
 	}
 
+	
+
+	if (KEYMANAGER->isOnceKeyDown('Z'))
+	{
+		_fireballAnim->AniStart();
+	}
+
+	if (_fireballAnim->isPlay())
+	{
+		cout << "발사";
+		_fireballRC.left += 5;
+		_fireballRC.right += 5;
+	}
+
+
 	_playerRC = RectMakeCenter(_x, _y,
 		_playerMoveAnim->getFrameWidth(),
 		_playerMoveAnim->getFrameHeight());
 
+	_fireballRC = RectMakeCenter(_x, _y,
+		_fireballAnim->getFrameWidth(),
+		_fireballAnim->getFrameHeight());
 
-	for (int i = _playerRC.left; i < _playerRC.right; i++)
+	for (int i = _playerRC.left+4; i <= _playerRC.right-4; i++)
 	{
-		COLORREF collision =
+		COLORREF collisionT =
 			GetPixel(IMAGEMANAGER->findImage("충돌")->getMemDC(),
 				i, _playerRC.top);
-
-		if (collision == RGB(255, 0, 255))
-		{
-			cout << "충돌1";
-		}
-	}
-
-	for (int i = _playerRC.top; i < _playerRC.bottom; i++)
-	{
-		COLORREF collision =
-			GetPixel(IMAGEMANAGER->findImage("충돌")->getMemDC(),
-				_playerRC.right,i);
-
-		if (collision == RGB(255, 0, 255))
-		{
-			cout << "충돌2";
-		}
-	}
-
-	for (int i = _playerRC.left; i < _playerRC.right; i++)
-	{
-		COLORREF collision =
+		COLORREF collisionB =
 			GetPixel(IMAGEMANAGER->findImage("충돌")->getMemDC(),
 				i, _playerRC.bottom);
 
-		if (collision == RGB(255, 0, 255))
+		if (collisionT == RGB(255, 0, 255))
 		{
-			cout << "충돌3";
+			_isCollisionTop = true;
+		}
+		else
+		{
+			_isCollisionTop = false;
+		}
+
+		if (collisionB == RGB(255, 0, 255))
+		{
+			_isCollisionBottom = true;
+		}
+		else
+		{
+			_isCollisionBottom = false;
 		}
 	}
 
-	for (int i = _playerRC.top; i < _playerRC.bottom; i++)
+	for (int i = _playerRC.top + 4; i <= _playerRC.bottom - 4; i++)
 	{
-		COLORREF collision =
+		COLORREF collisionL =
 			GetPixel(IMAGEMANAGER->findImage("충돌")->getMemDC(),
 				_playerRC.left, i);
 
-		if (collision == RGB(255, 0, 255))
+		COLORREF collisionR =
+			GetPixel(IMAGEMANAGER->findImage("충돌")->getMemDC(),
+				_playerRC.right, i);
+
+		if (collisionL == RGB(255, 0, 255))
 		{
-			cout << "충돌4";
+			_isCollisionLeft = true;
+			
+		}
+		else
+		{
+			_isCollisionLeft = false;
+		}
+
+		if (collisionR == RGB(255, 0, 255))
+		{
+			_isCollisionRight = true;
+		}
+		else
+		{
+			_isCollisionRight = false;
 		}
 	}
 
+	
+
+	if (_isCollisionLeft) _x += 2;
+	if (_isCollisionRight) _x -= 2;
+	if (_isCollisionTop) _y += 2;
+	if (_isCollisionBottom) _y -= 2;
 
 	_playerMoveAnim->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);
+	_fireballAnim->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);
 }
 
 void Player::render(void)
 {
-	//DrawRectMake(getMemDC(), _playerRC);
-
+	DrawRectMake(getMemDC(), _fireballRC);
+	_fireball->aniRender(getMemDC(), _fireballRC.left, _fireballRC.top,
+		_fireballAnim);
 	_playerImage->aniRender(getMemDC(), _playerRC.left, _playerRC.top, _playerMoveAnim);
 
 	/*DrawRectMake(getMemDC(), _miniRC[0]);

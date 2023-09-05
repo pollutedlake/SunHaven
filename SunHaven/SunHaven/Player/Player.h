@@ -2,6 +2,18 @@
 #include "../FrameWork/GameNode/GameNode.h"
 #include "../FrameWork/Animation/Animation.h"
 
+struct tagPlayerState
+{
+	float playerSpeed;
+	int HP;
+	int MP;
+
+	int mineEXP;
+	int combatEXP;
+	int farmingEXP;
+};
+
+
 class Player : public GameNode
 {
 private:
@@ -11,7 +23,17 @@ private:
 
 	RECT _miniRC[4];
 
+	GImage* _fireball;
+	Animation* _fireballAnim;
+	RECT _fireballRC;
+
 	float _x, _y;
+	float _moveSpeed;
+
+	bool _isCollisionLeft;
+	bool _isCollisionRight;
+	bool _isCollisionTop;
+	bool _isCollisionBottom;
 
 
 public:
@@ -35,7 +57,9 @@ public:
 
 	void worldToCamera(POINT position)
 	{
-		_playerRC = RectMakeCenter(position.x, position.y, 50, 50);
+		_playerRC = RectMakeCenter(position.x, position.y,
+			_playerMoveAnim->getFrameWidth(),
+			_playerMoveAnim->getFrameHeight());
 	}
 
 	Player() {}

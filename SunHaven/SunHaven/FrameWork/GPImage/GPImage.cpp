@@ -25,7 +25,6 @@ HRESULT GPImage::init(char* fileName, int destX, int destY, int maxFrameX, int m
 	WCHAR* wstr = A2W(fileName);
 	_gdiImg = new Bitmap(wstr);
 
-	_gdiInfo = new GDI_INFO;
 	_gdiInfo->x = destX;
 	_gdiInfo->y = destY;
 	_gdiInfo->hMemDC = CreateCompatibleDC(hdc);

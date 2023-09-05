@@ -11,6 +11,7 @@ HRESULT FarmScene::init(void)
 	_player = new Player;
 	_player->init(1600,1600);
 
+
 	_camera = new Camera;
 	_camera->init();
 	_camera->setPosition(_player->getPlayerPosition());
@@ -20,7 +21,7 @@ HRESULT FarmScene::init(void)
 
 
 
-	_player->setPlayerPosition(PointMake(3200, 1600));
+	_player->setPlayerPosition(PointMake(1600, 2800));
 
 
 
