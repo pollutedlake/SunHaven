@@ -8,9 +8,9 @@
 
 enum TileType
 {
-	Normal,
-	CANTGO,
-	STAIRS
+	NORMAL,
+	COLLIDER,
+	OBJECT
 };
 
 struct Tile
@@ -18,6 +18,7 @@ struct Tile
 	GImage* _image = nullptr;
 	int _tile = 0;
 	TileType _type;
+	LivingObjectType _livObjectType;
 };
 
 class NormalButton;
@@ -28,7 +29,7 @@ class MapToolScene : public GameNode
 {
 private:
 	GImage* _tileMapBuffer;
-	Tile _tileMap[6][100][100];
+	Tile _tileMap[7][100][100];
 	vector<Object*> _objectList;
 	vector<Object*>::iterator _itObjectList;
 	

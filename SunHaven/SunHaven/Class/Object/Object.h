@@ -20,6 +20,7 @@ private:
 	RECT _rc;
 	int _offsetX;
 	int _offsetY;
+	float _cx, _cy;
 
 public:
 	HRESULT init(void);
@@ -29,6 +30,7 @@ public:
 	void render(void);
 	void render(HDC hdc);
 
+	void updateCameraPos(float cx, float cy);
 	void renderToMouse();
 	void setTilePos(POINT tilePos) {_tilePos = tilePos;}
 	POINT getTilePos() {return _tilePos;}

@@ -12,7 +12,7 @@ HRESULT MapToolScene::init(void)
 	_layer = 0;
 	_curTiles = 0;
 	_tileMapSize = 100;
-	for(int i = 0; i < 6; i++)
+	for(int i = 0; i < 7; i++)
 	{
 		for (int j = 0; j < _tileMapSize; j++)
 		{
@@ -26,7 +26,7 @@ HRESULT MapToolScene::init(void)
 			ZeroMemory(&_tiles, sizeof(_tiles[i][j]) * 10);
 		}
 	}
-	for (int i = 0; i < 6; i++)
+	for (int i = 0; i < 7; i++)
 	{
 		_showLayer[i] = false;
 	}
@@ -41,6 +41,7 @@ HRESULT MapToolScene::init(void)
 				wsprintf(_tileName, "Tile%d-%d", k + 1, i * 10 + (j + 1));
 				_tiles[k][i][j]._image = IMAGEMANAGER->findImage(_tileName);
 				_tiles[k][i][j]._tile = (k + 1) * 1000 + 10 * i + j + 1;
+				_tiles[k][i][j]._type = NORMAL;
 			}
 		}
 	}

@@ -106,6 +106,7 @@
     <ClCompile Include="Class\Object\Tree.cpp" />
     <ClCompile Include="Class\Object\Rock.cpp" />
     <ClCompile Include="Class\Object\Grass.cpp" />
+    <ClCompile Include="Class\Object\ObjectManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Class\Boss\Dynus.h" />
@@ -194,6 +195,7 @@
     <ClInclude Include="Class\Object\Tree.h" />
     <ClInclude Include="Class\Object\Rock.h" />
     <ClInclude Include="Class\Object\Grass.h" />
+    <ClInclude Include="Class\Object\ObjectManager.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Stdafx.pch" />
@@ -215,6 +217,7 @@
   <ItemGroup>
     <Text Include="FarmMap.txt" />
     <Text Include="Debug\SunHaven.log" />
+    <Text Include="FarmMapObject.txt" />
   </ItemGroup>
   <ItemGroup>
     <Object Include="Debug\Animation.obj" />
