@@ -1,6 +1,7 @@
 // ¹Ú»óÇö
 #pragma once
 #include "../FrameWork/GameNode/GameNode.h"
+#include "../Class/Object/Object.h"
 
 #define MapToolWidth	800
 #define MapToolHeight	600
@@ -28,6 +29,8 @@ class MapToolScene : public GameNode
 private:
 	GImage* _tileMapBuffer;
 	Tile _tileMap[6][100][100];
+	vector<Object*> _objectList;
+	vector<Object*>::iterator _itObjectList;
 	
 	int _tileMapSize;
 
@@ -44,6 +47,9 @@ private:
 	vector<RadioButton*>::iterator _viRadioButton;
 
 	Tile _selectTiles[MapToolWidth / TILEWIDTH + 1][MapToolHeight / TILEHEIGHT + 1];
+	Object* _selectObject;
+	bool _isSelectObject;
+
 	POINT _cameraPos;
 	char _tileSizeChar[20];
 	bool _input;
@@ -74,8 +80,10 @@ public:
 	void nextTiles(void);
 	void erase(void);
 	void toggleShowLayer(int layer);
+	void selectObject(int objectType);
 
 	void copyTiles(void);
+	void sortObjects(int start, int end);
 
 	void saveMaps();
 	void loadLayers();

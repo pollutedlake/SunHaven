@@ -159,7 +159,9 @@
     <ClCompile Include="Class\Enemy\Player_Temp.cpp" />
     <ClCompile Include="Class\Inventory.cpp" />
     <ClCompile Include="Class\Item.cpp" />
+    <ClCompile Include="Class\Object\Grass.cpp" />
     <ClCompile Include="Player\Player.cpp" />
+    <ClCompile Include="Class\Object\Rock.cpp" />
     <ClCompile Include="Scene\FarmScene.cpp" />
     <ClCompile Include="Scene\DynusScene.cpp" />
     <ClCompile Include="FrameWork\Animation\Animation.cpp" />
@@ -186,6 +188,7 @@
     <ClCompile Include="Class\Enemy\TrapWeed.cpp" />
     <ClCompile Include="Class\Enemy\Shadeclaw.cpp" />
     <ClCompile Include="Class\UI.cpp" />
+    <ClCompile Include="Class\Object\Tree.cpp" />
     <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -198,12 +201,14 @@
     <ClInclude Include="Class\Object\Object.h" />
     <ClInclude Include="DataScene.h" />
     <ClInclude Include="Class\Data\JsonSaveLoader.h" />
+    <ClInclude Include="Class\Object\Grass.h" />
     <ClInclude Include="Json\json.h" />
     <ClInclude Include="Class\Data\INIData.h" />
     <ClInclude Include="Class\Enemy\Player_Temp.h" />
     <ClInclude Include="Class\Inventory.h" />
     <ClInclude Include="Class\Item.h" />
     <ClInclude Include="Player\Player.h" />
+    <ClInclude Include="Class\Object\Rock.h" />
     <ClInclude Include="Scene\FarmScene.h" />
     <ClInclude Include="Scene\DynusScene.h" />
     <ClInclude Include="FrameWork\Animation\Animation.h" />
@@ -232,6 +237,7 @@
     <ClInclude Include="Class\Enemy\SteelSlug.h" />
     <ClInclude Include="Class\Enemy\TrapWeed.h" />
     <ClInclude Include="Class\Enemy\Shadeclaw.h" />
+    <ClInclude Include="Class\Object\Tree.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Class\UI.h" />
