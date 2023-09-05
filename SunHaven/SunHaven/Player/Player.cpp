@@ -6,6 +6,11 @@ HRESULT Player::init(float x, float y)
 	_x = x;
 	_y = y;
 
+	_inven = new Inventory;
+	_inven->init();
+
+
+
 	_playerImage = IMAGEMANAGER->addImage("임시플레이어",
 		"Resources/Images/Player/kittywalk.bmp",
 		960, 52, true, RGB(255, 0, 255));
@@ -62,11 +67,13 @@ HRESULT Player::init(float x, float y)
 
 void Player::release(void)
 {
-
+	_inven->release();
 }
 
 void Player::update(void)
 {
+	_inven->update();
+
 	if (KEYMANAGER->isOnceKeyDown(VK_LEFT) ||
 		KEYMANAGER->isOnceKeyDown(VK_RIGHT) ||
 		KEYMANAGER->isOnceKeyDown(VK_UP) ||
@@ -74,8 +81,6 @@ void Player::update(void)
 	{
 		_playerMoveAnim->AniStart();
 	}
-
-
 
 	COLORREF stairCol =
 		GetPixel(IMAGEMANAGER->findImage("충돌")->getMemDC(),
@@ -209,11 +214,13 @@ void Player::update(void)
 
 void Player::render(void)
 {
+
 	DrawRectMake(getMemDC(), _fireballRC);
 	_fireball->aniRender(getMemDC(), _fireballRC.left, _fireballRC.top,
 		_fireballAnim);
 	_playerImage->aniRender(getMemDC(), _playerRC.left, _playerRC.top, _playerMoveAnim);
 
+	_inven->render();
 	/*DrawRectMake(getMemDC(), _miniRC[0]);
 	DrawRectMake(getMemDC(), _miniRC[1]);
 	DrawRectMake(getMemDC(), _miniRC[2]);

@@ -1,6 +1,7 @@
 #pragma once
 #include "../FrameWork/GameNode/GameNode.h"
 #include "../FrameWork/Animation/Animation.h"
+#include "../Class/Inventory.h"
 
 struct tagPlayerState
 {
@@ -26,6 +27,10 @@ private:
 	GImage* _fireball;
 	Animation* _fireballAnim;
 	RECT _fireballRC;
+
+
+	Inventory* _inven;
+
 
 	float _x, _y;
 	float _moveSpeed;
