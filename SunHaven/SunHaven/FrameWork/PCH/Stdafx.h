@@ -7,13 +7,16 @@
 
 #pragma comment (lib, "msimg32.lib")
 //#pragma comment (lib, "JsonCPP/lib_json/json_vc71_libmtd.lib")
-#pragma comment (lib, "fmodex_vc")
-
+#pragma comment (lib, "lib/FMOD/fmodex_vc.lib")
+#pragma comment(lib,"Winmm.lib")
 #include <windows.h>
 
 // 외부 헤더파일
 //#include "../../JsonCPP/include/json/json.h"
 #include "../../inc/FMOD/fmod.hpp"
+
+#include <mmsystem.h>
+
 
 #include <stdlib.h>
 #include <malloc.h>

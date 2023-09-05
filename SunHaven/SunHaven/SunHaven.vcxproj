@@ -174,7 +174,9 @@
     <ClCompile Include="Scene\MapToolScene.cpp" />
     <ClCompile Include="Resources.cpp" />
     <ClCompile Include="Manager\SceneManager.cpp" />
-    <ClCompile Include="Manager\SoundManager.cpp" />
+    <ClCompile Include="Manager\SoundManager.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="FrameWork\PCH\Stdafx.cpp" />
     <ClCompile Include="Manager\TimeManager.cpp" />
     <ClCompile Include="FrameWork\Timer\Timer.cpp" />
@@ -197,13 +199,7 @@
     <ClInclude Include="Class\Enemy\MagmaBug.h" />
     <ClInclude Include="DataScene.h" />
     <ClInclude Include="Class\Data\JsonSaveLoader.h" />
-    <ClInclude Include="inc\FMOD\fmod.h" />
     <ClInclude Include="inc\FMOD\fmod.hpp" />
-    <ClInclude Include="inc\FMOD\fmod_codec.h" />
-    <ClInclude Include="inc\FMOD\fmod_dsp.h" />
-    <ClInclude Include="inc\FMOD\fmod_errors.h" />
-    <ClInclude Include="inc\FMOD\fmod_memoryinfo.h" />
-    <ClInclude Include="inc\FMOD\fmod_output.h" />
     <ClInclude Include="Json\json.h" />
     <ClInclude Include="Class\Data\INIData.h" />
     <ClInclude Include="Class\Enemy\Player_Temp.h" />
@@ -227,7 +223,9 @@
     <ClInclude Include="Resources.h" />
     <ClInclude Include="Manager\SceneManager.h" />
     <ClInclude Include="FrameWork\SingletonBase\SingletonBase.h" />
-    <ClInclude Include="Manager\SoundManager.h" />
+    <ClInclude Include="Manager\SoundManager.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="Manager\TimeManager.h" />
     <ClInclude Include="FrameWork\Timer\Timer.h" />
     <ClInclude Include="Scene\TitleScene.h" />
@@ -255,14 +253,11 @@
     <None Include="Debug\vc142.idb" />
     <None Include="Debug\vc142.pdb" />
     <None Include="fmodex.dll" />
-    <None Include="fmodex64.dll" />
-    <None Include="fmodexL.dll" />
     <None Include="Stdafx.pch" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Debug\SunHaven.log" />
     <Text Include="FarmMap.txt" />
-    <Text Include="lib\FMOD\which library do I use.txt" />
   </ItemGroup>
   <ItemGroup>
     <Object Include="Debug\Animation.obj" />
@@ -295,13 +290,6 @@
     <Image Include="FarmMapCollision.bmp" />
   </ItemGroup>
   <ItemGroup>
-    <Library Include="lib\FMOD\fmodex64_vc.lib" />
-    <Library Include="lib\FMOD\fmodexL64_vc.lib" />
-    <Library Include="lib\FMOD\fmodexL_bc.lib" />
-    <Library Include="lib\FMOD\fmodexL_lcc.lib" />
-    <Library Include="lib\FMOD\fmodexL_vc.lib" />
-    <Library Include="lib\FMOD\fmodex_bc.lib" />
-    <Library Include="lib\FMOD\fmodex_lcc.lib" />
     <Library Include="lib\FMOD\fmodex_vc.lib" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -24,7 +24,7 @@ public:
 	inline float getElapsedTime(void) const { return _timeElapsed; }
 	inline float getWorldTime(void) const { return _worldTime; }
 
-	Timer();
-	~Timer();
+	Timer(){}
+	~Timer(){}
 };
 

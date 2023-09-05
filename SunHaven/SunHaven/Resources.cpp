@@ -26,6 +26,7 @@ HRESULT Resources::init(void)
 		true, RGB(255, 0, 255));	// Ä¿¼­
 
 	// Sound
+	SOUNDMANAGER->addSound("Main_Menu_Final", "Resources/Sound/Main_Menu_Final.wav", true, true);
 
 	// ====================MapToolScene====================
 	// Image

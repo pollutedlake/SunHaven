@@ -1,9 +1,9 @@
 #include "Stdafx.h"
-#include "../Manager/SoundManager.h"
+#include "SoundManager.h"
 
 SoundManager::SoundManager() : _system(nullptr),
-_channel(nullptr),
-_sound(nullptr)
+							   _channel(nullptr),
+							   _sound(nullptr)
 {
 
 }
@@ -198,4 +198,3 @@ bool SoundManager::isPauseSound(string keyName)
 	return isPause;
 
 }
-

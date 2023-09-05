@@ -186,19 +186,11 @@
     <ClInclude Include="Class\Enemy\SteelSlug.h" />
     <ClInclude Include="Class\Enemy\TrapWeed.h" />
     <ClInclude Include="Class\Enemy\Shadeclaw.h" />
-    <ClInclude Include="inc\FMOD\fmod.h" />
     <ClInclude Include="inc\FMOD\fmod.hpp" />
-    <ClInclude Include="inc\FMOD\fmod_codec.h" />
-    <ClInclude Include="inc\FMOD\fmod_dsp.h" />
-    <ClInclude Include="inc\FMOD\fmod_errors.h" />
-    <ClInclude Include="inc\FMOD\fmod_memoryinfo.h" />
-    <ClInclude Include="inc\FMOD\fmod_output.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Stdafx.pch" />
     <None Include="fmodex.dll" />
-    <None Include="fmodexL.dll" />
-    <None Include="fmodex64.dll" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Stdafx.pch" />
@@ -217,7 +209,6 @@
   <ItemGroup>
     <Text Include="FarmMap.txt" />
     <Text Include="Debug\SunHaven.log" />
-    <Text Include="lib\FMOD\which library do I use.txt" />
   </ItemGroup>
   <ItemGroup>
     <Object Include="Debug\Animation.obj" />
@@ -250,13 +241,6 @@
     <Image Include="FarmMapCollision.bmp" />
   </ItemGroup>
   <ItemGroup>
-    <Library Include="lib\FMOD\fmodex_bc.lib" />
-    <Library Include="lib\FMOD\fmodex_lcc.lib" />
     <Library Include="lib\FMOD\fmodex_vc.lib" />
-    <Library Include="lib\FMOD\fmodex64_vc.lib" />
-    <Library Include="lib\FMOD\fmodexL_bc.lib" />
-    <Library Include="lib\FMOD\fmodexL_lcc.lib" />
-    <Library Include="lib\FMOD\fmodexL_vc.lib" />
-    <Library Include="lib\FMOD\fmodexL64_vc.lib" />
   </ItemGroup>
 </Project>

@@ -17,7 +17,7 @@ HRESULT TitleScene::init(void)
     _isDone.set(0, true);
 
     cout << MYWINSIZE_X << "\t" << MYWINSIZE_Y << endl;
-
+    SOUNDMANAGER->play("Main_Menu_Final", 1.0f);
     return S_OK;
 }
 
