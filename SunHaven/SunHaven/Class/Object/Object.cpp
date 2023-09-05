@@ -16,8 +16,16 @@ HRESULT Object::init(LivingObjectType type, POINT tilePos)
 	_rc = RectMake(tilePos.x * TILEWIDTH * 2, tilePos.y * TILEHEIGHT * 2, TILEWIDTH * 2, TILEHEIGHT * 2);
 	switch (_type)
 	{
+	case GRASS1:
+		_offsetY = -12;
+		break;
 	case TREE1:
+		_offsetX = -3;
 		_offsetY = -48;
+		break;
+	case TREE2:
+		_offsetX = 3;
+		_offsetY = -42;
 		break;
 	}
 	return S_OK;
@@ -35,7 +43,7 @@ void Object::update(void)
 
 void Object::render(void)
 {
-	_image->render(getMemDC(), _cx + _offsetX * 2, _cy + _offsetY * 2, _image->getWidth() * 2, _image->getHeight() * 2,
+	_image->render(getMemDC(), _cx + _offsetX * 2 - _image->getWidth(), _cy + _offsetY * 2 - _image->getHeight(), _image->getWidth() * 2, _image->getHeight() * 2,
 		0, 0, _image->getWidth(), _image->getHeight());
 }
 
@@ -51,7 +59,7 @@ void Object::updateCameraPos(float cx, float cy)
 	_cy = cy;
 }
 
-void Object::renderToMouse()
+void Object::renderToPoint(POINT point)
 {
-	_image->alphaRender(getMemDC(), _ptMouse.x - _image->getWidth() / 2 + _offsetX, _ptMouse.y - _image->getHeight() / 2 + _offsetY, 128);
+	_image->alphaRender(getMemDC(), point.x - _image->getWidth() / 2 + _offsetX, point.y - _image->getHeight() / 2 + _offsetY, 128);
 }

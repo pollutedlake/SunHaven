@@ -8,6 +8,24 @@ HRESULT ObjectManager::init(void)
 	fopen_s(&_fp, "FarmMapObject.txt", "r");
 	if (_fp != NULL)
 	{
+		for (int j = 0; j < 100; j++)
+		{
+			for (int k = 0; k < 100; k++)
+			{
+				int tile;
+				fscanf_s(_fp, "%d ", &tile);
+				if (tile == -1)
+				{
+					continue;
+				}
+				Object* object = new Object;
+				object->init((LivingObjectType)tile, PointMake(k, j));
+				_vObject.push_back(object);
+				//_tileMap[6][j][k]._object = object;
+			}
+			fscanf_s(_fp, "\n");
+		}
+		/*fscanf_s(_fp, "\n");
 		int objectN;
 		fscanf_s(_fp, "%d\n", &objectN);
 		for (int i = 0; i < objectN; i++)
@@ -17,7 +35,7 @@ HRESULT ObjectManager::init(void)
 			Object* object = new Object;
 			object->init((LivingObjectType)type, PointMake(tilePosX, tilePosY));
 			_vObject.push_back(object);
-		}
+		}*/
 	}
 	std::fclose(_fp);
     return S_OK;

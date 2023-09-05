@@ -56,6 +56,9 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addImage("Object1", "Resources/Images/Object/Grass1.bmp", 24, 24, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("Object2", "Resources/Images/Object/Grass2.bmp", 24, 24, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("Object3", "Resources/Images/Object/Tree1.bmp", 89, 121, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Object4", "Resources/Images/Object/Tree2.bmp", 82, 108, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Object5", "Resources/Images/Object/Stone1.bmp", 24, 24, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Object6", "Resources/Images/Object/Stone2.bmp", 24, 24, true, RGB(255, 0, 255));
 	// Sound
 
 	// ====================DynusScene====================
@@ -132,6 +135,10 @@ HRESULT Resources::init(void)
 
 	// Sound
 
+	// ====================
+	// Image
+	IMAGEMANAGER->addImage("ClockUI", "Resources/Images/UI/Clock.bmp", 69, 65, true, RGB(255, 0, 255));
+	//Sound
 	return S_OK;
 }
 

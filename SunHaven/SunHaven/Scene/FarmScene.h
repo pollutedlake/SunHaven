@@ -5,6 +5,8 @@
 #include "../Class/Camera.h"
 #include "../Class/Object/ObjectManager.h"
 
+class UI;
+
 class FarmScene : public GameNode
 {
 private:
@@ -12,6 +14,7 @@ private:
 	GImage* _bg;
 	Camera* _camera;
 	ObjectManager* _om;
+	UI* _ui;
 
 public:
 	HRESULT init(void);

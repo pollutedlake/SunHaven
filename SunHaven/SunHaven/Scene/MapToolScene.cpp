@@ -41,7 +41,7 @@ HRESULT MapToolScene::init(void)
 				wsprintf(_tileName, "Tile%d-%d", k + 1, i * 10 + (j + 1));
 				_tiles[k][i][j]._image = IMAGEMANAGER->findImage(_tileName);
 				_tiles[k][i][j]._tile = (k + 1) * 1000 + 10 * i + j + 1;
-				_tiles[k][i][j]._type = NORMAL;
+				_tiles[k][i][j]._object = nullptr;
 			}
 		}
 	}
@@ -63,13 +63,13 @@ HRESULT MapToolScene::init(void)
 
 	// Save, Load 버튼
 	normalButton = new NormalButton;
-	normalButton->init(950.0f, 650.0f, 100, 44, "Button1", bind(&MapToolScene::saveMaps, this), "Save", RGB(255, 255, 255), 30, -15);
+	normalButton->init(950.0f, 700.0f, 100, 44, "Button1", bind(&MapToolScene::saveMaps, this), "Save", RGB(255, 255, 255), 30, -15);
 	_vNormalButton.push_back(normalButton);
 	normalButton = new NormalButton;
-	normalButton->init(1050.0f, 650.0f, 100, 44, "Button1", bind(&MapToolScene::loadLayers, this), "Load", RGB(255, 255, 255), 30, -15);
+	normalButton->init(1050.0f, 700.0f, 100, 44, "Button1", bind(&MapToolScene::loadLayers, this), "Load", RGB(255, 255, 255), 30, -15);
 	_vNormalButton.push_back(normalButton);
 	normalButton = new NormalButton;
-	normalButton->init(1150.0f, 650.0f, 100, 44, "Button1", bind(&MapToolScene::erase, this), "Erase", RGB(255, 255, 255), 30, -15);
+	normalButton->init(1150.0f, 700.0f, 100, 44, "Button1", bind(&MapToolScene::erase, this), "Erase", RGB(255, 255, 255), 30, -15);
 	_vNormalButton.push_back(normalButton);
 
 	// Object 버튼
@@ -84,22 +84,22 @@ HRESULT MapToolScene::init(void)
 
 	// Layer 선택 버튼
 	RadioButton* radioButton = new RadioButton;
-	float x[] = { 1100.0f, 1100.0f, 1100.0f, 1100.0f, 1100.0f, 1100.0f };
-	float y[] = { 350.0f, 400.0f, 450.0f, 500.0f, 550.0f, 600.0f };
-	int width[] = { 200, 200, 200, 200, 200, 200 };
-	int height[] = { 44, 44, 44, 44, 44, 44 };
-	char* str[] = { "Layer1", "Layer2", "Layer3", "Layer4", "Layer5", "Collider" };
-	function<void(int)> f[6];
-	for (int i = 0; i < 6; i++)
+	float x[] = { 1100.0f, 1100.0f, 1100.0f, 1100.0f, 1100.0f, 1100.0f, 1100.0f };
+	float y[] = { 350.0f, 400.0f, 450.0f, 500.0f, 550.0f, 600.0f, 650.0f };
+	int width[] = { 200, 200, 200, 200, 200, 200, 200 };
+	int height[] = { 44, 44, 44, 44, 44, 44, 44 };
+	char* str[] = { "Layer1", "Layer2", "Layer3", "Layer4", "Layer5", "Collider", "Object" };
+	function<void(int)> f[7];
+	for (int i = 0; i < 7; i++)
 	{
 			f[i] = bind(&MapToolScene::changeLayer, this, i);
 	}
-	radioButton->init(6, x, y, width, height, "Button1", f, str, RGB(255, 255, 255), 30, -15);
+	radioButton->init(7, x, y, width, height, "Button1", f, str, RGB(255, 255, 255), 30, -15);
 	_vRadioButton.push_back(radioButton);
 
 	// Layer보이는 버튼
 	ToggleButton* toggleButton;
-	for (int i = 0; i < 6; i++)
+	for (int i = 0; i < 7; i++)
 	{
 		toggleButton = new ToggleButton;
 		toggleButton->init(950.0f, 350.0f + 50.0f * i, 54, 34, "LayerShowButton", bind(&MapToolScene::toggleShowLayer, this, i), _showLayer[i]);
@@ -112,9 +112,6 @@ HRESULT MapToolScene::init(void)
 	_mapToolRC = RectMake(50, 50, MapToolWidth, MapToolHeight);
 	_selectTilesRow = 1;
 	_selectTilesCol = 1;
-	_copyMapTool = false;
-	_isSelectObject = false;
-	_objectList.clear();
 	return S_OK;
 }
 
@@ -137,17 +134,6 @@ void MapToolScene::release(void)
 		(*_viToggleButton)->release();
 		SAFE_DELETE(*_viToggleButton);
 		_viToggleButton = _vToggleButton.erase(_viToggleButton);
-	}
-	for (_itObjectList = _objectList.begin(); _itObjectList != _objectList.end();)
-	{
-		(*_itObjectList)->release();
-		SAFE_DELETE(*_itObjectList);
-		_itObjectList = _objectList.erase(_itObjectList);
-	}
-	if (_selectObject != nullptr)
-	{
-		_selectObject->release();
-		SAFE_DELETE(_selectObject);
 	}
 }
 
@@ -230,28 +216,25 @@ void MapToolScene::update(void)
 		{
 			(*_viRadioButton)->buttonDown();
 		}
-		if (PtInRect(&_mapToolRC, _ptMouse))
-		{
-			if (_isSelectObject)
-			{
-				Object* object = new Object;
-				object->init(_selectObject->getType(), PointMake((_ptMouse.x - 50 + _cameraPos.x - MapToolWidth / 2) / TILEWIDTH,
-					(_ptMouse.y - 50 + _cameraPos.y - MapToolHeight / 2) / TILEHEIGHT));	
-				_objectList.push_back(object);
-				sortObjects(0, _objectList.size() - 1);
-			}
-		}
 	}
 	if (KEYMANAGER->isStayKeyDown(VK_LBUTTON))
 	{
 		if (PtInRect(&_mapToolRC, _ptMouse))
 		{	
-			if (!_isSelectObject)
+			for (int i = 0; i < _selectTilesRow; i++)
 			{
-				for (int i = 0; i < _selectTilesRow; i++)
+				CopyMemory(&_tileMap[_layer][(_ptMouse.y - 50 + _cameraPos.y - MapToolHeight / 2) / TILEHEIGHT + i][(_ptMouse.x - 50 + _cameraPos.x - MapToolWidth / 2) / TILEWIDTH],
+				&_selectTiles[i][0], sizeof(Tile) * _selectTilesCol);
+				for (int j = 0; j < _selectTilesCol; j++)
 				{
-					CopyMemory(&_tileMap[_layer][(_ptMouse.y - 50 + _cameraPos.y - MapToolHeight / 2) / TILEHEIGHT + i][(_ptMouse.x - 50 + _cameraPos.x - MapToolWidth / 2) / TILEWIDTH],
-					&_selectTiles[i][0], sizeof(Tile) * _selectTilesCol);
+					if (_selectTiles[i][j]._object == nullptr)
+					{
+						continue;
+					}
+					Object* object = new Object(*_selectTiles[i][j]._object);
+					object->setTilePos(PointMake((_ptMouse.x - 50 + _cameraPos.x - MapToolWidth / 2) / TILEWIDTH + j, (_ptMouse.y - 50 + _cameraPos.y - MapToolHeight / 2) / TILEHEIGHT + i));
+					_tileMap[6][(_ptMouse.y - 50 + _cameraPos.y - MapToolHeight / 2) / TILEHEIGHT + i][(_ptMouse.x - 50 + _cameraPos.x - MapToolWidth / 2) / TILEWIDTH + j]._object = object;
+					_tileMap[5][(_ptMouse.y - 50 + _cameraPos.y - MapToolHeight / 2) / TILEHEIGHT + i][(_ptMouse.x - 50 + _cameraPos.x - MapToolWidth / 2) / TILEWIDTH + j] = _tiles[4][0][0];
 				}
 			}
 		}
@@ -397,13 +380,33 @@ void MapToolScene::render(void)
 				{
 					_tileMap[k][i][j]._image->render(_tileMapBuffer->getMemDC(), j * TILEWIDTH, i * TILEHEIGHT);
 				}
+				else if (_tileMap[5][i][j]._object != nullptr)
+				{
+					_tileMap[5][i][j]._object->render(_tileMapBuffer->getMemDC());
+				}
 			}
 		}
 	}
-
-	for (_itObjectList = _objectList.begin(); _itObjectList != _objectList.end(); ++_itObjectList)
+	if (_showLayer[6])
 	{
-		((*_itObjectList)->render(_tileMapBuffer->getMemDC()));
+		for (int i = 0; i < _tileMapSize; i++)
+		{
+			for (int j = 0; j < _tileMapSize; j++)
+			{
+				if (TILEWIDTH * (j + 1) < _cameraPos.x - MapToolWidth / 2 || TILEWIDTH * j > _cameraPos.x + MapToolWidth / 2)
+				{
+					continue;
+				}
+				if (TILEWIDTH * (i + 1) < _cameraPos.y - MapToolHeight / 2 || TILEHEIGHT * i > _cameraPos.y + MapToolHeight / 2)
+				{
+					continue;
+				}
+				if (_tileMap[6][i][j]._object != nullptr)
+				{
+					_tileMap[6][i][j]._object->render(_tileMapBuffer->getMemDC());
+				}
+			}
+		}
 	}
 	/*
 	char text[64];
@@ -499,22 +502,19 @@ void MapToolScene::render(void)
 
 	if(PtInRect(&_mapToolRC, _ptMouse))
 	{
-		if (_isSelectObject)
+		for (int i = 0; i < _selectTilesRow; i++)
 		{
-			_selectObject->renderToMouse();
-		}
-		else
-		{
-			for (int i = 0; i < _selectTilesRow; i++)
+			for (int j = 0; j < _selectTilesCol; j++)
 			{
-				for (int j = 0; j < _selectTilesCol; j++)
+				if (_selectTiles[i][j]._image == nullptr)
 				{
-					if (_selectTiles[i][j]._image == nullptr)
+					if (_selectTiles[i][j]._object != nullptr)
 					{
-						continue;
+						_selectTiles[i][j]._object->renderToPoint(PointMake(_ptMouse.x + TILEWIDTH * j, _ptMouse.y + TILEHEIGHT * i));
 					}
-					_selectTiles[i][j]._image->alphaRender(getMemDC(), _cursorRC.left + TILEWIDTH * j, _cursorRC.top + TILEHEIGHT * i, 128);
+					continue;;
 				}
+				_selectTiles[i][j]._image->alphaRender(getMemDC(), _cursorRC.left + TILEWIDTH * j, _cursorRC.top + TILEHEIGHT * i, 128);
 			}
 		}
 	}
@@ -565,33 +565,28 @@ void MapToolScene::toggleShowLayer(int layer)
 
 void MapToolScene::selectObject(int objectType)
 {
-	_isSelectObject = true;
-	Object* object = nullptr;
-	switch(objectType / 2)
-	{
-		case 0:
-			object = new Grass;
-		break;
-		case 1:
-			object = new Tree;
-		break;
-		case 2:
-			object = new Rock;
-		break;
-	}
+	char str[64];
+	wsprintf(str, "Object%d", objectType + 1);
+	_selectTiles[0][0]._image = IMAGEMANAGER->findImage(str);
+	Object* object = new Object;
 	object->init((LivingObjectType)objectType);
-	_selectObject = object;
 	for (int i = 0; i < MapToolWidth / TILEWIDTH + 1; i++)
 	{
 		ZeroMemory(&_selectTiles[i], sizeof(Tile) * MapToolHeight / TILEHEIGHT + 1);
 	}
+	_selectTiles[0][0]._object = object;
 	_selectTilesRow = 1;
 	_selectTilesCol = 1;
 	_selectRC = { NULL, NULL, NULL, NULL };
+	changeLayer(6);
 }
 
 void MapToolScene::copyTiles(void)
 {
+	for (int i = 0; i < MapToolWidth / TILEWIDTH + 1; i++)
+	{
+		ZeroMemory(&_selectTiles[i], sizeof(Tile) * MapToolHeight / TILEHEIGHT + 1);
+	}
 	_selectTilesRow = (_selectRC.bottom - _selectRC.top) / TILEHEIGHT;
 	_selectTilesCol = (_selectRC.right - _selectRC.left) / TILEWIDTH;
 	if(PtInRect(&_tilesRC, PointMake(_exCursorRC.left, _exCursorRC.top)))
@@ -612,44 +607,44 @@ void MapToolScene::copyTiles(void)
 	}
 }
 
-void MapToolScene::sortObjects(int start, int end)
-{
-	if (start >= end)
-	{
-		return;
-	}
-
-	int pivot  = start;
-	int i = pivot + 1;
-	int j = end;
-	Object* temp;
-	while (i <= j)
-	{
-		while (i <= end && _objectList[i]->getTilePos().y <= _objectList[pivot]->getTilePos().y)
-		{
-			i++;
-		}
-		while (j > start && _objectList[j]->getTilePos().y >= _objectList[pivot]->getTilePos().y)
-		{
-			j--;
-		}
-
-		if (i > j)
-		{
-			temp = _objectList[j];
-			_objectList[j] = _objectList[pivot];
-			_objectList[pivot] = temp;
-		}
-		else
-		{
-			temp = _objectList[i];
-			_objectList[i] = _objectList[j];
-			_objectList[j] = temp;
-		}
-	}
-	sortObjects(start, j - 1);
-	sortObjects(j + 1, end);
-}
+//void MapToolScene::sortObjects(int start, int end)
+//{
+//	if (start >= end)
+//	{
+//		return;
+//	}
+//
+//	int pivot  = start;
+//	int i = pivot + 1;
+//	int j = end;
+//	Object* temp;
+//	while (i <= j)
+//	{
+//		while (i <= end && _objectList[i]->getTilePos().y <= _objectList[pivot]->getTilePos().y)
+//		{
+//			i++;
+//		}
+//		while (j > start && _objectList[j]->getTilePos().y >= _objectList[pivot]->getTilePos().y)
+//		{
+//			j--;
+//		}
+//
+//		if (i > j)
+//		{
+//			temp = _objectList[j];
+//			_objectList[j] = _objectList[pivot];
+//			_objectList[pivot] = temp;
+//		}
+//		else
+//		{
+//			temp = _objectList[i];
+//			_objectList[i] = _objectList[j];
+//			_objectList[j] = temp;
+//		}
+//	}
+//	sortObjects(start, j - 1);
+//	sortObjects(j + 1, end);
+//}
 
 void MapToolScene::saveMaps()
 {
@@ -675,13 +670,22 @@ void MapToolScene::saveMaps()
 	fopen_s(&_fp, "FarmMapObject.txt", "w");
 	if (_fp != NULL)
 	{
-		fprintf(_fp, "%d", _objectList.size());
-		fprintf(_fp, "\n");
-		for (_itObjectList = _objectList.begin(); _itObjectList != _objectList.end(); ++_itObjectList)
+		for (int j = 0; j < 100; j++)
 		{
-			fprintf(_fp, "%d %d %d", (int)((*_itObjectList)->getType()), (*_itObjectList)->getTilePos().x, (*_itObjectList)->getTilePos().y);
+			for (int k = 0; k < 100; k++)
+			{
+				if (_tileMap[6][j][k]._object == nullptr)
+				{
+					fprintf(_fp, "%d ", -1);
+				}
+				else
+				{
+					fprintf(_fp, "%d ", (int)(_tileMap[6][j][k]._object->getType()));
+				}
+			}
 			fprintf(_fp, "\n");
 		}
+		fprintf(_fp, "\n");
 	}
 	std::fclose(_fp);
 
@@ -791,16 +795,23 @@ void MapToolScene::loadLayers()
 	fopen_s(&_fp, "FarmMapObject.txt", "r");
 	if (_fp != NULL)
 	{
-		int objectN;
-		fscanf_s(_fp, "%d\n", &objectN);
-		for (int i = 0; i < objectN; i++)
+		for (int j = 0; j < 100; j++)
 		{
-			int type, tilePosX, tilePosY;
-			fscanf_s(_fp, "%d %d %d\n", &type, &tilePosX, &tilePosY);
-			Object* object = new Object;
-			object->init((LivingObjectType)type, PointMake(tilePosX, tilePosY));
-			_objectList.push_back(object);
+			for (int k = 0; k < 100; k++)
+			{
+				int tile;
+				fscanf_s(_fp, "%d ", &tile);
+				if (tile == -1)
+				{
+					continue;
+				}
+				Object* object = new Object;
+				object->init((LivingObjectType)tile, PointMake(k, j));
+				_tileMap[6][j][k]._object = object;
+			}
+			fscanf_s(_fp, "\n");
 		}
+		fscanf_s(_fp, "\n");
 	}
 	std::fclose(_fp);
 }

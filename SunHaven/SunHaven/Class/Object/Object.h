@@ -21,6 +21,7 @@ private:
 	int _offsetX;
 	int _offsetY;
 	float _cx, _cy;
+	int HP;
 
 public:
 	HRESULT init(void);
@@ -31,7 +32,7 @@ public:
 	void render(HDC hdc);
 
 	void updateCameraPos(float cx, float cy);
-	void renderToMouse();
+	void renderToPoint(POINT point);
 	void setTilePos(POINT tilePos) {_tilePos = tilePos;}
 	POINT getTilePos() {return _tilePos;}
 	LivingObjectType getType() {return _type;}

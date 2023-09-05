@@ -1,6 +1,7 @@
 // ¹Î¿ë½Ä
 #include "Stdafx.h"
 #include "FarmScene.h"
+#include "../Class/UI.h"
 
 HRESULT FarmScene::init(void)
 {
@@ -9,7 +10,7 @@ HRESULT FarmScene::init(void)
 
 	
 	_player = new Player;
-	_player->init(1600,1600);
+	_player->init(2800, 1400);
 
 
 	_camera = new Camera;
@@ -23,10 +24,10 @@ HRESULT FarmScene::init(void)
 	_om->setCameraAddress(_camera);
 
 
-	_player->setPlayerPosition(PointMake(1600, 2800));
+	//_player->setPlayerPosition(PointMake(2400, 1000));
 
-
-
+	_ui = new UI;
+	_ui->init("Farm");
 
 	return S_OK;
 }
@@ -63,4 +64,6 @@ void FarmScene::render(void)
 	}
 
 	_player->render();
+	
+	_ui->render();
 }

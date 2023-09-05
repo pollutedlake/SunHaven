@@ -17,8 +17,7 @@ struct Tile
 {
 	GImage* _image = nullptr;
 	int _tile = 0;
-	TileType _type;
-	LivingObjectType _livObjectType;
+	Object* _object = nullptr;
 };
 
 class NormalButton;
@@ -30,9 +29,6 @@ class MapToolScene : public GameNode
 private:
 	GImage* _tileMapBuffer;
 	Tile _tileMap[7][100][100];
-	vector<Object*> _objectList;
-	vector<Object*>::iterator _itObjectList;
-	
 	int _tileMapSize;
 
 	GImage* _tilesBuffer;
@@ -48,8 +44,6 @@ private:
 	vector<RadioButton*>::iterator _viRadioButton;
 
 	Tile _selectTiles[MapToolWidth / TILEWIDTH + 1][MapToolHeight / TILEHEIGHT + 1];
-	Object* _selectObject;
-	bool _isSelectObject;
 
 	POINT _cameraPos;
 	char _tileSizeChar[20];
@@ -66,8 +60,7 @@ private:
 	int _selectTilesRow;
 	int _selectTilesCol;
 
-	bool _showLayer[6];
-	bool _copyMapTool;
+	bool _showLayer[7];
 
 public:
 	HRESULT init(void);
@@ -84,7 +77,6 @@ public:
 	void selectObject(int objectType);
 
 	void copyTiles(void);
-	void sortObjects(int start, int end);
 
 	void saveMaps();
 	void loadLayers();
