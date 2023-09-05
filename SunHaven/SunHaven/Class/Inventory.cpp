@@ -1,5 +1,6 @@
 #include "Stdafx.h"
 #include "Inventory.h"
+#include <string>
 
 
 HRESULT Inventory::init(void)
@@ -8,6 +9,11 @@ HRESULT Inventory::init(void)
 	_playerBG = RectMake(_invenBG.left + 30, _invenBG.top + 50, WINSIZE_X / 6, WINSIZE_Y / 2 - 80);
 	_playerName = RectMake(_playerBG.left, _playerBG.top - 20, 202, 20);
 	_itemListBG = RectMake(_playerBG.right + 30, _playerBG.top, WINSIZE_X / 4 + 20, WINSIZE_Y / 2 - 80);
+
+	for (int i = 0; i < 5; i++)
+	{
+		_playerStat[i] = RectMake(_playerBG.left + 10, (_playerBG.top + 82) + 17 * i, 10, 10);
+	}
 
 	inventoryList  temp;
 
@@ -21,13 +27,78 @@ HRESULT Inventory::init(void)
 			temp._draw = false;
 			temp._category = 0;
 		
-			
-			
-
 			_vInvenList.push_back(temp);
 
 		}
 	}
+
+	equipmentSlot temp2;
+
+	for (int i = 0; i < 3; i++)
+	{
+		for (int j = 0; j < 5; j++)
+		{
+			ZeroMemory(&temp2, sizeof(equipmentSlot));
+
+			if (i < 2)
+			{
+				temp2._rc = RectMake(_playerBG.right - 97 + i * 55, _playerBG.top + 40 + j * 50, 32, 32);
+				temp2._draw = false;
+				temp2._category = 0;
+
+				_vEquipmentSlot.push_back(temp2);
+			}
+			else
+			{
+				if (j == 0)
+				{
+					temp2._rc = RectMake(_playerBG.left + 13, _playerBG.bottom - 95, 32, 32);
+					temp2._draw = false;
+					temp2._category = 0;
+
+					_vEquipmentSlot.push_back(temp2);
+				}
+
+				if (j == 1)
+				{
+					temp2._rc = RectMake(_playerBG.left + 60, _playerBG.bottom - 95, 32, 32);
+					temp2._draw = false;
+					temp2._category = 0;
+
+					_vEquipmentSlot.push_back(temp2);
+				}
+
+				if (j == 2)
+				{
+					temp2._rc = RectMake(_playerBG.left + 13, _playerBG.bottom - 50, 32, 32);
+					temp2._draw = false;
+					temp2._category = 0;
+
+					_vEquipmentSlot.push_back(temp2);
+				}
+
+				if (j == 3)
+				{
+					temp2._rc = RectMake(_playerBG.left + 60, _playerBG.bottom - 50, 32, 32);
+					temp2._draw = false;
+					temp2._category = 0;
+
+					_vEquipmentSlot.push_back(temp2);
+				}
+
+				if (j == 4)
+				{
+					temp2._rc = {};
+
+					_vEquipmentSlot.push_back(temp2);
+				}
+			}
+
+
+		}
+	}
+
+
 
 	_getItem = 0;
 	_selectedItem = -1;
@@ -54,7 +125,7 @@ void Inventory::update(void)
 
 				_vInvenList[i]._draw = true;
 				
-				_lastItemTime = GetTickCount();
+				_lastItemTime = GetTickCount64();
 				
 				return;
 			}
@@ -76,6 +147,7 @@ void Inventory::update(void)
 
 		// 해당하는 인덱스를 찾음
 		int index = -1;
+		int temp = 0;
 		for (int i = 0; i < _vInvenList.size(); i++)
 		{
 			if (PtInRect(&_vInvenList[i]._rc, pt))
@@ -88,13 +160,22 @@ void Inventory::update(void)
 		// 인덱스가 유효하고 아이템이 있으면 _selectedItem에 저장
 		if (index != -1 && _vInvenList[index]._draw)
 		{
-			_selectedItem = index;
-			_vInvenList[index]._draw = false;
+			if (_selectedItem != -1)
+			{
+				temp = _vInvenList[index]._category;
+				_vInvenList[index]._category = _vInvenList[_selectedItem]._category;
+				_vInvenList[_selectedItem]._category = temp;
+
+			}
+			else
+			{
+				_selectedItem = index;
+				_vInvenList[index]._draw = false;
+			}
+		
+			
 		}
-		else
-		{
-			_selectedItem = -1;
-		}
+		
 	}
 
 	if (KEYMANAGER->isOnceKeyUp(VK_LBUTTON))
@@ -113,16 +194,25 @@ void Inventory::update(void)
 				index = i;
 				break;
 			}
+			
+			
 		}
 
 		// 인덱스가 유효하고 _selectedItem 값이 유효하면 아이템을 놓음
-		if (index != -1 && _selectedItem != -1)
-		{
+		
+		if (index != -1  && _selectedItem != -1)
+		{	
 			_vInvenList[index]._category = _vInvenList[_selectedItem]._category;
 			_vInvenList[index]._draw = true;
-			_vInvenList[_selectedItem]._draw = false;
+			//_vInvenList[_selectedItem]._draw = false;
 			_selectedItem = -1;
+			
 		}
+		
+		
+		
+		
+		
 	}
 }
 
@@ -135,6 +225,13 @@ void Inventory::render(void)
 		IMAGEMANAGER->render("player_bg_name_banner", getMemDC(), _playerName.left, _playerName.top);
 		IMAGEMANAGER->render("bg_backpack_items", getMemDC(), _itemListBG.left, _itemListBG.top);
 		
+		IMAGEMANAGER->render("icon_hp", getMemDC(), _playerStat[0].left, _playerStat[0].top);
+		IMAGEMANAGER->render("icon_mana #2486870", getMemDC(), _playerStat[1].left, _playerStat[1].top);
+		IMAGEMANAGER->render("icon_defense #2480984", getMemDC(), _playerStat[2].left, _playerStat[2].top);
+		IMAGEMANAGER->render("icon_attack_dmg+lv_combat", getMemDC(), _playerStat[3].left, _playerStat[3].top);
+		IMAGEMANAGER->render("icon_magic_damage", getMemDC(), _playerStat[4].left, _playerStat[4].top);
+
+		//인벤칸
 		for (int i = 0; i < 5; i++)
 		{
 			for (int j = 0; j < 8; j++)
@@ -170,6 +267,82 @@ void Inventory::render(void)
 			}
 		}
 
+		//장비칸
+		for (int i = 0; i < 3; i++)
+		{
+			for (int j = 0; j < 5; j++)
+			{
+				if (_vEquipmentSlot[i * 5 + j]._draw)
+				{
+					switch (_vEquipmentSlot[i * 5 + j]._category)
+					{
+					case 1:
+						IMAGEMANAGER->render("ironBoots", getMemDC(), _vInvenList[i * (8) + j]._rc.left, _vInvenList[i * (8) + j]._rc.top);
+
+						break;
+					case 2:
+						IMAGEMANAGER->render("ironChestPlate", getMemDC(), _vInvenList[i * (8) + j]._rc.left, _vInvenList[i * (8) + j]._rc.top);
+
+						break;
+					case 3:
+						IMAGEMANAGER->render("ironGloves", getMemDC(), _vInvenList[i * (8) + j]._rc.left, _vInvenList[i * (8) + j]._rc.top);
+
+						break;
+					case 4:
+						IMAGEMANAGER->render("ironSword", getMemDC(), _vInvenList[i * (8) + j]._rc.left, _vInvenList[i * (8) + j]._rc.top);
+
+						break;
+					}
+				}
+				else
+				{
+					if (i < 2)
+					{
+						if (i == 0)
+						{
+							IMAGEMANAGER->render(("equipment_slot" + to_string(j + 1)).c_str(), getMemDC(), _vEquipmentSlot[i * 5 + j]._rc.left, _vEquipmentSlot[i * 5 + j]._rc.top);
+						}
+
+						if (i == 1)
+						{
+							IMAGEMANAGER->render(("cosmetics_slot" + to_string(j + 1)).c_str(), getMemDC(), _vEquipmentSlot[i * 5 + j]._rc.left, _vEquipmentSlot[i * 5 + j]._rc.top);
+						}
+					}
+					else
+					{
+						if (j == 0)
+						{
+							IMAGEMANAGER->render("player_slot1_keepsake", getMemDC(), _vEquipmentSlot[i * 5 + j]._rc.left, _vEquipmentSlot[i * 5 + j]._rc.top);
+						}
+
+						if (j == 1)
+						{
+							IMAGEMANAGER->render("player_slot2_ring1", getMemDC(), _vEquipmentSlot[i * 5 + j]._rc.left, _vEquipmentSlot[i * 5 + j]._rc.top);
+
+						}
+
+						if (j == 2)
+						{
+							IMAGEMANAGER->render("player_slot3_amulet", getMemDC(), _vEquipmentSlot[i * 5 + j]._rc.left, _vEquipmentSlot[i * 5 + j]._rc.top);
+
+						}
+
+						if (j == 3)
+						{
+							IMAGEMANAGER->render("player_slot4_ring2", getMemDC(), _vEquipmentSlot[i * 5 + j]._rc.left, _vEquipmentSlot[i * 5 + j]._rc.top);
+
+						}
+
+						if (j == 4)
+						{
+							break;
+						}
+					}
+				}
+			}
+		}
+
+
 		if (_selectedItem != -1)
 		{
 			POINT pt;
@@ -197,7 +370,7 @@ void Inventory::render(void)
 
 	}
 	
-	DWORD currentTime = GetTickCount();
+	DWORD currentTime = GetTickCount64();
 	if (currentTime - _lastItemTime < 3000) // 3초 동안만 출력
 	{
 		switch (_getItem)
