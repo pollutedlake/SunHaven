@@ -15,6 +15,8 @@ private:
 
 	RECT _rc[3];		// 플레이 누르지 않았을 때
 
+	bool _sound;
+
 public:
 	HRESULT init(void);
 	void release(void);

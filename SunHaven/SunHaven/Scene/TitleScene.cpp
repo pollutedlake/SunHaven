@@ -17,7 +17,10 @@ HRESULT TitleScene::init(void)
     _isDone.set(0, true);
 
     cout << MYWINSIZE_X << "\t" << MYWINSIZE_Y << endl;
+
     SOUNDMANAGER->play("Main_Menu_Final", 1.0f);
+    _sound = false;
+    
     return S_OK;
 }
 
@@ -39,28 +42,39 @@ void TitleScene::update(void)
         yOffsetDirection *= -1.0f;
     }
 
+    
+
     for (int i = 0; i < 3; i++)
     {
         if (PtInRect(&_rc[i], _ptMouse))
         {
+            _sound = true;
+            //SOUNDMANAGER->play("E_titleButton", 1.0f);
+
             if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
             {
+               
+                SOUNDMANAGER->play("E_titleButtonClick", 1.0f);
+
                 if (_isDone.test(0))
                 {
-
+                    
                     switch (i)
                     {
                     case 0:
+                        
                         _isDone = _isDone << 1;
 
                         break;
 
                     case 1:
+                       
                         SCENEMANAGER->changeScene("MapTool");
 
                         break;
 
                     case 2:
+                       
                         PostQuitMessage(0);
 
                         break;
@@ -82,6 +96,7 @@ void TitleScene::update(void)
                         break;
 
                     case 2:
+                        
                         _isDone = _isDone >> 1;
 
                         break;
@@ -90,7 +105,19 @@ void TitleScene::update(void)
                 }
             }
         }
+        else
+        {
+            _sound = false;
+        }
+       
     }
+
+    if (_sound)
+    {
+        SOUNDMANAGER->play("E_titleButton", 1.0f);
+    }
+
+    SOUNDMANAGER->update();
 }
 
 void TitleScene::render(void)

@@ -27,6 +27,9 @@ HRESULT Resources::init(void)
 
 	// Sound
 	SOUNDMANAGER->addSound("Main_Menu_Final", "Resources/Sound/Main_Menu_Final.wav", true, true);
+	SOUNDMANAGER->addSound("E_titleButton", "Resources/Sound/E_titleButton.wav", false, false);
+	SOUNDMANAGER->addSound("E_titleButtonClick", "Resources/Sound/E_titleButtonClick.wav", false, false);
+
 
 	// ====================MapToolScene====================
 	// Image
