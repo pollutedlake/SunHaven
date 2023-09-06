@@ -44,8 +44,7 @@ void Object::update(void)
 
 void Object::render(void)
 {
-	_image->render(getMemDC(), _cx + _offsetX * 2 - _image->getWidth(), _cy + _offsetY * 2 - _image->getHeight(), _image->getWidth() * 2, _image->getHeight() * 2,
-		0, 0, _image->getWidth(), _image->getHeight());
+	_image->render(getMemDC(), _rc.left, _rc.top, _rc.right - _rc.left, _rc.bottom - _rc.top, 0, 0, _image->getWidth(), _image->getHeight());
 }
 
 void Object::render(HDC hdc)
@@ -56,14 +55,14 @@ void Object::render(HDC hdc)
 
 void Object::halfTransRender()
 {
-	_image->alphaRender(getMemDC(), _cx + _offsetX * 2 - _image->getWidth(), _cy + _offsetY * 2 - _image->getHeight(), _image->getWidth() * 2, _image->getHeight() * 2,
-		0, 0, _image->getWidth(), _image->getHeight(), 128);
+	_image->alphaRender(getMemDC(), _rc.left, _rc.right, (_rc.right - _rc.left), (_rc.bottom - _rc.top), 0, 0, _image->getWidth(), _image->getHeight(), 128);
 }
 
 void Object::updateCameraPos(float cx, float cy)
 {
 	_cx = cx;
 	_cy = cy;
+	_rc = RectMake(_cx + _offsetX * 2 - _image->getWidth(), _cy + _offsetY * 2 - _image->getHeight(), _image->getWidth() * 2, _image->getHeight() * 2);
 	switch (_type)
 	{
 		case TREE1:

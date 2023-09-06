@@ -15,6 +15,7 @@ private:
 	Camera* _camera;
 	ObjectManager* _om;
 	UI* _ui;
+	vector<pair<GameNode*, int>> _vRenderList;
 
 public:
 	HRESULT init(void);
@@ -22,7 +23,7 @@ public:
 	void update(void);
 	void render(void);
 
-	void SortingRender();
+	void sortingRenderList(int start, int end);
 
 	FarmScene() {}
 	~FarmScene() {}

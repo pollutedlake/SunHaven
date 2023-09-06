@@ -19,6 +19,7 @@ private:
 	LivingObjectType _type;
 	RECT _collisionRC;
 	RECT _transParentRC;
+	RECT _rc;
 	int _offsetX;
 	int _offsetY;
 	float _cx, _cy;
@@ -41,6 +42,7 @@ public:
 	LivingObjectType getType() {return _type;}
 	RECT getCollisionRC() {return _collisionRC;}
 	RECT getTransParentRC() {return _transParentRC;}
+	RECT getRC() {return _rc;}
 
 	Object() {}
 	~Object() {}
