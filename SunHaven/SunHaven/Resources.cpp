@@ -151,7 +151,11 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addImage("icon_magic_damage", "Resources/Images/Inventory/icon_magic_damage.bmp", 10, 10, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("icon_mana #2486870", "Resources/Images/Inventory/icon_mana #2486870.bmp", 10, 10, true, RGB(255, 0, 255));
 
-	IMAGEMANAGER->addImage("trash_button_normal-grab-grabhover-normalhover_0", "Resources/Images/Inventory/trash_button_normal-grab-grabhover-normalhover_0.bmp", 26, 25, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("trash_button", "Resources/Images/Inventory/trash_button.bmp", 26, 25, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("sort_button", "Resources/Images/Inventory/sort_button.bmp", 26, 25, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("drop_button", "Resources/Images/Inventory/drop_button.bmp", 26, 25, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("x_button", "Resources/Images/Inventory/x_button.bmp", 27, 28, true, RGB(255, 0, 255));
+
 	// shopImage
 
 	// Sound

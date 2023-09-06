@@ -26,6 +26,10 @@ private:
 	RECT _playerBG;
 	RECT _playerName;
 	RECT _itemListBG;
+	RECT _trashButton;
+	RECT _sortButton;
+	RECT _dropButton;
+	RECT _xButton;
 
 	RECT _playerStat[5];
 

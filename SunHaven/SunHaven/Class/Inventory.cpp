@@ -9,10 +9,14 @@ HRESULT Inventory::init(void)
 	_playerBG = RectMake(_invenBG.left + 30, _invenBG.top + 50, WINSIZE_X / 6, WINSIZE_Y / 2 - 80);
 	_playerName = RectMake(_playerBG.left, _playerBG.top - 20, 202, 20);
 	_itemListBG = RectMake(_playerBG.right + 30, _playerBG.top, WINSIZE_X / 4 + 20, WINSIZE_Y / 2 - 80);
-
+	_sortButton = RectMake(_itemListBG.left + 10, _itemListBG.bottom - 40, 26, 25);
+	_dropButton = RectMake(_itemListBG.right - 75, _itemListBG.bottom - 40, 26, 25);
+	_trashButton = RectMake(_itemListBG.right - 35, _itemListBG.bottom - 40, 26, 25);
+	_xButton = RectMake(_invenBG.right - 27, _invenBG.top - 5, 27, 28);
+	//_sortButton _trashButton _dropButton
 	for (int i = 0; i < 5; i++)
 	{
-		_playerStat[i] = RectMake(_playerBG.left + 10, (_playerBG.top + 82) + 17 * i, 10, 10);
+		_playerStat[i] = RectMake(_playerBG.left + 5, (_playerBG.top + 82) + 17 * i, 10, 10);
 	}
 
 	inventoryList  temp;
@@ -130,8 +134,6 @@ void Inventory::update(void)
 				return;
 			}
 
-
-
 		}
 		
 	}
@@ -162,10 +164,11 @@ void Inventory::update(void)
 		{
 			if (_selectedItem != -1)
 			{
+				
 				temp = _vInvenList[index]._category;
 				_vInvenList[index]._category = _vInvenList[_selectedItem]._category;
 				_vInvenList[_selectedItem]._category = temp;
-
+			
 			}
 			else
 			{
@@ -174,6 +177,21 @@ void Inventory::update(void)
 			}
 		
 			
+		}
+
+		//완전삭제로
+		if (PtInRect(&_trashButton, pt))
+		{
+			_vInvenList[_selectedItem]._draw = false;
+			_selectedItem = -1;
+		}
+
+
+		//바닥에버리기로
+		if (PtInRect(&_dropButton, pt))
+		{
+			_vInvenList[_selectedItem]._draw = false;
+			_selectedItem = -1;
 		}
 		
 	}
@@ -228,8 +246,29 @@ void Inventory::render(void)
 		IMAGEMANAGER->render("icon_hp", getMemDC(), _playerStat[0].left, _playerStat[0].top);
 		IMAGEMANAGER->render("icon_mana #2486870", getMemDC(), _playerStat[1].left, _playerStat[1].top);
 		IMAGEMANAGER->render("icon_defense #2480984", getMemDC(), _playerStat[2].left, _playerStat[2].top);
-		IMAGEMANAGER->render("icon_attack_dmg+lv_combat", getMemDC(), _playerStat[3].left, _playerStat[3].top);
-		IMAGEMANAGER->render("icon_magic_damage", getMemDC(), _playerStat[4].left, _playerStat[4].top);
+		IMAGEMANAGER->render("icon_attack_dmg+lv_combat", getMemDC(), _playerStat[3].left, _playerStat[3].top -1);
+		IMAGEMANAGER->render("icon_magic_damage", getMemDC(), _playerStat[4].left, _playerStat[4].top - 1);
+
+		IMAGEMANAGER->render("trash_button", getMemDC(), _trashButton.left, _trashButton.top);
+		IMAGEMANAGER->render("sort_button", getMemDC(), _sortButton.left, _sortButton.top);
+		IMAGEMANAGER->render("drop_button", getMemDC(), _dropButton.left, _dropButton.top);
+		IMAGEMANAGER->render("x_button", getMemDC(), _xButton.left, _xButton.top);
+
+		FONTMANAGER->textOut(getMemDC(), _playerStat[0].left + 15, _playerStat[0].top, "배달의민족 을지로체", 12, 5, "체력", strlen("체력"), RGB(255, 255, 255));
+		FONTMANAGER->textOut(getMemDC(), _playerStat[1].left + 15, _playerStat[1].top, "배달의민족 을지로체", 12, 5, "마나", strlen("마나"), RGB(255, 255, 255));
+		FONTMANAGER->textOut(getMemDC(), _playerStat[2].left + 15, _playerStat[2].top, "배달의민족 을지로체", 12, 5, "방어력", strlen("방어력"), RGB(255, 255, 255));
+		FONTMANAGER->textOut(getMemDC(), _playerStat[3].left + 15, _playerStat[3].top - 1, "배달의민족 을지로체", 12, 5, "물리 공격력", strlen("물리 공격력"), RGB(255, 255, 255));
+		FONTMANAGER->textOut(getMemDC(), _playerStat[4].left + 15, _playerStat[4].top - 1, "배달의민족 을지로체", 12, 5, "마법 공격력", strlen("마법 공격력"), RGB(255, 255, 255));
+
+
+		FONTMANAGER->textOut(getMemDC(), _vEquipmentSlot[0]._rc.left + 8, _vEquipmentSlot[0]._rc.top - 15, "배달의민족 을지로체", 10, 50, "장비", strlen("장비"), RGB(255, 255, 255));
+		FONTMANAGER->textOut(getMemDC(), _vEquipmentSlot[5]._rc.left + 8, _vEquipmentSlot[5]._rc.top - 15, "배달의민족 을지로체", 10, 50, "외형", strlen("외형"), RGB(255, 255, 255));
+		FONTMANAGER->textOut(getMemDC(), _vEquipmentSlot[10]._rc.left + 5, _vEquipmentSlot[10]._rc.top - 15, "배달의민족 을지로체", 10, 50, "기념품", strlen("기념품"), RGB(255, 255, 255));
+		FONTMANAGER->textOut(getMemDC(), _vEquipmentSlot[11]._rc.left + 5, _vEquipmentSlot[11]._rc.top - 15, "배달의민족 을지로체", 10, 50, "반지1", strlen("반지1"), RGB(255, 255, 255));
+		FONTMANAGER->textOut(getMemDC(), _vEquipmentSlot[12]._rc.left + 5, _vEquipmentSlot[12]._rc.top - 8, "배달의민족 을지로체", 10, 50, "목걸이", strlen("목걸이"), RGB(255, 255, 255));
+		FONTMANAGER->textOut(getMemDC(), _vEquipmentSlot[13]._rc.left + 5, _vEquipmentSlot[13]._rc.top - 8, "배달의민족 을지로체", 10, 50, "반지2", strlen("반지2"), RGB(255, 255, 255));
+
+		FONTMANAGER->textOut(getMemDC(), (_invenBG.right + _invenBG.left) / 2, _invenBG.top + 15, "배달의민족 을지로체", 15, 50, "가방", strlen("가방"), RGB(241, 224, 109));
 
 		//인벤칸
 		for (int i = 0; i < 5; i++)
@@ -323,13 +362,13 @@ void Inventory::render(void)
 
 						if (j == 2)
 						{
-							IMAGEMANAGER->render("player_slot3_amulet", getMemDC(), _vEquipmentSlot[i * 5 + j]._rc.left, _vEquipmentSlot[i * 5 + j]._rc.top);
+							IMAGEMANAGER->render("player_slot3_amulet", getMemDC(), _vEquipmentSlot[i * 5 + j]._rc.left, _vEquipmentSlot[i * 5 + j]._rc.top + 4);
 
 						}
 
 						if (j == 3)
 						{
-							IMAGEMANAGER->render("player_slot4_ring2", getMemDC(), _vEquipmentSlot[i * 5 + j]._rc.left, _vEquipmentSlot[i * 5 + j]._rc.top);
+							IMAGEMANAGER->render("player_slot4_ring2", getMemDC(), _vEquipmentSlot[i * 5 + j]._rc.left, _vEquipmentSlot[i * 5 + j]._rc.top + 4);
 
 						}
 

@@ -18,14 +18,15 @@ HRESULT TitleScene::init(void)
 
     cout << MYWINSIZE_X << "\t" << MYWINSIZE_Y << endl;
 
-    SOUNDMANAGER->play("Main_Menu_Final", 1.0f);
-    _sound = false;
+    SOUNDMANAGER->play("Main_Menu_Final", 0.5f);
+    _sound = 0;
     
     return S_OK;
 }
 
 void TitleScene::release(void)
 {
+
 }
 
 void TitleScene::update(void)
@@ -48,9 +49,9 @@ void TitleScene::update(void)
     {
         if (PtInRect(&_rc[i], _ptMouse))
         {
-            _sound = true;
-            //SOUNDMANAGER->play("E_titleButton", 1.0f);
-
+            
+                
+            
             if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
             {
                
@@ -105,17 +106,15 @@ void TitleScene::update(void)
                 }
             }
         }
-        else
-        {
-            _sound = false;
-        }
+        
+        
        
     }
 
-    if (_sound)
-    {
-        SOUNDMANAGER->play("E_titleButton", 1.0f);
-    }
+   
+    buttonSound();
+    
+    cout << _sound << endl;
 
     SOUNDMANAGER->update();
 }
@@ -153,6 +152,7 @@ void TitleScene::render(void)
                 50, 408 + i * 59, 2.2, 2,
                 IMAGEMANAGER->findGPImage("TitleButton")->getFrameX(), IMAGEMANAGER->findGPImage("TitleButton")->getFrameY(),
                 InterpolationModeNearestNeighbor, 0);
+            
         }
     }
 
@@ -172,5 +172,37 @@ void TitleScene::render(void)
 
     IMAGEMANAGER->render("Cursor", getMemDC(), _ptMouse.x, _ptMouse.y);
 
+  
+}
+
+void TitleScene::buttonSound()
+{
+    if (PtInRect(&_rc[0], _ptMouse) || PtInRect(&_rc[1], _ptMouse) || PtInRect(&_rc[2], _ptMouse))
+    {
+       
+       
+        _sound++;
+        if (_sound == 1)
+        {
+            SOUNDMANAGER->play("E_titleButton", 1.0f);
+        }
+
+        if (_sound > 2)
+        {
+            _sound = 2;
+        }
+
+        if (_rc[0].bottom == _ptMouse.y || _rc[1].bottom == _ptMouse.y) //|| _rc[2].bottom == _ptMouse.y)
+        {
+            _sound = 0;
+        }
+
+    }
+    else
+    {
+        _sound = 0;
+    }
+
+   
   
 }
