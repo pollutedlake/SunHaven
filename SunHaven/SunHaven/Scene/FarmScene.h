@@ -5,6 +5,20 @@
 #include "../Class/Camera.h"
 #include "../Class/Object/ObjectManager.h"
 
+struct cmp {
+	bool operator()(pair<GameNode*, int> a, pair<GameNode*, int> b)
+	{
+		if (a.second > b.second)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+};
+
 class UI;
 
 class FarmScene : public GameNode
@@ -15,15 +29,13 @@ private:
 	Camera* _camera;
 	ObjectManager* _om;
 	UI* _ui;
-	vector<pair<GameNode*, int>> _vRenderList;
+	priority_queue<pair<GameNode*, int>, vector<pair<GameNode*, int>>, cmp> _vRenderList;
 
 public:
 	HRESULT init(void);
 	void release(void);
 	void update(void);
 	void render(void);
-
-	void sortingRenderList(int start, int end);
 
 	FarmScene() {}
 	~FarmScene() {}

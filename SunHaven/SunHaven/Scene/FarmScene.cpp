@@ -5,8 +5,8 @@
 
 HRESULT FarmScene::init(void)
 {
-	_bg = IMAGEMANAGER->addImage("³óÀå", "FarmMap.bmp", 4800, 4800);
-	IMAGEMANAGER->addImage("Ãæµ¹", "FarmMapCollision.bmp", 4800, 4800);
+	_bg = IMAGEMANAGER->addImage("³óÀå", "FarmMap.bmp", 3600, 3600);
+	IMAGEMANAGER->addImage("Ãæµ¹", "FarmMapCollision.bmp", 3600, 3600);
 
 	
 	_player = new Player;
@@ -16,8 +16,8 @@ HRESULT FarmScene::init(void)
 	_camera = new Camera;
 	_camera->init();
 	_camera->setPosition(_player->getPlayerPosition());
-	_camera->setLimitRight(4368 - WINSIZE_X / 2);
-	_camera->setLimitBottom(4800 - WINSIZE_Y / 2);
+	_camera->setLimitRight(3276 - WINSIZE_X / 2);
+	_camera->setLimitBottom(3600 - WINSIZE_Y / 2);
 
 	_om = new ObjectManager;
 	_om->init();
@@ -25,13 +25,6 @@ HRESULT FarmScene::init(void)
 
 	_ui = new UI;
 	_ui->init("Farm");
-
-	_vRenderList.clear();
-	/*_vRenderList.push_back(_player);
-	for (int i = 0; i < _om->getObjectList().size(); i++)
-	{
-		_vRenderList.push_back(_om->getObjectList()[i]);
-	}*/
 	return S_OK;
 }
 
@@ -50,36 +43,51 @@ void FarmScene::update(void)
 	_player->worldToCamera(_camera->worldToCamera
 	(_player->getPlayerPosition()));
 	_om->update();
-	_vRenderList.push_back(make_pair(_player, _player->getPlayerRC().bottom));
+	/*_vRenderList.push(make_pair(_player, _player->getPlayerRC().bottom));
 	for (int i = 0; i < _om->getObjectList().size(); i++)
 	{
-		_vRenderList.push_back(make_pair(_om->getObjectList()[i], _om->getObjectList()[i]->getRC().bottom));
-	}
-	sortingRenderList(0, _vRenderList.size());
+		RECT temp;
+		if (IntersectRect(&temp, &RectMake(0, 0, WINSIZE_X, WINSIZE_Y), &_om->getObjectList()[i]->getRC()))
+		{
+			if (IntersectRect(&temp, &_player->getPlayerRC(), &_om->getObjectList()[i]->getRC()))
+			{
+				_om->getObjectList()[i]->setHalfTrans(true);
+			}
+			else
+			{
+				_om->getObjectList()[i]->setHalfTrans(false);
+			}
+			_vRenderList.push(make_pair(_om->getObjectList()[i], _om->getObjectList()[i]->getRC().bottom));
+		}
+	}*/
 }
 
 void FarmScene::render(void)
 {
-	_bg->render(getMemDC(), _camera->worldToCameraX(0),
-		_camera->worldToCameraY(0));
+	_bg->render(getMemDC(), 0, 0, _camera->getPosition().x - WINSIZE_X / 2,
+		_camera->getPosition().y - WINSIZE_Y / 2, WINSIZE_X, WINSIZE_Y);
 
-	_player->render();
-	bool playerRender = false;
+	_vRenderList.push(make_pair(_player, _player->getPlayerRC().bottom));
 	for (int i = 0; i < _om->getObjectList().size(); i++)
 	{
 		RECT temp;
-		if(IntersectRect(&temp, &RectMake(0, 0, WINSIZE_X, WINSIZE_Y), &_om->getObjectList()[i]->getRC()))
+		if (IntersectRect(&temp, &RectMake(0, 0, WINSIZE_X, WINSIZE_Y), &_om->getObjectList()[i]->getRC()))
 		{
-			if(&_om->getObjectList())
-			if (IntersectRect(&temp, &_player->getPlayerRC(), &_om->getObjectList()[i]->getRC()) && _om->getObjectList()[i]->getType() / 2 == 1)
+			if (IntersectRect(&temp, &_player->getPlayerRC(), &_om->getObjectList()[i]->getRC()))
 			{
-				_om->getObjectList()[i]->halfTransRender();
+				_om->getObjectList()[i]->setHalfTrans(true);
 			}
 			else
 			{
-				_om->getObjectList()[i]->render();
+				_om->getObjectList()[i]->setHalfTrans(false);
 			}
+			_vRenderList.push(make_pair(_om->getObjectList()[i], _om->getObjectList()[i]->getRC().bottom));
 		}
+	}
+	while (!_vRenderList.empty())
+	{
+		_vRenderList.top().first->render();
+		_vRenderList.pop();
 	}
 
 	if (KEYMANAGER->isToggleKey('W'))
@@ -88,45 +96,5 @@ void FarmScene::render(void)
 			_camera->worldToCameraY(0));
 	}
 
-	
 	_ui->render();
-}
-
-void FarmScene::sortingRenderList(int start, int end)
-{
-	if (start >= end)
-	{
-		return;
-	}
-	
-	int pivot  = start;
-	int i = pivot + 1;
-	int j = end;
-	pair<GameNode*, int> temp;
-	while (i <= j)
-	{
-		while (i <= end && _vRenderList[i].second <= _vRenderList[pivot].second)
-		{
-			i++;
-		}
-		while (j > start && _vRenderList[j].second >= _vRenderList[pivot].second)
-		{
-			j--;
-		}
-	
-		if (i > j)
-		{
-			temp = _vRenderList[j];
-			_vRenderList[j] = _vRenderList[pivot];
-			_vRenderList[pivot] = temp;
-		}
-		else
-		{
-			temp = _vRenderList[i];
-			_vRenderList[i] = _vRenderList[j];
-			_vRenderList[j] = temp;
-		}
-	}
-	sortingRenderList(start, j - 1);
-	sortingRenderList(j + 1, end);
 }

@@ -136,5 +136,5 @@ void GPImage::GPFrameRender(HDC hdc, int destX, int destY, float wRatio, float h
 	SAFE_DELETE(_gdiRender);
 
 
-	ReleaseDC(_hWnd, hdc);
+	//ReleaseDC(_hWnd, hdc);
 }
