@@ -62,6 +62,8 @@ public:
 			_playerMoveAnim->getFrameHeight());
 	}
 
+	RECT getPlayerRC() {return _playerRC;}
+
 	Player() {}
 	~Player() {}
 };

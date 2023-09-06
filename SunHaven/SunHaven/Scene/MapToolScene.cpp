@@ -234,7 +234,6 @@ void MapToolScene::update(void)
 					Object* object = new Object(*_selectTiles[i][j]._object);
 					object->setTilePos(PointMake((_ptMouse.x - 50 + _cameraPos.x - MapToolWidth / 2) / TILEWIDTH + j, (_ptMouse.y - 50 + _cameraPos.y - MapToolHeight / 2) / TILEHEIGHT + i));
 					_tileMap[6][(_ptMouse.y - 50 + _cameraPos.y - MapToolHeight / 2) / TILEHEIGHT + i][(_ptMouse.x - 50 + _cameraPos.x - MapToolWidth / 2) / TILEWIDTH + j]._object = object;
-					_tileMap[5][(_ptMouse.y - 50 + _cameraPos.y - MapToolHeight / 2) / TILEHEIGHT + i][(_ptMouse.x - 50 + _cameraPos.x - MapToolWidth / 2) / TILEWIDTH + j] = _tiles[4][0][0];
 				}
 			}
 		}

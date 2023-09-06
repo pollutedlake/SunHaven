@@ -23,6 +23,8 @@ public:
 
 	void setCameraAddress(Camera* camera) {_camera = camera;}
 
+	vObject getObjectList() {return _vObject;}
+
 	ObjectManager() {}
 	~ObjectManager() {}
 };

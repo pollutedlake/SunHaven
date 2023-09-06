@@ -23,9 +23,6 @@ HRESULT FarmScene::init(void)
 	_om->init();
 	_om->setCameraAddress(_camera);
 
-
-	//_player->setPlayerPosition(PointMake(2400, 1000));
-
 	_ui = new UI;
 	_ui->init("Farm");
 
@@ -44,7 +41,6 @@ void FarmScene::update(void)
 {
 	_player->update();
 	_camera->setPosition(_player->getPlayerPosition());
-	//_player->setPlayerPosition(_camera->worldToCamera(_player->getPlayerPosition()));
 	_player->worldToCamera(_camera->worldToCamera
 	(_player->getPlayerPosition()));
 	_om->update();
@@ -55,7 +51,19 @@ void FarmScene::render(void)
 	_bg->render(getMemDC(), _camera->worldToCameraX(0),
 		_camera->worldToCameraY(0));
 
-	_om->render();
+	_player->render();
+	for (int i = 0; i < _om->getObjectList().size(); i++)
+	{
+		RECT temp;
+		if (IntersectRect(&temp, &_player->getPlayerRC(), &_om->getObjectList()[i]->getTransParentRC()))
+		{
+			_om->getObjectList()[i]->halfTransRender();
+		}
+		else
+		{
+			_om->getObjectList()[i]->render();
+		}
+	}
 
 	if (KEYMANAGER->isToggleKey('W'))
 	{
@@ -63,7 +71,6 @@ void FarmScene::render(void)
 			_camera->worldToCameraY(0));
 	}
 
-	_player->render();
 	
 	_ui->render();
 }

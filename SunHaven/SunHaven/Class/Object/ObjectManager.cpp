@@ -21,21 +21,9 @@ HRESULT ObjectManager::init(void)
 				Object* object = new Object;
 				object->init((LivingObjectType)tile, PointMake(k, j));
 				_vObject.push_back(object);
-				//_tileMap[6][j][k]._object = object;
 			}
 			fscanf_s(_fp, "\n");
 		}
-		/*fscanf_s(_fp, "\n");
-		int objectN;
-		fscanf_s(_fp, "%d\n", &objectN);
-		for (int i = 0; i < objectN; i++)
-		{
-			int type, tilePosX, tilePosY;
-			fscanf_s(_fp, "%d %d %d\n", &type, &tilePosX, &tilePosY);
-			Object* object = new Object;
-			object->init((LivingObjectType)type, PointMake(tilePosX, tilePosY));
-			_vObject.push_back(object);
-		}*/
 	}
 	std::fclose(_fp);
     return S_OK;

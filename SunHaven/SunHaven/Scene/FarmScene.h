@@ -22,6 +22,8 @@ public:
 	void update(void);
 	void render(void);
 
+	void SortingRender();
+
 	FarmScene() {}
 	~FarmScene() {}
 };
