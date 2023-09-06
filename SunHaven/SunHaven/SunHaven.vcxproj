@@ -185,6 +185,7 @@
     <ClCompile Include="Class\Enemy\TrapWeed.cpp" />
     <ClCompile Include="Class\Enemy\Shadeclaw.cpp" />
     <ClCompile Include="Class\UI.cpp" />
+    <ClCompile Include="Player\Skill\Skill.cpp" />
     <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -230,6 +231,7 @@
     <ClInclude Include="Class\Enemy\SteelSlug.h" />
     <ClInclude Include="Class\Enemy\TrapWeed.h" />
     <ClInclude Include="Class\Enemy\Shadeclaw.h" />
+    <ClInclude Include="Player\Skill\Skill.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Class\UI.h" />

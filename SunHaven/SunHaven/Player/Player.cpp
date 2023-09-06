@@ -56,6 +56,31 @@ HRESULT Player::init(float x, float y)
 
 
 
+	_swordSlash = IMAGEMANAGER->addImage("Ä®ÈÖµÎ¸£±â",
+		"Resources/Images/Player/IronSwordSlash.bmp",
+		230, 132, true, RGB(255, 0, 255));
+	_swordSlashAnim = new Animation;
+	_swordSlashAnim->init(_swordSlash->getWidth(),
+		_swordSlash->getHeight(),
+		46, 66);
+
+	_swordSlashAnim->setFPS(8);
+	_swordSlashAnim->setPlayFrame(0, 4, false, false);
+
+	_swordSlashRC = RectMakeCenter(_x, _y,
+		_swordSlashAnim->getFrameWidth(),
+		_swordSlashAnim->getFrameHeight());
+
+
+
+
+
+
+
+	_jump = 5.5f;
+	_isJump = false;
+
+
 
 	_miniRC[0] = RectMake(_playerRC.left, _playerRC.top - 3, 3, 3);
 	_miniRC[1] = RectMake(_playerRC.right + 3, _playerRC.top, 3, 3);
@@ -68,11 +93,21 @@ HRESULT Player::init(float x, float y)
 void Player::release(void)
 {
 	_inven->release();
+
+	_playerMoveAnim->release();
+	SAFE_DELETE(_playerMoveAnim);
+	
+	_fireballAnim->release();
+	SAFE_DELETE(_fireballAnim);
+	
+	_swordSlashAnim->release();
+	SAFE_DELETE(_swordSlashAnim);
 }
 
 void Player::update(void)
 {
 	_inven->update();
+
 
 	if (KEYMANAGER->isOnceKeyDown(VK_LEFT) ||
 		KEYMANAGER->isOnceKeyDown(VK_RIGHT) ||
@@ -90,6 +125,14 @@ void Player::update(void)
 	if (KEYMANAGER->isStayKeyDown(VK_LEFT))
 	{
 		_x -= _moveSpeed;
+		_swordSlashAnim->setPlayFrame(0, 4, false, false);
+
+		if (KEYMANAGER->isOnceKeyDown('Z'))
+		{
+			_x -= 220;
+			_swordSlashAnim->AniStart();
+		}
+
 		if (stairCol == RGB(2, 62, 156))
 		{
 			_y -= _moveSpeed;
@@ -99,6 +142,15 @@ void Player::update(void)
 	else if (KEYMANAGER->isStayKeyDown(VK_RIGHT))
 	{
 		_x += _moveSpeed;
+		int arr[5] = { 9,8,7,6,5 };
+		_swordSlashAnim->setPlayFrame(arr, 5, false);
+
+		if (KEYMANAGER->isOnceKeyDown('Z'))
+		{
+			_x += 220;
+			_swordSlashAnim->AniStart();
+		}
+
 		if (stairCol == RGB(2, 62, 156))
 		{
 			_y += _moveSpeed;
@@ -120,18 +172,40 @@ void Player::update(void)
 		_playerMoveAnim->AniStop();
 	}
 
-	
+	_playerRC = RectMakeCenter(_x, _y,
+		_playerMoveAnim->getFrameWidth(),
+		_playerMoveAnim->getFrameHeight());
 
-	if (KEYMANAGER->isOnceKeyDown('Z'))
+	if (KEYMANAGER->isOnceKeyDown(VK_SPACE))
 	{
-		_fireballAnim->AniStart();
+		_isJump = true;
 	}
 
-	if (_fireballAnim->isPlay())
+	if (_isJump)
+	{
+		if (_jump < -5.5f)
+		{
+			_isJump = false;
+			_jump = 5.5f;
+		}
+
+		_y -= _jump;
+
+
+
+		_jump -= 0.2f;
+	}
+	
+
+	if (KEYMANAGER->isOnceKeyDown('X'))
+	{
+		_swordSlashAnim->AniStart();
+		cout << "Ä®";
+	}
+
+	if (_swordSlashAnim->isPlay())
 	{
 		cout << "¹ß»ç";
-		_fireballRC.left += 5;
-		_fireballRC.right += 5;
 	}
 
 
@@ -139,9 +213,6 @@ void Player::update(void)
 		_playerMoveAnim->getFrameWidth(),
 		_playerMoveAnim->getFrameHeight());
 
-	_fireballRC = RectMakeCenter(_x, _y,
-		_fireballAnim->getFrameWidth(),
-		_fireballAnim->getFrameHeight());
 
 	for (int i = _playerRC.left+4; i <= _playerRC.right-4; i++)
 	{
@@ -201,6 +272,11 @@ void Player::update(void)
 		}
 	}
 
+
+
+
+
+
 	
 
 	if (_isCollisionLeft) _x += 2;
@@ -210,15 +286,22 @@ void Player::update(void)
 
 	_playerMoveAnim->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);
 	_fireballAnim->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);
+	_swordSlashAnim->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);
 }
 
 void Player::render(void)
 {
 
-	DrawRectMake(getMemDC(), _fireballRC);
+	DrawRectMake(getMemDC(), _playerRC);
 	_fireball->aniRender(getMemDC(), _fireballRC.left, _fireballRC.top,
 		_fireballAnim);
 	_playerImage->aniRender(getMemDC(), _playerRC.left, _playerRC.top, _playerMoveAnim);
+
+	if(_swordSlashAnim->isPlay())
+	{
+		_swordSlash->aniRender(getMemDC(), _swordSlashRC.left, _swordSlashRC.top,
+			_swordSlashAnim);
+	}
 
 	_inven->render();
 	/*DrawRectMake(getMemDC(), _miniRC[0]);

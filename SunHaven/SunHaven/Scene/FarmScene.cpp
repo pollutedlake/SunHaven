@@ -25,7 +25,6 @@ HRESULT FarmScene::init(void)
 
 
 
-
 	return S_OK;
 }
 
@@ -40,6 +39,7 @@ void FarmScene::update(void)
 	_player->update();
 	_camera->setPosition(_player->getPlayerPosition());
 	//_player->setPlayerPosition(_camera->worldToCamera(_player->getPlayerPosition()));
+
 	_player->worldToCamera(_camera->worldToCamera
 	(_player->getPlayerPosition()));
 }

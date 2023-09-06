@@ -29,6 +29,12 @@ private:
 	RECT _fireballRC;
 
 
+	GImage* _swordSlash;
+	Animation* _swordSlashAnim;
+	RECT _swordSlashRC;
+
+
+
 	Inventory* _inven;
 
 
@@ -40,6 +46,9 @@ private:
 	bool _isCollisionTop;
 	bool _isCollisionBottom;
 
+
+	float _jump;
+	bool _isJump;
 
 public:
 	HRESULT init(float x, float y);
@@ -65,6 +74,21 @@ public:
 		_playerRC = RectMakeCenter(position.x, position.y,
 			_playerMoveAnim->getFrameWidth(),
 			_playerMoveAnim->getFrameHeight());
+
+
+		
+		if (KEYMANAGER->isStayKeyDown(VK_LEFT))
+		{
+			_swordSlashRC = RectMakeCenter(position.x - 28, position.y,
+				_swordSlashAnim->getFrameWidth(),
+				_swordSlashAnim->getFrameHeight());
+		}
+		else if (KEYMANAGER->isStayKeyDown(VK_RIGHT))
+		{
+			_swordSlashRC = RectMakeCenter(position.x + 28, position.y,
+				_swordSlashAnim->getFrameWidth(),
+				_swordSlashAnim->getFrameHeight());
+		}
 	}
 
 	Player() {}
