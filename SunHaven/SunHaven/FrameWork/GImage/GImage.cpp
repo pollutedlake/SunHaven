@@ -235,7 +235,8 @@ HRESULT GImage::initForAlphaBlend(void)
 	_blendImage->loadType = LOAD_FILE;
 	_blendImage->resID = 0;
 	_blendImage->hMemDC = CreateCompatibleDC(hdc);
-	_blendImage->hBit = (HBITMAP)CreateCompatibleBitmap(hdc, _imageInfo->width, _imageInfo->height);
+	//_blendImage->hBit = (HBITMAP)CreateCompatibleBitmap(hdc, _imageInfo->width, _imageInfo->height);
+	_blendImage->hBit = (HBITMAP)CreateCompatibleBitmap(hdc, WINSIZE_X, WINSIZE_Y);
 	_blendImage->hOBit = (HBITMAP)SelectObject(_blendImage->hMemDC, _blendImage->hBit);
 	_blendImage->width = WINSIZE_X;
 	_blendImage->height = WINSIZE_Y;
@@ -543,7 +544,6 @@ void GImage::alphaRender(HDC hdc, int destX, int destY, int destWidth, int destH
 			destX, destY,
 			SRCCOPY
 		);
-
 		GdiTransparentBlt
 		(
 			_blendImage->hMemDC,
@@ -556,7 +556,6 @@ void GImage::alphaRender(HDC hdc, int destX, int destY, int destWidth, int destH
 			sourHeight,
 			_transColor
 		);
-
 		AlphaBlend
 		(
 			hdc,

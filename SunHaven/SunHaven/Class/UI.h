@@ -80,3 +80,20 @@ public:
 	RadioButton();
 	~RadioButton() {}
 };
+
+class UI : public GameNode
+{
+	string _sceneName;
+	GImage* _clock;
+	GImage* _cursor;
+
+public:
+	HRESULT init(void);
+	HRESULT init(string sceneName);
+	void release(void);
+	void update(void);
+	void render(void);
+
+	UI() {}
+	~UI() {}
+};

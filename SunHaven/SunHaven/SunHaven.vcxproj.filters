@@ -102,7 +102,15 @@
     <ClCompile Include="Class\Enemy\SteelSlug.cpp" />
     <ClCompile Include="Class\Enemy\TrapWeed.cpp" />
     <ClCompile Include="Class\Enemy\Shadeclaw.cpp" />
+<<<<<<< HEAD
     <ClCompile Include="Player\Skill\Skill.cpp" />
+=======
+    <ClCompile Include="Class\Object\Object.cpp" />
+    <ClCompile Include="Class\Object\Tree.cpp" />
+    <ClCompile Include="Class\Object\Rock.cpp" />
+    <ClCompile Include="Class\Object\Grass.cpp" />
+    <ClCompile Include="Class\Object\ObjectManager.cpp" />
+>>>>>>> main
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Class\Boss\Dynus.h" />
@@ -187,7 +195,15 @@
     <ClInclude Include="Class\Enemy\SteelSlug.h" />
     <ClInclude Include="Class\Enemy\TrapWeed.h" />
     <ClInclude Include="Class\Enemy\Shadeclaw.h" />
+<<<<<<< HEAD
     <ClInclude Include="Player\Skill\Skill.h" />
+=======
+    <ClInclude Include="Class\Object\Object.h" />
+    <ClInclude Include="Class\Object\Tree.h" />
+    <ClInclude Include="Class\Object\Rock.h" />
+    <ClInclude Include="Class\Object\Grass.h" />
+    <ClInclude Include="Class\Object\ObjectManager.h" />
+>>>>>>> main
   </ItemGroup>
   <ItemGroup>
     <None Include="Stdafx.pch" />
@@ -209,6 +225,7 @@
   <ItemGroup>
     <Text Include="FarmMap.txt" />
     <Text Include="Debug\SunHaven.log" />
+    <Text Include="FarmMapObject.txt" />
   </ItemGroup>
   <ItemGroup>
     <Object Include="Debug\Animation.obj" />

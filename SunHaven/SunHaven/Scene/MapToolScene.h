@@ -1,22 +1,23 @@
 // ¹Ú»óÇö
 #pragma once
 #include "../FrameWork/GameNode/GameNode.h"
+#include "../Class/Object/Object.h"
 
 #define MapToolWidth	800
 #define MapToolHeight	600
 
 enum TileType
 {
-	Normal,
-	CANTGO,
-	STAIRS
+	NORMAL,
+	COLLIDER,
+	OBJECT
 };
 
 struct Tile
 {
 	GImage* _image = nullptr;
 	int _tile = 0;
-	TileType _type;
+	Object* _object = nullptr;
 };
 
 class NormalButton;
@@ -27,8 +28,7 @@ class MapToolScene : public GameNode
 {
 private:
 	GImage* _tileMapBuffer;
-	Tile _tileMap[6][100][100];
-	
+	Tile _tileMap[7][100][100];
 	int _tileMapSize;
 
 	GImage* _tilesBuffer;
@@ -44,6 +44,7 @@ private:
 	vector<RadioButton*>::iterator _viRadioButton;
 
 	Tile _selectTiles[MapToolWidth / TILEWIDTH + 1][MapToolHeight / TILEHEIGHT + 1];
+
 	POINT _cameraPos;
 	char _tileSizeChar[20];
 	bool _input;
@@ -59,8 +60,7 @@ private:
 	int _selectTilesRow;
 	int _selectTilesCol;
 
-	bool _showLayer[6];
-	bool _copyMapTool;
+	bool _showLayer[7];
 
 public:
 	HRESULT init(void);
@@ -74,6 +74,7 @@ public:
 	void nextTiles(void);
 	void erase(void);
 	void toggleShowLayer(int layer);
+	void selectObject(int objectType);
 
 	void copyTiles(void);
 

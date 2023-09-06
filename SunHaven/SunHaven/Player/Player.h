@@ -91,6 +91,8 @@ public:
 		}
 	}
 
+	RECT getPlayerRC() {return _playerRC;}
+
 	Player() {}
 	~Player() {}
 };

@@ -279,3 +279,40 @@ void RadioButton::buttonUp(int num)
 RadioButton::RadioButton()
 {
 }
+
+HRESULT UI::init(void)
+{
+	return S_OK;
+}
+
+HRESULT UI::init(string sceneName)
+{
+	_sceneName = sceneName;
+	if (sceneName == "Farm")
+	{
+		_clock = IMAGEMANAGER->findImage("ClockUI");
+		_cursor = IMAGEMANAGER->findImage("Cursor");
+	}
+	return S_OK;
+}
+
+void UI::release(void)
+{
+}
+
+void UI::update(void)
+{
+	if (_sceneName == "Title")
+	{
+
+	}
+}
+
+void UI::render(void)
+{
+	if (_sceneName == "Farm")
+	{
+		_clock->render(getMemDC(), 20, 20);
+		_cursor->render(getMemDC(), _ptMouse.x, _ptMouse.y);
+	}
+}

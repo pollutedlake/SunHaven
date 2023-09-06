@@ -1,7 +1,7 @@
 #pragma once
-#include "../FrameWork/SingletonBase/SingletonBase.h"
+#include "../FrameWork/GameNode/GameNode.h"
 
-class Camera : public SingletonBase<Camera>
+class Camera : public GameNode
 {
 private:
 	POINT _position;
@@ -23,8 +23,6 @@ public:
 	POINT worldToCamera(POINT point);
 	float worldToCameraX(float x);
 	float worldToCameraY(float y);
-	float getXScreen(float x);
-	float getYScreen(float y);
 
 	Camera() {}
 	~Camera() {}
