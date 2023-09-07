@@ -59,6 +59,7 @@ void ObjectManager::update(void)
 	for (_viObject = _vObject.begin(); _viObject != _vObject.end(); ++_viObject)
 	{
 		(*_viObject)->updateCameraPos(_camera->worldToCameraX((*_viObject)->getTilePos().x * 36 + 18), _camera->worldToCameraY((*_viObject)->getTilePos().y * 36 + 18));
+		(*_viObject)->update();
 	}
 }
 

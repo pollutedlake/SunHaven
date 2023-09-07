@@ -15,6 +15,13 @@ enum TileType
 	OBJECT
 };
 
+enum Map
+{
+	FARM,
+	MINE,
+	DYNUS
+};
+
 struct Tile
 {
 	GImage* _image = nullptr;
@@ -34,7 +41,7 @@ private:
 	int _tileMapSize;
 
 	GImage* _tilesBuffer;
-	Tile _tiles[5][20][20];
+	Tile _tiles[10][20][20];
 
 	GImage* _collisionBuffer;
 

@@ -37,9 +37,6 @@ void Object::updateCameraPos(float cx, float cy)
 	_cx = cx;
 	_cy = cy;
 	_rc = RectMake(_cx + _offsetX * 1.5 - _image->getWidth(), _cy + _offsetY * 1.5 - _image->getHeight(), _image->getWidth() * 1.5, _image->getHeight() * 1.5);
-	/*_hpBar->setX(_cx);
-	_hpBar->setY(_cy - 36);
-	_hpBar->setGauge(_curHp, _maxHp);*/
 }
 
 void Object::renderToPoint(POINT point)
@@ -49,8 +46,8 @@ void Object::renderToPoint(POINT point)
 
 void Object::renderHpBar()
 {
-	//if (_curHp < _maxHp)
-	//{
+	if (_curHp < _maxHp)
+	{
 		_hpBar->render();
-	//}
+	}
 }

@@ -3,7 +3,7 @@
 #include "../GameNode/GameNode.h"
 #include "../Class/Boss/Dynus.h"
 #include "../Class/Enemy/Shadeclaw.h"
-#include "../Class/Enemy/Player_Temp.h"
+#include "../../Player/Player.h"
 #include "../Class/Enemy/EnemyManager.h"
 
 class DynusScene : public GameNode
@@ -11,10 +11,9 @@ class DynusScene : public GameNode
 private:
 	Dynus* _dynus;
 	Shadeclaw* _shadeclaw;
-	Player_Temp* _player;
+	Player* _player;
 	EnemyManager* _em;
 
-	float _x, _y;
 	char _text[64];
 
 public:

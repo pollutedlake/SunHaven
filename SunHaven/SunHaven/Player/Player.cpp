@@ -1,10 +1,18 @@
 #include "Stdafx.h"
 #include "Player.h"
+#include "../Class/Object/ObjectManager.h"
 
 HRESULT Player::init(float x, float y)
 {
 	_x = x;
 	_y = y;
+
+
+
+	_inven = new Inventory;
+	_inven->init();
+
+	
 
 	_playerImage = IMAGEMANAGER->addImage("임시플레이어",
 		"Resources/Images/Player/kittywalk.bmp",
@@ -25,8 +33,7 @@ HRESULT Player::init(float x, float y)
 	_moveSpeed = 2.0f;
 
 
-
-
+	
 
 
 
@@ -51,22 +58,72 @@ HRESULT Player::init(float x, float y)
 
 
 
+	_swordSlash = IMAGEMANAGER->addImage("칼휘두르기",
+		"Resources/Images/Player/IronSwordSlash.bmp",
+		230, 132, true, RGB(255, 0, 255));
+	_swordSlashAnim = new Animation;
+	_swordSlashAnim->init(_swordSlash->getWidth(),
+		_swordSlash->getHeight(),
+		46, 66);
 
+	_swordSlashAnim->setFPS(8);
+	_swordSlashAnim->setPlayFrame(0, 4, false, false);
+
+	_swordSlashRC = RectMakeCenter(_x, _y,
+		_swordSlashAnim->getFrameWidth(),
+		_swordSlashAnim->getFrameHeight());
+
+
+
+	
+
+
+
+	_jump = 5.5f;
+	_isJump = false;
+
+
+	_playerState.HP = INIDATAMANAGER->loadDataInteger("tempINIFile", "commonState", "HP");
+	_playerState.MP = INIDATAMANAGER->loadDataInteger("tempINIFile", "commonState", "MP");
+	_playerState.gold = INIDATAMANAGER->loadDataInteger("tempINIFile", "commonState", "Gold");
+	
+	_playerState.HPRecoveryPerSec = (float)_playerState.HP / 1500;
+	_playerState.MPRecoveryPerSec = (float)_playerState.MP / 50;
+
+	_playerState.attackDamage = INIDATAMANAGER->loadDataInteger("tempINIFile", "combatState", "attackDamage");
+	_playerState.spellDamage = INIDATAMANAGER->loadDataInteger("tempINIFile", "combatState", "spellDamage");
+	_playerState.defence = INIDATAMANAGER->loadDataInteger("tempINIFile", "combatState", "defence");
+	
+
+	
 	_miniRC[0] = RectMake(_playerRC.left, _playerRC.top - 3, 3, 3);
 	_miniRC[1] = RectMake(_playerRC.right + 3, _playerRC.top, 3, 3);
 	_miniRC[2] = RectMake(_playerRC.right -3, _playerRC.top + 3, 3, 3);
 	_miniRC[3] = RectMake(_playerRC.left-3, _playerRC.top, 3, 3);
 	
+
 	return S_OK;
 }
 
 void Player::release(void)
 {
+	_inven->release();
 
+	_playerMoveAnim->release();
+	SAFE_DELETE(_playerMoveAnim);
+	
+	_fireballAnim->release();
+	SAFE_DELETE(_fireballAnim);
+	
+	_swordSlashAnim->release();
+	SAFE_DELETE(_swordSlashAnim);
 }
 
 void Player::update(void)
 {
+	_inven->update();
+
+
 	if (KEYMANAGER->isOnceKeyDown(VK_LEFT) ||
 		KEYMANAGER->isOnceKeyDown(VK_RIGHT) ||
 		KEYMANAGER->isOnceKeyDown(VK_UP) ||
@@ -74,8 +131,6 @@ void Player::update(void)
 	{
 		_playerMoveAnim->AniStart();
 	}
-
-
 
 	COLORREF stairCol =
 		GetPixel(IMAGEMANAGER->findImage("충돌")->getMemDC(),
@@ -85,6 +140,14 @@ void Player::update(void)
 	if (KEYMANAGER->isStayKeyDown(VK_LEFT))
 	{
 		_x -= _moveSpeed;
+		_swordSlashAnim->setPlayFrame(0, 4, false, false);
+
+		if (KEYMANAGER->isOnceKeyDown('Z'))
+		{
+			_x -= 220;
+			_swordSlashAnim->AniStart();
+		}
+
 		if (stairCol == RGB(2, 62, 156))
 		{
 			_y -= _moveSpeed;
@@ -94,6 +157,15 @@ void Player::update(void)
 	else if (KEYMANAGER->isStayKeyDown(VK_RIGHT))
 	{
 		_x += _moveSpeed;
+		int arr[5] = { 9,8,7,6,5 };
+		_swordSlashAnim->setPlayFrame(arr, 5, false);
+
+		if (KEYMANAGER->isOnceKeyDown('Z'))
+		{
+			_x += 220;
+			_swordSlashAnim->AniStart();
+		}
+
 		if (stairCol == RGB(2, 62, 156))
 		{
 			_y += _moveSpeed;
@@ -103,11 +175,19 @@ void Player::update(void)
 	else if (KEYMANAGER->isStayKeyDown(VK_UP))
 	{
 		_y -= _moveSpeed;
+		if (KEYMANAGER->isOnceKeyDown('Z'))
+		{
+			_y -= 220;
+		}
 		_playerMoveAnim->setPlayFrame(10, 14, false, true);
 	}
 	else if (KEYMANAGER->isStayKeyDown(VK_DOWN))
 	{
 		_y += _moveSpeed;
+		if (KEYMANAGER->isOnceKeyDown('Z'))
+		{
+			_y += 220;
+		}
 		_playerMoveAnim->setPlayFrame(0, 4, false, true);
 	}
 	else
@@ -115,30 +195,42 @@ void Player::update(void)
 		_playerMoveAnim->AniStop();
 	}
 
+	_playerRC = RectMakeCenter(_x, _y,
+		_playerMoveAnim->getFrameWidth(),
+		_playerMoveAnim->getFrameHeight());
+
+	if (KEYMANAGER->isOnceKeyDown(VK_SPACE))
+	{
+		_isJump = true;
+	}
+
+	if (_isJump)
+	{
+		if (_jump < -5.5f)
+		{
+			_isJump = false;
+			_jump = 5.5f;
+		}
+
+		_y -= _jump;
+
+
+
+		_jump -= 0.2f;
+	}
 	
 
-	if (KEYMANAGER->isOnceKeyDown('Z'))
+	if (KEYMANAGER->isOnceKeyDown('X'))
 	{
-		_fireballAnim->AniStart();
+		_swordSlashAnim->AniStart();
 	}
-
-	if (_fireballAnim->isPlay())
-	{
-		cout << "발사";
-		_fireballRC.left += 5;
-		_fireballRC.right += 5;
-	}
-
 
 	_playerRC = RectMakeCenter(_x, _y,
 		_playerMoveAnim->getFrameWidth(),
 		_playerMoveAnim->getFrameHeight());
 
-	_fireballRC = RectMakeCenter(_x, _y,
-		_fireballAnim->getFrameWidth(),
-		_fireballAnim->getFrameHeight());
 
-	for (int i = _playerRC.left+4; i <= _playerRC.right-4; i++)
+	for (int i = _playerRC.left + 4; i <= _playerRC.right - 4; i++)
 	{
 		COLORREF collisionT =
 			GetPixel(IMAGEMANAGER->findImage("충돌")->getMemDC(),
@@ -196,6 +288,8 @@ void Player::update(void)
 		}
 	}
 
+
+
 	
 
 	if (_isCollisionLeft) _x += 2;
@@ -205,14 +299,26 @@ void Player::update(void)
 
 	_playerMoveAnim->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);
 	_fireballAnim->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);
+	_swordSlashAnim->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);
 }
 
 void Player::render(void)
 {
-	DrawRectMake(getMemDC(), _fireballRC);
 	_fireball->aniRender(getMemDC(), _fireballRC.left, _fireballRC.top,
 		_fireballAnim);
 	_playerImage->aniRender(getMemDC(), _playerRC.left, _playerRC.top, _playerMoveAnim);
+
+	if(_swordSlashAnim->isPlay())
+	{
+		_swordSlash->aniRender(getMemDC(), _swordSlashRC.left, _swordSlashRC.top,
+			_swordSlashAnim);
+	}
+
+
+
+
+
+	_inven->render();
 
 	/*DrawRectMake(getMemDC(), _miniRC[0]);
 	DrawRectMake(getMemDC(), _miniRC[1]);
@@ -220,18 +326,30 @@ void Player::render(void)
 	DrawRectMake(getMemDC(), _miniRC[3]);*/
 }
 
-void Player::UseTool()
+void Player::UseTool(ObjectManager* object)
 {
+	for (int i = 0; i < object->getObjectList().size(); i++)
+	{
+		if (object->getObjectList()[i]->getType() <= 1)
+		{
+
+		}
+	}
 }
 
 void Player::UseFishingLod()
 {
+
 }
 
 void Player::UseSword()
 {
+
 }
 
 void Player::UseCrossBow()
 {
+
 }
+
+

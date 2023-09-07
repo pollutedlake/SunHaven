@@ -2,7 +2,7 @@
 #include "EnemyManager.h"
 #include "Shadeclaw.h"
 //#include "Rocket.h"
-#include "../Enemy/Player_Temp.h"
+#include "../../Player/Player.h"
 
 HRESULT EnemyManager::init(void)
 {
@@ -32,6 +32,8 @@ void EnemyManager::update(void)
 {
 	for (_viEnemy = _vEnemy.begin(); _viEnemy != _vEnemy.end(); ++_viEnemy)
 	{
+		(*_viEnemy)->setPlayerX(_player->getPlayerPosition().x);
+		(*_viEnemy)->setPlayerY(_player->getPlayerPosition().y);
 		(*_viEnemy)->update();
 	}
 

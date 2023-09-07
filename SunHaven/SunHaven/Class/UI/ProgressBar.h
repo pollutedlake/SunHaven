@@ -4,7 +4,7 @@
 class ProgressBar : public GameNode
 {
 private:
-	GPImage* _progressBarTop;
+	GImage* _progressBarTop;
 	GPImage* _progressBarBottom;
 	GImage* _progressBarFill;
 

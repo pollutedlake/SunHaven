@@ -78,10 +78,3 @@ unsigned long Timer::getFrameRate(char* str) const
     return _frameRate;
 }
 
-Timer::Timer()
-{
-}
-
-Timer::~Timer()
-{
-}
