@@ -10,7 +10,7 @@ HRESULT FarmScene::init(void)
 
 	
 	_player = new Player;
-	_player->init(2800, 1400);
+	_player->init(2400, 1400);
 
 
 	_camera = new Camera;
@@ -43,27 +43,12 @@ void FarmScene::update(void)
 	_player->worldToCamera(_camera->worldToCamera
 	(_player->getPlayerPosition()));
 	_om->update();
-	/*_vRenderList.push(make_pair(_player, _player->getPlayerRC().bottom));
-	for (int i = 0; i < _om->getObjectList().size(); i++)
-	{
-		RECT temp;
-		if (IntersectRect(&temp, &RectMake(0, 0, WINSIZE_X, WINSIZE_Y), &_om->getObjectList()[i]->getRC()))
-		{
-			if (IntersectRect(&temp, &_player->getPlayerRC(), &_om->getObjectList()[i]->getRC()))
-			{
-				_om->getObjectList()[i]->setHalfTrans(true);
-			}
-			else
-			{
-				_om->getObjectList()[i]->setHalfTrans(false);
-			}
-			_vRenderList.push(make_pair(_om->getObjectList()[i], _om->getObjectList()[i]->getRC().bottom));
-		}
-	}*/
+	//cout << "aaaaaaaaaaa" << endl;
 }
 
 void FarmScene::render(void)
 {
+	//cout << "bbbbbbbbbbbb" << endl;
 	_bg->render(getMemDC(), 0, 0, _camera->getPosition().x - WINSIZE_X / 2,
 		_camera->getPosition().y - WINSIZE_Y / 2, WINSIZE_X, WINSIZE_Y);
 
@@ -71,9 +56,11 @@ void FarmScene::render(void)
 	for (int i = 0; i < _om->getObjectList().size(); i++)
 	{
 		RECT temp;
+		// 카메라안에 잡히는 것만 클리핑해서 렌더링
 		if (IntersectRect(&temp, &RectMake(0, 0, WINSIZE_X, WINSIZE_Y), &_om->getObjectList()[i]->getRC()))
 		{
-			if (IntersectRect(&temp, &_player->getPlayerRC(), &_om->getObjectList()[i]->getRC()))
+			// 이미지가 겹치면 반투명화
+			if (IntersectRect(&temp, &_player->getPlayerRC(), &_om->getObjectList()[i]->getRC()) && _om->getObjectList()[i]->getRC().bottom > _player->getPlayerRC().bottom)
 			{
 				_om->getObjectList()[i]->setHalfTrans(true);
 			}
@@ -81,9 +68,11 @@ void FarmScene::render(void)
 			{
 				_om->getObjectList()[i]->setHalfTrans(false);
 			}
+			// y값으로 정렬
 			_vRenderList.push(make_pair(_om->getObjectList()[i], _om->getObjectList()[i]->getRC().bottom));
 		}
 	}
+	// 정렬된 순서로 렌더
 	while (!_vRenderList.empty())
 	{
 		_vRenderList.top().first->render();

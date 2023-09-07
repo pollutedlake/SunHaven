@@ -6,7 +6,7 @@ HRESULT MainGame::init(void)
 	GameNode::init(true);
 	_resources = new Resources;
 	_resources->init();
-	SCENEMANAGER->changeScene("MapTool");
+	SCENEMANAGER->changeScene("Farm");
 	ShowCursor(false);
 	return S_OK;
 }
@@ -19,11 +19,13 @@ void MainGame::release(void)
 void MainGame::update(void)
 {
 	GameNode::update();
+	cout << "update" << endl;
 	SCENEMANAGER->update();
 }
 
 void MainGame::render(void)
 {
+	cout << "render" << endl;
 	PatBlt(getMemDC(), 0, 0, WINSIZE_X, WINSIZE_Y, WHITENESS);
 	SCENEMANAGER->render();
 	TIMEMANAGER->render(getMemDC());
