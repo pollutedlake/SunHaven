@@ -4,6 +4,7 @@
 
 HRESULT DynusScene::init(void)
 {
+
 	IMAGEMANAGER->addImage("Ãæµ¹", "FarmMapCollision.bmp", 3600, 3600);
 	_player = new Player;
 

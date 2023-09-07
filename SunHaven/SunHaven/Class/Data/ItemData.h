@@ -120,12 +120,7 @@ public:
 	void accessorySetUp(tagAccessory* qAcc = nullptr);
 	void ingredientSetUp(tagIngredient* qIngredient = nullptr);
 	void consumableSetUp(tagConsumable* qConsumable = nullptr);
-	/*void armorSetUp(Item* qItem = nullptr);
-	void materialSetUp(Item* qItem = nullptr);
-	void consumableSetUp(Item* qItem = nullptr);*/
-
-	//queue<Item*>* getItem() { return &this->_item; }
-	//queue<Item*>* getItem() { return &this->_item; }
+	
 	queue<tagTool*>* getTool() { return &this->_tool; }
 	queue<tagWeapon*>* getWeapon() { return &this->_weapon; }
 	queue<tagArmor*>* getArmor() { return &this->_armor; }
