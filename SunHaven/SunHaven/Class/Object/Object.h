@@ -13,12 +13,13 @@ enum LivingObjectType
 
 class Object : public GameNode
 {
-private:
+protected:
 	GImage* _image;
 	POINT _tilePos;
 	LivingObjectType _type;
 	RECT _collisionRC;
-	RECT _transParentRC;
+	bool _halfTrans;
+	RECT _rc;
 	int _offsetX;
 	int _offsetY;
 	float _cx, _cy;
@@ -26,21 +27,21 @@ private:
 
 public:
 	HRESULT init(void);
-	HRESULT init(LivingObjectType type, POINT tilePos = { NULL, NULL });
+	virtual HRESULT init(LivingObjectType type, POINT tilePos = { NULL, NULL });
 	void release(void);
 	void update(void);
 	void render(void);
 	void render(HDC hdc);
 
-	void halfTransRender();
 	void updateCameraPos(float cx, float cy);
 	void renderToPoint(POINT point);
 	void setTilePos(POINT tilePos) {_tilePos = tilePos;}
+	void setHalfTrans(bool halfTrans) { _halfTrans = halfTrans; }
 
 	POINT getTilePos() {return _tilePos;}
 	LivingObjectType getType() {return _type;}
 	RECT getCollisionRC() {return _collisionRC;}
-	RECT getTransParentRC() {return _transParentRC;}
+	RECT getRC() {return _rc;}
 
 	Object() {}
 	~Object() {}

@@ -1,6 +1,8 @@
 #pragma once
 #include "../../FrameWork/GameNode/GameNode.h"
-#include "Object.h"
+#include "Tree.h"
+#include "Rock.h"
+#include "Grass.h"
 
 class Camera;
 

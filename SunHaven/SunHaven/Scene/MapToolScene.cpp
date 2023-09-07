@@ -216,6 +216,19 @@ void MapToolScene::update(void)
 		{
 			(*_viRadioButton)->buttonDown();
 		}
+		if (PtInRect(&_tilesRC, _ptMouse))
+		{
+			if (PtInRect(&_mapToolRC, PointMake(_exCursorRC.left, _exCursorRC.top)))
+			{
+				for (int i = 0; i < (_selectRC.bottom - _selectRC.top) / TILEHEIGHT; i++)
+				{
+					for (int j = 0; j < (_selectRC.right - _selectRC.left) / TILEWIDTH; j++)
+					{
+						_tileMap[_layer][_selectRC.top / TILEHEIGHT + i][_selectRC.left / TILEWIDTH + j] = _tiles[_curTiles][(_cursorRC.top - 50) / TILEHEIGHT][(_cursorRC.left - 900) / TILEWIDTH];
+					}
+				}
+			}
+		}
 	}
 	if (KEYMANAGER->isStayKeyDown(VK_LBUTTON))
 	{
@@ -224,7 +237,7 @@ void MapToolScene::update(void)
 			for (int i = 0; i < _selectTilesRow; i++)
 			{
 				CopyMemory(&_tileMap[_layer][(_ptMouse.y - 50 + _cameraPos.y - MapToolHeight / 2) / TILEHEIGHT + i][(_ptMouse.x - 50 + _cameraPos.x - MapToolWidth / 2) / TILEWIDTH],
-				&_selectTiles[i][0], sizeof(Tile) * _selectTilesCol);
+					&_selectTiles[i][0], sizeof(Tile) * _selectTilesCol);
 				for (int j = 0; j < _selectTilesCol; j++)
 				{
 					if (_selectTiles[i][j]._object == nullptr)
@@ -567,7 +580,23 @@ void MapToolScene::selectObject(int objectType)
 	char str[64];
 	wsprintf(str, "Object%d", objectType + 1);
 	_selectTiles[0][0]._image = IMAGEMANAGER->findImage(str);
-	Object* object = new Object;
+	Object* object = nullptr;
+	switch (objectType / 2)
+	{
+		case 0:
+			object = new Grass;
+		break;
+		case 1:
+			object = new Tree;
+		break;
+		case 2:
+			object = new Rock;
+		break;
+	}
+	if (object == nullptr)
+	{
+		return;
+	}
 	object->init((LivingObjectType)objectType);
 	for (int i = 0; i < MapToolWidth / TILEWIDTH + 1; i++)
 	{
@@ -605,45 +634,6 @@ void MapToolScene::copyTiles(void)
 		}
 	}
 }
-
-//void MapToolScene::sortObjects(int start, int end)
-//{
-//	if (start >= end)
-//	{
-//		return;
-//	}
-//
-//	int pivot  = start;
-//	int i = pivot + 1;
-//	int j = end;
-//	Object* temp;
-//	while (i <= j)
-//	{
-//		while (i <= end && _objectList[i]->getTilePos().y <= _objectList[pivot]->getTilePos().y)
-//		{
-//			i++;
-//		}
-//		while (j > start && _objectList[j]->getTilePos().y >= _objectList[pivot]->getTilePos().y)
-//		{
-//			j--;
-//		}
-//
-//		if (i > j)
-//		{
-//			temp = _objectList[j];
-//			_objectList[j] = _objectList[pivot];
-//			_objectList[pivot] = temp;
-//		}
-//		else
-//		{
-//			temp = _objectList[i];
-//			_objectList[i] = _objectList[j];
-//			_objectList[j] = temp;
-//		}
-//	}
-//	sortObjects(start, j - 1);
-//	sortObjects(j + 1, end);
-//}
 
 void MapToolScene::saveMaps()
 {

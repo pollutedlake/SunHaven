@@ -19,11 +19,13 @@ void MainGame::release(void)
 void MainGame::update(void)
 {
 	GameNode::update();
+	cout << "update" << endl;
 	SCENEMANAGER->update();
 }
 
 void MainGame::render(void)
 {
+	cout << "render" << endl;
 	PatBlt(getMemDC(), 0, 0, WINSIZE_X, WINSIZE_Y, WHITENESS);
 	SCENEMANAGER->render();
 	TIMEMANAGER->render(getMemDC());

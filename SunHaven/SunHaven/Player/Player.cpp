@@ -289,7 +289,6 @@ void Player::update(void)
 	}
 
 
-	cout << "check: " << _isCollisionRight << endl;
 
 	
 
@@ -320,6 +319,7 @@ void Player::render(void)
 
 
 	_inven->render();
+
 	/*DrawRectMake(getMemDC(), _miniRC[0]);
 	DrawRectMake(getMemDC(), _miniRC[1]);
 	DrawRectMake(getMemDC(), _miniRC[2]);
@@ -328,19 +328,28 @@ void Player::render(void)
 
 void Player::UseTool(ObjectManager* object)
 {
+	for (int i = 0; i < object->getObjectList().size(); i++)
+	{
+		if (object->getObjectList()[i]->getType() <= 1)
+		{
 
+		}
+	}
 }
 
 void Player::UseFishingLod()
 {
+
 }
 
 void Player::UseSword()
 {
+
 }
 
 void Player::UseCrossBow()
 {
+
 }
 
 

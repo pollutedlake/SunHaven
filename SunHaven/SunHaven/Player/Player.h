@@ -71,6 +71,7 @@ public:
 	void render(void);
 
 	void UseTool(ObjectManager* object);
+
 	void UseFishingLod();
 	void UseSword();
 	void UseCrossBow();

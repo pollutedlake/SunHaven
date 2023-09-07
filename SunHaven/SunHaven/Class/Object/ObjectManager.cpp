@@ -18,9 +18,24 @@ HRESULT ObjectManager::init(void)
 				{
 					continue;
 				}
-				Object* object = new Object;
-				object->init((LivingObjectType)tile, PointMake(k, j));
-				_vObject.push_back(object);
+				Object* object = nullptr;
+				switch (tile / 2)
+				{
+					case 0:
+						object = new Grass;
+					break;
+					case 1:
+						object = new Tree;
+					break;
+					case 2:
+						object = new Rock;
+					break;
+				}
+				if(object != nullptr)
+				{
+					object->init((LivingObjectType)tile, PointMake(k, j));
+					_vObject.push_back(object);
+				}
 			}
 			fscanf_s(_fp, "\n");
 		}
@@ -43,7 +58,7 @@ void ObjectManager::update(void)
 {
 	for (_viObject = _vObject.begin(); _viObject != _vObject.end(); ++_viObject)
 	{
-		(*_viObject)->updateCameraPos(_camera->worldToCameraX((*_viObject)->getTilePos().x * 48 + 24), _camera->worldToCameraY((*_viObject)->getTilePos().y * 48 + 24));
+		(*_viObject)->updateCameraPos(_camera->worldToCameraX((*_viObject)->getTilePos().x * 36 + 18), _camera->worldToCameraY((*_viObject)->getTilePos().y * 36 + 18));
 	}
 }
 

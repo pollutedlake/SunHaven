@@ -138,6 +138,25 @@ HRESULT Resources::init(void)
 	// ====================
 	// Image
 	IMAGEMANAGER->addImage("ClockUI", "Resources/Images/UI/Clock.bmp", 69, 65, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addGPFrameImage("DateBar", "Resources/Images/UI/DateBar.png",
+		0, 0,
+		1, 1,
+		false, NULL, RotateNoneFlipNone);
+	IMAGEMANAGER->addGPFrameImage("TimeBar", "Resources/Images/UI/TimeBar.png",
+		0, 0,
+		1, 1,
+		false, NULL, RotateNoneFlipNone);
+	IMAGEMANAGER->addGPFrameImage("UpperRightBar", "Resources/Images/UI/UpperRightBar.png",
+		0, 0,
+		1, 1,
+		false, NULL, RotateNoneFlipNone);
+	IMAGEMANAGER->addImage("GoldIcon", "Resources/Images/UI/GoldIcon.bmp", 10, 9, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("TicketIcon", "Resources/Images/UI/TicketIcon.bmp", 22, 22, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("OrbIcon", "Resources/Images/UI/OrbIcon.bmp", 11, 11, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("QuestBookIcon", "Resources/Images/UI/QuestBookIcon.bmp", 18, 15, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("SkillTreeIcon", "Resources/Images/UI/SkillTreeIcon.bmp", 23, 26, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("BarnAnimalsIcon", "Resources/Images/UI/BarnAnimalsIcon.bmp", 24, 18, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("FishingNetIcon", "Resources/Images/UI/FishingNetIcon.bmp", 16, 17, true, RGB(255, 0, 255));
 	//Sound
 	return S_OK;
 }
