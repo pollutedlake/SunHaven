@@ -49,6 +49,14 @@ public:
 	void update(void);
 	void render(void);
 
+	void getItem();
+	void itemMove();
+	void invenMold();
+	void invenSlot();
+	void equipment_Slot();
+	void moveItemRender();
+	void popupItem();
+
 	Inventory(){}
 	~Inventory(){}
 };

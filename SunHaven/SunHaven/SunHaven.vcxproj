@@ -153,6 +153,7 @@
     <ClCompile Include="Class\Enemy\EnemyManager.cpp" />
     <ClCompile Include="Class\Enemy\FlameImp.cpp" />
     <ClCompile Include="Class\Enemy\MagmaBug.cpp" />
+    <ClCompile Include="Class\CraftingTable.cpp" />
     <ClCompile Include="DataScene.cpp" />
     <ClCompile Include="Class\Data\JsonSaveLoader.cpp" />
     <ClCompile Include="Class\Data\INIData.cpp" />
@@ -197,6 +198,7 @@
     <ClInclude Include="Class\Enemy\EnemyManager.h" />
     <ClInclude Include="Class\Enemy\FlameImp.h" />
     <ClInclude Include="Class\Enemy\MagmaBug.h" />
+    <ClInclude Include="Class\CraftingTable.h" />
     <ClInclude Include="DataScene.h" />
     <ClInclude Include="Class\Data\JsonSaveLoader.h" />
     <ClInclude Include="inc\FMOD\fmod.hpp" />

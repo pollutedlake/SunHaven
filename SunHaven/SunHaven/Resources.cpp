@@ -156,6 +156,10 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addImage("drop_button", "Resources/Images/Inventory/drop_button.bmp", 26, 25, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("x_button", "Resources/Images/Inventory/x_button.bmp", 27, 28, true, RGB(255, 0, 255));
 
+	//CraftingImage
+
+
+
 	// shopImage
 
 	// Sound
