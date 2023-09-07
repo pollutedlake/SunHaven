@@ -3,11 +3,22 @@
 #include "../FrameWork/Animation/Animation.h"
 #include "../Class/Inventory.h"
 
+class ObjectManager;
+
 struct tagPlayerState
 {
+	string playerName;
 	float playerSpeed;
 	int HP;
 	int MP;
+	float HPRecoveryPerSec;
+	float MPRecoveryPerSec;
+	int gold;
+
+	int attackDamage;
+	int spellDamage;
+	int defence;
+	float critical;
 
 	int mineEXP;
 	int combatEXP;
@@ -17,6 +28,10 @@ struct tagPlayerState
 
 class Player : public GameNode
 {
+private:
+	tagPlayerState _playerState;
+	int a;
+
 private:
 	GImage* _playerImage;
 	Animation* _playerMoveAnim;
@@ -32,7 +47,6 @@ private:
 	GImage* _swordSlash;
 	Animation* _swordSlashAnim;
 	RECT _swordSlashRC;
-
 
 
 	Inventory* _inven;
@@ -56,7 +70,7 @@ public:
 	void update(void);
 	void render(void);
 
-	void UseTool();
+	void UseTool(ObjectManager* object);
 	void UseFishingLod();
 	void UseSword();
 	void UseCrossBow();
@@ -91,7 +105,27 @@ public:
 		}
 	}
 
-	RECT getPlayerRC() {return _playerRC;}
+
+
+
+	bool isCollision()
+	{
+
+	}
+
+	void setCollision(bool left, bool right, bool top, bool bottom)
+	{
+		_isCollisionLeft = left;
+		_isCollisionRight = right;
+		_isCollisionTop = top;
+		_isCollisionBottom = bottom;
+
+		cout << _isCollisionLeft <<
+			_isCollisionRight <<
+			_isCollisionTop << _isCollisionBottom << endl;
+	}
+
+	RECT getPlayerRC() { return _playerRC; }
 
 	Player() {}
 	~Player() {}

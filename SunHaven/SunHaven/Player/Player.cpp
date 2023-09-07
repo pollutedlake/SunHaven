@@ -1,15 +1,18 @@
 #include "Stdafx.h"
 #include "Player.h"
+#include "../Class/Object/ObjectManager.h"
 
 HRESULT Player::init(float x, float y)
 {
 	_x = x;
 	_y = y;
 
+
+
 	_inven = new Inventory;
 	_inven->init();
 
-
+	
 
 	_playerImage = IMAGEMANAGER->addImage("임시플레이어",
 		"Resources/Images/Player/kittywalk.bmp",
@@ -30,8 +33,7 @@ HRESULT Player::init(float x, float y)
 	_moveSpeed = 2.0f;
 
 
-
-
+	
 
 
 
@@ -73,7 +75,7 @@ HRESULT Player::init(float x, float y)
 
 
 
-
+	
 
 
 
@@ -81,12 +83,25 @@ HRESULT Player::init(float x, float y)
 	_isJump = false;
 
 
+	_playerState.HP = INIDATA->loadDataInteger("tempINIFile", "commonState", "HP");
+	_playerState.MP = INIDATA->loadDataInteger("tempINIFile", "commonState", "MP");
+	_playerState.gold = INIDATA->loadDataInteger("tempINIFile", "commonState", "Gold");
+	
+	_playerState.HPRecoveryPerSec = (float)_playerState.HP / 1500;
+	_playerState.MPRecoveryPerSec = (float)_playerState.MP / 50;
 
+	_playerState.attackDamage = INIDATA->loadDataInteger("tempINIFile", "combatState", "attackDamage");
+	_playerState.spellDamage = INIDATA->loadDataInteger("tempINIFile", "combatState", "spellDamage");
+	_playerState.defence = INIDATA->loadDataInteger("tempINIFile", "combatState", "defence");
+	
+
+	
 	_miniRC[0] = RectMake(_playerRC.left, _playerRC.top - 3, 3, 3);
 	_miniRC[1] = RectMake(_playerRC.right + 3, _playerRC.top, 3, 3);
 	_miniRC[2] = RectMake(_playerRC.right -3, _playerRC.top + 3, 3, 3);
 	_miniRC[3] = RectMake(_playerRC.left-3, _playerRC.top, 3, 3);
 	
+
 	return S_OK;
 }
 
@@ -160,11 +175,19 @@ void Player::update(void)
 	else if (KEYMANAGER->isStayKeyDown(VK_UP))
 	{
 		_y -= _moveSpeed;
+		if (KEYMANAGER->isOnceKeyDown('Z'))
+		{
+			_y -= 220;
+		}
 		_playerMoveAnim->setPlayFrame(10, 14, false, true);
 	}
 	else if (KEYMANAGER->isStayKeyDown(VK_DOWN))
 	{
 		_y += _moveSpeed;
+		if (KEYMANAGER->isOnceKeyDown('Z'))
+		{
+			_y += 220;
+		}
 		_playerMoveAnim->setPlayFrame(0, 4, false, true);
 	}
 	else
@@ -200,21 +223,14 @@ void Player::update(void)
 	if (KEYMANAGER->isOnceKeyDown('X'))
 	{
 		_swordSlashAnim->AniStart();
-		cout << "칼";
 	}
-
-	if (_swordSlashAnim->isPlay())
-	{
-		cout << "발사";
-	}
-
 
 	_playerRC = RectMakeCenter(_x, _y,
 		_playerMoveAnim->getFrameWidth(),
 		_playerMoveAnim->getFrameHeight());
 
 
-	for (int i = _playerRC.left+4; i <= _playerRC.right-4; i++)
+	for (int i = _playerRC.left + 4; i <= _playerRC.right - 4; i++)
 	{
 		COLORREF collisionT =
 			GetPixel(IMAGEMANAGER->findImage("충돌")->getMemDC(),
@@ -273,9 +289,7 @@ void Player::update(void)
 	}
 
 
-
-
-
+	cout << "check: " << _isCollisionRight << endl;
 
 	
 
@@ -291,8 +305,6 @@ void Player::update(void)
 
 void Player::render(void)
 {
-
-	DrawRectMake(getMemDC(), _playerRC);
 	_fireball->aniRender(getMemDC(), _fireballRC.left, _fireballRC.top,
 		_fireballAnim);
 	_playerImage->aniRender(getMemDC(), _playerRC.left, _playerRC.top, _playerMoveAnim);
@@ -303,6 +315,10 @@ void Player::render(void)
 			_swordSlashAnim);
 	}
 
+
+
+
+
 	_inven->render();
 	/*DrawRectMake(getMemDC(), _miniRC[0]);
 	DrawRectMake(getMemDC(), _miniRC[1]);
@@ -310,8 +326,9 @@ void Player::render(void)
 	DrawRectMake(getMemDC(), _miniRC[3]);*/
 }
 
-void Player::UseTool()
+void Player::UseTool(ObjectManager* object)
 {
+
 }
 
 void Player::UseFishingLod()
@@ -325,3 +342,5 @@ void Player::UseSword()
 void Player::UseCrossBow()
 {
 }
+
+

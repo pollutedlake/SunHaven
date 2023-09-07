@@ -1,233 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="Class\Boss\Dynus.cpp" />
-    <ClCompile Include="Class\Bullets\Bullets.cpp" />
-    <ClCompile Include="Class\Enemy\Enemy.cpp" />
-    <ClCompile Include="Class\Enemy\EnemyManager.cpp" />
-    <ClCompile Include="Scene\FarmScene.cpp" />
-    <ClCompile Include="Scene\DynusScene.cpp" />
-    <ClCompile Include="FrameWork\Animation\Animation.cpp" />
-    <ClCompile Include="Class\Camera.cpp" />
-    <ClCompile Include="Manager\FontManager.cpp" />
-    <ClCompile Include="FrameWork\GameNode\GameNode.cpp" />
-    <ClCompile Include="FrameWork\GImage\GImage.cpp" />
-    <ClCompile Include="FrameWork\GPImage\GPImage.cpp" />
-    <ClCompile Include="Manager\ImageManager.cpp" />
-    <ClCompile Include="Manager\KeyManager.cpp" />
-    <ClCompile Include="MainGame.cpp" />
-    <ClCompile Include="Scene\MapToolScene.cpp" />
-    <ClCompile Include="Resources.cpp" />
-    <ClCompile Include="Manager\SceneManager.cpp" />
-    <ClCompile Include="Manager\SoundManager.cpp" />
-    <ClCompile Include="FrameWork\PCH\Stdafx.cpp" />
-    <ClCompile Include="Manager\TimeManager.cpp" />
-    <ClCompile Include="FrameWork\Timer\Timer.cpp" />
-    <ClCompile Include="Scene\TitleScene.cpp" />
-    <ClCompile Include="Scene\ShopScene.cpp" />
-    <ClCompile Include="Scene\TownScene.cpp" />
-    <ClCompile Include="FrameWork\Utility\Utils.cpp" />
-    <ClCompile Include="WinMain.cpp" />
-    <ClCompile Include="FrameWork\Animation\Animation.cpp">
-      <Filter>FrameWork\Animation</Filter>
-    </ClCompile>
-    <ClCompile Include="Class\Camera.cpp">
-      <Filter>Class</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene\DynusScene.cpp">
-      <Filter>Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene\FarmScene.cpp">
-      <Filter>Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="Manager\FontManager.cpp">
-      <Filter>Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="FrameWork\GameNode\GameNode.cpp">
-      <Filter>FrameWork\GameNode</Filter>
-    </ClCompile>
-    <ClCompile Include="FrameWork\GImage\GImage.cpp">
-      <Filter>FrameWork\GImage</Filter>
-    </ClCompile>
-    <ClCompile Include="FrameWork\GPImage\GPImage.cpp">
-      <Filter>FrameWork\GPImage</Filter>
-    </ClCompile>
-    <ClCompile Include="Manager\ImageManager.cpp">
-      <Filter>Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="Manager\KeyManager.cpp">
-      <Filter>Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene\MapToolScene.cpp">
-      <Filter>Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="Manager\SceneManager.cpp">
-      <Filter>Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene\ShopScene.cpp">
-      <Filter>Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="FrameWork\PCH\Stdafx.cpp">
-      <Filter>FrameWork\PCH</Filter>
-    </ClCompile>
-    <ClCompile Include="Manager\SoundManager.cpp">
-      <Filter>Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="Manager\TimeManager.cpp">
-      <Filter>Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="FrameWork\Timer\Timer.cpp">
-      <Filter>FrameWork\Timer</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene\TitleScene.cpp">
-      <Filter>Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene\TownScene.cpp">
-      <Filter>Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="FrameWork\Utility\Utils.cpp">
-      <Filter>FrameWork\Utility</Filter>
-    </ClCompile>
-    <ClCompile Include="Class\UI.cpp" />
-    <ClCompile Include="Class\Inventory.cpp" />
-    <ClCompile Include="Class\Item.cpp" />
-    <ClCompile Include="Player\Player.cpp" />
-    <ClCompile Include="Class\Enemy\Collision.cpp" />
-    <ClCompile Include="Class\Enemy\FlameImp.cpp" />
-    <ClCompile Include="Class\Enemy\MagmaBug.cpp" />
-    <ClCompile Include="DataScene.cpp" />
-    <ClCompile Include="Class\Data\JsonSaveLoader.cpp" />
-    <ClCompile Include="Class\Data\INIData.cpp" />
-    <ClCompile Include="Class\Enemy\Player_Temp.cpp" />
-    <ClCompile Include="Class\Enemy\SteelSlug.cpp" />
-    <ClCompile Include="Class\Enemy\TrapWeed.cpp" />
-    <ClCompile Include="Class\Enemy\Shadeclaw.cpp" />
-<<<<<<< HEAD
-    <ClCompile Include="Player\Skill\Skill.cpp" />
-=======
-    <ClCompile Include="Class\Object\Object.cpp" />
-    <ClCompile Include="Class\Object\Tree.cpp" />
-    <ClCompile Include="Class\Object\Rock.cpp" />
-    <ClCompile Include="Class\Object\Grass.cpp" />
-    <ClCompile Include="Class\Object\ObjectManager.cpp" />
->>>>>>> main
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Class\Boss\Dynus.h" />
-    <ClInclude Include="Class\Bullets\Bullets.h" />
-    <ClInclude Include="Class\Enemy\Enemy.h" />
-    <ClInclude Include="Class\Enemy\EnemyManager.h" />
-    <ClInclude Include="Scene\FarmScene.h" />
-    <ClInclude Include="Scene\DynusScene.h" />
-    <ClInclude Include="FrameWork\Animation\Animation.h" />
-    <ClInclude Include="Class\Camera.h" />
-    <ClInclude Include="FrameWork\Utility\CommonMacroFunction.h" />
-    <ClInclude Include="Manager\FontManager.h" />
-    <ClInclude Include="FrameWork\GameNode\GameNode.h" />
-    <ClInclude Include="FrameWork\GImage\GImage.h" />
-    <ClInclude Include="FrameWork\GPImage\GPImage.h" />
-    <ClInclude Include="Manager\ImageManager.h" />
-    <ClInclude Include="Manager\KeyManager.h" />
-    <ClInclude Include="MainGame.h" />
-    <ClInclude Include="Scene\MapToolScene.h" />
-    <ClInclude Include="FrameWork\Utility\RandomFunction.h" />
-    <ClInclude Include="Resources.h" />
-    <ClInclude Include="FrameWork\Animation\Animation.h">
-      <Filter>FrameWork\Animation</Filter>
-    </ClInclude>
-    <ClInclude Include="Class\Camera.h">
-      <Filter>Class</Filter>
-    </ClInclude>
-    <ClInclude Include="FrameWork\Utility\CommonMacroFunction.h">
-      <Filter>FrameWork\Utility</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene\DynusScene.h">
-      <Filter>Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene\FarmScene.h">
-      <Filter>Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Manager\FontManager.h">
-      <Filter>Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="FrameWork\GameNode\GameNode.h">
-      <Filter>FrameWork\GameNode</Filter>
-    </ClInclude>
-    <ClInclude Include="FrameWork\GImage\GImage.h">
-      <Filter>FrameWork\GImage</Filter>
-    </ClInclude>
-    <ClInclude Include="FrameWork\GPImage\GPImage.h">
-      <Filter>FrameWork\GPImage</Filter>
-    </ClInclude>
-    <ClInclude Include="Manager\ImageManager.h">
-      <Filter>Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="Manager\KeyManager.h">
-      <Filter>Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene\MapToolScene.h">
-      <Filter>Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="FrameWork\Utility\RandomFunction.h">
-      <Filter>FrameWork\Utility</Filter>
-    </ClInclude>
-    <ClInclude Include="Class\UI.h" />
-    <ClInclude Include="Class\Inventory.h" />
-    <ClInclude Include="Class\Item.h" />
-    <ClInclude Include="Player\Player.h" />
-    <ClInclude Include="Class\Enemy\FlameImp.h" />
-    <ClInclude Include="Class\Enemy\MagmaBug.h" />
-    <ClInclude Include="DataScene.h" />
-    <ClInclude Include="Class\Data\JsonSaveLoader.h" />
-    <ClInclude Include="Json\json.h" />
-    <ClInclude Include="Class\Data\INIData.h" />
-    <ClInclude Include="Class\Enemy\Player_Temp.h" />
-    <ClInclude Include="Manager\SceneManager.h" />
-    <ClInclude Include="FrameWork\SingletonBase\SingletonBase.h" />
-    <ClInclude Include="Manager\SoundManager.h" />
-    <ClInclude Include="Manager\TimeManager.h" />
-    <ClInclude Include="FrameWork\Timer\Timer.h" />
-    <ClInclude Include="Scene\TitleScene.h" />
-    <ClInclude Include="FrameWork\PCH\Stdafx.h" />
-    <ClInclude Include="Scene\ShopScene.h" />
-    <ClInclude Include="Scene\TownScene.h" />
-    <ClInclude Include="FrameWork\Utility\Utils.h" />
-    <ClInclude Include="Class\Enemy\SteelSlug.h" />
-    <ClInclude Include="Class\Enemy\TrapWeed.h" />
-    <ClInclude Include="Class\Enemy\Shadeclaw.h" />
-<<<<<<< HEAD
-    <ClInclude Include="Player\Skill\Skill.h" />
-=======
-    <ClInclude Include="Class\Object\Object.h" />
-    <ClInclude Include="Class\Object\Tree.h" />
-    <ClInclude Include="Class\Object\Rock.h" />
-    <ClInclude Include="Class\Object\Grass.h" />
-    <ClInclude Include="Class\Object\ObjectManager.h" />
->>>>>>> main
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Stdafx.pch" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Stdafx.pch" />
-    <None Include="Debug\SunHaven.pch" />
-    <None Include="Debug\vc142.idb" />
-    <None Include="Debug\vc142.pdb" />
-    <None Include="Debug\SunHaven.tlog\CL.command.1.tlog" />
-    <None Include="Debug\SunHaven.tlog\CL.read.1.tlog" />
-    <None Include="Debug\SunHaven.tlog\CL.write.1.tlog" />
-    <None Include="Debug\SunHaven.tlog\link.command.1.tlog" />
-    <None Include="Debug\SunHaven.tlog\link.delete.1.tlog" />
-    <None Include="Debug\SunHaven.tlog\link.read.1.tlog" />
-    <None Include="Debug\SunHaven.tlog\link.write.1.tlog" />
-    <None Include="Debug\SunHaven.tlog\SunHaven.lastbuildstate" />
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="FarmMap.txt" />
-    <Text Include="Debug\SunHaven.log" />
-    <Text Include="FarmMapObject.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <Object Include="Debug\Animation.obj" />
     <Object Include="Debug\Camera.obj" />
     <Object Include="Debug\DynusScene.obj" />
@@ -254,7 +27,128 @@
     <Object Include="Debug\WinMain.obj" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Class\Boss\Dynus.cpp" />
+    <ClCompile Include="Class\Bullets\Bullets.cpp" />
+    <ClCompile Include="Class\Enemy\Collision.cpp" />
+    <ClCompile Include="Class\Enemy\Enemy.cpp" />
+    <ClCompile Include="Class\Enemy\EnemyManager.cpp" />
+    <ClCompile Include="Class\Enemy\FlameImp.cpp" />
+    <ClCompile Include="Class\Enemy\MagmaBug.cpp" />
+    <ClCompile Include="Class\Object\Object.cpp" />
+    <ClCompile Include="DataScene.cpp" />
+    <ClCompile Include="Class\Data\JsonSaveLoader.cpp" />
+    <ClCompile Include="Class\Data\INIData.cpp" />
+    <ClCompile Include="Class\Enemy\Player_Temp.cpp" />
+    <ClCompile Include="Class\Inventory.cpp" />
+    <ClCompile Include="Class\Item.cpp" />
+    <ClCompile Include="Class\Object\Grass.cpp" />
+    <ClCompile Include="Class\Object\ObjectManager.cpp" />
+    <ClCompile Include="Player\Player.cpp" />
+    <ClCompile Include="Class\Object\Rock.cpp" />
+    <ClCompile Include="Scene\FarmScene.cpp" />
+    <ClCompile Include="Scene\DynusScene.cpp" />
+    <ClCompile Include="FrameWork\Animation\Animation.cpp" />
+    <ClCompile Include="Class\Camera.cpp" />
+    <ClCompile Include="Manager\FontManager.cpp" />
+    <ClCompile Include="FrameWork\GameNode\GameNode.cpp" />
+    <ClCompile Include="FrameWork\GImage\GImage.cpp" />
+    <ClCompile Include="FrameWork\GPImage\GPImage.cpp" />
+    <ClCompile Include="Manager\ImageManager.cpp" />
+    <ClCompile Include="Manager\KeyManager.cpp" />
+    <ClCompile Include="MainGame.cpp" />
+    <ClCompile Include="Scene\MapToolScene.cpp" />
+    <ClCompile Include="Resources.cpp" />
+    <ClCompile Include="Manager\SceneManager.cpp" />
+    <ClCompile Include="Manager\SoundManager.cpp" />
+    <ClCompile Include="FrameWork\PCH\Stdafx.cpp" />
+    <ClCompile Include="Manager\TimeManager.cpp" />
+    <ClCompile Include="FrameWork\Timer\Timer.cpp" />
+    <ClCompile Include="Scene\TitleScene.cpp" />
+    <ClCompile Include="Scene\ShopScene.cpp" />
+    <ClCompile Include="Scene\TownScene.cpp" />
+    <ClCompile Include="FrameWork\Utility\Utils.cpp" />
+    <ClCompile Include="Class\Enemy\SteelSlug.cpp" />
+    <ClCompile Include="Class\Enemy\TrapWeed.cpp" />
+    <ClCompile Include="Class\Enemy\Shadeclaw.cpp" />
+    <ClCompile Include="Class\UI.cpp" />
+    <ClCompile Include="Player\Skill\Skill.cpp" />
+    <ClCompile Include="Class\Object\Tree.cpp" />
+    <ClCompile Include="WinMain.cpp" />
+    <ClCompile Include="Player\Skill\MiningSkill.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Class\Boss\Dynus.h" />
+    <ClInclude Include="Class\Bullets\Bullets.h" />
+    <ClInclude Include="Class\Enemy\Enemy.h" />
+    <ClInclude Include="Class\Enemy\EnemyManager.h" />
+    <ClInclude Include="Class\Enemy\FlameImp.h" />
+    <ClInclude Include="Class\Enemy\MagmaBug.h" />
+    <ClInclude Include="Class\Object\Object.h" />
+    <ClInclude Include="DataScene.h" />
+    <ClInclude Include="Class\Data\JsonSaveLoader.h" />
+    <ClInclude Include="Class\Object\Grass.h" />
+    <ClInclude Include="Json\json.h" />
+    <ClInclude Include="Class\Data\INIData.h" />
+    <ClInclude Include="Class\Enemy\Player_Temp.h" />
+    <ClInclude Include="Class\Inventory.h" />
+    <ClInclude Include="Class\Item.h" />
+    <ClInclude Include="Class\Object\ObjectManager.h" />
+    <ClInclude Include="Player\Player.h" />
+    <ClInclude Include="Class\Object\Rock.h" />
+    <ClInclude Include="Scene\FarmScene.h" />
+    <ClInclude Include="Scene\DynusScene.h" />
+    <ClInclude Include="FrameWork\Animation\Animation.h" />
+    <ClInclude Include="Class\Camera.h" />
+    <ClInclude Include="FrameWork\Utility\CommonMacroFunction.h" />
+    <ClInclude Include="Manager\FontManager.h" />
+    <ClInclude Include="FrameWork\GameNode\GameNode.h" />
+    <ClInclude Include="FrameWork\GImage\GImage.h" />
+    <ClInclude Include="FrameWork\GPImage\GPImage.h" />
+    <ClInclude Include="Manager\ImageManager.h" />
+    <ClInclude Include="Manager\KeyManager.h" />
+    <ClInclude Include="MainGame.h" />
+    <ClInclude Include="Scene\MapToolScene.h" />
+    <ClInclude Include="FrameWork\Utility\RandomFunction.h" />
+    <ClInclude Include="Resources.h" />
+    <ClInclude Include="Manager\SceneManager.h" />
+    <ClInclude Include="FrameWork\SingletonBase\SingletonBase.h" />
+    <ClInclude Include="Manager\SoundManager.h" />
+    <ClInclude Include="Manager\TimeManager.h" />
+    <ClInclude Include="FrameWork\Timer\Timer.h" />
+    <ClInclude Include="Scene\TitleScene.h" />
+    <ClInclude Include="FrameWork\PCH\Stdafx.h" />
+    <ClInclude Include="Scene\ShopScene.h" />
+    <ClInclude Include="Scene\TownScene.h" />
+    <ClInclude Include="FrameWork\Utility\Utils.h" />
+    <ClInclude Include="Class\Enemy\SteelSlug.h" />
+    <ClInclude Include="Class\Enemy\TrapWeed.h" />
+    <ClInclude Include="Class\Enemy\Shadeclaw.h" />
+    <ClInclude Include="Player\Skill\Skill.h" />
+    <ClInclude Include="Class\Object\Tree.h" />
+    <ClInclude Include="Class\UI.h" />
+    <ClInclude Include="Player\Skill\MiningSkill.h" />
+  </ItemGroup>
+  <ItemGroup>
     <Image Include="FarmMap.bmp" />
     <Image Include="FarmMapCollision.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Debug\SunHaven.pch" />
+    <None Include="Debug\SunHaven.tlog\CL.command.1.tlog" />
+    <None Include="Debug\SunHaven.tlog\CL.read.1.tlog" />
+    <None Include="Debug\SunHaven.tlog\CL.write.1.tlog" />
+    <None Include="Debug\SunHaven.tlog\link.command.1.tlog" />
+    <None Include="Debug\SunHaven.tlog\link.delete.1.tlog" />
+    <None Include="Debug\SunHaven.tlog\link.read.1.tlog" />
+    <None Include="Debug\SunHaven.tlog\link.write.1.tlog" />
+    <None Include="Debug\SunHaven.tlog\SunHaven.lastbuildstate" />
+    <None Include="Debug\vc142.idb" />
+    <None Include="Debug\vc142.pdb" />
+    <None Include="Stdafx.pch" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Debug\SunHaven.log" />
+    <Text Include="FarmMap.txt" />
+    <Text Include="FarmMapObject.txt" />
   </ItemGroup>
 </Project>

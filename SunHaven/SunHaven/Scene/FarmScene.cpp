@@ -23,16 +23,13 @@ HRESULT FarmScene::init(void)
 	_om->init();
 	_om->setCameraAddress(_camera);
 
-<<<<<<< HEAD
 
 
-	_player->setPlayerPosition(PointMake(1600, 2800));
+	_player->setPlayerPosition(PointMake(2496, 1500));
 
 
-=======
 	_ui = new UI;
 	_ui->init("Farm");
->>>>>>> main
 
 	return S_OK;
 }
@@ -49,20 +46,21 @@ void FarmScene::update(void)
 {
 	_player->update();
 	_camera->setPosition(_player->getPlayerPosition());
-<<<<<<< HEAD
 	//_player->setPlayerPosition(_camera->worldToCamera(_player->getPlayerPosition()));
 
-=======
->>>>>>> main
 	_player->worldToCamera(_camera->worldToCamera
 	(_player->getPlayerPosition()));
 	_om->update();
+
+	Collision();
 }
 
 void FarmScene::render(void)
 {
 	_bg->render(getMemDC(), _camera->worldToCameraX(0),
 		_camera->worldToCameraY(0));
+
+
 
 	_player->render();
 	for (int i = 0; i < _om->getObjectList().size(); i++)
@@ -86,4 +84,20 @@ void FarmScene::render(void)
 
 	
 	_ui->render();
+}
+
+void FarmScene::Collision(void)
+{
+	for (int i = 0; i < _om->getObjectList().size(); i++)
+	{
+		RECT temp;
+
+		if (IntersectRect(&temp,
+			&RectMakeCenter(_player->getPlayerPosition().x,
+				_player->getPlayerPosition().y,48,52),
+			&_om->getObjectList()[i]->getCollisionRC()))
+		{
+			
+		}
+	}
 }

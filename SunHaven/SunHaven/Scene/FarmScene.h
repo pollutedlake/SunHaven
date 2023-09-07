@@ -24,6 +24,12 @@ public:
 
 	void SortingRender();
 
+
+
+
+
+	void Collision(void);
+
 	FarmScene() {}
 	~FarmScene() {}
 };
