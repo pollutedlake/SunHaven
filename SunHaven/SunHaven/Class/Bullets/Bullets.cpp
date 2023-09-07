@@ -81,9 +81,9 @@ void Beam::draw(void)
 {
 	for (_viBullet = _vBullet.begin(); _viBullet != _vBullet.end(); ++_viBullet)
 	{
-		//DrawRectMake(getMemDC(), _viBullet->rc);
+		DrawRectMake(getMemDC(), _viBullet->rc);
 
-		_viBullet->img->frameRender(getMemDC(), _viBullet->rc.left, _viBullet->rc.top);
+		//_viBullet->img->frameRender(getMemDC(), _viBullet->rc.left, _viBullet->rc.top);
 
 		/*_viBullet->pImg->GPFrameRender(getMemDC(), _viBullet->rc.left, _viBullet->rc.top, 1, 1,
 			_viBullet->pImg->getFrameX(), _viBullet->pImg->getFrameY(),
@@ -138,8 +138,8 @@ void Beam::move(void)
 {
 	for (_viBullet = _vBullet.begin(); _viBullet != _vBullet.end();)
 	{
-		//_viBullet->rc.right += _viBullet->speed;
-		_viBullet->x += _viBullet->speed;
+		_viBullet->rc.right += _viBullet->speed;
+		//_viBullet->x += _viBullet->speed;
 
 		_viBullet->rc = RectMakeCenter(_viBullet->x, _viBullet->y,
 			_viBullet->img->getWidth(), _viBullet->img->getHeight());

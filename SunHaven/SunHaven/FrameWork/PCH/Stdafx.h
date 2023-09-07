@@ -6,14 +6,13 @@
 #pragma comment(linker,"/entry:WinMainCRTStartup /subsystem:console")
 
 #pragma comment (lib, "msimg32.lib")
-//#pragma comment (lib, "JsonCPP/lib_json/json_vc71_libmtd.lib")
+#pragma comment (lib, "JsonCPP/lib_json/json_vc71_libmtd.lib")
 
 
 #include <windows.h>
 
 // 외부 헤더파일
-//#include "../../JsonCPP/include/json/json.h"
-
+#include "../../JsonCPP/include/json/json.h"
 
 #include <stdlib.h>
 #include <malloc.h>
@@ -70,7 +69,7 @@ ID2D1HwndRenderTarget* _ID2DRanderTarget = nullptr;*/
 #include "../../Manager/TimeManager.h"
 #include "../../Manager/SceneManager.h"
 #include "../../Class/Data/INIData.h"
-//#include "../../Class/Data/JsonSaveLoader.h"
+#include "../../Class/Data/JsonSaveLoader.h"
 #include "../Utility/Utils.h"
 
 using namespace MY_UTIL;
@@ -83,8 +82,8 @@ using namespace MY_UTIL;
 #define SOUNDMANAGER SoundManager::getSingleton()
 #define TIMEMANAGER TimeManager::getSingleton()
 #define SCENEMANAGER SceneManager::getSingleton()
-#define INIDATA INIData::getSingleton()
-//#define JSONSAVELOADER JsonSaveLoader::getSingleton()
+#define INIDATAMANAGER INIData::getSingleton()
+#define JSONDATAMANAGER JsonSaveLoader::getSingleton()
 
 // # 매크로 # (윈도우창 초기화)
 #define WINNAME					(LPTSTR)(TEXT("WindowsAPI"))

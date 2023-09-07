@@ -1,6 +1,6 @@
 #include "Stdafx.h"
 #include "Dynus.h"
-#include "../Enemy/Player_Temp.h"
+#include "../../Player/Player.h"
 //#include "../Enemy/Shadeclaw.h"
 #include "../Enemy/EnemyManager.h"
 
@@ -17,11 +17,15 @@ HRESULT Dynus::init(void)
 	_worldTimeCount = GetTickCount();
 	_fireCount = 0.0f;
 	_bulletCount = 0;
-	_turnCount = TIMEMANAGER->getWorldTime();
-	_bulletTurnCount = 3.0f;
+	_turnCount1 = TIMEMANAGER->getWorldTime();
+	_turnCount2 = TIMEMANAGER->getWorldTime();
+	_bulletTurnCount1 = 3.0f;
+	_bulletTurnCount2 = 3.0f;
 	_beamCount = 0.0f;
 	_beamFireCount = 0.0f;
 	_beamTurnCount = TIMEMANAGER->getWorldTime();
+	_spawnAtferTime = 5.0f;
+	_spawnWorldTime = TIMEMANAGER->getWorldTime();
 
 	_timeCount = 100;
 
@@ -84,7 +88,9 @@ HRESULT Dynus::init(void)
 	_pa2StartPosIdx = 3;
 	_pa3StartPosIdx = 2;
 
-	_em->spawnShadeclaw();
+	_rndPattern = 0;
+
+	//_em->spawnShadeclaw();
 
 	return S_OK;
 }
@@ -129,13 +135,6 @@ void Dynus::release(void)
 
 	_em->release();
 	SAFE_DELETE(_em);
-
-	/*for (_viEnemy = _vEnemy.begin(); _viEnemy != _vEnemy.end(); ++_viEnemy)
-	{
-		(*_viEnemy)->release();
-
-		SAFE_DELETE(*_viEnemy);
-	}*/
 }
 
 void Dynus::update(void)
@@ -227,8 +226,66 @@ void Dynus::update(void)
 			}
 
 			break;
+			
+		case EDynusPhase::STAR:
+			bulletFire();
+
+			break;
 
 		case EDynusPhase::THIRD:
+			
+
+			switch (_rndPattern)
+			{
+			case 0:
+				bulletFire();
+
+				if (_pa1StartPosIdx < 0)
+				{
+					if (_rndPattern == 0)
+					{
+						_rndPattern = RND->getFromIntTo(1, 3);
+					}
+				}
+
+				break;
+
+			case 1:
+				spreadEllipse();
+
+				if (_pa2StartPosIdx < 0)
+				{
+					_rndPattern = RND->getFromIntTo(0, 3);
+					
+					if (_rndPattern == 1)
+					{
+						_rndPattern = RND->getFromIntTo(2, 3);
+					}
+				}
+
+				break;
+
+			case 2:
+				//beamFire();
+				cout << "beamFire" << endl;
+				break;
+
+			case 3:
+				cout << "spawnShadeclaw" << endl;
+				_em->spawnShadeclaw();
+
+				if (spawnAfterTime())
+				{
+					_rndPattern = RND->getFromIntTo(0, 3);
+
+					if (_rndPattern == 3)
+					{
+						_rndPattern = RND->getFromIntTo(0, 2);
+					}
+				}
+
+				break;
+			}
 
 			break;
 		}
@@ -273,10 +330,6 @@ void Dynus::update(void)
 
 	_bullet->update();
 	_beam->update();
-	/*for (_viEnemy = _vEnemy.begin(); _viEnemy != _vEnemy.end(); ++_viEnemy)
-	{
-		(*_viEnemy)->update();
-	}*/
 }
 
 void Dynus::render(void)
@@ -285,10 +338,6 @@ void Dynus::render(void)
 
 	_bullet->render();
 	_beam->render();
-	/*for (_viEnemy = _vEnemy.begin(); _viEnemy != _vEnemy.end(); ++_viEnemy)
-	{
-		(*_viEnemy)->render();
-	}*/
 }
 
 void Dynus::move(void)
@@ -347,13 +396,13 @@ void Dynus::bulletFire()
 				(_rcPa1Start[_pa1StartPosIdx][j].bottom + _rcPa1Start[_pa1StartPosIdx][j].top) / 2,
 				getAngle((_rcPa1Start[_pa1StartPosIdx][j].left + _rcPa1Start[_pa1StartPosIdx][j].right) / 2,
 					(_rcPa1Start[_pa1StartPosIdx][j].bottom + _rcPa1Start[_pa1StartPosIdx][j].top) / 2,
-					_player->getPosition().x, _player->getPosition().y) + xOffset * 0.01f, 2.0f);
+					_player->getPlayerPosition().x, _player->getPlayerPosition().y) + xOffset * 0.01f, 2.0f);
 		}
 		
 		_bulletCount++;
 	}
 
-	if (_bulletCount == 3 && turnCountFire() && _pa1StartPosIdx > -1)
+	if (_bulletCount == 3 && turnCountFire1() && _pa1StartPosIdx > -1)
 	{
 		_pa1StartPosIdx--;
 
@@ -363,7 +412,7 @@ void Dynus::bulletFire()
 
 void Dynus::spreadEllipse(void)
 {
-	if (turnCountFire())
+	if (turnCountFire2())
 	{
 		for (int j = 0; j < PA2_STARTPOS_NUM_2; j++)
 		{
@@ -404,12 +453,12 @@ void Dynus::beamFire(void)
 		_beamCount++;
 	}
 
-	if (_beamCount == 9 && turnCountFire() && _pa3StartPosIdx > 0)
+	/*if (_beamCount == 9 && turnCountFire() && _pa3StartPosIdx > 0)
 	{
 		_pa3StartPosIdx--;
 
 		_beamCount = 0;
-	}
+	}*/
 }
 
 //void Dynus::spawnEnemy(void)
@@ -452,12 +501,12 @@ bool Dynus::bulletCountFire(void)
 	return false;
 }
 
-bool Dynus::turnCountFire(void)
+bool Dynus::turnCountFire1(void)
 {
-	if (_bulletTurnCount + _turnCount <= TIMEMANAGER->getWorldTime())
+	if (_bulletTurnCount1 + _turnCount1 <= TIMEMANAGER->getWorldTime())
 	{
-		_turnCount = TIMEMANAGER->getWorldTime();
-		_bulletTurnCount = 3.0f;
+		_turnCount1 = TIMEMANAGER->getWorldTime();
+		_bulletTurnCount1 = 1.5f;
 
 		return true;
 	}
@@ -465,12 +514,39 @@ bool Dynus::turnCountFire(void)
 	return false;
 }
 
+bool Dynus::turnCountFire2(void)
+{
+	if (_bulletTurnCount2 + _turnCount2 <= TIMEMANAGER->getWorldTime())
+	{
+		_turnCount2 = TIMEMANAGER->getWorldTime();
+		_bulletTurnCount2 = 1.5f;
+
+		return true;
+	}
+
+	return false;
+}
+
+
 bool Dynus::beamCountFire(void)
 {
 	if (_beamCount + _beamTurnCount <= TIMEMANAGER->getWorldTime())
 	{
 		_beamTurnCount = TIMEMANAGER->getWorldTime();
 		_beamCount = 0.1f;
+
+		return true;
+	}
+
+	return false;
+}
+
+bool Dynus::spawnAfterTime(void)
+{
+	if (_spawnAtferTime + _spawnWorldTime <= TIMEMANAGER->getWorldTime())
+	{
+		_spawnWorldTime = TIMEMANAGER->getWorldTime();
+		_spawnAtferTime = 0.1f;
 
 		return true;
 	}

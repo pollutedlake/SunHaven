@@ -4,7 +4,8 @@
 
 HRESULT DynusScene::init(void)
 {
-	_player = new Player_Temp;
+	IMAGEMANAGER->addImage("Ãæµ¹", "FarmMapCollision.bmp", 3600, 3600);
+	_player = new Player;
 
 	_dynus = new Dynus;
 
@@ -17,10 +18,8 @@ HRESULT DynusScene::init(void)
 	_dynus->setEnemyManagerMemoryAddress(_em);
 	_em->setPlayerMemoryAddress(_player);
 	_dynus->setPlayerMemoryAddress(_player);
-	_player->init();
+	_player->init(CENTER_X, CENTER_Y + 250);
 	_dynus->init();
-
-	_x = _y = 0.0f;
 
 	wsprintf(_text, "DynusScene");
 
@@ -53,6 +52,6 @@ void DynusScene::render(void)
 	//IMAGEMANAGER->alphaRender("BlueStarFill", getMemDC(), 0, 0, 200);
 	IMAGEMANAGER->render("DynusLayer0", getMemDC(), 0, 0, 30, 95, WINSIZE_X, WINSIZE_Y);
 	_dynus->render();
-	_player->render();
 	_em->render();
+	_player->render();
 }

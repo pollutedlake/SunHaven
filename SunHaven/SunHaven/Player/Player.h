@@ -64,6 +64,8 @@ public:
 
 	RECT getPlayerRC() {return _playerRC;}
 
+	RECT getRect(void) { return _playerRC; }
+
 	Player() {}
 	~Player() {}
 };

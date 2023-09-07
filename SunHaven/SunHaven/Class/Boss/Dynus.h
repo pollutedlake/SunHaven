@@ -14,7 +14,7 @@
  
 #define PA3_STARTPOS_NUM	3 
 
-class Player_Temp;
+class Player;
 class EnemyManager;
 
 enum class EDynusState
@@ -30,6 +30,7 @@ enum class EDynusPhase
 {
 	FIRST,
 	SECOND,
+	STAR,
 	THIRD
 };
 
@@ -52,7 +53,7 @@ class Dynus : public GameNode
 //	viEnemy _viEnemy;
 
 private:
-	Player_Temp* _player;
+	Player* _player;
 	EnemyManager* _em;
 
 	EDynusState _state;
@@ -79,11 +80,15 @@ private:
 	float _bulletFireCount;	// 패턴1
 	float _fireCount;		// 패턴1 탄알 사이 간격
 	int _bulletCount;		// 패턴1 1회당 탄알 발사 횟수
-	float _turnCount;		// 패턴1,2 사이 간격
-	float _bulletTurnCount;	// 패턴2
+	float _turnCount1;		// 패턴1 사이 간격
+	float _turnCount2;		// 패턴2 사이 간격
+	float _bulletTurnCount1;	// 패턴1 한 번 공격 당 간격
+	float _bulletTurnCount2;	// 패턴2 한 번 공격 당 간격
 	float _beamFireCount;	// 패턴3 1회당 탄알 발사 횟수
 	int _beamCount;			// 패턴3 탄알 사이 간격
 	float _beamTurnCount;	// 패턴3 
+	float _spawnAtferTime;
+	float _spawnWorldTime;
 
 	float _worldTimeCount;
 	int _timeCount;
@@ -91,6 +96,10 @@ private:
 	int _pa1StartPosIdx;
 	int _pa2StartPosIdx;
 	int _pa3StartPosIdx;
+
+	int _rndPattern;
+	
+	//int _nextPaIdx;		// 페이즈마다 다른 패턴 간격(카운트로 관리)
 
 public:
 	HRESULT init(void);
@@ -110,14 +119,16 @@ public:
 	
 
 	bool bulletCountFire(void);
-	bool turnCountFire(void);
+	bool turnCountFire1(void);
+	bool turnCountFire2(void);
 	bool beamCountFire(void);
+	bool spawnAfterTime(void);
 
 	RECT getRcDynus(void) { return _rcDynus; }
 	//vector<Enemy*> getEnemys(void) { return _vEnemy; }
 	Bullet* getBullet(void) { return _bullet; }
 
-	void setPlayerMemoryAddress(Player_Temp* player) { _player = player; }
+	void setPlayerMemoryAddress(Player* player) { _player = player; }
 	void setEnemyManagerMemoryAddress(EnemyManager* em) { _em = em; }
 
 	Dynus() {}

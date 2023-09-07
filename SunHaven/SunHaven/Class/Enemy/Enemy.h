@@ -4,6 +4,7 @@
 enum class EEnemyState
 {
 	IDLE,
+	MOVE,
 	ATTACK,
 	DIE
 };
@@ -14,6 +15,7 @@ protected:
 	EEnemyState _state;
 
 	GImage* _image;
+
 	RECT _rc;
 	float _detectRange;
 	float _attackRange;
@@ -32,11 +34,12 @@ protected:
 	float _bulletFireCount;
 
 	bool _isLeft;
-	//string _strState;
+
+	float _playerX, _playerY;
 
 public:
 	HRESULT init(void);
-	HRESULT init(POINT position);
+	virtual HRESULT init(POINT position);
 
 	void release(void);
 	void update(void);
@@ -48,7 +51,10 @@ public:
 	virtual void draw(void);
 	virtual void animation(void);
 
-	bool bulletCountFire(void);
+	//bool bulletCountFire(void);
+
+	EEnemyState getEState(void) { return _state; }
+	void setEState(EEnemyState state) { _state = state; }
 
 	RECT getRect(void) { return _rc; }
 
@@ -60,6 +66,12 @@ public:
 
 	float getY(void) { return _y; }
 	void setY(float y) { _y = y; }
+
+	float getPlayerX(void) { return _playerX; }
+	void setPlayerX(float playerX) { _playerX = playerX; }
+
+	float getPlayerY(void) { return _playerY; }
+	void setPlayerY(float _playerY) { _playerY = _playerY; }
 
 	//void collisionCheck();
 

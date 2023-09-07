@@ -1,12 +1,10 @@
 #include "Stdafx.h"
-#include "../../Scene/DynusScene.h"
+#include "DynusScene.h"
 
 void DynusScene::collision(void)
 {
-	for (int i = 0; i < _em->getEnemys().size(); i++)
+	/*for (int i = 0; i < _em->getEnemys().size(); i++)
 	{
-		RECT rcTemp1;
-
 		if (getDistance(_em->getEnemys()[i]->getX(), _em->getEnemys()[i]->getY(),
 			_player->getPosition().x, _player->getPosition().y) > 50 &&
 			getDistance(_em->getEnemys()[i]->getX(), _em->getEnemys()[i]->getY(),
@@ -34,5 +32,5 @@ void DynusScene::collision(void)
 
 			_em->getEnemys()[i]->attack();
 		}
-	}
+	}*/
 }
