@@ -36,6 +36,7 @@ public:
 	void release(void);
 	void update(void);
 	void render(void);
+	void Collision(void);
 
 	FarmScene() {}
 	~FarmScene() {}

@@ -1,30 +1,56 @@
 #pragma once
 #include "../FrameWork/SingletonBase/SingletonBase.h"
-// 윈도우 내장 라이브러리 (재생)
-// 시간 / v사운드 -> PlaySound()
-#include <mmsystem.h>
-// mciSendString()이라는 함수를 사용하기 위해
-#include <mciapi.h>
 
-#pragma comment(lib, "Winmm.lib")
+
+
+// 사운드 갯수
+constexpr auto soundBuffer = 10;
+
+
+// 여분의 채널 갯수 (버퍼)
+constexpr auto extraSoundChannel = 5;
+
+
+// 총 사운드 갯수
+constexpr auto totalSoundChannel = soundBuffer + extraSoundChannel;
+
+
+
+using namespace FMOD;
+
 class SoundManager : public SingletonBase<SoundManager>
 {
 private:
+	typedef map<string, Sound**> arrSounds;
+	typedef map<string, Sound**>::iterator  arrSoundsIter;
+	typedef map<string, Channel**> arrChannels;
+	typedef map<string, Channel**>::iterator  arrChannelsIter;
+
+	System* _system;
+	Sound** _sound;
+	Channel** _channel;
+
+	arrSounds _mTotalSounds;
+
 
 public:
 	HRESULT init(void);
-	// MP3
-	void addMp3FileWithKey(string key, string fileName);
-	// WAV
-	void addWaveFileWithKey(string key, string fileName);
-	// 효과음
-	void playEffectSoundWave(char* fileName);
-	// MP3 재생
-	void playSoundWithKey(string key);
-	// 정지
-	void stopMp3WithKey(string key);
+	void release(void);
+	void update(void);
 
-	SoundManager() {};
-	~SoundManager() {};
+	void addSound(string keyName, string soundName, bool background, bool loop);
+
+	void play(string keyName, float volume);
+	void stop(string keyName);
+	void pause(string keyName);
+	void resume(string keyName);
+
+	bool isPlaySound(string keyName);
+	bool isPauseSound(string keyName);
+
+
+	SoundManager();
+	~SoundManager() {}
+
 };
 

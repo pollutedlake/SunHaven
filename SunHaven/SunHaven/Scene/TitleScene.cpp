@@ -16,6 +16,9 @@ HRESULT TitleScene::init(void)
     _isDone.reset();
     _isDone.set(0, true);
 
+    SOUNDMANAGER->play("Main_Menu_Final", 0.5f);
+    _sound = 0;
+    
     return S_OK;
 }
 
@@ -43,6 +46,9 @@ void TitleScene::update(void)
         {
             if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
             {
+               
+                SOUNDMANAGER->play("E_titleButtonClick", 1.0f);
+
                 if (_isDone.test(0))
                 {
 
@@ -89,6 +95,13 @@ void TitleScene::update(void)
             }
         }
     }
+
+   
+    buttonSound();
+    
+    cout << _sound << endl;
+
+    SOUNDMANAGER->update();
 }
 
 void TitleScene::render(void)
@@ -143,5 +156,37 @@ void TitleScene::render(void)
 
     IMAGEMANAGER->render("Cursor", getMemDC(), _ptMouse.x, _ptMouse.y);
 
+  
+}
+
+void TitleScene::buttonSound()
+{
+    if (PtInRect(&_rc[0], _ptMouse) || PtInRect(&_rc[1], _ptMouse) || PtInRect(&_rc[2], _ptMouse))
+    {
+       
+       
+        _sound++;
+        if (_sound == 1)
+        {
+            SOUNDMANAGER->play("E_titleButton", 1.0f);
+        }
+
+        if (_sound > 2)
+        {
+            _sound = 2;
+        }
+
+        if (_rc[0].bottom == _ptMouse.y || _rc[1].bottom == _ptMouse.y) //|| _rc[2].bottom == _ptMouse.y)
+        {
+            _sound = 0;
+        }
+
+    }
+    else
+    {
+        _sound = 0;
+    }
+
+   
   
 }

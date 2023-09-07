@@ -1,12 +1,24 @@
 #pragma once
 #include "../FrameWork/GameNode/GameNode.h"
 #include "../FrameWork/Animation/Animation.h"
+#include "../Class/Inventory.h"
+
+class ObjectManager;
 
 struct tagPlayerState
 {
+	string playerName;
 	float playerSpeed;
 	int HP;
 	int MP;
+	float HPRecoveryPerSec;
+	float MPRecoveryPerSec;
+	int gold;
+
+	int attackDamage;
+	int spellDamage;
+	int defence;
+	float critical;
 
 	int mineEXP;
 	int combatEXP;
@@ -16,6 +28,10 @@ struct tagPlayerState
 
 class Player : public GameNode
 {
+private:
+	tagPlayerState _playerState;
+	int a;
+
 private:
 	GImage* _playerImage;
 	Animation* _playerMoveAnim;
@@ -27,6 +43,15 @@ private:
 	Animation* _fireballAnim;
 	RECT _fireballRC;
 
+
+	GImage* _swordSlash;
+	Animation* _swordSlashAnim;
+	RECT _swordSlashRC;
+
+
+	Inventory* _inven;
+
+
 	float _x, _y;
 	float _moveSpeed;
 
@@ -36,13 +61,17 @@ private:
 	bool _isCollisionBottom;
 
 
+	float _jump;
+	bool _isJump;
+
 public:
 	HRESULT init(float x, float y);
 	void release(void);
 	void update(void);
 	void render(void);
 
-	void UseTool();
+	void UseTool(ObjectManager* object);
+
 	void UseFishingLod();
 	void UseSword();
 	void UseCrossBow();
@@ -60,9 +89,44 @@ public:
 		_playerRC = RectMakeCenter(position.x, position.y,
 			_playerMoveAnim->getFrameWidth(),
 			_playerMoveAnim->getFrameHeight());
+
+
+		
+		if (KEYMANAGER->isStayKeyDown(VK_LEFT))
+		{
+			_swordSlashRC = RectMakeCenter(position.x - 28, position.y,
+				_swordSlashAnim->getFrameWidth(),
+				_swordSlashAnim->getFrameHeight());
+		}
+		else if (KEYMANAGER->isStayKeyDown(VK_RIGHT))
+		{
+			_swordSlashRC = RectMakeCenter(position.x + 28, position.y,
+				_swordSlashAnim->getFrameWidth(),
+				_swordSlashAnim->getFrameHeight());
+		}
 	}
 
-	RECT getPlayerRC() {return _playerRC;}
+
+
+
+	bool isCollision()
+	{
+
+	}
+
+	void setCollision(bool left, bool right, bool top, bool bottom)
+	{
+		_isCollisionLeft = left;
+		_isCollisionRight = right;
+		_isCollisionTop = top;
+		_isCollisionBottom = bottom;
+
+		cout << _isCollisionLeft <<
+			_isCollisionRight <<
+			_isCollisionTop << _isCollisionBottom << endl;
+	}
+
+	RECT getPlayerRC() { return _playerRC; }
 
 	RECT getRect(void) { return _playerRC; }
 

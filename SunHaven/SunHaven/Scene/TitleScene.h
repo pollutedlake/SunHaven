@@ -15,11 +15,15 @@ private:
 
 	RECT _rc[3];		// 플레이 누르지 않았을 때
 
+	int _sound;
+
 public:
 	HRESULT init(void);
 	void release(void);
 	void update(void);
 	void render(void);
+
+	void buttonSound();
 
 	TitleScene() {}
 	~TitleScene() {}
