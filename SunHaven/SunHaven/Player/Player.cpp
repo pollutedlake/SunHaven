@@ -10,7 +10,7 @@ HRESULT Player::init(float x, float y)
 		_playerMoveAnim->getFrameWidth(),
 		_playerMoveAnim->getFrameHeight());*/
 
-	_playerRC = RectMakeCenter(WINSIZE_X / 2, WINSIZE_Y / 2,
+	_playerRC = RectMakeCenter(_x, _y,
 		50,50);
 
 	return S_OK;
@@ -25,24 +25,25 @@ void Player::update(void)
 {
 	if (KEYMANAGER->isStayKeyDown(VK_LEFT))
 	{
-		_playerRC.left -= 3;
-		_playerRC.right -= 3;
+		_x -= 3.0f;
 	}
 	if (KEYMANAGER->isStayKeyDown(VK_RIGHT))
 	{
-		_playerRC.left += 3;
-		_playerRC.right += 3;
+		_x += 3.0f;
+
 	}
 	if (KEYMANAGER->isStayKeyDown(VK_UP))
 	{
-		_playerRC.top -= 3;
-		_playerRC.bottom -= 3;
+		_y -= 3.0f;
+
 	}
 	if (KEYMANAGER->isStayKeyDown(VK_DOWN))
 	{
-		_playerRC.top += 3;
-		_playerRC.bottom += 3;
+		_y += 3.0f;
 	}
+
+	_playerRC = RectMakeCenter(_x, _y,
+		50, 50);
 
 	cout << _playerRC.left << endl;
 }

@@ -145,19 +145,39 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Class\Item\Item.cpp" />
+    <ClCompile Include="Class\Item\Armor.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="Class\Boss\Dynus.cpp" />
     <ClCompile Include="Class\Bullets\Bullets.cpp" />
-    <ClCompile Include="Class\Enemy\Collision.cpp" />
+    <ClCompile Include="Class\Data\ItemData.cpp" />
+    <ClCompile Include="Class\Item\Consumable.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="Class\Item\Material.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="Class\Data\ObjectData.cpp" />
+    <ClCompile Include="Class\Data\QuestData.cpp" />
+    <ClCompile Include="Class\Quest\Quest.cpp" />
+    <ClCompile Include="Class\Data\PlayerData.cpp" />
+    <ClCompile Include="Class\Skill\CombatSkill.cpp" />
+    <ClCompile Include="Class\Skill\ExplorationSkill.cpp" />
+    <ClCompile Include="Class\Skill\FarmingSkill.cpp" />
+    <ClCompile Include="Class\Skill\FishingSkill.cpp" />
+    <ClCompile Include="Class\Skill\MiningSkill.cpp" />
+    <ClCompile Include="Scene\Collision.cpp" />
     <ClCompile Include="Class\Enemy\Enemy.cpp" />
     <ClCompile Include="Class\Enemy\EnemyManager.cpp" />
     <ClCompile Include="Class\Enemy\FlameImp.cpp" />
     <ClCompile Include="Class\Enemy\MagmaBug.cpp" />
-    <ClCompile Include="DataScene.cpp" />
     <ClCompile Include="Class\Data\JsonSaveLoader.cpp" />
     <ClCompile Include="Class\Data\INIData.cpp" />
-    <ClCompile Include="Class\Enemy\Player_Temp.cpp" />
+    <ClCompile Include="Class\Enemy\Player_Temp.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="Class\Inventory.cpp" />
-    <ClCompile Include="Class\Item.cpp" />
     <ClCompile Include="Player\Player.cpp" />
     <ClCompile Include="Scene\FarmScene.cpp" />
     <ClCompile Include="Scene\DynusScene.cpp" />
@@ -185,23 +205,47 @@
     <ClCompile Include="Class\Enemy\TrapWeed.cpp" />
     <ClCompile Include="Class\Enemy\Shadeclaw.cpp" />
     <ClCompile Include="Class\UI.cpp" />
+    <ClCompile Include="Class\Item\Weapon.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="Class\Skill\Skill.cpp" />
     <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Class\Item\Armor.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="Class\Boss\Dynus.h" />
     <ClInclude Include="Class\Bullets\Bullets.h" />
     <ClInclude Include="Class\Enemy\Enemy.h" />
     <ClInclude Include="Class\Enemy\EnemyManager.h" />
     <ClInclude Include="Class\Enemy\FlameImp.h" />
     <ClInclude Include="Class\Enemy\MagmaBug.h" />
-    <ClInclude Include="DataScene.h" />
     <ClInclude Include="Class\Data\JsonSaveLoader.h" />
+    <ClInclude Include="Class\Data\ItemData.h" />
+    <ClInclude Include="Class\Item\Consumable.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="Class\Item\Item.h" />
+    <ClInclude Include="Class\Skill\CombatSkill.h" />
+    <ClInclude Include="Class\Skill\ExplorationSkill.h" />
+    <ClInclude Include="Class\Skill\FarmingSkill.h" />
+    <ClInclude Include="Class\Skill\FishingSkill.h" />
     <ClInclude Include="Json\json.h" />
     <ClInclude Include="Class\Data\INIData.h" />
-    <ClInclude Include="Class\Enemy\Player_Temp.h" />
+    <ClInclude Include="Class\Enemy\Player_Temp.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="Class\Inventory.h" />
-    <ClInclude Include="Class\Item.h" />
+    <ClInclude Include="Class\Item\Material.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="Class\Data\ObjectData.h" />
+    <ClInclude Include="Class\Data\PlayerData.h" />
+    <ClInclude Include="Class\Skill\MiningSkill.h" />
     <ClInclude Include="Player\Player.h" />
+    <ClInclude Include="Class\Data\QuestData.h" />
+    <ClInclude Include="Class\Quest\Quest.h" />
     <ClInclude Include="Scene\FarmScene.h" />
     <ClInclude Include="Scene\DynusScene.h" />
     <ClInclude Include="FrameWork\Animation\Animation.h" />
@@ -230,6 +274,10 @@
     <ClInclude Include="Class\Enemy\SteelSlug.h" />
     <ClInclude Include="Class\Enemy\TrapWeed.h" />
     <ClInclude Include="Class\Enemy\Shadeclaw.h" />
+    <ClInclude Include="Class\Item\Weapon.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="Class\Skill\Skill.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Class\UI.h" />
@@ -246,6 +294,10 @@
     <None Include="Debug\SunHaven.tlog\SunHaven.lastbuildstate" />
     <None Include="Debug\vc142.idb" />
     <None Include="Debug\vc142.pdb" />
+    <None Include="Schema\Item.json" />
+    <None Include="Schema\Object.json" />
+    <None Include="Schema\Quest.json" />
+    <None Include="Schema\Player.json" />
     <None Include="Stdafx.pch" />
   </ItemGroup>
   <ItemGroup>

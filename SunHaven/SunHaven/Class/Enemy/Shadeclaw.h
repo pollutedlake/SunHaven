@@ -1,23 +1,24 @@
 #pragma once
 #include "Enemy.h"
 
-class Player_Temp;
+class Player;
 
-enum class EShadeclawState
-{
-	IDLE,
-	ATTACK,
-	DIE
-};
+//enum class EShadeclawState
+//{
+//	IDLE,
+//	MOVE,
+//	ATTACK,
+//	DIE
+//};
 
 class Shadeclaw : public Enemy
 {
 private:
-	EShadeclawState _state;
+	//EShadeclawState _state;
 
 	float _speed;
 
-	Player_Temp* _player;
+	Player* _player;
 
 public:
 	HRESULT init(POINT position);
@@ -30,7 +31,10 @@ public:
 	void animation() override;
 	void draw() override;
 
-	void setPlayerMemoryAddress(Player_Temp* player) { _player = player; }
+	void setPlayerMemoryAddress(Player* player) { _player = player; }
+
+	//EShadeclawState getEState(void) { return _state; }
+	//void setEState(EShadeclawState state) { _state = state; }
 
 	Shadeclaw() {}
 	~Shadeclaw() {}

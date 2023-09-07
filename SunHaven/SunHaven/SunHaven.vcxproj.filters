@@ -90,8 +90,32 @@
     </ClCompile>
     <ClCompile Include="Class\UI.cpp" />
     <ClCompile Include="Class\Inventory.cpp" />
-    <ClCompile Include="Class\Item.cpp" />
     <ClCompile Include="Player\Player.cpp" />
+    <ClCompile Include="Scene\Collision.cpp" />
+    <ClCompile Include="Class\Enemy\FlameImp.cpp" />
+    <ClCompile Include="Class\Enemy\MagmaBug.cpp" />
+    <ClCompile Include="Class\Data\JsonSaveLoader.cpp" />
+    <ClCompile Include="Class\Data\INIData.cpp" />
+    <ClCompile Include="Class\Enemy\Player_Temp.cpp" />
+    <ClCompile Include="Class\Enemy\SteelSlug.cpp" />
+    <ClCompile Include="Class\Enemy\TrapWeed.cpp" />
+    <ClCompile Include="Class\Enemy\Shadeclaw.cpp" />
+    <ClCompile Include="Class\Data\ItemData.cpp" />
+    <ClCompile Include="Class\Item\Weapon.cpp" />
+    <ClCompile Include="Class\Item\Armor.cpp" />
+    <ClCompile Include="Class\Item\Material.cpp" />
+    <ClCompile Include="Class\Item\Consumable.cpp" />
+    <ClCompile Include="Class\Data\ObjectData.cpp" />
+    <ClCompile Include="Class\Data\QuestData.cpp" />
+    <ClCompile Include="Class\Item\Item.cpp" />
+    <ClCompile Include="Class\Quest\Quest.cpp" />
+    <ClCompile Include="Class\Data\PlayerData.cpp" />
+    <ClCompile Include="Class\Skill\Skill.cpp" />
+    <ClCompile Include="Class\Skill\ExplorationSkill.cpp" />
+    <ClCompile Include="Class\Skill\FarmingSkill.cpp" />
+    <ClCompile Include="Class\Skill\MiningSkill.cpp" />
+    <ClCompile Include="Class\Skill\CombatSkill.cpp" />
+    <ClCompile Include="Class\Skill\FishingSkill.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Class\Boss\Dynus.h" />
@@ -149,46 +173,54 @@
     <ClInclude Include="Scene\MapToolScene.h">
       <Filter>Scene</Filter>
     </ClInclude>
-    <ClInclude Include="Manager\SceneManager.h">
-      <Filter>Scene</Filter>
-    </ClInclude>
     <ClInclude Include="FrameWork\Utility\RandomFunction.h">
-      <Filter>FrameWork\Utility</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene\ShopScene.h">
-      <Filter>Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="FrameWork\SingletonBase\SingletonBase.h">
-      <Filter>FrameWork\SingletonBase</Filter>
-    </ClInclude>
-    <ClInclude Include="FrameWork\PCH\Stdafx.h">
-      <Filter>FrameWork\PCH</Filter>
-    </ClInclude>
-    <ClInclude Include="Manager\SoundManager.h">
-      <Filter>Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="Manager\TimeManager.h">
-      <Filter>Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="FrameWork\Timer\Timer.h">
-      <Filter>FrameWork\Timer</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene\TitleScene.h">
-      <Filter>Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene\TownScene.h">
-      <Filter>Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="FrameWork\Utility\Utils.h">
       <Filter>FrameWork\Utility</Filter>
     </ClInclude>
     <ClInclude Include="Class\UI.h" />
     <ClInclude Include="Class\Inventory.h" />
-    <ClInclude Include="Class\Item.h" />
     <ClInclude Include="Player\Player.h" />
+    <ClInclude Include="Class\Enemy\FlameImp.h" />
+    <ClInclude Include="Class\Enemy\MagmaBug.h" />
+    <ClInclude Include="Class\Data\JsonSaveLoader.h" />
+    <ClInclude Include="Json\json.h" />
+    <ClInclude Include="Class\Data\INIData.h" />
+    <ClInclude Include="Class\Enemy\Player_Temp.h" />
+    <ClInclude Include="Manager\SceneManager.h" />
+    <ClInclude Include="FrameWork\SingletonBase\SingletonBase.h" />
+    <ClInclude Include="Manager\SoundManager.h" />
+    <ClInclude Include="Manager\TimeManager.h" />
+    <ClInclude Include="FrameWork\Timer\Timer.h" />
+    <ClInclude Include="Scene\TitleScene.h" />
+    <ClInclude Include="FrameWork\PCH\Stdafx.h" />
+    <ClInclude Include="Scene\ShopScene.h" />
+    <ClInclude Include="Scene\TownScene.h" />
+    <ClInclude Include="FrameWork\Utility\Utils.h" />
+    <ClInclude Include="Class\Enemy\SteelSlug.h" />
+    <ClInclude Include="Class\Enemy\TrapWeed.h" />
+    <ClInclude Include="Class\Enemy\Shadeclaw.h" />
+    <ClInclude Include="Class\Data\ItemData.h" />
+    <ClInclude Include="Class\Item\Weapon.h" />
+    <ClInclude Include="Class\Item\Armor.h" />
+    <ClInclude Include="Class\Item\Material.h" />
+    <ClInclude Include="Class\Item\Consumable.h" />
+    <ClInclude Include="Class\Data\ObjectData.h" />
+    <ClInclude Include="Class\Data\QuestData.h" />
+    <ClInclude Include="Class\Item\Item.h" />
+    <ClInclude Include="Class\Quest\Quest.h" />
+    <ClInclude Include="Class\Data\PlayerData.h" />
+    <ClInclude Include="Class\Skill\Skill.h" />
+    <ClInclude Include="Class\Skill\ExplorationSkill.h" />
+    <ClInclude Include="Class\Skill\FarmingSkill.h" />
+    <ClInclude Include="Class\Skill\MiningSkill.h" />
+    <ClInclude Include="Class\Skill\CombatSkill.h" />
+    <ClInclude Include="Class\Skill\FishingSkill.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Stdafx.pch" />
+    <None Include="Schema\Item.json" />
+    <None Include="Schema\Quest.json" />
+    <None Include="Schema\Object.json" />
+    <None Include="Schema\Player.json" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Stdafx.pch" />

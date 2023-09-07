@@ -25,6 +25,8 @@ public:
 	POINT getPlayerPosition() { return PointMake((int)_x, (int)_y); }
 	void setPlayerPosition(POINT position);
 
+	RECT getRect(void) { return _playerRC; }
+
 	Player() {}
 	~Player() {}
 };

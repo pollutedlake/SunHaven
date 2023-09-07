@@ -4,7 +4,7 @@
 #include "../Enemy/Enemy.h"
 #include "../Bullets/Bullets.h"
 
-class Player_Temp;
+class Player;
 class EnemyManager : public GameNode
 {
 private:
@@ -16,7 +16,7 @@ private:
 	viEnemy _viEnemy;
 
 	Bullet* _bullet;
-	Player_Temp* _player;
+	Player* _player;
 
 public:
 	HRESULT init(void);
@@ -33,7 +33,7 @@ public:
 
 	vector<Enemy*> getEnemys(void) { return _vEnemy; }
 	Bullet* getBullet(void) { return _bullet; }
-	void setPlayerMemoryAddress(Player_Temp* player) { _player = player; }
+	void setPlayerMemoryAddress(Player* player) { _player = player; }
 
 	/*float getCenterX() { return _centerX; }
 	void setCenterX(float centerX) { _centerX = centerX; }
