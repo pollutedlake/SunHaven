@@ -1,7 +1,7 @@
 // ¹Ú»óÇö
 #include "Stdafx.h"
 #include "MapToolScene.h"
-#include "../Class/UI.h"
+#include "../Class/UI/Buttons.h"
 #include "../Class/Object/Grass.h"
 #include "../Class/Object/Tree.h"
 #include "../Class/Object/Rock.h"

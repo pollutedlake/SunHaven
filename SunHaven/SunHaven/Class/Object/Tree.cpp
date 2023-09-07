@@ -3,7 +3,18 @@
 
 HRESULT Tree::init(void)
 {
-	
+	switch (_type)
+	{
+	case TREE1:
+		_maxHp = 100;
+		break;
+	case TREE2:
+		_maxHp = 120;
+		break;
+	}
+	_curHp = _maxHp;
+	_hpBar = new ProgressBar;
+	_hpBar->init(NULL, NULL, NULL, NULL);
 	return S_OK;
 }
 

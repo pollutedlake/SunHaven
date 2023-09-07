@@ -14,18 +14,18 @@ HRESULT MainGame::init(void)
 void MainGame::release(void)
 {
 	GameNode::release();
+	_resources->release();
+	SAFE_DELETE(_resources);
 }
 
 void MainGame::update(void)
 {
 	GameNode::update();
-	cout << "update" << endl;
 	SCENEMANAGER->update();
 }
 
 void MainGame::render(void)
 {
-	cout << "render" << endl;
 	PatBlt(getMemDC(), 0, 0, WINSIZE_X, WINSIZE_Y, WHITENESS);
 	SCENEMANAGER->render();
 	TIMEMANAGER->render(getMemDC());

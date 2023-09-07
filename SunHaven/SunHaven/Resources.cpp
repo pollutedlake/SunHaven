@@ -157,6 +157,15 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addImage("SkillTreeIcon", "Resources/Images/UI/SkillTreeIcon.bmp", 23, 26, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("BarnAnimalsIcon", "Resources/Images/UI/BarnAnimalsIcon.bmp", 24, 18, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("FishingNetIcon", "Resources/Images/UI/FishingNetIcon.bmp", 16, 17, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addGPFrameImage("ProgressBarBottom", "Resources/Images/UI/ProgressBarBottom.png",
+		0, 0,
+		1, 1,
+		false, NULL, RotateNoneFlipNone);
+	IMAGEMANAGER->addGPFrameImage("ProgressBarTop", "Resources/Images/UI/ProgressBarTop.png",
+		0, 0,
+		1, 1,
+		false, NULL, RotateNoneFlipNone);
+	IMAGEMANAGER->addImage("ProgressBarFill", "Resources/Images/UI/ProgressBarFill.bmp", 24, 5);
 	//Sound
 	return S_OK;
 }

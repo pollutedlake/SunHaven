@@ -1,5 +1,5 @@
 #include "Stdafx.h"
-#include "UI.h"
+#include "Buttons.h"
 
 HRESULT NormalButton::init(void)
 {
@@ -13,7 +13,7 @@ HRESULT NormalButton::init(float x, float y, int width, int height, char* imageN
 	_button._width = width;
 	_button._height = height;
 	_button._image = IMAGEMANAGER->findImage(imageName);
-	_button._onClick = move(onClick);
+	_button._onClick = onClick;
 	_button._click = false;
 	_button._frameX = 0;
 	_button._frameY = 0;
@@ -37,7 +37,7 @@ void NormalButton::update(void)
 		_button._onCusor = true;
 		_button._frameX = 1;
 	}
-	else if(!_button._click)
+	else if (!_button._click)
 	{
 		_button._onCusor = false;
 		_button._frameX = 0;
@@ -47,7 +47,7 @@ void NormalButton::update(void)
 void NormalButton::render(void)
 {
 	_button._image->frameRender(getMemDC(), _button._rc.left, _button._rc.top, _button._width, _button._height, _button._frameX, _button._frameY);
-	if(_fontSize != NULL)
+	if (_fontSize != NULL)
 	{
 		SetTextAlign(getMemDC(), TA_CENTER);
 		FONTMANAGER->textOut(getMemDC(), _button._x, _button._y + _offsetY, "배달의민족 을지로체", _fontSize, 100, _str, strlen(_str), _color);
@@ -90,7 +90,7 @@ HRESULT ToggleButton::init(void)
 	return S_OK;
 }
 
-HRESULT ToggleButton::init(float x, float y, int width, int height, char* imageName, function<void(int)> onClick, bool toggle)//char* str, COLORREF color, int fontSize, int offsetY)
+HRESULT ToggleButton::init(float x, float y, int width, int height, char* imageName, function<void(int)> onClick, bool toggle)
 {
 	_button._x = x;
 	_button._y = y;
@@ -99,7 +99,7 @@ HRESULT ToggleButton::init(float x, float y, int width, int height, char* imageN
 	_button._image = IMAGEMANAGER->findImage(imageName);
 	_button._onClick = move(onClick);
 	_button._click = false;
-	if(toggle)
+	if (toggle)
 	{
 		_button._frameX = 0;
 	}
@@ -115,7 +115,7 @@ HRESULT ToggleButton::init(float x, float y, int width, int height, char* imageN
 
 void ToggleButton::release(void)
 {
-	
+
 }
 
 void ToggleButton::update(void)
@@ -213,7 +213,7 @@ void RadioButton::update(void)
 		if (PtInRect(&(*_viButtons)->_rc, _ptMouse))
 		{
 			(*_viButtons)->_onCusor = true;
-			if(!(*_viButtons)->_click)
+			if (!(*_viButtons)->_click)
 			{
 				(*_viButtons)->_frameX = 1;
 			}
@@ -237,7 +237,7 @@ void RadioButton::render(void)
 		if (_fontSize != NULL)
 		{
 			SetTextAlign(getMemDC(), TA_CENTER);
-			FONTMANAGER->textOut(getMemDC(), (*_viButtons)->_x, (*_viButtons)->_y + _offsetY, "배달의민족 을지로체", _fontSize, 100, 
+			FONTMANAGER->textOut(getMemDC(), (*_viButtons)->_x, (*_viButtons)->_y + _offsetY, "배달의민족 을지로체", _fontSize, 100,
 				_str[_viButtons - _vButtons.begin()], strlen(_str[_viButtons - _vButtons.begin()]), _color);
 			SetTextAlign(getMemDC(), TA_LEFT);
 		}
@@ -278,76 +278,4 @@ void RadioButton::buttonUp(int num)
 
 RadioButton::RadioButton()
 {
-}
-
-HRESULT UI::init(void)
-{
-	return S_OK;
-}
-
-HRESULT UI::init(string sceneName)
-{
-	_sceneName = sceneName;
-	if (sceneName == "Farm")
-	{
-		_clock = IMAGEMANAGER->findImage("ClockUI");
-		_cursor = IMAGEMANAGER->findImage("Cursor");
-		_dateBar = IMAGEMANAGER->findGPImage("DateBar");
-		_timeBar = IMAGEMANAGER->findGPImage("TimeBar");
-		_upperRightBar = IMAGEMANAGER->findGPImage("UpperRightBar");
-		_goldIcon = IMAGEMANAGER->findImage("GoldIcon");
-		_ticketIcon = IMAGEMANAGER->findImage("TicketIcon");
-		_orbIcon = IMAGEMANAGER->findImage("OrbIcon");
-		_fishingNetIcon = IMAGEMANAGER->findImage("FishingNetIcon");
-		_barnAnimalsIcon = IMAGEMANAGER->findImage("BarnAnimalsIcon");
-		_skillTreeIcon = IMAGEMANAGER->findImage("SkillTreeIcon");
-		_questBookIcon = IMAGEMANAGER->findImage("QuestBookIcon");
-	}
-	return S_OK;
-}
-
-void UI::release(void)
-{
-}
-
-void UI::update(void)
-{
-	if (_sceneName == "Title")
-	{
-
-	}
-}
-
-void UI::render(void)
-{
-	if (_sceneName == "Farm")
-	{
-		_clock->render(getMemDC(), 20, 20, _clock->getWidth() * 1.5f, _clock->getHeight() * 1.5f, 0, 0, _clock->getWidth(), _clock->getHeight());
-		_cursor->render(getMemDC(), _ptMouse.x, _ptMouse.y);
-		_dateBar->GPFrameRender(getMemDC(), 130, 20, 1.5f, 1.5f, 0, 0, InterpolationModeNearestNeighbor, 0);
-		_dateBar->GPFrameRender(getMemDC(), 130, 55, 1.5f, 1.5f, 0, 0, InterpolationModeNearestNeighbor, 0);
-		_timeBar->GPFrameRender(getMemDC(), 130, 95, 1.5f, 1.5f, 0, 0, InterpolationModeNearestNeighbor, 0);
-		_upperRightBar->GPFrameRender(getMemDC(), WINSIZE_X - 666, 0, 1.5f, 1.5f, 0, 0, InterpolationModeNearestNeighbor, 0);
-		FONTMANAGER->textOut(getMemDC(), 135, 25,"배달의민족 을지로체", 20, 100, "봄 1년차", strlen("봄 1년차"), RGB(255, 255, 255));
-		FONTMANAGER->textOut(getMemDC(), 135, 60,"배달의민족 을지로체", 20, 100, "일요일 1일", strlen("일요일 1일"), RGB(255, 255, 255));
-		FONTMANAGER->textOut(getMemDC(), 135, 100,"배달의민족 을지로체", 20, 100, "06:00AM", strlen("06:00AM"), RGB(255, 255, 255));
-		_goldIcon->render(getMemDC(), WINSIZE_X - 300, 8, _goldIcon->getWidth() * 1.5f, _goldIcon->getHeight() * 1.5f, 0, 0, _goldIcon->getWidth(), _goldIcon->getHeight());
-		FONTMANAGER->textOut(getMemDC(), WINSIZE_X - 280, 8, "배달의민족 을지로체", 14, 100, "1,669", strlen("1,669"), RGB(255, 255, 255));
-		_orbIcon->render(getMemDC(), WINSIZE_X - 200, 8, _orbIcon->getWidth() * 1.5f, _orbIcon->getHeight() * 1.5f, 0, 0, _orbIcon->getWidth(), _orbIcon->getHeight());
-		FONTMANAGER->textOut(getMemDC(), WINSIZE_X - 180, 8, "배달의민족 을지로체", 14, 100, "8", strlen("8"), RGB(255, 255, 255));
-		_ticketIcon->render(getMemDC(), WINSIZE_X - 100, 4);
-		FONTMANAGER->textOut(getMemDC(), WINSIZE_X - 75, 8, "배달의민족 을지로체", 14, 100, "13", strlen("13"), RGB(255, 255, 255));
-		_fishingNetIcon->render(getMemDC(), WINSIZE_X - 400, 4);
-		FONTMANAGER->textOut(getMemDC(), WINSIZE_X - 375, 8, "배달의민족 을지로체", 14, 100, "0/4", strlen("0/4"), RGB(255, 255, 255));
-		_barnAnimalsIcon->render(getMemDC(), WINSIZE_X - 500, 4);
-		FONTMANAGER->textOut(getMemDC(), WINSIZE_X - 470, 6, "배달의민족 을지로체", 14, 100, "0/6", strlen("0/6"), RGB(255, 255, 255));
-		_skillTreeIcon->render(getMemDC(), WINSIZE_X - _skillTreeIcon->getWidth() * 1.5, 50, _skillTreeIcon->getWidth() * 1.5, _skillTreeIcon->getHeight() * 1.5, 
-			0, 0, _skillTreeIcon->getWidth(), _skillTreeIcon->getHeight());
-		SetTextAlign(getMemDC(), TA_RIGHT);
-		FONTMANAGER->textOut(getMemDC(), WINSIZE_X - 40, 65, "배달의민족 을지로체", 14, 100, "스킬 트리 [K]", strlen("스킬 트리 [K]"), RGB(255, 255, 255));
-		_questBookIcon->render(getMemDC(), WINSIZE_X - _questBookIcon->getWidth() * 1.5 - 5, 95, _questBookIcon->getWidth() * 1.5, _questBookIcon->getHeight() * 1.5,
-			0, 0, _questBookIcon->getWidth(), _questBookIcon->getHeight());
-		FONTMANAGER->textOut(getMemDC(), WINSIZE_X - 40, 100, "배달의민족 을지로체", 14, 100, "퀘스트 [L]", strlen("퀘스트 [L]"), RGB(255, 255, 255));
-		SetTextAlign(getMemDC(), TA_LEFT);
-	}
 }

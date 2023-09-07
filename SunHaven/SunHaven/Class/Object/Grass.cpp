@@ -3,6 +3,16 @@
 
 HRESULT Grass::init(void)
 {
+	switch (_type)
+	{
+	case GRASS1:
+		_maxHp = 5;
+		break;
+	case GRASS2:
+		_maxHp = 10;
+		break;
+	}
+	_curHp = _maxHp;
 	return S_OK;
 }
 

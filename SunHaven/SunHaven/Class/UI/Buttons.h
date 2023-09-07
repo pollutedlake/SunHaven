@@ -1,5 +1,5 @@
 #pragma once
-#include "../FrameWork/GameNode/GameNode.h"
+#include "../../FrameWork/GameNode/GameNode.h"
 
 struct Button
 {
@@ -44,7 +44,7 @@ private:
 
 public:
 	HRESULT init(void);
-	HRESULT init(float x, float y, int width, int height, char* imageName, function<void(int)> onClick, bool toggle);//char* str = "", COLORREF color = RGB(255, 255, 255), int fontSize = NULL, int offsetY = NULL);
+	HRESULT init(float x, float y, int width, int height, char* imageName, function<void(int)> onClick, bool toggle);
 	void release(void);
 	void update(void);
 	void render(void);
@@ -68,7 +68,7 @@ private:
 
 public:
 	HRESULT init(void);
-	HRESULT init(int buttonN, float x[], float y[], int width[], int height[], char* imageName, function<void(int)> onClick[], char* str[], COLORREF color = RGB(255, 255, 255), int fontSize = NULL, 
+	HRESULT init(int buttonN, float x[], float y[], int width[], int height[], char* imageName, function<void(int)> onClick[], char* str[], COLORREF color = RGB(255, 255, 255), int fontSize = NULL,
 		int offsetY = NULL);
 	void release(void);
 	void update(void);
@@ -81,30 +81,3 @@ public:
 	~RadioButton() {}
 };
 
-class UI : public GameNode
-{
-	string _sceneName;
-	GImage* _clock;
-	GImage* _cursor;
-	GPImage* _dateBar;
-	GPImage* _timeBar;
-	GPImage* _upperRightBar;
-	GImage* _goldIcon;
-	GImage* _ticketIcon;
-	GImage* _orbIcon;
-	GImage* _fishingNetIcon;
-	GImage* _barnAnimalsIcon;
-	GImage* _skillTreeIcon;
-	GImage* _questBookIcon;
-	char* _text[256];
-
-public:
-	HRESULT init(void);
-	HRESULT init(string sceneName);
-	void release(void);
-	void update(void);
-	void render(void);
-
-	UI() {}
-	~UI() {}
-};

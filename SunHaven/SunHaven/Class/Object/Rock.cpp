@@ -3,6 +3,16 @@
 
 HRESULT Rock::init(void)
 {
+	switch (_type)
+	{
+	case ROCK1:
+		_maxHp = 5;
+		break;
+	case ROCK2:
+		_maxHp = 10;
+		break;
+	}
+	_curHp = _maxHp;
 	return S_OK;
 }
 

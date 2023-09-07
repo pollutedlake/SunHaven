@@ -1,10 +1,12 @@
 // ¹Ú»óÇö
 #pragma once
 #include "../FrameWork/GameNode/GameNode.h"
-#include "../Class/Object/Object.h"
+//#include "../Class/Object/Object.h"
 
 #define MapToolWidth	800
 #define MapToolHeight	600
+
+class Object;
 
 enum TileType
 {

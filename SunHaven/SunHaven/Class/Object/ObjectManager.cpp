@@ -66,6 +66,10 @@ void ObjectManager::render(void)
 {
 	for (_viObject = _vObject.begin(); _viObject != _vObject.end(); ++_viObject)
 	{
-		(*_viObject)->render();
+		RECT rect;
+		if(IntersectRect(&rect, &RectMake(0, 0, WINSIZE_X, WINSIZE_Y), &(*_viObject)->getRC()))
+		{
+			(*_viObject)->renderHpBar();
+		}
 	}
 }

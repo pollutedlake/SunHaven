@@ -88,7 +88,7 @@
     <ClCompile Include="FrameWork\Utility\Utils.cpp">
       <Filter>FrameWork\Utility</Filter>
     </ClCompile>
-    <ClCompile Include="Class\UI.cpp" />
+    <ClCompile Include="Class\UI\UI.cpp" />
     <ClCompile Include="Class\Inventory.cpp" />
     <ClCompile Include="Class\Item.cpp" />
     <ClCompile Include="Player\Player.cpp" />
@@ -107,6 +107,8 @@
     <ClCompile Include="Class\Object\Rock.cpp" />
     <ClCompile Include="Class\Object\Grass.cpp" />
     <ClCompile Include="Class\Object\ObjectManager.cpp" />
+    <ClCompile Include="Class\UI\ProgressBar.cpp" />
+    <ClCompile Include="Class\UI\Buttons.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Class\Boss\Dynus.h" />
@@ -167,7 +169,7 @@
     <ClInclude Include="FrameWork\Utility\RandomFunction.h">
       <Filter>FrameWork\Utility</Filter>
     </ClInclude>
-    <ClInclude Include="Class\UI.h" />
+    <ClInclude Include="Class\UI\UI.h" />
     <ClInclude Include="Class\Inventory.h" />
     <ClInclude Include="Class\Item.h" />
     <ClInclude Include="Player\Player.h" />
@@ -196,6 +198,8 @@
     <ClInclude Include="Class\Object\Rock.h" />
     <ClInclude Include="Class\Object\Grass.h" />
     <ClInclude Include="Class\Object\ObjectManager.h" />
+    <ClInclude Include="Class\UI\ProgressBar.h" />
+    <ClInclude Include="Class\UI\Buttons.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Stdafx.pch" />
