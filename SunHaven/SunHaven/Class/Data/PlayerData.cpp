@@ -13,7 +13,7 @@ void PlayerData::init(void)
 
 void PlayerData::explorationSetUp(Skill* qExplor)
 {
-	/*Json::Value root = JSONDATAMANAGER->loadJsonFile("./Schema/PlayerData.json");
+	Json::Value root = JSONDATAMANAGER->loadJsonFile("./Schema/PlayerData.json");
 
 	for (auto it = root["Skill"]["Exploration"].begin(); it != root["Skill"]["Exploration"].end(); it++)
 	{
@@ -21,31 +21,21 @@ void PlayerData::explorationSetUp(Skill* qExplor)
 		{
 			Skill* qExplor = new ExplorationSkill;
 
-			Json::Value arrFloatType = (*it)["_value1"];
-			float* floatType = (float*)malloc(sizeof(float) * arrFloatType.size());
-
-			if (floatType != nullptr)
-			{
-				for (int i = 0; i < arrFloatType.size(); i++)
-				{
-					*(floatType + i) = (*it)["_value1"][i].asInt();
-					*(floatType + i) = (*it)["_value2"][i].asInt();
-				}
-			}
-
-			qExplor->init
+			/*qExplor->init
 			(
 				(*it)["_index"].asString(),
 				(*it)["_name"].asString(),
-				(*it)["_type"].asString(),
+				(*it)["_type"].asString(), 
 				(*it)["_tier"].asInt(),
-				(*it)["_description"].asString,
+				(*it)["_description"].asString(),
+				(*it)["_value1"][(Json::Value::UInt)0].asDouble(),
+				(*it)["_value1"][1].asDouble(),
+				(*it)["_value1"][2].asDouble(),
 
 
-				(*it)["_filePath"].asString()
-			);
+			);*/
 
 			_skill.push(qExplor);
 		}
-	}*/
+	}
 }

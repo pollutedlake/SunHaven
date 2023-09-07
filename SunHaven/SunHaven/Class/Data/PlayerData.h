@@ -1,6 +1,17 @@
 #pragma once
 #include "../Skill/Skill.h"
 
+struct tagSkill
+{
+	string index;
+	string name;
+	string type;
+	int tier;
+	string description;
+	double value1[3];
+	double value2[3];
+};
+
 class PlayerData
 {
 private:

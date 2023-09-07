@@ -1,7 +1,8 @@
 #include "Stdafx.h"
 #include "ExplorationSkill.h"
 
-void ExplorationSkill::init(string index, string name, string type, int tier, string description, float value1[], float value2[], const char* filePath, int width, int height)
+void ExplorationSkill::init(string index, string name, string type, int tier, string description,
+	double value1[], double value2[])
 {
 	_index = index;
 	_type = type;
@@ -13,6 +14,4 @@ void ExplorationSkill::init(string index, string name, string type, int tier, st
 		_value1[i] = value1[i];
 		_value2[i] = value2[i];
 	}
-
-	_filePath = filePath;
 }
