@@ -125,6 +125,20 @@ HRESULT Resources::init(void)
 	// Sound
 
 	// ====================ShopScene====================
+	
+	// itemImage
+	IMAGEMANAGER->addImage("³ì½¼ °î±ªÀÌ", "Resources/Images/Item/icon_rusty_pickaxe.bmp", 32, 32, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("¾Æ´Ù¸¸Æ® °î±ªÀÌ", "Resources/Images/Item/icon_adamant_pickaxe.bmp", 32, 32, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("³ì½¼ ±ªÀÌ", "Resources/Images/Item/icon_rusty_hoe.bmp", 32, 32, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("¾Æ´Ù¸¸Æ® ±ªÀÌ", "Resources/Images/Item/icon_adamant_hoe.bmp", 32, 32, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("³ì½¼ µµ³¢", "Resources/Images/Item/icon_rusty_axe.bmp", 32, 32, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("¾Æ´Ù¸¸Æ® µµ³¢", "Resources/Images/Item/icon_adamant_axe.bmp", 32, 32, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("³ì½¼ ¹°»Ñ¸®°³", "Resources/Images/Item/icon_rusty_wateringCan.bmp", 32, 32, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("¾Æ´Ù¸¸Æ® ¹°»Ñ¸®°³", "Resources/Images/Item/icon_adamant_wateringCan.bmp", 32, 32, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("±âº» ³¬½Ë´ë", "Resources/Images/Item/icon_basic_fishingRod.bmp", 32, 32, true, RGB(255, 0, 255));
+	
+	 
+	
 	// invenImage
 	IMAGEMANAGER->addImage("invenBG", "Resources/Images/Inventory/invenBG.bmp", WINSIZE_X/2, WINSIZE_Y/2);
 	IMAGEMANAGER->addImage("player_bg", "Resources/Images/Inventory/player_bg.bmp", WINSIZE_X / 6, WINSIZE_Y / 2 - 80);
@@ -163,7 +177,7 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addImage("x_button", "Resources/Images/Inventory/x_button.bmp", 27, 28, true, RGB(255, 0, 255));
 
 	//CraftingImage
-
+	//IMAGEMANAGER->addImage("cooking_bg1" , "Resources/Images/CraftingTable/cooking_bg1.bmp",)
 
 
 	// shopImage

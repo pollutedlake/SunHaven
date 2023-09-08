@@ -117,7 +117,7 @@ private:
 
 
 public:
-	
+	//void init()
 
 	Item() {}
 	~Item() {}
