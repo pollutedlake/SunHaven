@@ -117,6 +117,22 @@ HRESULT Resources::init(void)
 		14, 2,
 		true, RGB(255, 0, 255));	// 다이너스 소환 몬스터 고스트
 
+	IMAGEMANAGER->addImage("DynusJumpPlatform", "Resources/Images/Boss/DynusJumpPlatform.bmp",
+		38 * 2, 54 * 2,
+		true, RGB(255, 0, 255));	// 다이너스 점프 플랫폼
+
+	IMAGEMANAGER->addImage("DynusHpBar", "Resources/Images/UI/DynusHpBar.bmp",
+		425, 58,
+		true, RGB(255, 0, 255));	// 다이너스 HpBar
+
+	IMAGEMANAGER->addImage("ProgressBarW", "Resources/Images/UI/ProgressBarW.bmp",
+		92, 14,
+		true, RGB(255, 0, 255));	// 프로그래스 바 가로
+
+	//IMAGEMANAGER->addImage("DynusJumpPlatform", "Resources/Images/Boss/DynusJumpPlatform.bmp",
+	//	38 * 2, 54 * 2,
+	//	true, RGB(255, 0, 255));	// 다이너스 점프 플랫폼
+
 	// Sound
 
 	// ====================FarmScene====================

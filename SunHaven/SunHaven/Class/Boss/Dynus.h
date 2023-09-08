@@ -75,6 +75,9 @@ private:
 	RECT _rcPa2Start[PA2_STARTPOS_NUM_1][PA2_STARTPOS_NUM_2];
 	RECT _rcPa3Start[PA3_STARTPOS_NUM];
 
+	float _hp;
+	float _maxHp;
+
 	float _x, _y;
 
 	float _bulletFireCount;	// 패턴1
@@ -82,8 +85,10 @@ private:
 	int _bulletCount;		// 패턴1 1회당 탄알 발사 횟수
 	float _turnCount1;		// 패턴1 사이 간격
 	float _turnCount2;		// 패턴2 사이 간격
+	float _turnCount3;		// 패턴2 사이 간격
 	float _bulletTurnCount1;	// 패턴1 한 번 공격 당 간격
 	float _bulletTurnCount2;	// 패턴2 한 번 공격 당 간격
+	float _bulletTurnCount3;	// 패턴2 한 번 공격 당 간격
 	float _beamFireCount;	// 패턴3 1회당 탄알 발사 횟수
 	int _beamCount;			// 패턴3 탄알 사이 간격
 	float _beamTurnCount;	// 패턴3 
@@ -101,7 +106,12 @@ private:
 	
 	//int _nextPaIdx;		// 페이즈마다 다른 패턴 간격(카운트로 관리)
 
+	float _hpTime;
+	float _hpTurnCount;
+
 public:
+	bool hpMinusTemp(void);
+
 	HRESULT init(void);
 	HRESULT init(const char* imageName, POINT position);
 
@@ -121,6 +131,7 @@ public:
 	bool bulletCountFire(void);
 	bool turnCountFire1(void);
 	bool turnCountFire2(void);
+	bool turnCountFire3(void);
 	bool beamCountFire(void);
 	bool spawnAfterTime(void);
 

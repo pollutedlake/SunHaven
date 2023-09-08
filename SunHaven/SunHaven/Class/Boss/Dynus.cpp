@@ -4,11 +4,27 @@
 //#include "../Enemy/Shadeclaw.h"
 #include "../Enemy/EnemyManager.h"
 
+bool Dynus::hpMinusTemp(void)
+{
+	if (_hpTime + _hpTurnCount <= TIMEMANAGER->getWorldTime())
+	{
+		_hpTurnCount = TIMEMANAGER->getWorldTime();
+		_hpTime = 1.0f;
+
+		return true;
+	}
+
+	return false;
+}
+
 HRESULT Dynus::init(void)
 {
 	//_state = EDynusState::BREATHE;
 	_phase = EDynusPhase::FIRST;
 	//_spell = EDynusSpell::SPREAD_X;
+
+	_hp = 10000.0f;
+	_maxHp = 10000.0f;
 
 	_x = CENTER_X - 317;
 	_y = 0;
@@ -19,13 +35,18 @@ HRESULT Dynus::init(void)
 	_bulletCount = 0;
 	_turnCount1 = TIMEMANAGER->getWorldTime();
 	_turnCount2 = TIMEMANAGER->getWorldTime();
-	_bulletTurnCount1 = 3.0f;
-	_bulletTurnCount2 = 3.0f;
+	_turnCount3 = TIMEMANAGER->getWorldTime();
+	_bulletTurnCount1 = 2.0f;
+	_bulletTurnCount2 = 2.0f;
+	_bulletTurnCount3 = 0.5f;
 	_beamCount = 0.0f;
 	_beamFireCount = 0.0f;
 	_beamTurnCount = TIMEMANAGER->getWorldTime();
 	_spawnAtferTime = 5.0f;
 	_spawnWorldTime = TIMEMANAGER->getWorldTime();
+
+	_hpTime = 1.0f;
+	_hpTurnCount = TIMEMANAGER->getWorldTime();
 
 	_timeCount = 100;
 
@@ -51,7 +72,7 @@ HRESULT Dynus::init(void)
 	_bullet->init("DynusOrb2", 100, 1500.0f);
 
 	_beam = new Beam;
-	_beam->init(100, 1500.0f);
+	_beam->init(3, 1500.0f);
 
 	_rcDynus = RectMakeCenter(_x, _y,
 		_breatheImg->getFrameWidth(), _breatheImg->getFrameHeight());
@@ -139,6 +160,11 @@ void Dynus::release(void)
 
 void Dynus::update(void)
 {
+	if (hpMinusTemp())
+	{
+		_hp -= 100;
+	}
+
 	switch (_state)
 	{
 	case EDynusState::BREATHE:
@@ -167,12 +193,14 @@ void Dynus::update(void)
 			switch (_spell)
 			{
 			case EDynusSpell::SPREAD_X:
-				bulletFire();
-				//beamFire();
+
+				beamFire();
+
+				/*bulletFire();
 				if (_pa1StartPosIdx < 0)
 				{
 					_spell = EDynusSpell::SPREAD_ELLIPSE;
-				}
+				}*/
 
 				break;
 
@@ -338,6 +366,18 @@ void Dynus::render(void)
 
 	_bullet->render();
 	_beam->render();
+
+	
+	IMAGEMANAGER->render("DynusHpBar", getMemDC(), CENTER_X - 210, CENTER_Y + 220);
+
+	char bossHpRate[128];
+
+	sprintf_s(bossHpRate, "%d %s %d", static_cast<int>(_hp), "/", static_cast<int>(_maxHp));
+
+	FONTMANAGER->textOut(getMemDC(), CENTER_X - 10, CENTER_Y + 230, "배달의민족 을지로체",
+		20, 500, "Dynus", strlen("Dynus"), RGB(255, 255, 255));
+	FONTMANAGER->textOut(getMemDC(), CENTER_X - 30, CENTER_Y + 250, "배달의민족 을지로체",
+		15, 400, bossHpRate, strlen(bossHpRate), RGB(255, 255, 255));
 }
 
 void Dynus::move(void)
@@ -396,7 +436,7 @@ void Dynus::bulletFire()
 				(_rcPa1Start[_pa1StartPosIdx][j].bottom + _rcPa1Start[_pa1StartPosIdx][j].top) / 2,
 				getAngle((_rcPa1Start[_pa1StartPosIdx][j].left + _rcPa1Start[_pa1StartPosIdx][j].right) / 2,
 					(_rcPa1Start[_pa1StartPosIdx][j].bottom + _rcPa1Start[_pa1StartPosIdx][j].top) / 2,
-					_player->getPlayerPosition().x, _player->getPlayerPosition().y) + xOffset * 0.01f, 2.0f);
+					_player->getPlayerPosition().x, _player->getPlayerPosition().y) + xOffset * 0.01f, 4.0f);
 		}
 		
 		_bulletCount++;
@@ -418,7 +458,7 @@ void Dynus::spreadEllipse(void)
 		{
 			_bullet->fire((_rcPa2Start[_pa2StartPosIdx][j].left + _rcPa2Start[_pa2StartPosIdx][j].right) / 2,
 				(_rcPa2Start[_pa2StartPosIdx][j].bottom + _rcPa2Start[_pa2StartPosIdx][j].top) / 2,
-				DEGREE_RADIAN(j * 22.5f), 2.0f);
+				DEGREE_RADIAN(j * 22.5f), 4.0f);
 		}
 
 		if (_pa2StartPosIdx > -1)
@@ -430,35 +470,25 @@ void Dynus::spreadEllipse(void)
 
 void Dynus::beamFire(void)
 {
-	float speed = 10.0f;
+	float speed = 25.0f;
 
 	if ((_pa3StartPosIdx == 0 || _pa3StartPosIdx == 2))
 	{
-		speed = 10.0f;
+		speed = 25.0f;
 	}
 
 	else
 	{
-		speed = -10.0f;
+		speed = -25.0f;
 	}
 
-	if (_beamCount < 9 && bulletCountFire())
+	if (turnCountFire3() && _pa3StartPosIdx > -1)
 	{
 		_beam->fire((_rcPa3Start[_pa3StartPosIdx].left + _rcPa3Start[_pa3StartPosIdx].right) / 2,
-			(_rcPa3Start[_pa3StartPosIdx].bottom + _rcPa3Start[_pa3StartPosIdx].top) / 2, speed);
+			(_rcPa3Start[_pa3StartPosIdx].bottom + _rcPa3Start[_pa3StartPosIdx].top) / 2, speed, _pa3StartPosIdx);
 
-		/*_beam->fire((_rcPa3Start[0].left + _rcPa3Start[0].right) / 2,
-			(_rcPa3Start[0].bottom + _rcPa3Start[0].top) / 2);*/
-
-		_beamCount++;
-	}
-
-	/*if (_beamCount == 9 && turnCountFire() && _pa3StartPosIdx > 0)
-	{
 		_pa3StartPosIdx--;
-
-		_beamCount = 0;
-	}*/
+	}
 }
 
 //void Dynus::spawnEnemy(void)
@@ -520,6 +550,19 @@ bool Dynus::turnCountFire2(void)
 	{
 		_turnCount2 = TIMEMANAGER->getWorldTime();
 		_bulletTurnCount2 = 1.5f;
+
+		return true;
+	}
+
+	return false;
+}
+
+bool Dynus::turnCountFire3(void)
+{
+	if (_bulletTurnCount3 + _turnCount3 <= TIMEMANAGER->getWorldTime())
+	{
+		_turnCount3 = TIMEMANAGER->getWorldTime();
+		_bulletTurnCount3 = 1.5f;
 
 		return true;
 	}

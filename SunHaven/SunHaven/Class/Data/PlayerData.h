@@ -1,5 +1,4 @@
 #pragma once
-#include "../Skill/Skill.h"
 
 struct tagSkill
 {

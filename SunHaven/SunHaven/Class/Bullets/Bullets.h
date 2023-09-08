@@ -6,6 +6,7 @@ struct tagBullet
 {
 	GImage* img;
 	GPImage* pImg;
+	GPImage* pImg2;
 	RECT rc;
 	int count;
 	float x, y;
@@ -64,13 +65,18 @@ private:
 
 	float _worldTimeCount;
 
+	int _index;
+
+	float _sourX;
+	float _sourX2;
+
 public:
 	HRESULT init(int bulletMax, float range);
 	void release(void);
 	void update(void);
 	void render(void);
 
-	void fire(float x, float y, float speed);
+	void fire(float x, float y, float speed, int index);
 	void draw(void);
 	void move(void);
 

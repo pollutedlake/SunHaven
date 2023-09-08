@@ -159,6 +159,7 @@
     <ClCompile Include="Class\Skill\FarmingSkill.cpp" />
     <ClCompile Include="Class\Skill\FishingSkill.cpp" />
     <ClCompile Include="Class\Skill\MiningSkill.cpp" />
+    <ClCompile Include="Class\Data\EnemyData.cpp" />
     <ClCompile Include="Scene\Collision.cpp" />
     <ClCompile Include="Class\Enemy\Enemy.cpp" />
     <ClCompile Include="Class\Enemy\EnemyManager.cpp" />
@@ -217,6 +218,7 @@
     <ClInclude Include="Class\Object\Object.h" />
     <ClInclude Include="Class\CraftingTable.h" />
     <ClInclude Include="Class\Data\JsonSaveLoader.h" />
+    <ClInclude Include="Class\Data\EnemyData.h" />
     <ClInclude Include="inc\FMOD\fmod.hpp" />
     <ClInclude Include="Class\Object\Grass.h" />
     <ClInclude Include="Class\Data\ItemData.h" />
@@ -290,6 +292,7 @@
     <None Include="fmodex.dll" />
     <None Include="INIData\temp.ini.ini" />
     <None Include="INIData\tempINIFile.ini" />
+    <None Include="Schema\Enemy.json" />
     <None Include="Schema\Item.json" />
     <None Include="Schema\Object.json" />
     <None Include="Schema\Quest.json" />
