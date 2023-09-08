@@ -146,6 +146,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Class\UI\Buttons.cpp" />
     <ClCompile Include="Class\Item\Item.cpp" />
     <ClCompile Include="Class\Boss\Dynus.cpp" />
     <ClCompile Include="Class\Bullets\Bullets.cpp" />
@@ -175,6 +176,7 @@
     <ClCompile Include="Player\Skill\MiningSkill.cpp" />
     <ClCompile Include="Player\Player.cpp" />
     <ClCompile Include="Class\Object\Rock.cpp" />
+    <ClCompile Include="Class\UI\ProgressBar.cpp" />
     <ClCompile Include="Scene\FarmScene.cpp" />
     <ClCompile Include="Scene\DynusScene.cpp" />
     <ClCompile Include="FrameWork\Animation\Animation.cpp" />
@@ -202,13 +204,14 @@
     <ClCompile Include="Class\Enemy\SteelSlug.cpp" />
     <ClCompile Include="Class\Enemy\TrapWeed.cpp" />
     <ClCompile Include="Class\Enemy\Shadeclaw.cpp" />
-    <ClCompile Include="Class\UI.cpp" />
+    <ClCompile Include="Class\UI\UI.cpp" />
     <ClCompile Include="Class\Skill\Skill.cpp" />
     <ClCompile Include="Player\Skill\Skill.cpp" />
     <ClCompile Include="Class\Object\Tree.cpp" />
     <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Class\UI\Buttons.h" />
     <ClInclude Include="Class\Boss\Dynus.h" />
     <ClInclude Include="Class\Bullets\Bullets.h" />
     <ClInclude Include="Class\Enemy\Enemy.h" />
@@ -240,6 +243,7 @@
     <ClInclude Include="Class\Data\QuestData.h" />
     <ClInclude Include="Class\Quest\Quest.h" />
     <ClInclude Include="Class\Object\Rock.h" />
+    <ClInclude Include="Class\UI\ProgressBar.h" />
     <ClInclude Include="Scene\FarmScene.h" />
     <ClInclude Include="Scene\DynusScene.h" />
     <ClInclude Include="FrameWork\Animation\Animation.h" />
@@ -275,7 +279,7 @@
     <ClInclude Include="Class\Object\Tree.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Class\UI.h" />
+    <ClInclude Include="Class\UI\UI.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Debug\SunHaven.pch" />
@@ -316,7 +320,9 @@
     <Object Include="Debug\ImageManager.obj" />
     <Object Include="Debug\KeyManager.obj" />
     <Object Include="Debug\MainGame.obj" />
-    <Object Include="Debug\MapToolScene.obj" />
+    <Object Include="Debug\MapToolScene.obj">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+    </Object>
     <Object Include="Debug\Resources.obj" />
     <Object Include="Debug\SceneManager.obj" />
     <Object Include="Debug\ShopScene.obj" />

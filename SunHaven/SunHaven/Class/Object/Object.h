@@ -1,5 +1,6 @@
 #pragma once
 #include "../../FrameWork/GameNode/GameNode.h"
+#include "../UI/ProgressBar.h"
 
 enum LivingObjectType
 {
@@ -7,13 +8,14 @@ enum LivingObjectType
 	GRASS2,
 	TREE1,
 	TREE2,
-	STONE1,
-	STONE2
+	ROCK1,
+	ROCK2
 };
 
 class Object : public GameNode
 {
 protected:
+	ProgressBar* _hpBar;
 	GImage* _image;
 	POINT _tilePos;
 	LivingObjectType _type;
@@ -23,7 +25,8 @@ protected:
 	int _offsetX;
 	int _offsetY;
 	float _cx, _cy;
-	int HP;
+	int _maxHp;
+	int _curHp;
 
 public:
 	HRESULT init(void);
@@ -32,9 +35,10 @@ public:
 	void update(void);
 	void render(void);
 	void render(HDC hdc);
+	void renderToPoint(POINT point);
+	void renderHpBar();
 
 	void updateCameraPos(float cx, float cy);
-	void renderToPoint(POINT point);
 	void setTilePos(POINT tilePos) {_tilePos = tilePos;}
 	void setHalfTrans(bool halfTrans) { _halfTrans = halfTrans; }
 

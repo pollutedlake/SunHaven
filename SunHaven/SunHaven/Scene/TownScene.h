@@ -6,7 +6,6 @@
 class TownScene : public GameNode
 {
 private:
-	PlayerData* _playerData;
 	EnemyData* _enemyData;
 
 public:

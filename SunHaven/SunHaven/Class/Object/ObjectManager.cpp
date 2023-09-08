@@ -59,6 +59,7 @@ void ObjectManager::update(void)
 	for (_viObject = _vObject.begin(); _viObject != _vObject.end(); ++_viObject)
 	{
 		(*_viObject)->updateCameraPos(_camera->worldToCameraX((*_viObject)->getTilePos().x * 36 + 18), _camera->worldToCameraY((*_viObject)->getTilePos().y * 36 + 18));
+		(*_viObject)->update();
 	}
 }
 
@@ -66,6 +67,10 @@ void ObjectManager::render(void)
 {
 	for (_viObject = _vObject.begin(); _viObject != _vObject.end(); ++_viObject)
 	{
-		(*_viObject)->render();
+		RECT rect;
+		if(IntersectRect(&rect, &RectMake(0, 0, WINSIZE_X, WINSIZE_Y), &(*_viObject)->getRC()))
+		{
+			(*_viObject)->renderHpBar();
+		}
 	}
 }

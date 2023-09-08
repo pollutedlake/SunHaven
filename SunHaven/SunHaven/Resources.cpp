@@ -35,7 +35,7 @@ HRESULT Resources::init(void)
 	// Image
 	char key[64];
 	char fileName[64];
-	for(int j = 1; j <= 5; j++)
+	for(int j = 1; j <= 10; j++)
 	{
 		for (int i = 1; i <= 100; i++)
 		{
@@ -208,6 +208,12 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addImage("SkillTreeIcon", "Resources/Images/UI/SkillTreeIcon.bmp", 23, 26, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("BarnAnimalsIcon", "Resources/Images/UI/BarnAnimalsIcon.bmp", 24, 18, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("FishingNetIcon", "Resources/Images/UI/FishingNetIcon.bmp", 16, 17, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addGPFrameImage("ProgressBarBottom", "Resources/Images/UI/ProgressBarBottom.png",
+		0, 0,
+		1, 1,
+		false, NULL, RotateNoneFlipNone);
+	IMAGEMANAGER->addImage("ProgressBarTop", "Resources/Images/UI/ProgressBarTop.bmp", 26, 7, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("ProgressBarFill", "Resources/Images/UI/ProgressBarFill.bmp", 24, 5);
 	//Sound
 	return S_OK;
 }

@@ -1,14 +1,13 @@
 // ¹Î¿ë½Ä
 #include "Stdafx.h"
 #include "FarmScene.h"
-#include "../Class/UI.h"
+#include "../Class/UI/UI.h"
 
 HRESULT FarmScene::init(void)
 {
 	_bg = IMAGEMANAGER->addImage("³óÀå", "FarmMap.bmp", 3600, 3600);
 	IMAGEMANAGER->addImage("Ãæµ¹", "FarmMapCollision.bmp", 3600, 3600);
 
-	
 	_player = new Player;
 	_player->init(2400, 1400);
 
@@ -48,15 +47,6 @@ void FarmScene::update(void)
 	_player->worldToCamera(_camera->worldToCamera
 	(_player->getPlayerPosition()));
 	_om->update();
-
-	Collision();
-}
-
-void FarmScene::render(void)
-{
-	_bg->render(getMemDC(), 0, 0, _camera->getPosition().x - WINSIZE_X / 2,
-		_camera->getPosition().y - WINSIZE_Y / 2, WINSIZE_X, WINSIZE_Y);
-
 	_vRenderList.push(make_pair(_player, _player->getPlayerRC().bottom));
 	for (int i = 0; i < _om->getObjectList().size(); i++)
 	{
@@ -77,12 +67,21 @@ void FarmScene::render(void)
 			_vRenderList.push(make_pair(_om->getObjectList()[i], _om->getObjectList()[i]->getRC().bottom));
 		}
 	}
+	Collision();
+}
+
+void FarmScene::render(void)
+{
+	_bg->render(getMemDC(), 0, 0, _camera->getPosition().x - WINSIZE_X / 2,
+		_camera->getPosition().y - WINSIZE_Y / 2, WINSIZE_X, WINSIZE_Y);
 	// Á¤·ÄµÈ ¼ø¼­·Î ·»´õ
 	while (!_vRenderList.empty())
 	{
 		_vRenderList.top().first->render();
 		_vRenderList.pop();
 	}
+
+	_om->render();
 
 	if (KEYMANAGER->isToggleKey('W'))
 	{
