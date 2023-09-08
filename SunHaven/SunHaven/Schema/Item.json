@@ -1,0 +1,741 @@
+/*
+
+"a" [
+
+
+
+          {
+
+          }
+        ],
+
+*/
+
+//{
+//  "Item": {
+//    "Weapon": [
+//      {
+//        //"intType": {
+//        //  "_name": "무거운 크로스보우",
+//        //  "_category": "무기",
+//        //  "_grade": "철"
+//        //},
+//        "_name": "무거운 크로스보우",
+//        "_category": "무기",
+//        "_grade": "철",
+//        "_minDamage": 10,
+//        "_maxDamage": 12,
+//        "_attackSpeed": 10, // 공격 속도
+//        "_require": 10, // 요구 레벨
+//        "_gold": 5000,
+//        "_sellGold": 1000
+//      },
+
+//      {
+//        "_name": "철 소드",
+//        "_category": "무기",
+//        "_grade": "철",
+//        "_damage": [ 12, 15 ],  // 데미지 범위
+//        "_attackSpeed": 12,                  // 공격 속도
+//        "_require": 10,                    // 요구 레벨
+//        "_gold": 4000,
+//        "_sellGold": 300
+//      }
+//    ],
+
+//    "Armor": [
+//      {
+//        "_name": "철 헬멧",
+//        "_category": "방어구",
+//        "_grade": "철",
+//        "_defense": 2, // 방어력
+//        "_maxHp": 8, // 최대 HP
+//        "_require": 10, // 요구 레벨
+//        "_gold": 5000,
+//        "_sellGold": 1000
+//      },
+
+//      {
+//        "_name": "철 갑옷(상)",
+//        "_category": "방어구",
+//        "_grade": "철",
+//        "_defense": 4, // 방어력
+//        "_maxHp": 8, // 최대 HP
+//        "_require": 10, // 요구 레벨
+//        "_gold": 0, // 구매 불가
+//        "_sellGold": 575
+//      },
+
+//      {
+//        "_name": "철 갑옷(하)",
+//        "_category": "방어구",
+//        "_grade": "철",
+//        "_defense": 3, // 방어력
+//        "_maxHp": 5, // 최대 HP
+//        "_require": 10, // 요구 레벨
+//        "_gold": 0, // 구매 불가
+//        "_sellGold": 460
+//      },
+
+//      {
+//        "_name": "철 장갑",
+//        "_category": "방어구",
+//        "_grade": "철",
+//        "_defense": 8, // 방어력
+//        "_maxHp": 12, // 최대 HP
+//        "_require": 10, // 요구 레벨
+//        "_gold": 0, // 구매 불가
+//        "_sellGold": 460
+//      }
+//    ],
+
+//    "Material": [
+//      {
+//        "_name": "통나무",
+//        "_category": "재료",
+//        "_stackSize": 50,
+//        "_sellGold": 100
+//      },
+
+//      {
+//        "_name": "잡초",
+//        "_category": "재료",
+//        "_stackSize": 50,
+//        "_sellGold": 100
+//      },
+
+//      {
+//        "_name": "돌멩이",
+//        "_category": "재료",
+//        "_stackSize": 50,
+//        "_sellGold": 100
+//      },
+
+//      {
+//        "_name": "나무 판자",
+//        "_category": "재료",
+//        "_stackSize": 50,
+//        "_sellGold": 100
+//      },
+
+//      {
+//        "_name": "밀",
+//        "_category": "재료",
+//        "_stackSize": 50,
+//        "_sellGold": 100
+//      },
+
+//      {
+//        "_name": "밀 씨앗",
+//        "_category": "재료",
+//        "_stackSize": 50,
+//        "_sellGold": 100
+//      },
+
+//      {
+//        "_name": "물고기",
+//        "_category": "재료",
+//        "_stackSize": 50,
+//        "_sellGold": 100
+//      },
+
+//      {
+//        "_name": "구리",
+//        "_category": "재료",
+//        "_stackSize": 50,
+//        "_sellGold": 100
+//      },
+
+//      {
+//        "_name": "철",
+//        "_category": "재료",
+//        "_stackSize": 50,
+//        "_sellGold": 100
+//      },
+
+//      {
+//        "_name": "아다만트",
+//        "_category": "재료",
+//        "_stackSize": 50,
+//        "_sellGold": 100
+//      }
+//    ],
+
+//    "Consumable": [
+//      {
+//        "_name": "쿠키",
+//        "_category": "소모품",
+//        "_hp": 15,
+//        "_mp": 10,
+//        "_stackSize": 50,
+//        "_gold": 115,
+//        "_sellGold": 87
+//      }
+//    ]
+//  }
+//}
+
+{
+  "Item": {
+    "Tool": [
+      {
+        "_strType": [
+          "0-0",
+          "Resources/Images/Item/icon_rusty_pickaxe.bmp",
+          "녹슨 곡괭이",
+          "채광",
+          "커먼",
+          "녹이 조금 쓸었어도 바위에는 효과적입니다.",
+          null
+        ],
+
+        "_intType": [
+          null, // 재료 갯수
+          2, // minDmg
+          3, // maxDmg 
+          8, // 공격속도
+          0, // 채광 레벨
+          null, // 작업 시간
+          50 // 판매 가격
+        ]
+      },
+
+      {
+        "_strType": [
+          "0-1",
+          "Resources/Images/Item/icon_adamant_pickaxe.bmp",
+          "아다만트 곡괭이",
+          "채광",
+          "레어",
+          "돌과 광석을 부수는데 이보다 좋은 도구는 없습니다.",
+          "아다만트 바"
+        ],
+
+        "_intType": [
+          10, // 재료 갯수
+          7, // minDmg
+          11, // maxDmg 
+          11, // 공격속도
+          20, // 채광 레벨
+          8, // 작업 시간
+          500 // 판매 가격
+        ]
+      },
+
+      {
+        "_strType": [
+          "0-2",
+          "Resources/Images/Item/icon_rusty_hoe.bmp",
+          "녹슨 괭이",
+          "농사",
+          "커먼",
+          "누군가 이 도구를 망가뜨렸지만 당분간은 쓸 수 있습니다.",
+          null
+        ],
+
+        "_intType": [
+          null, // 재료 갯수
+          null, // minDmg
+          null, // maxDmg 
+          8, // 공격속도
+          0, // 농사 레벨
+          null, // 작업 시간
+          50 // 판매 가격
+        ]
+      },
+
+      {
+        "_strType": [
+          "0-3",
+          "Resources/Images/Item/icon_adamant_hoe.bmp",
+          "아다만트 괭이",
+          "농사",
+          "레어",
+          "누군가 이 도구를 망가뜨렸지만 당분간은 쓸 수 있습니다.",
+          "아다만트 바"
+        ],
+
+        "_intType": [
+          6, // 재료 갯수
+          null, // minDmg
+          null, // maxDmg 
+          9, // 공격속도
+          5, // 농사 레벨
+          2, // 작업 시간
+          100 // 판매 가격
+        ]
+      },
+
+      {
+        "_strType": [
+          "0-4",
+          "Resources/Images/Item/icon_rusty_axe.bmp",
+          "녹슨 도끼",
+          "탐험",
+          "커먼",
+          "예전만큼 좋지는 않지만 여전히 쓸만합니다.",
+          null
+        ],
+
+        "_intType": [
+          null, // 재료 갯수
+          8, // minDmg
+          13, // maxDmg
+          9, // 공격속도
+          0, // 탐험 레벨
+          null, // 작업 시간
+          50 // 판매 가격
+        ]
+      },
+
+      {
+        "_strType": [
+          "0-5",
+          "Resources/Images/Item/icon_adamant_axe.bmp",
+          "아다만트 도끼",
+          "탐험",
+          "레어",
+          "나무와 그루터기를 베어낼 수 있습니다.",
+          "아다만트 바"
+        ],
+
+        "_intType": [
+          8, // 재료 갯수
+          13, // minDmg
+          22, // maxDmg 
+          12, // 공격속도
+          20, // 채광 레벨
+          8, // 작업 시간
+          500 // 판매 가격
+        ]
+      },
+
+      {
+        "_strType": [
+          "0-6",
+          "Resources/Images/Item/icon_rusty_wateringCan.bmp",
+          "녹슨 물뿌리개",
+          "농사",
+          "커먼",
+          "녹이 슬어 구멍이 좀 생겼지만 여전히 물을 담을 수는 있습니다.",
+          null
+        ],
+
+        "_intType": [
+          null, // 재료 갯수
+          null, // minDmg
+          null, // maxDmg 
+          7, // 공격속도
+          0, // 농사 레벨
+          null, // 작업 시간
+          50 // 판매 가격
+        ]
+      },
+
+      {
+        "_strType": [
+          "0-7",
+          "Resources/Images/Item/icon_adamant_wateringCan.bmp",
+          "아다만트 물뿌리개",
+          "농사",
+          "레어",
+          "아다만트로 만든 물뿌리개다.",
+          "아다만트 바"
+        ],
+
+        "_intType": [
+          8, // 재료 갯수
+          null, // minDmg
+          null, // maxDmg 
+          10, // 공격속도
+          20, // 농사 레벨
+          8, // 작업 시간
+          500 // 판매 가격
+        ]
+      },
+
+      {
+        "_strType": [
+          "0-8",
+          "Resources/Images/Item/icon_basic_fishingRod.bmp",
+          "기본 낚싯대",
+          "낚시",
+          "커먼",
+          "기초적이지만 완벽하게 작동합니다.",
+          null
+        ],
+
+        "_intType": [
+          null, // 재료 갯수
+          null, // minDmg
+          null, // maxDmg 
+          null, // 공격속도
+          0, // 낚시 레벨
+          null, // 작업 시간
+          200 // 판매 가격
+        ]
+      }
+    ],
+
+    "Weapon": [
+      {
+        "_strType": [
+          "1-0",
+          "Resources/Images/Item/icon_basic_crossbow.bmp",
+          "쇠뇌", // name
+          "무기", // type
+          "커먼",
+          "육중한 나무 몸체와 두꺼운 금속 활대로로 이루어져 거의 모든 것에 구멍을 뚫을 수 있습니다.",
+          null
+        ],
+
+        "_intType": [
+          null,
+          5, // minDamage
+          7, // maxDamage
+          22, // attackSpeed
+          0, // requireLv
+          1000, // gold
+          100 // sellGold
+        ]
+      },
+
+      {
+        "_strType": [
+          "1-1",
+          "Resources/Images/Item/icon_adamant_crossbow.bmp",
+          "아다만트 쇠뇌", // name
+          "무기", // type
+          "레어",
+          "육중한 나무 몸체와 두꺼운 금속 활대로로 이루어져 거의 모든 것에 구멍을 뚫을 수 있습니다.",
+          "아다만트 바"
+        ],
+
+        "_intType": [
+          10,
+          22, // minDamage
+          24, // maxDamage
+          13, // attackSpeed
+          20, // requireLv
+          20000, // gold
+          1000 // sellGold
+        ]
+      },
+
+      {
+        "_strType": [
+          "1-2",
+          "Resources/Images/Item/icon_basic_sword.bmp",
+          "검", // name
+          "무기", // type
+          "커먼",
+          "모든 전사의 친구인 잘 연마된 칼입니다.",
+          null
+        ],
+
+        "_intType": [
+          null,
+          5, // minDamage
+          8, // maxDamage
+          11, // attackSpeed
+          0, // requireLv
+          800, // gold
+          100 // sellGold
+        ]
+      },
+      {
+        "_strType": [
+          "1-3",
+          "Resources/Images/Item/icon_adamant_sword.bmp",
+          "아다만트 검", // name
+          "무기", // type
+          "레어",
+          "모든 전사의 친구인 잘 연마된 칼입니다.",
+          "아다만트 바"
+        ],
+
+        "_intType": [
+          10,
+          18, // minDamage
+          24, // maxDamage
+          13, // attackSpeed
+          20, // requireLv
+          20000, // gold
+          500 // sellGold
+        ]
+      }
+    ],
+
+    "Armor": [
+      {
+        "_strType": [
+          "2-0",
+          "Resources/Images/Item/icon_adamant_helmet.bmp",
+          "아다만트 헬멧", // name
+          "방어구", // type
+          "레어", // grade
+          "머리를 보호하기에 최적의 헬멧입니다.",
+          "아다만트 바"
+        ],
+
+        "_intType": [
+          5,
+          4, // defense
+          15, // maxHp
+          20, // requireLv
+          null, // gold
+          1035 // sellGold
+        ]
+      },
+
+      {
+        "_strType": [
+          "2-1",
+          "Resources/Images/Item/icon_adamant_chestPlate.bmp",
+          "아다만트 갑옷 (상의)", // name
+          "방어구", // type
+          "레어", // grade
+          "아다만트로 만든 상의입니다.",
+          "아다만트 바"
+        ],
+
+        "_intType": [
+          6,
+          6, // defense
+          15, // maxHp
+          20, // requireLv
+          null, // gold
+          1242 // sellGold
+        ]
+      },
+
+      {
+        "_strType": [
+          "2-2",
+          "Resources/Images/Item/icon_adamant_legs.bmp",
+          "아다만트 갑옷 (하의)", // name
+          "방어구", // type
+          "레어",
+          "아다만트로 만든 하의입니다.",
+          "아다만트 바"
+        ],
+
+        "_intType": [
+          5,
+          4, // defense
+          8, // maxHp
+          20, // requireLv
+          null, // gold
+          1035 // sellGold
+        ]
+      },
+
+      {
+        "_strType": [
+          "2-3",
+          "Resources/Images/Item/icon_adamant_gloves.bmp",
+          "아다만트 장갑", // name
+          "방어구", // type
+          "레어",
+          "아다만트로 만든 장갑입니다.",
+          "아다만트 바"
+        ],
+
+        "_intType": [
+          4,
+          3, // defense
+          6, // maxHp
+          20, // requireLv
+          null, // gold
+          828 // sellGold
+        ]
+      }
+    ],
+
+    "Accessory": [
+      {
+        "_strType": [
+          "3-0",
+          "Resources/Images/Item/icon_adamant_accessory.bmp",
+          "아다만트 반지",
+          "악세서리",
+          "레어",
+          "아다만트로 만든 반지입니다.",
+          "아다만트 바"
+        ],
+
+        "_intType": [
+          5,
+          4, // attackDamage
+          4, // spellDamage
+          20, // combatLv
+          7500, // gold
+          500 // sellGold
+        ]
+      },
+
+      {
+        "_strType": [
+          "3-1",
+          "Resources/Images/Item/icon_Romance_Keepsake.bmp",
+          "연애 증표",
+          "악세서리",
+          null,
+          "낭만적인 연애를 사랑하는 사람들이 지니는 징표.",
+          null
+        ],
+
+        "_intType": [
+          null,
+          null, // attackDamage
+          null, // spellDamage
+          null, // combatLv
+          null, // gold
+          50 // sellGold
+        ]
+      }
+    ],
+
+  "Ingredient": [
+    {
+      "_strType": [
+        "4-0",
+        "Resources/Images/Item/icon_log.bmp",
+        "통나무", // name
+        "재료", // type
+        "판자가 되기만을 기다리고 있는 잘린 통나무입니다."
+      ],
+
+      "_intType": [
+        999, // stackSize
+        159 // sellGold
+      ]
+    },
+
+    {
+      "_strType": [
+        "4-1",
+        "Resources/Images/Item/icon_stone.bmp",
+        "돌", // name
+        "재료", // type
+        "평범한 바위 덩어리지만 쓸모있는걸로 만들 수 있을거에요."
+      ],
+
+      "_intType": [
+        999, // stackSize
+        82 // sellGold
+      ]
+    },
+
+    {
+      "_strType": [
+        "4-2",
+        "Resources/Images/Item/icon_woodplank.bmp",
+        "나무 판자", // name
+        "재료", // type
+        "이것으로 많은 것을 만들 수 있어요!"
+      ],
+
+      "_intType": [
+        999, // stackSize
+        80 // sellGold
+      ]
+    },
+
+    {
+      "_strType": [
+        "4-3",
+        "Resources/Images/Item/icon_wheat.bmp",
+        "밀", // name  
+        "재료", // type
+        "밀가루를 만들 때 쓰입니다."
+      ],
+
+      "_intType": [
+        999, // stackSize
+        100 // sellGold
+      ]
+    },
+
+    {
+      "_strType": [
+        "4-4",
+        "Resources/Images/Item/icon_wheatSeed.bmp",
+        "밀 씨앗", // name
+        "재료", // type
+        "다재다능한 품종으로 평가받으며 전 국토의 구불구불한 들판에서 자라는 것으로 유명합니다."
+      ],
+
+      "_intType": [
+        999, // stackSize
+        100 // sellGold
+      ]
+    },
+
+    {
+      "_strType": [
+        "4-5",
+        "Resources/Images/Item/icon_basic_fish.bmp",
+        "일반 물고기", // name
+        "재료", // type
+        "영양가가 많습니다."
+      ],
+
+      "_intType": [
+        999, // stackSize
+        100 // sellGold
+      ]
+    },
+
+    {
+      "_strType": [
+        "4-6",
+        "Resources/Images/Item/icon_adamant_ore.bmp",
+        "아다만트 광석", // name
+        "재료", // type
+        "채광으로 얻을 수 있는 아다만트 광석입니다."
+      ],
+
+      "_intType": [
+        999, // stackSize
+        100 // sellGold
+      ]
+    },
+
+    {
+      "_strType": [
+        "4-7",
+        "Resources/Images/Item/icon_adamant_bar.bmp",
+        "아다만트 바", // name
+        "재료", // type
+        "돌이랑 아다만트 광석을 이용해 제작할 수 있습니다."
+      ],
+
+      "_intType": [
+        999, // stackSize
+        100 // sellGold
+      ]
+    }
+  ],
+
+  "Consumable": [
+    {
+      "_strType": [
+        "5-0",
+        "Resources/Images/Item/icon_cookies.bmp",
+        "쿠키", // name
+        "소모품", // type
+        "바삭하고 맛있는 쿠키입니다."
+      ],
+
+      "_intType": [
+        15, // hp
+        10, // mp
+        999, // stackSize
+        115, // gold
+        87 // sellGold
+      ]
+    }
+  ]
+}
+}

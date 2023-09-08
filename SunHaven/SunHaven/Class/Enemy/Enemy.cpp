@@ -11,7 +11,9 @@ Enemy::Enemy(void) : _rc(RectMake(0, 0, 0, 0)),
 					_timeCount(0.0f),
 					_fireCount(0.0f),
 					_bulletFireCount(0.0f),
-					_isLeft(false)
+					_isLeft(false),
+					_playerX(0.0f),
+					_playerY(0.0f)
 {
 }
 
@@ -24,19 +26,19 @@ HRESULT Enemy::init(void)
 
 HRESULT Enemy::init(POINT position)
 {
-	_x = position.x;
-	_y = position.y;
+	/*_x = position.x;
+	_y = position.y;*/
 
-	_worldTimeCount = GetTickCount();
+	/*_worldTimeCount = GetTickCount();
 	_timeCount = 100;
 
 	_bulletFireCount = TIMEMANAGER->getWorldTime();
-	_fireCount = 2.5f;
+	_fireCount = 2.5f;*/
 
-	_imageName = "Shadeclow_Idle";
+	/*_imageName = "Shadeclow_Idle";
 	_image = IMAGEMANAGER->findImage(_imageName);
 	_rc = RectMakeCenter(_x, _y,
-		_image->getFrameWidth(), _image->getFrameHeight());
+		_image->getFrameWidth(), _image->getFrameHeight());*/
 
 	return S_OK;
 }
@@ -48,19 +50,21 @@ void Enemy::release(void)
 
 void Enemy::update(void)
 {
-	move();
+	//cout << "1111111" << endl;
+
+	//move();
 	//collisionCheck();
 }
 
 void Enemy::render(void)
 {
-	draw();
-	animation();
+	//draw();
+	//animation();
 }
 
 void Enemy::move(void)
 {
-
+	//cout << "1111111" << endl;
 }
 
 void Enemy::attack(void)
@@ -79,9 +83,6 @@ void Enemy::draw(void)
 		SelectObject(getMemDC(), oldBrush);
 		DeleteObject(myBrush);
 	}
-
-	_image->frameRender(getMemDC(), _x, _y,
-		_currentFrameX, _currentFrameY);
 }
 
 void Enemy::animation(void)
@@ -98,15 +99,15 @@ void Enemy::animation(void)
 	}*/
 }
 
-bool Enemy::bulletCountFire(void)
-{
-	if (_fireCount + _bulletFireCount <= TIMEMANAGER->getWorldTime())
-	{
-		_bulletFireCount = TIMEMANAGER->getWorldTime();
-		_fireCount = 2.5f;
-
-		return true;
-	}
-
-	return false;
-}
+//bool Enemy::bulletCountFire(void)
+//{
+//	if (_fireCount + _bulletFireCount <= TIMEMANAGER->getWorldTime())
+//	{
+//		_bulletFireCount = TIMEMANAGER->getWorldTime();
+//		_fireCount = 2.5f;
+//
+//		return true;
+//	}
+//
+//	return false;
+//}

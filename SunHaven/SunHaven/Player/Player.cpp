@@ -83,16 +83,16 @@ HRESULT Player::init(float x, float y)
 	_isJump = false;
 
 
-	_playerState.HP = INIDATA->loadDataInteger("tempINIFile", "commonState", "HP");
-	_playerState.MP = INIDATA->loadDataInteger("tempINIFile", "commonState", "MP");
-	_playerState.gold = INIDATA->loadDataInteger("tempINIFile", "commonState", "Gold");
+	_playerState.HP = INIDATAMANAGER->loadDataInteger("tempINIFile", "commonState", "HP");
+	_playerState.MP = INIDATAMANAGER->loadDataInteger("tempINIFile", "commonState", "MP");
+	_playerState.gold = INIDATAMANAGER->loadDataInteger("tempINIFile", "commonState", "Gold");
 	
 	_playerState.HPRecoveryPerSec = (float)_playerState.HP / 1500;
 	_playerState.MPRecoveryPerSec = (float)_playerState.MP / 50;
 
-	_playerState.attackDamage = INIDATA->loadDataInteger("tempINIFile", "combatState", "attackDamage");
-	_playerState.spellDamage = INIDATA->loadDataInteger("tempINIFile", "combatState", "spellDamage");
-	_playerState.defence = INIDATA->loadDataInteger("tempINIFile", "combatState", "defence");
+	_playerState.attackDamage = INIDATAMANAGER->loadDataInteger("tempINIFile", "combatState", "attackDamage");
+	_playerState.spellDamage = INIDATAMANAGER->loadDataInteger("tempINIFile", "combatState", "spellDamage");
+	_playerState.defence = INIDATAMANAGER->loadDataInteger("tempINIFile", "combatState", "defence");
 	
 
 	
