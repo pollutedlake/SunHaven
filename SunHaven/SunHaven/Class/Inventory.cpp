@@ -153,9 +153,10 @@ void Inventory::render(void)
 
 	}
 
+
 	if (PtInRect(&_xButton, _ptMouse) && KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
 	{
-
+		
 	}
 	
 	popupItem();
@@ -164,7 +165,7 @@ void Inventory::render(void)
 
 void Inventory::getItem()
 {
-	if (KEYMANAGER->isOnceKeyDown('E'))
+	if (KEYMANAGER->isOnceKeyDown('O'))
 	{
 		_getItem = RND->getFromIntTo(0, 8);
 
@@ -229,7 +230,7 @@ void Inventory::itemMove()
 		}
 
 		//완전삭제로 수정예정
-		if (PtInRect(&_trashButton, pt))
+		if (PtInRect(&_trashButton, pt)&& _selectedItem != -1)
 		{
 			_vInvenList[_selectedItem]._draw = false;
 			_selectedItem = -1;
@@ -237,7 +238,7 @@ void Inventory::itemMove()
 
 
 		//바닥에버리기로 수정예정
-		if (PtInRect(&_dropButton, pt))
+		if (PtInRect(&_dropButton, pt) && _selectedItem != -1)
 		{
 			_vInvenList[_selectedItem]._draw = false;
 			_selectedItem = -1;

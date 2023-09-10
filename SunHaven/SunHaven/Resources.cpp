@@ -181,6 +181,7 @@ HRESULT Resources::init(void)
 
 
 	// shopImage
+	IMAGEMANAGER->addImage("Shop_Bg", "Resources/Images/Shop/Shop_Bg.bmp", WINSIZE_X, WINSIZE_Y);
 
 	// Sound
 
