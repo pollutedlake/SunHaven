@@ -7,7 +7,8 @@ HRESULT Player::init(float x, float y)
 	_x = x;
 	_y = y;
 
-
+	_mining = new Skill;
+	_mining->init();
 
 	_inven = new Inventory;
 	_inven->init();
@@ -22,7 +23,7 @@ HRESULT Player::init(float x, float y)
 		_playerImage->getHeight(),
 		48, 52);
 
-	_playerMoveAnim->setFPS(4);
+	_playerMoveAnim->setFPS(8);
 
 	_playerRC = RectMakeCenter(_x, _y,
 		_playerMoveAnim->getFrameWidth(),
@@ -30,11 +31,13 @@ HRESULT Player::init(float x, float y)
 
 	_isCollisionLeft = _isCollisionRight =
 		_isCollisionTop =_isCollisionBottom = false;
-	_moveSpeed = 2.0f;
+	_moveSpeed = 3.0f;
 
 
-	
-
+	_fireBeam = IMAGEMANAGER->addImage("파이어빔",
+		"Resources/Images/Skill/combat/FirebeamA.bmp",
+		100, 50, true, RGB(255, 0, 255));
+	_firebeamRC = RectMakeCenter(_x, _y, 50, 50);
 
 
 	_fireball = IMAGEMANAGER->addImage("파이어볼",
@@ -66,7 +69,7 @@ HRESULT Player::init(float x, float y)
 		_swordSlash->getHeight(),
 		46, 66);
 
-	_swordSlashAnim->setFPS(8);
+	_swordSlashAnim->setFPS(12);
 	_swordSlashAnim->setPlayFrame(0, 4, false, false);
 
 	_swordSlashRC = RectMakeCenter(_x, _y,
@@ -145,6 +148,7 @@ void Player::update(void)
 		if (KEYMANAGER->isOnceKeyDown('Z'))
 		{
 			_x -= 220;
+
 			_swordSlashAnim->AniStart();
 		}
 
@@ -290,12 +294,24 @@ void Player::update(void)
 
 
 
+	if (KEYMANAGER->isStayKeyDown('U'))
+	{
+		_firebeamRC.right += 10;
+		offsetX -= 10;
+	}
+	else
+	{
+		_firebeamRC = RectMakeCenter(_x, _y, 50, 50);
+	}
+
+
+	_mining->update();
 	
 
-	if (_isCollisionLeft) _x += 2;
-	if (_isCollisionRight) _x -= 2;
-	if (_isCollisionTop) _y += 2;
-	if (_isCollisionBottom) _y -= 2;
+	if (_isCollisionLeft) _x += _moveSpeed;
+	if (_isCollisionRight) _x -= _moveSpeed;
+	if (_isCollisionTop) _y += _moveSpeed;
+	if (_isCollisionBottom) _y -= _moveSpeed;
 
 	_playerMoveAnim->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);
 	_fireballAnim->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);
@@ -306,6 +322,14 @@ void Player::render(void)
 {
 	_fireball->aniRender(getMemDC(), _fireballRC.left, _fireballRC.top,
 		_fireballAnim);
+
+
+	if (KEYMANAGER->isStayKeyDown('U'))
+	{
+		_fireBeam->loopRender(getMemDC(), &_firebeamRC,
+			offsetX, 0);
+	}
+
 	_playerImage->aniRender(getMemDC(), _playerRC.left, _playerRC.top, _playerMoveAnim);
 
 	if(_swordSlashAnim->isPlay())
@@ -316,9 +340,10 @@ void Player::render(void)
 
 
 
-
-
 	_inven->render();
+	
+	if(KEYMANAGER->isToggleKey('K'))
+		_mining->render();
 
 	/*DrawRectMake(getMemDC(), _miniRC[0]);
 	DrawRectMake(getMemDC(), _miniRC[1]);

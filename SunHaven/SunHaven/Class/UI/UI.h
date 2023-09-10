@@ -25,6 +25,9 @@ public:
 	void update(void);
 	void render(void);
 
+	void updateUIWindow();
+	void showUIWindow();
+
 	UI() {}
 	~UI() {}
 };
