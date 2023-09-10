@@ -27,7 +27,7 @@ void ProgressBar::update(void)
 
 void ProgressBar::render(void)
 {
-	if(_progressBarTop != nullptr)
+	if(_progressBarBottom != nullptr)
 	{
 		_progressBarBottom->render(getMemDC(), _rc.left, _rc.top, _maxWidth, _height, 0, 0, _progressBarBottom->getWidth(), _progressBarBottom->getHeight());
 	}
