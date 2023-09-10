@@ -1,17 +1,19 @@
 #pragma once
 #include "../FrameWork/GameNode/GameNode.h"
+#include "../Class/Data/ItemData.h"
 
 struct inventoryList
 {
-	GImage* _imageInvenList;
+	
 	RECT _rc;
 	bool _draw;
 	int _category;
+
 };
 
 struct equipmentSlot
 {
-	GImage* _imageEquipmentSlot;
+	
 	RECT _rc;
 	bool _draw;
 	int _category;
@@ -42,6 +44,13 @@ private:
 
 	vector<equipmentSlot> _vEquipmentSlot;
 	vector<equipmentSlot>::iterator _viEquipmentSlot;
+
+	vector<tagTool*> _vTool;
+	vector<tagTool*>::iterator _viTool;
+
+	ItemData* _ID;
+	
+
 
 public:
 	HRESULT init(void);
