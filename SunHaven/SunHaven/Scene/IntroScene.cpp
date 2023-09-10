@@ -22,8 +22,6 @@ HRESULT IntroScene::init(void)
 	
 	_lynn = new Lynn;
 	Action* action;
-	//if(_cutIdx == 0)
-	//{
 		_lynn->init(440, 90);
 		_lynn->pushMovePoint(make_pair(440, 200));
 		_lynn->pushMovePoint(make_pair(400, 200));
@@ -55,10 +53,7 @@ HRESULT IntroScene::init(void)
 		_lynn->pushAction(action);
 		action = new Action(IDLE, RIGHT, true);
 		_lynn->pushAction(action);
-	//}
-	//else if (_cutIdx == 1)
-	//{
-	//	_lynn->init(220, 240);
+
 		_lynn->pushMovePoint(make_pair(380, 240));
 		_lynn->pushMovePoint(make_pair(530, 240));
 		_lynn->pushMovePoint(make_pair(530, 290));
@@ -77,20 +72,24 @@ HRESULT IntroScene::init(void)
 		_lynn->pushAction(action);
 		action = new Action(IDLE, UP, true);
 		_lynn->pushAction(action);
-		action = new Action(SADIDLE, RIGHT, false, 1.0f);
+		action = new Action(SADIDLE, RIGHT, false, 0.5f);
 		_lynn->pushAction(action);
-		action = new Action(IDLE, UP, false, 1.0f);
+		action = new Action(IDLE, UP, false, 0.5f);
 		_lynn->pushAction(action);
 		action = new Action(SADIDLE, DOWN, true);
+		_lynn->pushAction(action);
+		action = new Action(SADIDLE, DOWN, false, 2.0f);
 		_lynn->pushAction(action);
 		action = new Action(SADWALK, DOWN, false);
 		_lynn->pushAction(action);
 		action = new Action(SADWALK, RIGHT, false);
 		_lynn->pushAction(action);
-	//}
+		action = new Action(SADIDLE, RIGHT, true);
+		_lynn->pushAction(action);
+
 	_nextActionTiming.push(2);
 	_nextActionTiming.push(4);
-	_nextActionTiming.push(15);
+	_nextActionTiming.push(16);
 	_nextActionTiming.push(20);
 	_nextActionTiming.push(21);
 	_nextActionTiming.push(22);
@@ -197,6 +196,22 @@ void IntroScene::update(void)
 				_dialogState = OPEN;
 			}
 		}
+		else if (_lynn->getActionIdx() == 8)
+		{
+			_dialogState = HIDE;
+		}
+		else if (_lynn->getActionIdx() == 9)
+		{
+			_dialogState = SHOW;
+		}
+		if (_dialogState == HIDE && _dialogIdx == 15)
+		{
+			_time += TIMEMANAGER->getElapsedTime();
+			if (_time > 1.0f)
+			{
+				_dialogState = OPEN;
+			}
+		}
 	}
 	else if (_cutIdx == 1)
 	{
@@ -220,6 +235,43 @@ void IntroScene::update(void)
 				_count++;
 				_time = TIMEMANAGER->getWorldTime();
 			}
+			if (_lynn->getActionIdx() == 15)
+			{
+				_dialogState = HIDE;
+			}
+			else if (_lynn->getActionIdx() == 16)
+			{
+				_dialogState = SHOW;
+			}
+			else if (_lynn->getActionIdx() == 18)
+			{
+				if (_dialogState == HIDE)
+				{
+					_dialogState = OPEN;
+				}
+			}
+			else if (_lynn->getActionIdx() == 19)
+			{
+				_dialogState = HIDE;
+			}
+			else if (_lynn->getActionIdx() == 20)
+			{
+				_dialogState = SHOW;
+			}
+			else if (_lynn->getActionIdx() == 23)
+			{
+				if (_dialogState == HIDE)
+				{
+					_dialogState = OPEN;
+				}
+			}
+			else if (_lynn->getActionIdx() == 24)
+			{
+				if (_dialogState == SHOW)
+				{
+					_dialogState = HIDE;
+				}
+			}
 		}
 		_lynn->update();
 	}
@@ -235,6 +287,14 @@ void IntroScene::update(void)
 			else
 			{
 				_dialogIdx++;
+				cout << _dialogIdx << endl;
+				if (_dialogIdx == 15 || _dialogIdx == 28 || _dialogIdx == 32)
+				{
+					if (_dialogState == SHOW)
+					{
+						_dialogState = CLOSE;
+					}
+				}
 				if (unName())
 				{
 					_lynn->popAction();
@@ -248,6 +308,10 @@ void IntroScene::update(void)
 				}
 			}
 		}
+	}
+	if (KEYMANAGER->isOnceKeyDown(VK_F1))
+	{
+		SCENEMANAGER->changeScene("Farm");
 	}
 }
 
@@ -275,6 +339,10 @@ void IntroScene::render(void)
 		_trainPassengers[6]->frameRender(_introCut[1]->getMemDC(), 215, 180, _count % (_trainPassengers[6]->getMaxFrameX() + 1), 0);
 		_catSleep->frameRender(_introCut[1]->getMemDC(), 60, 195, _count % (_catSleep->getMaxFrameX() + 1), 0);
 		_lynn->render(_introCut[1]->getMemDC());
+		if(_lynn->getActionIdx() >= 24)
+		{
+			IMAGEMANAGER->frameRender("RainCloud", _introCut[1]->getMemDC(), _lynn->getX() - 20, _lynn->getY() - 60, _count % (IMAGEMANAGER->findImage("RainCloud")->getMaxFrameX() + 1), 0);
+		}
 		_introCut[1]->render(getMemDC(), WINSIZE_X / 2 - _train1->getWidth() * 0.65f, 0, _train1->getWidth() * 1.3f, _train1->getHeight() * 1.3f, 0, 0, _train1->getWidth(), _train1->getHeight());
 	}
 	if (_changeCut)

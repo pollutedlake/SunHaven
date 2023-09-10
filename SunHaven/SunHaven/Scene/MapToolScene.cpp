@@ -392,10 +392,10 @@ void MapToolScene::render(void)
 				{
 					_tileMap[k][i][j]._image->render(_tileMapBuffer->getMemDC(), j * TILEWIDTH, i * TILEHEIGHT);
 				}
-				else if (_tileMap[5][i][j]._object != nullptr)
+				/*else if (_tileMap[6][i][j]._object != nullptr)
 				{
-					_tileMap[5][i][j]._object->render(_tileMapBuffer->getMemDC());
-				}
+					_tileMap[6][i][j]._object->render(_tileMapBuffer->getMemDC());
+				}*/
 			}
 		}
 	}
@@ -541,6 +541,10 @@ void MapToolScene::render(void)
 
 	// 마우스 커서
 	IMAGEMANAGER->findImage("Cursor")->render(getMemDC(), _ptMouse.x, _ptMouse.y);
+	if (KEYMANAGER->isOnceKeyDown(VK_F1))
+	{
+		SCENEMANAGER->changeScene("Title");
+	}
 }
 
 void MapToolScene::changeLayer(int layerN)
@@ -794,7 +798,24 @@ void MapToolScene::loadLayers()
 				{
 					continue;
 				}
-				Object* object = new Object;
+				//Object* object = new Object;
+				Object* object = nullptr;
+				switch (tile / 2)
+				{
+				case 0:
+					object = new Grass;
+					break;
+				case 1:
+					object = new Tree;
+					break;
+				case 2:
+					object = new Rock;
+					break;
+				}
+				if (object == nullptr)
+				{
+					return;
+				}
 				object->init((LivingObjectType)tile, PointMake(k, j));
 				_tileMap[6][j][k]._object = object;
 			}

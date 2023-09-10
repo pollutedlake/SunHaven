@@ -63,6 +63,7 @@ public:
 	HRESULT init(char* fileName, int destX, int destY, int maxFrameX, int maxFrameY, bool isTrans, COLORREF color, Gdiplus::RotateFlipType rotateFlipType = Gdiplus::RotateNoneFlipNone);
 	void release(void);
 	void GPFrameRender(HDC hdc, int destX, int destY, float wRatio, float hRatio, int currentFrameX, int currentFrameY, Gdiplus::InterpolationMode _imode, int angle = 0);
+	void GPRender(HDC hdc, int destX, int destY, float wRatio, float hRatio, int sourX, int sourY, int sourWith, int sourHeight, Gdiplus::InterpolationMode _imode, int angle = 0);
 
 	inline int getWidth(void) { return _gdiInfo->width; }
 	inline int getHeight(void) { return _gdiInfo->height; }

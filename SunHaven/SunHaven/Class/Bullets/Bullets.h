@@ -6,7 +6,11 @@ struct tagBullet
 {
 	GImage* img;
 	GPImage* pImg;
+	GPImage* pImg2;
+	GPImage* pImg3;
 	RECT rc;
+	RECT rc2;
+	RECT rc3;
 	int count;
 	float x, y;
 	float fireX, fireY;
@@ -25,6 +29,10 @@ private:
 	float _bulletMax;
 	float _range;
 
+	float _spawnTime;
+	float _spawnWorldTime;
+
+	bool _isSpawn;
 
 public:
 	HRESULT init(const char* imageName, int bulletMax, float range);
@@ -36,6 +44,7 @@ public:
 	void draw(void);
 	void move(void);
 
+	bool spawningTime(void);
 	void removeBullet(int arrNum);
 
 	vector<tagBullet> getBullet(void) { return _vBullet; }
@@ -64,13 +73,19 @@ private:
 
 	float _worldTimeCount;
 
+	int _index;
+
+	float _sourX;
+	float _sourX2;
+	float _sourX3;
+
 public:
 	HRESULT init(int bulletMax, float range);
 	void release(void);
 	void update(void);
 	void render(void);
 
-	void fire(float x, float y, float speed);
+	void fire(float x, float y, float speed, int index);
 	void draw(void);
 	void move(void);
 

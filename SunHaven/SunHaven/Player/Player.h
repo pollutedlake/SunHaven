@@ -2,6 +2,7 @@
 #include "../FrameWork/GameNode/GameNode.h"
 #include "../FrameWork/Animation/Animation.h"
 #include "../Class/Inventory.h"
+#include "../Class/Skill/MiningSkill.h"
 
 class ObjectManager;
 
@@ -32,6 +33,8 @@ private:
 	tagPlayerState _playerState;
 	int a;
 
+	Skill* _mining;
+
 private:
 	GImage* _playerImage;
 	Animation* _playerMoveAnim;
@@ -47,6 +50,11 @@ private:
 	GImage* _swordSlash;
 	Animation* _swordSlashAnim;
 	RECT _swordSlashRC;
+
+	
+	GImage* _fireBeam;
+	RECT _firebeamRC;
+	int offsetX = 0;
 
 
 	Inventory* _inven;
@@ -97,13 +105,22 @@ public:
 			_swordSlashRC = RectMakeCenter(position.x - 28, position.y,
 				_swordSlashAnim->getFrameWidth(),
 				_swordSlashAnim->getFrameHeight());
+
+			_firebeamRC = RectMake(position.x, position.y - 24,
+				position.x - (_firebeamRC.right - _firebeamRC.left), 50);
 		}
 		else if (KEYMANAGER->isStayKeyDown(VK_RIGHT))
 		{
 			_swordSlashRC = RectMakeCenter(position.x + 28, position.y,
 				_swordSlashAnim->getFrameWidth(),
 				_swordSlashAnim->getFrameHeight());
+
 		}
+
+
+
+		_firebeamRC = RectMake(position.x, position.y - 24,
+			position.x + (_firebeamRC.right - _firebeamRC.left), 50);
 	}
 
 

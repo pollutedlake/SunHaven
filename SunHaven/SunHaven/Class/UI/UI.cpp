@@ -37,6 +37,10 @@ void UI::update(void)
 	{
 
 	}
+	else if (_sceneName == "Farm")
+	{
+		updateUIWindow();
+	}
 }
 
 void UI::render(void)
@@ -71,4 +75,17 @@ void UI::render(void)
 		FONTMANAGER->textOut(getMemDC(), WINSIZE_X - 40, 100, "배달의민족 을지로체", 14, 100, "퀘스트 [L]", strlen("퀘스트 [L]"), RGB(255, 255, 255));
 		SetTextAlign(getMemDC(), TA_LEFT);
 	}
+	else if (_sceneName == "Farm")
+	{
+		showUIWindow();
+	}
+}
+
+void UI::updateUIWindow()
+{
+}
+
+void UI::showUIWindow()
+{
+
 }
