@@ -1,6 +1,6 @@
 ﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(1091,5): warning MSB8027: 이름이 MiningSkill.cpp인 둘 이상의 파일이 같은 위치에 출력을 생성합니다. 이로 인해 잘못된 빌드 결과가 나타날 수 있습니다.  관련된 파일은 Class\Skill\MiningSkill.cpp, Player\Skill\MiningSkill.cpp입니다.
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(1091,5): warning MSB8027: 이름이 Skill.cpp인 둘 이상의 파일이 같은 위치에 출력을 생성합니다. 이로 인해 잘못된 빌드 결과가 나타날 수 있습니다.  관련된 파일은 Class\Skill\Skill.cpp, Player\Skill\Skill.cpp입니다.
-  TownScene.cpp
+  Dynus.cpp
 C:\Users\ksy29\Documents\새 폴더\SunHaven\SunHaven\FrameWork\GImage\GImage.h(116,14): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
 C:\Users\ksy29\Documents\새 폴더\SunHaven\SunHaven\FrameWork\GImage\GImage.h(116,14): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
 C:\Users\ksy29\Documents\새 폴더\SunHaven\SunHaven\FrameWork\GImage\GImage.h(117,14): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
@@ -17,4 +17,62 @@ C:\Users\ksy29\Documents\새 폴더\SunHaven\SunHaven\FrameWork\GImage\GImage.h(
 C:\Users\ksy29\Documents\새 폴더\SunHaven\SunHaven\FrameWork\GImage\GImage.h(130,18): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
 C:\Users\ksy29\Documents\새 폴더\SunHaven\SunHaven\FrameWork\GImage\GImage.h(131,18): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
 C:\Users\ksy29\Documents\새 폴더\SunHaven\SunHaven\FrameWork\GImage\GImage.h(131,18): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\ksy29\Documents\새 폴더\SunHaven\SunHaven\Class\Enemy\Enemy.h(68,49): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\ksy29\Documents\새 폴더\SunHaven\SunHaven\Class\Enemy\Enemy.h(68,45): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\ksy29\Documents\새 폴더\SunHaven\SunHaven\Class\Enemy\Enemy.h(69,46): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\ksy29\Documents\새 폴더\SunHaven\SunHaven\Class\Enemy\Enemy.h(69,42): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\ksy29\Documents\새 폴더\SunHaven\SunHaven\Player\Player.h(83,16): warning C4244: '=': 'LONG'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\ksy29\Documents\새 폴더\SunHaven\SunHaven\Player\Player.h(84,16): warning C4244: '=': 'LONG'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\ksy29\Documents\새 폴더\SunHaven\SunHaven\Class\Boss\Dynus.cpp(36,32): warning C4244: '=': 'DWORD'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\ksy29\Documents\새 폴더\SunHaven\SunHaven\Class\Boss\Dynus.cpp(45,15): warning C4244: '=': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\ksy29\Documents\새 폴더\SunHaven\SunHaven\Class\Boss\Dynus.cpp(88,32): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\ksy29\Documents\새 폴더\SunHaven\SunHaven\Class\Boss\Dynus.cpp(88,28): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\ksy29\Documents\새 폴더\SunHaven\SunHaven\Class\Boss\Dynus.cpp(97,15): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\ksy29\Documents\새 폴더\SunHaven\SunHaven\Class\Boss\Dynus.cpp(96,69): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\ksy29\Documents\새 폴더\SunHaven\SunHaven\Class\Boss\Dynus.cpp(107,18): warning C4244: '초기화 중': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\ksy29\Documents\새 폴더\SunHaven\SunHaven\Class\Boss\Dynus.cpp(108,18): warning C4244: '초기화 중': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\ksy29\Documents\새 폴더\SunHaven\SunHaven\Class\Boss\Dynus.cpp(111,49): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\ksy29\Documents\새 폴더\SunHaven\SunHaven\Class\Boss\Dynus.cpp(110,88): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\ksy29\Documents\새 폴더\SunHaven\SunHaven\Class\Boss\Dynus.cpp(126,69): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\ksy29\Documents\새 폴더\SunHaven\SunHaven\Class\Boss\Dynus.cpp(127,75): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\ksy29\Documents\새 폴더\SunHaven\SunHaven\Class\Boss\Dynus.cpp(128,75): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\ksy29\Documents\새 폴더\SunHaven\SunHaven\Class\Boss\Dynus.cpp(129,75): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\ksy29\Documents\새 폴더\SunHaven\SunHaven\Class\Boss\Dynus.cpp(130,75): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\ksy29\Documents\새 폴더\SunHaven\SunHaven\Class\Boss\Dynus.cpp(131,75): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\ksy29\Documents\새 폴더\SunHaven\SunHaven\Class\Boss\Dynus.cpp(132,75): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\ksy29\Documents\새 폴더\SunHaven\SunHaven\Class\Boss\Dynus.cpp(411,73): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\ksy29\Documents\새 폴더\SunHaven\SunHaven\Class\Boss\Dynus.cpp(416,68): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\ksy29\Documents\새 폴더\SunHaven\SunHaven\Class\Boss\Dynus.cpp(421,68): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\ksy29\Documents\새 폴더\SunHaven\SunHaven\Class\Boss\Dynus.cpp(427,68): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\ksy29\Documents\새 폴더\SunHaven\SunHaven\Class\Boss\Dynus.cpp(432,68): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\ksy29\Documents\새 폴더\SunHaven\SunHaven\Class\Boss\Dynus.cpp(437,68): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\ksy29\Documents\새 폴더\SunHaven\SunHaven\Class\Boss\Dynus.cpp(442,68): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\ksy29\Documents\새 폴더\SunHaven\SunHaven\Class\Boss\Dynus.cpp(695,61): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\ksy29\Documents\새 폴더\SunHaven\SunHaven\Class\Boss\Dynus.cpp(695,51): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\ksy29\Documents\새 폴더\SunHaven\SunHaven\Class\Boss\Dynus.cpp(699,38): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\ksy29\Documents\새 폴더\SunHaven\SunHaven\Class\Boss\Dynus.cpp(699,34): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\ksy29\Documents\새 폴더\SunHaven\SunHaven\Class\Boss\Dynus.cpp(718,65): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\ksy29\Documents\새 폴더\SunHaven\SunHaven\Class\Boss\Dynus.cpp(717,64): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\ksy29\Documents\새 폴더\SunHaven\SunHaven\Class\Boss\Dynus.cpp(742,65): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\ksy29\Documents\새 폴더\SunHaven\SunHaven\Class\Boss\Dynus.cpp(741,64): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\ksy29\Documents\새 폴더\SunHaven\SunHaven\Class\Boss\Dynus.cpp(834,74): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\ksy29\Documents\새 폴더\SunHaven\SunHaven\Class\Boss\Dynus.cpp(840,69): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\ksy29\Documents\새 폴더\SunHaven\SunHaven\Class\Boss\Dynus.cpp(847,69): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\ksy29\Documents\새 폴더\SunHaven\SunHaven\Class\Boss\Dynus.cpp(854,69): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\ksy29\Documents\새 폴더\SunHaven\SunHaven\Class\Boss\Dynus.cpp(861,69): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\ksy29\Documents\새 폴더\SunHaven\SunHaven\Class\Boss\Dynus.cpp(868,69): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\ksy29\Documents\새 폴더\SunHaven\SunHaven\Class\Boss\Dynus.cpp(875,69): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\ksy29\Documents\새 폴더\SunHaven\SunHaven\Class\Boss\Dynus.cpp(898,67): warning C4244: '인수': 'LONG'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\ksy29\Documents\새 폴더\SunHaven\SunHaven\Class\Boss\Dynus.cpp(898,35): warning C4244: '인수': 'LONG'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\ksy29\Documents\새 폴더\SunHaven\SunHaven\Class\Boss\Dynus.cpp(897,86): warning C4244: '인수': 'LONG'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\ksy29\Documents\새 폴더\SunHaven\SunHaven\Class\Boss\Dynus.cpp(896,94): warning C4244: '인수': 'LONG'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\ksy29\Documents\새 폴더\SunHaven\SunHaven\Class\Boss\Dynus.cpp(895,85): warning C4244: '인수': 'LONG'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\ksy29\Documents\새 폴더\SunHaven\SunHaven\Class\Boss\Dynus.cpp(894,98): warning C4244: '인수': 'LONG'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\ksy29\Documents\새 폴더\SunHaven\SunHaven\Class\Boss\Dynus.cpp(928,5): warning C4244: '인수': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\ksy29\Documents\새 폴더\SunHaven\SunHaven\Class\Boss\Dynus.cpp(927,84): warning C4244: '인수': 'LONG'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\ksy29\Documents\새 폴더\SunHaven\SunHaven\Class\Boss\Dynus.cpp(926,97): warning C4244: '인수': 'LONG'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\ksy29\Documents\새 폴더\SunHaven\SunHaven\Class\Boss\Dynus.cpp(957,77): warning C4244: '인수': 'LONG'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\ksy29\Documents\새 폴더\SunHaven\SunHaven\Class\Boss\Dynus.cpp(956,88): warning C4244: '인수': 'LONG'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\ksy29\Documents\새 폴더\SunHaven\SunHaven\Class\Boss\Dynus.cpp(1061,16): warning C4244: '=': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\ksy29\Documents\새 폴더\SunHaven\SunHaven\Class\Boss\Dynus.cpp(1084,20): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
   SunHaven.vcxproj -> C:\Users\ksy29\Documents\새 폴더\SunHaven\Debug\SunHaven.exe

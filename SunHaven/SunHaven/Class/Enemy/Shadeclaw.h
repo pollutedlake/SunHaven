@@ -26,10 +26,11 @@ public:
 	void update(void);
 	void render(void);
 
-	void move() override;
-	void attack() override;
-	void animation() override;
-	void draw() override;
+	void move(void) override;
+	void targetOn(void) override;
+	void attack(void) override;
+	void animation(void) override;
+	void draw(void) override;
 
 	void setPlayerMemoryAddress(Player* player) { _player = player; }
 

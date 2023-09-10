@@ -2,6 +2,7 @@
 #include "../GameNode/GameNode.h"
 #include "../Animation/Animation.h"
 #include "../Bullets/Bullets.h"
+#include "../UI/ProgressBar.h"
 //#include "../Enemy/Enemy.h"
 //#include "../Enemy/EnemyManager.h"
 
@@ -13,6 +14,8 @@
 #define PA2_STARTPOS_NUM_2	16
  
 #define PA3_STARTPOS_NUM	3 
+
+#define PLATFORM_NUM		7
 
 class Player;
 class EnemyManager;
@@ -37,9 +40,12 @@ enum class EDynusPhase
 enum class EDynusSpell
 {
 	SPREAD_X,
+	SPREAD_X2,
 	SPREAD_ELLIPSE,
-	BEAM,
-	SPAWN
+	BEAM1,
+	BEAM2,
+	SPAWN,
+	STAR
 };
 
 class Dynus : public GameNode
@@ -60,11 +66,15 @@ private:
 	EDynusPhase _phase;
 	EDynusSpell _spell;
 
+	GImage* _curImg;
 	GImage* _breatheImg;
 	GImage* _spellImg;
 
 	Animation* _breatheAni;
 	Animation* _spellAni;
+	Animation* _curAni;
+
+	ProgressBar* _hpBar;
 
 	Bullet* _bullet;
 	Beam* _beam;
@@ -74,7 +84,11 @@ private:
 	RECT _rcPa1Start[PA1_STARTPOS_NUM_1][PA1_STARTPOS_NUM_2];
 	RECT _rcPa2Start[PA2_STARTPOS_NUM_1][PA2_STARTPOS_NUM_2];
 	RECT _rcPa3Start[PA3_STARTPOS_NUM];
+	RECT _rcPlatform[PLATFORM_NUM];
+	float _platformMove;
+	bool _isPlatformUp[PLATFORM_NUM];
 
+	//RECT _rcHpBar;
 	float _hp;
 	float _maxHp;
 
@@ -109,6 +123,15 @@ private:
 	float _hpTime;
 	float _hpTurnCount;
 
+	float _spawnBulletTime;
+	float _spawnBulletWorldTime;
+
+	bool _isSpawn;
+	bool _isSpawnEnemy;
+	bool _isSpawnAfter;
+
+	float _k;
+
 public:
 	bool hpMinusTemp(void);
 
@@ -121,12 +144,14 @@ public:
 
 	virtual void move(void);
 	void draw(void);
+	void drawPlatform(void);
 
 	void bulletFire(void);
 	void spreadEllipse(void);
 	void beamFire(void);
 	//void spawnEnemy(void);
-	
+	bool spawningTime(void);
+
 
 	bool bulletCountFire(void);
 	bool turnCountFire1(void);
@@ -134,6 +159,8 @@ public:
 	bool turnCountFire3(void);
 	bool beamCountFire(void);
 	bool spawnAfterTime(void);
+
+	void collision(void);
 
 	RECT getRcDynus(void) { return _rcDynus; }
 	//vector<Enemy*> getEnemys(void) { return _vEnemy; }
