@@ -1,34 +1,44 @@
 #include "Stdafx.h"
 #include "ProgressBar.h"
 
-HRESULT ProgressBar::init(int x, int y, int width, int height)
+HRESULT ProgressBar::init(string barTop, string barBottom, string barFill, int x, int y, int width, int height)
 {
-	_progressBarTop = IMAGEMANAGER->findImage("ProgressBarTop");
-	_progressBarFill = IMAGEMANAGER->findImage("ProgressBarFill");
+	_progressBarTop = IMAGEMANAGER->findImage(barTop);
+	_progressBarFill = IMAGEMANAGER->findImage(barFill);
+	_progressBarBottom = IMAGEMANAGER->findImage(barBottom);
 	_x = x;
 	_y = y;
 	_rc = RectMakeCenter(_x, _y, width, height);
-	_width = _progressBarFill->getWidth() * 1.5;
+	_maxWidth = width;
+	_width = _maxWidth;
+	_height = height;
 	return S_OK;
 }
 
 void ProgressBar::release(void)
 {
+	
 }
 
 void ProgressBar::update(void)
 {
-	_rc = RectMakeCenter(_x, _y, _progressBarFill->getWidth() * 1.5, _progressBarFill->getHeight() * 1.5);
+	_rc = RectMakeCenter(_x, _y, _maxWidth, _height);
 }
 
 void ProgressBar::render(void)
 {
-	_progressBarFill->render(getMemDC(), _rc.left, _rc.top, _width, _progressBarFill->getHeight() * 1.5, 0, 0, _progressBarFill->getWidth(), _progressBarFill->getHeight());
-	_progressBarTop->render(getMemDC(),	_rc.left, _rc.top, _progressBarFill->getWidth() * 1.5, _progressBarFill->getHeight() * 1.5, 
-		0, 0, _progressBarTop->getWidth(), _progressBarTop->getHeight());
+	if(_progressBarBottom != nullptr)
+	{
+		_progressBarBottom->render(getMemDC(), _rc.left, _rc.top, _maxWidth, _height, 0, 0, _progressBarBottom->getWidth(), _progressBarBottom->getHeight());
+	}
+	_progressBarFill->render(getMemDC(), _rc.left, _rc.top, _width, _height, 0, 0, _progressBarFill->getWidth(), _progressBarFill->getHeight());
+	if (_progressBarTop != nullptr)
+	{
+		_progressBarTop->render(getMemDC(),	_rc.left, _rc.top, _maxWidth, _height,	0, 0, _progressBarTop->getWidth(), _progressBarTop->getHeight());
+	}
 }
 
 void ProgressBar::setGauge(float currentX, float maxX)
 {
-	_width = (currentX / maxX) * _progressBarFill->getWidth() * 1.5;
+	_width = (currentX / maxX) * _maxWidth;
 }

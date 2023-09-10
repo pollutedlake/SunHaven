@@ -160,6 +160,8 @@
     <ClCompile Include="Class\Skill\FarmingSkill.cpp" />
     <ClCompile Include="Class\Skill\FishingSkill.cpp" />
     <ClCompile Include="Class\Skill\MiningSkill.cpp" />
+    <ClCompile Include="Class\NPC\Lynn.cpp" />
+    <ClCompile Include="Scene\IntroScene.cpp" />
     <ClCompile Include="Scene\Collision.cpp" />
     <ClCompile Include="Class\Enemy\Enemy.cpp" />
     <ClCompile Include="Class\Enemy\EnemyManager.cpp" />
@@ -228,6 +230,8 @@
     <ClInclude Include="Class\Skill\ExplorationSkill.h" />
     <ClInclude Include="Class\Skill\FarmingSkill.h" />
     <ClInclude Include="Class\Skill\FishingSkill.h" />
+    <ClInclude Include="Class\NPC\Lynn.h" />
+    <ClInclude Include="Scene\IntroScene.h" />
     <ClInclude Include="Json\json.h" />
     <ClInclude Include="Class\Data\INIData.h" />
     <ClInclude Include="Class\Inventory.h" />
@@ -315,6 +319,7 @@
     <Object Include="Debug\GImage.obj" />
     <Object Include="Debug\GPImage.obj" />
     <Object Include="Debug\ImageManager.obj" />
+    <Object Include="Debug\IntroScene.obj" />
     <Object Include="Debug\KeyManager.obj" />
     <Object Include="Debug\MainGame.obj" />
     <Object Include="Debug\MapToolScene.obj">

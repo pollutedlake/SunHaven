@@ -30,7 +30,7 @@ HRESULT Tree::init(LivingObjectType type, POINT tilePos)
 	}
 	_curHp = _maxHp * RND->getFloat(1.0f);
 	_hpBar = new ProgressBar;
-	_hpBar->init(NULL, NULL, NULL, NULL);
+	_hpBar->init("ObjectHpBarTop", "", "ObjectHpBarFill", NULL, NULL, 36, 7);
 	return S_OK;
 }
 
@@ -38,8 +38,8 @@ void Tree::update(void)
 {
 	_hpBar->setX(_cx - 25);
 	_hpBar->setY(_cy - 50);
-	_hpBar->setGauge(_curHp, _maxHp);
 	_hpBar->update();
+	_hpBar->setGauge(_curHp, _maxHp);
 }
 
 void Tree::render(void)
