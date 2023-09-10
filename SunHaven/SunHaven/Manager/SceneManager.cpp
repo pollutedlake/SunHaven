@@ -7,6 +7,7 @@
 #include "../Scene/FarmScene.h"
 #include "../Scene/DynusScene.h"
 #include "../Scene/ShopScene.h"
+#include "../Scene/IntroScene.h"
 
 HRESULT SceneManager::init(void)
 {
@@ -16,6 +17,7 @@ HRESULT SceneManager::init(void)
     SCENEMANAGER->addScene("Shop", new ShopScene);
     SCENEMANAGER->addScene("Farm", new FarmScene);
     SCENEMANAGER->addScene("Dynus", new DynusScene);
+    SCENEMANAGER->addScene("Intro", new IntroScene);
     _currentScene = nullptr;
     return S_OK;
 }

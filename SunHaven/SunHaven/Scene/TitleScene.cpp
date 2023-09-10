@@ -77,7 +77,8 @@ void TitleScene::update(void)
                     switch (i)
                     {
                     case 0:
-                        //SCENEMANAGER->changeScene("DynusScene");
+                        SOUNDMANAGER->stop("Main_Menu_Final");
+                        SCENEMANAGER->changeScene("Intro");
 
                         break;
 

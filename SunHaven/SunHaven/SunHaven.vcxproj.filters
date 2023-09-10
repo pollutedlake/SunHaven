@@ -25,6 +25,7 @@
     <Object Include="Debug\UI.obj" />
     <Object Include="Debug\Utils.obj" />
     <Object Include="Debug\WinMain.obj" />
+    <Object Include="Debug\IntroScene.obj" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Class\UI\Buttons.cpp" />
@@ -87,7 +88,8 @@
     <ClCompile Include="Player\Skill\Skill.cpp" />
     <ClCompile Include="Class\Object\Tree.cpp" />
     <ClCompile Include="WinMain.cpp" />
-    <ClCompile Include="IntroScene.cpp" />
+    <ClCompile Include="Scene\IntroScene.cpp" />
+    <ClCompile Include="Class\NPC\Lynn.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Class\UI\Buttons.h" />
@@ -154,7 +156,8 @@
     <ClInclude Include="Player\Skill\Skill.h" />
     <ClInclude Include="Class\Object\Tree.h" />
     <ClInclude Include="Class\UI\UI.h" />
-    <ClInclude Include="IntroScene.h" />
+    <ClInclude Include="Scene\IntroScene.h" />
+    <ClInclude Include="Class\NPC\Lynn.h" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="lib\FMOD\fmodex_vc.lib" />
