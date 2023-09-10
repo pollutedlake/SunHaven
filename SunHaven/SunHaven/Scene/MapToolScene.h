@@ -1,16 +1,25 @@
 // ¹Ú»óÇö
 #pragma once
 #include "../FrameWork/GameNode/GameNode.h"
-#include "../Class/Object/Object.h"
+//#include "../Class/Object/Object.h"
 
 #define MapToolWidth	800
 #define MapToolHeight	600
+
+class Object;
 
 enum TileType
 {
 	NORMAL,
 	COLLIDER,
 	OBJECT
+};
+
+enum Map
+{
+	FARM,
+	MINE,
+	DYNUS
 };
 
 struct Tile
@@ -32,7 +41,7 @@ private:
 	int _tileMapSize;
 
 	GImage* _tilesBuffer;
-	Tile _tiles[5][20][20];
+	Tile _tiles[10][20][20];
 
 	GImage* _collisionBuffer;
 

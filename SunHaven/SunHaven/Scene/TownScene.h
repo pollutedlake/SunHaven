@@ -4,7 +4,6 @@
 class TownScene : public GameNode
 {
 private:
-	float _frameTick;
 
 public:
 	HRESULT init(void);

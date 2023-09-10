@@ -26,12 +26,16 @@ HRESULT Resources::init(void)
 		true, RGB(255, 0, 255));	// Ä¿¼­
 
 	// Sound
+	SOUNDMANAGER->addSound("Main_Menu_Final", "Resources/Sound/Main_Menu_Final.wav", true, true);
+	SOUNDMANAGER->addSound("E_titleButton", "Resources/Sound/E_titleButton.wav", false, false);
+	SOUNDMANAGER->addSound("E_titleButtonClick", "Resources/Sound/E_titleButtonClick.wav", false, false);
+
 
 	// ====================MapToolScene====================
 	// Image
 	char key[64];
 	char fileName[64];
-	for(int j = 1; j <= 5; j++)
+	for(int j = 1; j <= 10; j++)
 	{
 		for (int i = 1; i <= 100; i++)
 		{
@@ -131,6 +135,37 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addImage("ironChestPlate", "Resources/Images/Inventory/ironChestPlate.bmp", 32, 32, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("ironGloves", "Resources/Images/Inventory/ironGloves.bmp", 32, 32, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("ironSword", "Resources/Images/Inventory/ironSword.bmp", 32, 32, true, RGB(255, 0, 255));
+
+	IMAGEMANAGER->addImage("cosmetics_slot1", "Resources/Images/Inventory/cosmetics_slot1.bmp", 32, 32, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("cosmetics_slot2", "Resources/Images/Inventory/cosmetics_slot2.bmp", 32, 32, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("cosmetics_slot3", "Resources/Images/Inventory/cosmetics_slot3.bmp", 32, 32, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("cosmetics_slot4", "Resources/Images/Inventory/cosmetics_slot4.bmp", 32, 32, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("cosmetics_slot5", "Resources/Images/Inventory/cosmetics_slot5.bmp", 32, 32, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("equipment_slot1", "Resources/Images/Inventory/equipment_slot1.bmp", 32, 32, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("equipment_slot2", "Resources/Images/Inventory/equipment_slot2.bmp", 32, 32, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("equipment_slot3", "Resources/Images/Inventory/equipment_slot3.bmp", 32, 32, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("equipment_slot4", "Resources/Images/Inventory/equipment_slot4.bmp", 32, 32, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("equipment_slot5", "Resources/Images/Inventory/equipment_slot5.bmp", 32, 32, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("player_slot1_keepsake", "Resources/Images/Inventory/player_slot1_keepsake.bmp", 32, 32, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("player_slot2_ring1", "Resources/Images/Inventory/player_slot2_ring1.bmp", 32, 32, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("player_slot3_amulet", "Resources/Images/Inventory/player_slot3_amulet.bmp", 32, 32, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("player_slot4_ring2", "Resources/Images/Inventory/player_slot4_ring2.bmp", 32, 32, true, RGB(255, 0, 255));
+
+	IMAGEMANAGER->addImage("icon_attack_dmg+lv_combat", "Resources/Images/Inventory/icon_attack_dmg+lv_combat.bmp", 10, 10, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("icon_defense #2480984", "Resources/Images/Inventory/icon_defense #2480984.bmp", 10, 10, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("icon_hp", "Resources/Images/Inventory/icon_hp.bmp", 10, 10, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("icon_magic_damage", "Resources/Images/Inventory/icon_magic_damage.bmp", 10, 10, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("icon_mana #2486870", "Resources/Images/Inventory/icon_mana #2486870.bmp", 10, 10, true, RGB(255, 0, 255));
+
+	IMAGEMANAGER->addImage("trash_button", "Resources/Images/Inventory/trash_button.bmp", 26, 25, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("sort_button", "Resources/Images/Inventory/sort_button.bmp", 26, 25, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("drop_button", "Resources/Images/Inventory/drop_button.bmp", 26, 25, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("x_button", "Resources/Images/Inventory/x_button.bmp", 27, 28, true, RGB(255, 0, 255));
+
+	//CraftingImage
+
+
+
 	// shopImage
 
 	// Sound
@@ -157,6 +192,12 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addImage("SkillTreeIcon", "Resources/Images/UI/SkillTreeIcon.bmp", 23, 26, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("BarnAnimalsIcon", "Resources/Images/UI/BarnAnimalsIcon.bmp", 24, 18, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("FishingNetIcon", "Resources/Images/UI/FishingNetIcon.bmp", 16, 17, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addGPFrameImage("ProgressBarBottom", "Resources/Images/UI/ProgressBarBottom.png",
+		0, 0,
+		1, 1,
+		false, NULL, RotateNoneFlipNone);
+	IMAGEMANAGER->addImage("ProgressBarTop", "Resources/Images/UI/ProgressBarTop.bmp", 26, 7, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("ProgressBarFill", "Resources/Images/UI/ProgressBarFill.bmp", 24, 5);
 	//Sound
 	return S_OK;
 }

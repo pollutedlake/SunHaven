@@ -8,27 +8,7 @@ HRESULT Object::init(void)
 
 HRESULT Object::init(LivingObjectType type, POINT tilePos)
 {
-	/*_type = type;
-	char str[64];
-	wsprintf(str, "Object%d", (int)type + 1);
-	_image = IMAGEMANAGER->findImage(str);
-	_tilePos = tilePos;
-	_collisionRC = RectMake(tilePos.x * TILEWIDTH * 2, tilePos.y * TILEHEIGHT * 2, TILEWIDTH * 2, TILEHEIGHT * 2);
-	_halfTrans = false;
-	switch (_type)
-	{
-	case GRASS1:
-		_offsetY = -12;
-		break;
-	case TREE1:
-		_offsetX = -3;
-		_offsetY = -48;
-		break;
-	case TREE2:
-		_offsetX = 3;
-		_offsetY = -42;
-		break;
-	}*/
+	
 	return S_OK;
 }
 
@@ -44,7 +24,6 @@ void Object::update(void)
 
 void Object::render(void)
 {
-	//_image->render(getMemDC(), _rc.left, _rc.top, _rc.right - _rc.left, _rc.bottom - _rc.top, 0, 0, _image->getWidth(), _image->getHeight());
 }
 
 void Object::render(HDC hdc)
@@ -63,4 +42,12 @@ void Object::updateCameraPos(float cx, float cy)
 void Object::renderToPoint(POINT point)
 {
 	_image->alphaRender(getMemDC(), point.x - _image->getWidth() / 2 + _offsetX, point.y - _image->getHeight() / 2 + _offsetY, 128);
+}
+
+void Object::renderHpBar()
+{
+	if (_curHp < _maxHp)
+	{
+		_hpBar->render();
+	}
 }

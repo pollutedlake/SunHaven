@@ -1,7 +1,7 @@
 // ¹Ú»óÇö
 #include "Stdafx.h"
 #include "MapToolScene.h"
-#include "../Class/UI.h"
+#include "../Class/UI/Buttons.h"
 #include "../Class/Object/Grass.h"
 #include "../Class/Object/Tree.h"
 #include "../Class/Object/Rock.h"
@@ -19,7 +19,7 @@ HRESULT MapToolScene::init(void)
 			ZeroMemory(&_tileMap, sizeof(_tileMap[i][j]) * _tileMapSize);
 		}
 	}
-	for(int i = 0; i < 5; i++)
+	for(int i = 0; i < 10; i++)
 	{
 		for (int j = 0; j < 10; j++)
 		{
@@ -31,7 +31,7 @@ HRESULT MapToolScene::init(void)
 		_showLayer[i] = false;
 	}
 	_showLayer[0] = true;
-	for(int k = 0; k < 5; k++)
+	for(int k = 0; k < 10; k++)
 	{
 		for (int i = 0; i < 10; i++)
 		{
@@ -550,13 +550,13 @@ void MapToolScene::changeLayer(int layerN)
 
 void MapToolScene::prevTiles(void)
 {
-	_curTiles--; if (_curTiles < 0) _curTiles = 4; PatBlt(_tilesBuffer->getMemDC(), 0, 0, TILEWIDTH * 10, TILEHEIGHT * 10, WHITENESS);
+	_curTiles--; if (_curTiles < 0) _curTiles = 9; PatBlt(_tilesBuffer->getMemDC(), 0, 0, TILEWIDTH * 10, TILEHEIGHT * 10, WHITENESS);
 }
 
 
 void MapToolScene::nextTiles(void)
 {
-	_curTiles++; if (_curTiles > 4) _curTiles = 0; PatBlt(_tilesBuffer->getMemDC(), 0, 0, TILEWIDTH * 10, TILEHEIGHT * 10, WHITENESS);
+	_curTiles++; if (_curTiles > 9) _curTiles = 0; PatBlt(_tilesBuffer->getMemDC(), 0, 0, TILEWIDTH * 10, TILEHEIGHT * 10, WHITENESS);
 }
 
 void MapToolScene::erase(void)

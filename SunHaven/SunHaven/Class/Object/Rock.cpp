@@ -17,8 +17,16 @@ HRESULT Rock::init(LivingObjectType type, POINT tilePos)
 	_halfTrans = false;
 	switch (_type)
 	{
-		
+	case ROCK1:
+		_maxHp = 5;
+		break;
+	case ROCK2:
+		_maxHp = 10;
+		break;
 	}
+	_curHp = _maxHp * RND->getFloat(1.0f);
+	_hpBar = new ProgressBar;
+	_hpBar->init(NULL, NULL, NULL, NULL);
 	return S_OK;
 }
 
@@ -28,6 +36,10 @@ void Rock::release(void)
 
 void Rock::update(void)
 {
+	_hpBar->setX(_cx - 5);
+	_hpBar->setY(_cy - 36);
+	_hpBar->setGauge(_curHp, _maxHp);
+	_hpBar->update();
 }
 
 void Rock::render(void)

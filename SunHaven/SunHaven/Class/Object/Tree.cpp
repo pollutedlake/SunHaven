@@ -3,7 +3,6 @@
 
 HRESULT Tree::init(void)
 {
-	
 	return S_OK;
 }
 
@@ -21,17 +20,26 @@ HRESULT Tree::init(LivingObjectType type, POINT tilePos)
 	case TREE1:
 		_offsetX = -3;
 		_offsetY = -48;
+		_maxHp = 100;
 		break;
 	case TREE2:
 		_offsetX = 3;
 		_offsetY = -42;
+		_maxHp = 120;
 		break;
 	}
+	_curHp = _maxHp * RND->getFloat(1.0f);
+	_hpBar = new ProgressBar;
+	_hpBar->init(NULL, NULL, NULL, NULL);
 	return S_OK;
 }
 
 void Tree::update(void)
 {
+	_hpBar->setX(_cx - 25);
+	_hpBar->setY(_cy - 50);
+	_hpBar->setGauge(_curHp, _maxHp);
+	_hpBar->update();
 }
 
 void Tree::render(void)

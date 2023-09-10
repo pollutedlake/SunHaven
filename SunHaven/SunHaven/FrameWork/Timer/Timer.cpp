@@ -37,7 +37,6 @@ void Timer::tick(float lockFPS)
     }
 
     _timeElapsed = (_curTime - _lastTime) * _timeScale;
-
     if (lockFPS > 0.0f)
     {
         while (_timeElapsed < (1.0f / lockFPS))
@@ -79,10 +78,3 @@ unsigned long Timer::getFrameRate(char* str) const
     return _frameRate;
 }
 
-Timer::Timer()
-{
-}
-
-Timer::~Timer()
-{
-}

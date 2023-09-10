@@ -14,7 +14,6 @@ HRESULT GameNode::init(bool managerInit)
     if (managerInit)
     {
         setlocale(LC_ALL, "korean");
-        SetTimer(_hWnd, 1, 10, NULL);
 
         KEYMANAGER->init();
         RND->init();
