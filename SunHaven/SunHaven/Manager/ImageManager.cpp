@@ -262,6 +262,13 @@ void ImageManager::GPFrameRender(string strKey, HDC hdc, int destX, int destY, f
 	if (img) img->GPFrameRender(hdc, destX, destY, wRatio, hRatio, currentFrameX, currentFrameY, _imode, angle);
 }
 
+void ImageManager::GPRender(string strKey, HDC hdc, int destX, int destY, float wRatio, float hRatio, int sourX, int sourY, int sourWidth, int sourHeight, Gdiplus::InterpolationMode _imode, int angle)
+{
+	GPImage* img = findGPImage(strKey);
+
+	if (img) img->GPRender(hdc, destX, destY, wRatio, hRatio, sourX, sourY, sourWidth, sourHeight, _imode, angle);
+}
+
 void ImageManager::alphaFrameRender(string strKey, HDC hdc, int destX, int destY, int currentFrameX, int currentFrameY, BYTE alpha)
 {
 	GImage* img = findImage(strKey);

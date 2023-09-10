@@ -46,6 +46,7 @@ public:
 	void frameRender(string strKey, HDC hdc, int destX, int destY, int currentFrameX, int currentFrameY);
 	void frameRender(string strKey, HDC hdc, int destX, int destY, int destWidth, int destHeight, int currentFrameX, int currentFrameY);
 	void GPFrameRender(string strKey, HDC hdc, int destX, int destY, float wRatio, float hRatio, int currentFrameX, int currentFrameY, Gdiplus::InterpolationMode _imode, int angle);
+	void GPRender(string strKey, HDC hdc, int destX, int destY, float wRatio, float hRatio, int sourX, int sourY, int sourWidth, int sourHeight,  Gdiplus::InterpolationMode _imode, int angle);
 	void alphaFrameRender(string strKey, HDC hdc, int destX, int destY, int currentFrameX, int currentFrameY, BYTE alpha);
 
 	ImageManager() {}

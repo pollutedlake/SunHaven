@@ -109,3 +109,16 @@ inline void MyTextOut(HDC hdc, int x, int y, LPCTSTR Text)
 {
 	TextOut(hdc, x, y, Text, lstrlen(Text));
 }
+
+inline RECT CollisionAreaResizing(RECT& rcDest, int width, int height)
+{
+	RECT rc =
+	{
+		rcDest.left + width / 2,
+		rcDest.top + height / 2,
+		rcDest.right - width / 2,
+		rcDest.bottom - height / 2
+	};
+
+	return rc;
+}

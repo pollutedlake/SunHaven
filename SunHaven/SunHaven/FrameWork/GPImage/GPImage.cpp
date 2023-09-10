@@ -138,3 +138,46 @@ void GPImage::GPFrameRender(HDC hdc, int destX, int destY, float wRatio, float h
 
 	//ReleaseDC(_hWnd, hdc);
 }
+
+void GPImage::GPRender(HDC hdc, int destX, int destY, float wRatio, float hRatio, int sourX, int sourY, int sourWith, int sourHeight, Gdiplus::InterpolationMode _imode, int angle)
+{
+
+	/*GdiTransparentBlt
+	(
+		hdc,
+		destX,
+		destY,
+		_gdiInfo->frameWidth * wRatio,
+		_gdiInfo->frameHeight * hRatio,
+		_gdiInfo->hMemDC,
+		_gdiInfo->currentFrameX * _gdiInfo->frameWidth,
+		_gdiInfo->currentFrameY * _gdiInfo->frameHeight,
+		_gdiInfo->frameWidth,
+		_gdiInfo->frameHeight,
+		RGB(0, 0, 0)
+	);*/
+
+	Gdiplus::InterpolationMode imode = InterpolationModeNearestNeighbor;
+
+	Gdiplus::ImageAttributes imageAttr;
+
+
+
+	_gdiRender = new Gdiplus::Graphics(hdc);
+
+	_gdiRender->SetInterpolationMode(imode);
+	_gdiRender->DrawImage
+	(
+		_gdiImg,
+		Gdiplus::Rect
+		(
+			destX, destY,
+			sourWith * wRatio,
+			sourHeight * hRatio
+		),
+		sourX, sourY,
+		sourWith, sourHeight,
+		Gdiplus::UnitPixel, &imageAttr);
+
+	SAFE_DELETE(_gdiRender);
+}

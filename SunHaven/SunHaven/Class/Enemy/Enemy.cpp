@@ -67,6 +67,10 @@ void Enemy::move(void)
 	//cout << "1111111" << endl;
 }
 
+void Enemy::targetOn(void)
+{
+}
+
 void Enemy::attack(void)
 {
 }

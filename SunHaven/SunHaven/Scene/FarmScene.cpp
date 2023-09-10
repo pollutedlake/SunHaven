@@ -68,6 +68,10 @@ void FarmScene::update(void)
 		}
 	}
 	Collision();
+	if (KEYMANAGER->isOnceKeyDown(VK_F1))
+	{
+		SCENEMANAGER->changeScene("Shop");
+	}
 }
 
 void FarmScene::render(void)

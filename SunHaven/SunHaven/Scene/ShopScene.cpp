@@ -26,7 +26,10 @@ void ShopScene::update(void)
 {
 	_player->update();
 	
-	
+	if (KEYMANAGER->isOnceKeyDown(VK_F1))
+	{
+		SCENEMANAGER->changeScene("Dynus");
+	}
 }
 
 void ShopScene::render(void)

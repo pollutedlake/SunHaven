@@ -1,7 +1,8 @@
 #include "Stdafx.h"
 #include "Skill.h"
 
-void Skill::init(string index, string name, string type, int tier, string description, float value1[], float value2[], const char* filePath, int width, int height)
+void Skill::init(string index, string name, string type, int tier, string description,
+	double value1[], double value2[])
 {
 	
 }
@@ -131,7 +132,7 @@ void Skill::update()
 	{
 		if (PtInRect(&_img[i].iconRC, _ptMouse))
 		{
-			if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
+			if (KEYMANAGER->isOnceKeyDown(VK_MBUTTON))
 			{
 				cout << i << endl;
 				_img[i].skillLV--;

@@ -85,6 +85,10 @@ HRESULT Resources::init(void)
 		257, 169,
 		true, RGB(255, 0, 255));	// 다이너스 날개
 
+	IMAGEMANAGER->addImage("DynusBulletPortal", "Resources/Images/Boss/DynusBulletPortal.bmp",
+		22, 26,
+		true, RGB(255, 0, 255));	// 다이너스 탄 포탈
+
 	IMAGEMANAGER->addGPFrameImage("DynusOrb", "Resources/Images/Boss/DynusOrb.png",
 		0, 0,
 		1, 1,
@@ -107,15 +111,39 @@ HRESULT Resources::init(void)
 
 	IMAGEMANAGER->addFrameImage("Shadeclow_Attack", "Resources/Images/Enemy/Ghost/Ghost_Attack.bmp",
 		0, 0,
-		440, 80,
+		440 * 2, 80 * 2,
 		11, 2,
 		true, RGB(255, 0, 255));	// 다이너스 소환 몬스터 고스트
 
 	IMAGEMANAGER->addFrameImage("Shadeclow_Die", "Resources/Images/Enemy/Ghost/Ghost_Die.bmp",
 		0, 0,
-		560, 80,
+		560 * 2, 80 * 2,
 		14, 2,
 		true, RGB(255, 0, 255));	// 다이너스 소환 몬스터 고스트
+
+	IMAGEMANAGER->addImage("DynusJumpPlatform", "Resources/Images/Boss/DynusJumpPlatform.bmp",
+		38 * 2, 54 * 2,
+		true, RGB(255, 0, 255));	// 다이너스 점프 플랫폼
+
+	IMAGEMANAGER->addImage("DynusHpBar", "Resources/Images/UI/DynusHpBar.bmp",
+		425, 58,
+		true, RGB(255, 0, 255));	// 다이너스 HpBar
+
+	IMAGEMANAGER->addImage("DynusHpBarBorder", "Resources/Images/UI/DynusHpBarBorder.bmp",
+		425, 58,
+		true, RGB(255, 0, 255));	// 다이너스 HpBar
+
+	IMAGEMANAGER->addImage("ProgressBarW", "Resources/Images/UI/ProgressBarW.bmp",
+		92, 14,
+		true, RGB(255, 0, 255));	// 프로그래스 바 가로
+
+	IMAGEMANAGER->addImage("ProgressBarBGW", "Resources/Images/UI/ProgressBarBGW.bmp",
+		92, 14,
+		true, RGB(255, 0, 255));	// 프로그래스 바 배경 가로
+
+	//IMAGEMANAGER->addImage("DynusJumpPlatform", "Resources/Images/Boss/DynusJumpPlatform.bmp",
+	//	38 * 2, 54 * 2,
+	//	true, RGB(255, 0, 255));	// 다이너스 점프 플랫폼
 
 	// Sound
 

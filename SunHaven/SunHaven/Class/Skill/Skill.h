@@ -30,9 +30,8 @@ protected:
 	string _type;
 	int _tier;
 	string _description;
-	float _value1[3];
-	float _value2[3];
-	const char* _filePath;
+	double _value1[3];
+	double _value2[3];
 
 
 
@@ -50,7 +49,7 @@ private:
 
 public:
 	virtual void init(string index, string name, string type, int tier, string description,
-		float value1[], float value2[], const char* filePath, int width, int height);
+		double value1[], double value2[]);
 
 	HRESULT init();
     void release();
@@ -63,8 +62,7 @@ public:
 	string getType(void) { return _type; }
 	int getTier(void) { return _tier; }
 	string getDescription(void) { return _description; }
-	float getValue1(int index) { return _value1[index]; }
-	float getValue2(int index) { return _value2[index]; }
-	const char* getFilePath(void) { return _filePath; }
+	double getValue1(int index) { return _value1[index]; }
+	double getValue2(int index) { return _value2[index]; }
 };
 

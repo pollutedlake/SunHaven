@@ -249,6 +249,10 @@ void IntroScene::update(void)
 			}
 		}
 	}
+	if (KEYMANAGER->isOnceKeyDown(VK_F1))
+	{
+		SCENEMANAGER->changeScene("Farm");
+	}
 }
 
 void IntroScene::render(void)
