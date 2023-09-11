@@ -135,8 +135,6 @@ void Player::update(void)
 {
 	_inven->update();
 
-	cout << _playerState.playerName << endl;
-
 	if (KEYMANAGER->isOnceKeyDown(VK_LEFT) ||
 		KEYMANAGER->isOnceKeyDown(VK_RIGHT) ||
 		KEYMANAGER->isOnceKeyDown(VK_UP) ||
@@ -387,10 +385,11 @@ void Player::UseTool(ObjectManager* object)
 			&& _eTools == eTools::SICKLE)
 		{
 			if (IntersectRect(&temp,
-				&object->getObjectList()[i]->getRC(),
+				&object->getObjectList()[i]->getCollisionRC(),
 				&_swordSlashRC)
 				&& _swordSlashAnim->getNowPlayIdx()==1)
 			{
+				// SD : 钱海绰 家府
 				object->getObjectList()[i]->setHP(1);
 			}
 
@@ -400,10 +399,11 @@ void Player::UseTool(ObjectManager* object)
 			&& _eTools == eTools::AXE)
 		{
 			if (IntersectRect(&temp,
-				&object->getObjectList()[i]->getRC(),
+				&object->getObjectList()[i]->getCollisionRC(),
 				&_swordSlashRC)
 				&& _swordSlashAnim->getNowPlayIdx() == 1)
 			{
+				// SD : 唱公 海绰 家府
 				object->getObjectList()[i]->setHP(1);
 			}
 
@@ -413,10 +413,11 @@ void Player::UseTool(ObjectManager* object)
 			&& _eTools == eTools::PICKAXE)
 		{
 			if (IntersectRect(&temp,
-				&object->getObjectList()[i]->getRC(),
+				&object->getObjectList()[i]->getCollisionRC(),
 				&_swordSlashRC)
 				&& _swordSlashAnim->getNowPlayIdx() == 1)
 			{
+				// SD : 倒某绰 家府
 				object->getObjectList()[i]->setHP(1);
 			}
 
