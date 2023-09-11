@@ -798,7 +798,6 @@ void MapToolScene::loadLayers()
 				{
 					continue;
 				}
-				//Object* object = new Object;
 				Object* object = nullptr;
 				switch (tile / 2)
 				{

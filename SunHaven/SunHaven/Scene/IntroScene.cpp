@@ -5,6 +5,7 @@ HRESULT IntroScene::init(void)
 {
 	_lynnMomHouse = IMAGEMANAGER->findImage("LynnMomHouse");
 	_train1 = IMAGEMANAGER->findImage("Train1");
+	_train2 = IMAGEMANAGER->findImage("Train2");
 	_lynnMom = IMAGEMANAGER->findImage("LynnMom1");
 	_catSleep = IMAGEMANAGER->findImage("CatSleep");
 	for (int i = 0; i < 7; i++)
@@ -14,78 +15,88 @@ HRESULT IntroScene::init(void)
 		_trainPassengers[i] = IMAGEMANAGER->findImage(text);
 	}
 	_dialogWindow = IMAGEMANAGER->findImage("DialogWindow");
+	_trainWindow = IMAGEMANAGER->findImage("TrainWindow1");
 	_introCut[0] = IMAGEMANAGER->addImage("IntroCut1", WINSIZE_X, WINSIZE_Y);
 	_introCut[1] = IMAGEMANAGER->addImage("IntroCut2", WINSIZE_X, WINSIZE_Y);
+	_introCut[2] = IMAGEMANAGER->addImage("IntroCut3", WINSIZE_X, WINSIZE_Y);
 	_cutIdx = 0;
 	_changeCutImg = IMAGEMANAGER->addImage("TransformScene", WINSIZE_X, WINSIZE_Y, true, RGB(255, 0, 255));
 	_cameraPos = { WINSIZE_X / 3, WINSIZE_Y / 3};
 	
 	_lynn = new Lynn;
 	Action* action;
-		_lynn->init(440, 90);
-		_lynn->pushMovePoint(make_pair(440, 200));
-		_lynn->pushMovePoint(make_pair(400, 200));
-		_lynn->pushMovePoint(make_pair(400, 350));
-		_lynn->pushMovePoint(make_pair(480, 350));
-		action = new Action(IDLE, UP, false, 2.0f);
-		_lynn->pushAction(action);
-		action = new Action(WALK, DOWN, false);
-		_lynn->pushAction(action);
-		action = new Action(WALK, LEFT, false);
-		_lynn->pushAction(action);
-		action = new Action(WALK, DOWN, false);
-		_lynn->pushAction(action);
-		action = new Action(IDLE, RIGHT, true);
-		_lynn->pushAction(action);
-		action = new Action(SADIDLE, DOWN, true);
-		_lynn->pushAction(action);
-		action = new Action(IDLE, RIGHT, true);
-		_lynn->pushAction(action);
-		action = new Action(WALK, RIGHT, false);
-		_lynn->pushAction(action);
-		action = new Action(IDLE, RIGHT, true);
-		_lynn->pushAction(action);
-		action = new Action(IDLE, DOWN, true);
-		_lynn->pushAction(action);
-		action = new Action(SADIDLE, DOWN, true);
-		_lynn->pushAction(action);
-		action = new Action(SADIDLE, RIGHT, true);
-		_lynn->pushAction(action);
-		action = new Action(IDLE, RIGHT, true);
-		_lynn->pushAction(action);
+	_lynn->init(440, 90);
+	_lynn->pushMovePoint(make_pair(440, 200));
+	_lynn->pushMovePoint(make_pair(400, 200));
+	_lynn->pushMovePoint(make_pair(400, 350));
+	_lynn->pushMovePoint(make_pair(480, 350));
+	action = new Action(IDLE, UP, false, 2.0f);
+	_lynn->pushAction(action);
+	action = new Action(WALK, DOWN, false);
+	_lynn->pushAction(action);
+	action = new Action(WALK, LEFT, false);
+	_lynn->pushAction(action);
+	action = new Action(WALK, DOWN, false);
+	_lynn->pushAction(action);
+	action = new Action(IDLE, RIGHT, true);
+	_lynn->pushAction(action);
+	action = new Action(SADIDLE, DOWN, true);
+	_lynn->pushAction(action);
+	action = new Action(IDLE, RIGHT, true);
+	_lynn->pushAction(action);
+	action = new Action(WALK, RIGHT, false);
+	_lynn->pushAction(action);
+	action = new Action(IDLE, RIGHT, true);
+	_lynn->pushAction(action);
+	action = new Action(IDLE, DOWN, true);
+	_lynn->pushAction(action);
+	action = new Action(SADIDLE, DOWN, true);
+	_lynn->pushAction(action);
+	action = new Action(SADIDLE, RIGHT, true);
+	_lynn->pushAction(action);
+	action = new Action(IDLE, RIGHT, true);
+	_lynn->pushAction(action);
 
-		_lynn->pushMovePoint(make_pair(380, 240));
-		_lynn->pushMovePoint(make_pair(530, 240));
-		_lynn->pushMovePoint(make_pair(530, 290));
-		_lynn->pushMovePoint(make_pair(660, 290));
-		action = new Action(IDLE, RIGHT, true);
-		_lynn->pushAction(action);
-		action = new Action(WALK, RIGHT, false);
-		_lynn->pushAction(action);
-		action = new Action(IDLE, UP, true);
-		_lynn->pushAction(action);
-		action = new Action(SADIDLE, RIGHT, false, 1.0f);
-		_lynn->pushAction(action);
-		action = new Action(SADIDLE, DOWN, true);
-		_lynn->pushAction(action);
-		action = new Action(SADWALK, RIGHT, false);
-		_lynn->pushAction(action);
-		action = new Action(IDLE, UP, true);
-		_lynn->pushAction(action);
-		action = new Action(SADIDLE, RIGHT, false, 0.5f);
-		_lynn->pushAction(action);
-		action = new Action(IDLE, UP, false, 0.5f);
-		_lynn->pushAction(action);
-		action = new Action(SADIDLE, DOWN, true);
-		_lynn->pushAction(action);
-		action = new Action(SADIDLE, DOWN, false, 2.0f);
-		_lynn->pushAction(action);
-		action = new Action(SADWALK, DOWN, false);
-		_lynn->pushAction(action);
-		action = new Action(SADWALK, RIGHT, false);
-		_lynn->pushAction(action);
-		action = new Action(SADIDLE, RIGHT, true);
-		_lynn->pushAction(action);
+	_lynn->pushMovePoint(make_pair(380, 240));
+	_lynn->pushMovePoint(make_pair(530, 240));
+	_lynn->pushMovePoint(make_pair(530, 290));
+	_lynn->pushMovePoint(make_pair(660, 290));
+	action = new Action(IDLE, RIGHT, true);
+	_lynn->pushAction(action);
+	action = new Action(WALK, RIGHT, false);
+	_lynn->pushAction(action);
+	action = new Action(IDLE, UP, true);
+	_lynn->pushAction(action);
+	action = new Action(SADIDLE, RIGHT, false, 1.0f);
+	_lynn->pushAction(action);
+	action = new Action(SADIDLE, DOWN, true);
+	_lynn->pushAction(action);
+	action = new Action(SADWALK, RIGHT, false);
+	_lynn->pushAction(action);
+	action = new Action(IDLE, UP, true);
+	_lynn->pushAction(action);
+	action = new Action(SADIDLE, RIGHT, false, 0.5f);
+	_lynn->pushAction(action);
+	action = new Action(IDLE, UP, false, 0.5f);
+	_lynn->pushAction(action);
+	action = new Action(SADIDLE, DOWN, true);
+	_lynn->pushAction(action);
+	action = new Action(SADIDLE, DOWN, false, 2.0f);
+	_lynn->pushAction(action);
+	action = new Action(SADWALK, DOWN, false);
+	_lynn->pushAction(action);
+	action = new Action(SADWALK, RIGHT, false);
+	_lynn->pushAction(action);
+	action = new Action(SADIDLE, RIGHT, true);
+	_lynn->pushAction(action);
+
+	_lynn->pushMovePoint(make_pair(247, 290));
+	action = new Action(WALK, RIGHT, false);
+	action = new Action(WALK, UP, false);
+	action = new Action(IDLE, UP, true);
+	action = new Action(WALK, LEFT, false);
+	action = new Action(WALK, UP, false);
+	_lynn->pushAction(action);
 
 	_nextActionTiming.push(2);
 	_nextActionTiming.push(4);
@@ -217,20 +228,35 @@ void IntroScene::update(void)
 	{
 		if(_changeCut)
 		{
-			_time += TIMEMANAGER->getElapsedTime() * 1000.0f;
-			if (_time > WINSIZE_X)
+			if (_lynn->getActionIdx() == 27)
 			{
-				_changeCut = false;
-				_time = 0;
+				_time -= TIMEMANAGER->getElapsedTime() * 1000.0f;
+				if (_time < 0)
+				{
+					_time = 0.0f;
+					_lynn->setPos(100, 290);
+					_lynn->popAction();
+					_dialogIdx++;
+					_cutIdx++;
+				}
 			}
-			if (_dialogState == HIDE)
+			else
 			{
-				_dialogState = OPEN;
+				_time += TIMEMANAGER->getElapsedTime() * 1000.0f;
+				if (_time > WINSIZE_X)
+				{
+					_changeCut = false;
+					_time = 0;
+				}
+				if (_dialogState == HIDE)
+				{
+					_dialogState = OPEN;
+				}
 			}
 		}
 		else
 		{
-			if (_time + 0.2f < TIMEMANAGER->getWorldTime())
+			if (_time + 0.1f < TIMEMANAGER->getWorldTime())
 			{
 				_count++;
 				_time = TIMEMANAGER->getWorldTime();
@@ -272,8 +298,27 @@ void IntroScene::update(void)
 					_dialogState = HIDE;
 				}
 			}
+			else if (_lynn->getActionIdx() == 27)
+			{
+				_changeCut = true;
+				_time = WINSIZE_X;
+			}
 		}
+		cout << _lynn->getActionIdx() << endl;
 		_lynn->update();
+	}
+	else if (_cutIdx == 2)
+	{
+		_time += TIMEMANAGER->getElapsedTime() * 1000.0f;
+		if (_time > WINSIZE_X)
+		{
+			_changeCut = false;
+			_time = 0;
+		}
+		if (_dialogState == HIDE)
+		{
+			_dialogState = OPEN;
+		}
 	}
 	updateDialog();
 	if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
@@ -295,7 +340,7 @@ void IntroScene::update(void)
 						_dialogState = CLOSE;
 					}
 				}
-				if (unName())
+				if (checkNextActionTiming())
 				{
 					_lynn->popAction();
 				}
@@ -329,6 +374,10 @@ void IntroScene::render(void)
 	else if (_cutIdx == 1)
 	{
 		PatBlt(getMemDC(), 0, 0, WINSIZE_X, WINSIZE_Y, BLACKNESS);
+		for(int i = 0; i < 7; i++)
+		{
+			_trainWindow->frameRender(_introCut[1]->getMemDC(), 45 + 84 * i, 61, (_count % 51) % 10, (_count % 51) / 10);
+		}
 		_train1->render(_introCut[1]->getMemDC());
 		_trainPassengers[0]->frameRender(_introCut[1]->getMemDC(), 190, 140, _count % 6, 0);
 		_trainPassengers[1]->frameRender(_introCut[1]->getMemDC(), 323, 140, _count % (_trainPassengers[1]->getMaxFrameX() + 1), 0);
@@ -345,6 +394,14 @@ void IntroScene::render(void)
 		}
 		_introCut[1]->render(getMemDC(), WINSIZE_X / 2 - _train1->getWidth() * 0.65f, 0, _train1->getWidth() * 1.3f, _train1->getHeight() * 1.3f, 0, 0, _train1->getWidth(), _train1->getHeight());
 	}
+	else if (_cutIdx == 2)
+	{
+		PatBlt(getMemDC(), 0, 0, WINSIZE_X, WINSIZE_Y, BLACKNESS);
+		_train2->render(_introCut[2]->getMemDC());
+		_lynn->render(_introCut[2]->getMemDC());
+		_introCut[2]->render(getMemDC(), WINSIZE_X / 2 - _train2->getWidth() * 0.65f, 0, _train2->getWidth() * 1.3f, _train2->getHeight() * 1.3f, 0, 0, _train2->getWidth(), _train2->getHeight());
+	}
+	renderDialog();
 	if (_changeCut)
 	{
 		PatBlt(_changeCutImg->getMemDC(), 0, 0, WINSIZE_X, WINSIZE_Y, BLACKNESS);
@@ -355,7 +412,6 @@ void IntroScene::render(void)
 		DeleteObject(magenta);
 		_changeCutImg->render(getMemDC());
 	}
-	renderDialog();
 	_cursorImg->render(getMemDC(), _ptMouse.x, _ptMouse.y);
 }
 
@@ -425,7 +481,7 @@ void IntroScene::updateDialog()
 	}
 }
 
-bool IntroScene::unName()
+bool IntroScene::checkNextActionTiming()
 {
 	if (_dialogIdx == _nextActionTiming.front())
 	{

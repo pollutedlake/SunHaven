@@ -250,6 +250,7 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addFrameImage("LynnMom1", "Resources/Images/Intro/LynnMom1.bmp", 936, 59, 18, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("LynnMomHouse", "Resources/Images/Intro/LynnMomHouse.bmp", 654, 462, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("Train1", "Resources/Images/Intro/Train1.bmp", 686, 357, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Train2", "Resources/Images/Intro/Train2.bmp", 643, 357, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("LynnWalkSheet", "Resources/Images/Intro/LynnWalkSheet.bmp", 840, 104, 20, 2, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("LynnBlinkSheet", "Resources/Images/Intro/LynnBlinkSheet.bmp", 378, 52, 9, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("LynnBreathingSheet", "Resources/Images/Intro/LynnBreathingSheet.bmp", 1008, 52, 24, 1, true, RGB(255, 0, 255));
@@ -267,6 +268,7 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addFrameImage("TrainPassenger07", "Resources/Images/Intro/TrainPassenger07.bmp", 256, 45, 8, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("CatSleep", "Resources/Images/Intro/CatSleep.bmp", 442, 22, 13, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("RainCloud", "Resources/Images/Intro/RainCloud.bmp", 860, 46, 20, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("TrainWindow1", "Resources/Images/Intro/TrainWindow1.bmp", 870, 444, 10, 6, true, RGB(255, 0, 255));
 	// Sound
 
 	return S_OK;

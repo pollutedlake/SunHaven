@@ -63,7 +63,7 @@ void Tree::release(void)
 void Tree::setHP(int damage)
 {
 	_curHp -= damage;
-	if (_curHp <= 0)
+	if (_curHp <= 0 && _hpBarOffsetX == 1)
 	{
 		_maxHp /= 2;
 		_curHp = _maxHp;

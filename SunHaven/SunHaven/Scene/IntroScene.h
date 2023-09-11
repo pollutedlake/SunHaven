@@ -30,9 +30,11 @@ private:
 	GImage* _changeCutImg;
 	GImage* _trainPassengers[7];
 	GImage* _catSleep;
+	GImage* _trainWindow;
 
 	GImage* _lynnMomHouse;
 	GImage* _train1;
+	GImage* _train2;
 
 	Lynn* _lynn;
 
@@ -68,7 +70,7 @@ public:
 	void dialog(string charName, string printString, int length, int expression);
 	void updateDialog();
 
-	bool unName();
+	bool checkNextActionTiming();
 
 	IntroScene() {}
 	~IntroScene() {}

@@ -6,7 +6,7 @@ HRESULT MainGame::init(void)
 	GameNode::init(true);
 	_resources = new Resources;
 	_resources->init();
-	SCENEMANAGER->changeScene("Farm");
+	SCENEMANAGER->changeScene("Intro");
 	ShowCursor(false);
 	return S_OK;
 }
