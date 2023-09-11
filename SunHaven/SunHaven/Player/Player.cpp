@@ -63,22 +63,32 @@ HRESULT Player::init(float x, float y, string collisionMapKey)
 
 
 
-
+	IMAGEMANAGER->addImage("Ä® À§¾Æ·¡ ÈÖµÎ¸£±â",
+		"Resources/Images/Player/IronSwordSlashUpDown.bmp",
+		330, 90, true, RGB(255, 0, 255));
 
 	_swordSlash = IMAGEMANAGER->addImage("Ä®ÈÖµÎ¸£±â",
 		"Resources/Images/Player/IronSwordSlash.bmp",
 		230, 132, true, RGB(255, 0, 255));
+
 	_swordSlashAnim = new Animation;
 	_swordSlashAnim->init(_swordSlash->getWidth(),
 		_swordSlash->getHeight(),
 		46, 66);
 
-	_swordSlashAnim->setFPS(20);
-	_swordSlashAnim->setPlayFrame(0, 4, false, false);
+	_swordSlashUpDownAnim = new Animation;
+	_swordSlashUpDownAnim->init(_swordSlash->getWidth(),
+		_swordSlash->getHeight(),
+		66, 45);
+
+	_swordAnim = _swordSlashAnim;
+
+	_swordAnim->setFPS(10);
+	_swordAnim->setPlayFrame(0, 4, false, false);
 
 	_swordSlashRC = RectMakeCenter(_x, _y,
-		_swordSlashAnim->getFrameWidth(),
-		_swordSlashAnim->getFrameHeight());
+		_swordAnim->getFrameWidth(),
+		_swordAnim->getFrameHeight());
 
 
 
@@ -135,7 +145,15 @@ void Player::update(void)
 {
 	_inven->update();
 
-	cout << _playerState.playerName << endl;
+	//cout << _ptMouse.x << ", " << _ptMouse.y << endl;
+
+	//COLORREF waterCol =
+	//	GetPixel(_collisionMap->getMemDC(),
+	//		_ptMouse.x, _ptMouse.y);
+	//int r = GetRValue(waterCol);
+	//int g = GetGValue(waterCol);
+	//int b = GetBValue(waterCol);
+	//cout << r << ", " << g << ", " << b << endl;
 
 	if (KEYMANAGER->isOnceKeyDown(VK_LEFT) ||
 		KEYMANAGER->isOnceKeyDown(VK_RIGHT) ||
@@ -153,7 +171,9 @@ void Player::update(void)
 	if (KEYMANAGER->isStayKeyDown(VK_LEFT))
 	{
 		_x -= _moveSpeed;
-		_swordSlashAnim->setPlayFrame(0, 4, false, false);
+		_swordSlash = IMAGEMANAGER->findImage("Ä®ÈÖµÎ¸£±â");
+		_swordAnim = _swordSlashAnim;
+		_swordAnim->setPlayFrame(0, 4, false, false);
 
 		if (KEYMANAGER->isOnceKeyDown('Z'))
 		{
@@ -171,8 +191,10 @@ void Player::update(void)
 	else if (KEYMANAGER->isStayKeyDown(VK_RIGHT))
 	{
 		_x += _moveSpeed;
+		_swordSlash = IMAGEMANAGER->findImage("Ä®ÈÖµÎ¸£±â");
+		_swordAnim = _swordSlashAnim;
 		int arr[5] = { 9,8,7,6,5 };
-		_swordSlashAnim->setPlayFrame(arr, 5, false);
+		_swordAnim->setPlayFrame(arr, 5, false);
 
 		if (KEYMANAGER->isOnceKeyDown('Z'))
 		{
@@ -189,6 +211,10 @@ void Player::update(void)
 	else if (KEYMANAGER->isStayKeyDown(VK_UP))
 	{
 		_y -= _moveSpeed;
+		_swordSlash = IMAGEMANAGER->findImage("Ä® À§¾Æ·¡ ÈÖµÎ¸£±â");
+		_swordSlashUpDownAnim->setPlayFrame(0, 4, false, false);
+		_swordAnim = _swordSlashUpDownAnim;
+
 		if (KEYMANAGER->isOnceKeyDown('Z'))
 		{
 			_y -= 220;
@@ -198,6 +224,11 @@ void Player::update(void)
 	else if (KEYMANAGER->isStayKeyDown(VK_DOWN))
 	{
 		_y += _moveSpeed;
+		_swordSlash = IMAGEMANAGER->findImage("Ä® À§¾Æ·¡ ÈÖµÎ¸£±â");
+		int arr[5] = { 9,8,7,6,5 };
+		_swordSlashUpDownAnim->setPlayFrame(arr, 5, false);
+		_swordAnim = _swordSlashUpDownAnim;
+
 		if (KEYMANAGER->isOnceKeyDown('Z'))
 		{
 			_y += 220;
@@ -208,6 +239,8 @@ void Player::update(void)
 	{
 		_playerMoveAnim->AniStop();
 	}
+
+	cout << _swordAnim->getNowPlayIdx() << endl;
 
 	_playerRC = RectMakeCenter(_x, _y,
 		_playerMoveAnim->getFrameWidth(),
@@ -236,7 +269,7 @@ void Player::update(void)
 
 	if (KEYMANAGER->isOnceKeyDown('X'))
 	{
-		_swordSlashAnim->AniStart();
+		_swordAnim->AniStart();
 	}
 
 	_playerRC = RectMakeCenter(_x, _y,
@@ -318,7 +351,6 @@ void Player::update(void)
 		_eTools = eTools::PICKAXE;
 	}
 
-
 	if (KEYMANAGER->isStayKeyDown('U'))
 	{
 		_firebeamRC.right += 10;
@@ -340,7 +372,7 @@ void Player::update(void)
 
 	_playerMoveAnim->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);
 	_fireballAnim->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);
-	_swordSlashAnim->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);
+	_swordAnim->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);
 }
 
 void Player::render(void)
@@ -357,13 +389,12 @@ void Player::render(void)
 
 	_playerImage->aniRender(getMemDC(), _playerRC.left, _playerRC.top, _playerMoveAnim);
 
-	if(_swordSlashAnim->isPlay())
+	DrawRectMake(getMemDC(), _swordSlashRC);
+	if(_swordAnim->isPlay())
 	{
-		DrawRectMake(getMemDC(), _swordSlashRC);
 		_swordSlash->aniRender(getMemDC(), _swordSlashRC.left, _swordSlashRC.top,
-			_swordSlashAnim);
+			_swordAnim);
 	}
-
 
 
 	_inven->render();
@@ -396,7 +427,7 @@ void Player::UseTool(ObjectManager* object)
 
 		}
 
-		if (object->getObjectList()[i]->getType() / 2 == 1
+		else if (object->getObjectList()[i]->getType() / 2 == 1
 			&& _eTools == eTools::AXE)
 		{
 			if (IntersectRect(&temp,
@@ -409,7 +440,7 @@ void Player::UseTool(ObjectManager* object)
 
 		}
 
-		if (object->getObjectList()[i]->getType() / 2 == 2
+		else if (object->getObjectList()[i]->getType() / 2 == 2
 			&& _eTools == eTools::PICKAXE)
 		{
 			if (IntersectRect(&temp,
@@ -426,7 +457,15 @@ void Player::UseTool(ObjectManager* object)
 
 void Player::UseFishingLod()
 {
-
+	
+	if (KEYMANAGER->isOnceKeyUp(VK_RBUTTON))
+	{
+		if (GetPixel(_collisionMap->getMemDC(), _ptMouse.x, _ptMouse.y)
+			== RGB(255, 0, 0))
+		{
+			cout << "³¬½ÃÇÏ°Ô?" << endl;
+		}
+	}
 }
 
 void Player::UseSword()
@@ -437,6 +476,22 @@ void Player::UseSword()
 void Player::UseCrossBow()
 {
 
+}
+
+void Player::ObjectCollision(ObjectManager* object)
+{
+	for (int i = 0; i < object->getObjectList().size(); i++)
+	{
+		RECT temp;
+
+		if (IntersectRect(&temp,
+			&_playerRC,
+			&object->getObjectList()[i]->getRC()))
+		{
+			//_x -= _moveSpeed;
+			cout << "Ãæµ¹µÊ" << endl;
+		}
+	}
 }
 
 

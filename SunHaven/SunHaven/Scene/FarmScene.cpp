@@ -67,7 +67,9 @@ void FarmScene::update(void)
 			_vRenderList.push(make_pair(_om->getObjectList()[i], _om->getObjectList()[i]->getRC().bottom));
 		}
 	}
-	Collision();
+
+
+	_player->ObjectCollision(_om);
 
 	_player->UseTool(_om);
 
@@ -110,9 +112,9 @@ void FarmScene::Collision(void)
 		if (IntersectRect(&temp,
 			&RectMakeCenter(_player->getPlayerPosition().x,
 				_player->getPlayerPosition().y,48,52),
-			&_om->getObjectList()[i]->getCollisionRC()))
+			&_om->getObjectList()[i]->getRC()))
 		{
-			
+			cout << "Ãæµ¹" << endl;
 		}
 	}
 }

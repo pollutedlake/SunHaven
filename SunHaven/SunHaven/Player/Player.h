@@ -58,7 +58,9 @@ private:
 
 
 	GImage* _swordSlash;
+	Animation* _swordAnim;
 	Animation* _swordSlashAnim;
+	Animation* _swordSlashUpDownAnim;
 	RECT _swordSlashRC;
 
 	
@@ -96,6 +98,8 @@ public:
 	void UseSword();
 	void UseCrossBow();
 
+	void ObjectCollision(ObjectManager* object);
+
 	POINT getPlayerPosition() { return PointMake((int)_x, (int)_y); }
 
 	void setPlayerPosition(POINT position)
@@ -124,11 +128,24 @@ public:
 		else if (KEYMANAGER->isStayKeyDown(VK_RIGHT))
 		{
 			_swordSlashRC = RectMakeCenter(position.x + 28, position.y,
-				_swordSlashAnim->getFrameWidth(),
-				_swordSlashAnim->getFrameHeight());
+				_swordAnim->getFrameWidth(),
+				_swordAnim->getFrameHeight());
 
 		}
+		else if (KEYMANAGER->isStayKeyDown(VK_UP))
+		{
+			_swordSlashRC = RectMakeCenter(position.x, position.y-28,
+				_swordAnim->getFrameWidth(),
+				_swordAnim->getFrameHeight());
 
+		}
+		else if (KEYMANAGER->isStayKeyDown(VK_DOWN))
+		{
+			_swordSlashRC = RectMakeCenter(position.x, position.y+28,
+				_swordAnim->getFrameWidth(),
+				_swordAnim->getFrameHeight());
+
+		}
 
 
 		_firebeamRC = RectMake(position.x, position.y - 24,
