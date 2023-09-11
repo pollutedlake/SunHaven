@@ -1,13 +1,24 @@
 #pragma once
 #include "Skill.h"
-class FarmingSkill :
-    public Skill
+
+class FarmingSkill : public Skill
 {
 private:
+	skillImg _img;
+	skillBorderImg _borderImg[40];
+	char str[50];
 
 
 public:
     void init(string index, string name, string type, int tier, string description,
-        float value1[], float value2[], const char* filePath, int width, int height);
+        double value1[], double value2[]);
+
+	HRESULT init();
+	void release();
+	void update();
+	void render();
+
+	FarmingSkill() {}
+	~FarmingSkill() {}
 };
 

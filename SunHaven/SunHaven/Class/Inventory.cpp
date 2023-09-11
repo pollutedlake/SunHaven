@@ -5,6 +5,10 @@
 
 HRESULT Inventory::init(void)
 {
+	_ID = new ItemData;
+	_ID->init();
+
+
 	_invenBG = RectMake(WINSIZE_X / 4, WINSIZE_Y / 4, WINSIZE_X / 2, WINSIZE_Y / 2);
 	_playerBG = RectMake(_invenBG.left + 30, _invenBG.top + 50, WINSIZE_X / 6, WINSIZE_Y / 2 - 80);
 	_playerName = RectMake(_playerBG.left, _playerBG.top - 20, 202, 20);
@@ -104,12 +108,24 @@ HRESULT Inventory::init(void)
 
 	_getItem = 0;
 	_selectedItem = -1;
+
+	//tagTool* temp3;
+
+	for (int i = 0; i < 9; i++)
+	{
+		_vTool.push_back(_ID->getTool()->front());
+		_ID->getTool()->pop();
+	}
+
+	
+
+
 	return S_OK;
 }
 
 void Inventory::release(void)
 {
-
+	SAFE_DELETE(_ID);
 }
 
 void Inventory::update(void)
@@ -136,6 +152,12 @@ void Inventory::render(void)
 		moveItemRender();
 
 	}
+
+
+	if (PtInRect(&_xButton, _ptMouse) && KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
+	{
+		
+	}
 	
 	popupItem();
 	
@@ -143,9 +165,9 @@ void Inventory::render(void)
 
 void Inventory::getItem()
 {
-	if (KEYMANAGER->isOnceKeyDown('E'))
+	if (KEYMANAGER->isOnceKeyDown('O'))
 	{
-		_getItem = RND->getFromIntTo(1, 4);
+		_getItem = RND->getFromIntTo(0, 8);
 
 		for (int i = 0; i < _vInvenList.size(); i++)
 		{
@@ -208,7 +230,7 @@ void Inventory::itemMove()
 		}
 
 		//완전삭제로 수정예정
-		if (PtInRect(&_trashButton, pt))
+		if (PtInRect(&_trashButton, pt)&& _selectedItem != -1)
 		{
 			_vInvenList[_selectedItem]._draw = false;
 			_selectedItem = -1;
@@ -216,7 +238,7 @@ void Inventory::itemMove()
 
 
 		//바닥에버리기로 수정예정
-		if (PtInRect(&_dropButton, pt))
+		if (PtInRect(&_dropButton, pt) && _selectedItem != -1)
 		{
 			_vInvenList[_selectedItem]._draw = false;
 			_selectedItem = -1;
@@ -240,7 +262,6 @@ void Inventory::itemMove()
 				index = i;
 				break;
 			}
-
 
 		}
 
@@ -306,20 +327,40 @@ void Inventory::invenSlot()
 			{
 				switch (_vInvenList[i * 8 + j]._category)
 				{
-				case 1:
-					IMAGEMANAGER->render("ironBoots", getMemDC(), _vInvenList[i * (8) + j]._rc.left, _vInvenList[i * (8) + j]._rc.top);
+				case 0:
 
+					IMAGEMANAGER->render(_vTool.at(_vInvenList[i * 8 + j]._category)->name.c_str(), getMemDC(), _vInvenList[i * (8) + j]._rc.left, _vInvenList[i * (8) + j]._rc.top);
+					break;
+				case 1:
+					
+					IMAGEMANAGER->render(_vTool.at(_vInvenList[i * 8 + j]._category)->name.c_str(), getMemDC(), _vInvenList[i * (8) + j]._rc.left, _vInvenList[i * (8) + j]._rc.top);
 					break;
 				case 2:
-					IMAGEMANAGER->render("ironChestPlate", getMemDC(), _vInvenList[i * (8) + j]._rc.left, _vInvenList[i * (8) + j]._rc.top);
+					IMAGEMANAGER->render(_vTool.at(_vInvenList[i * 8 + j]._category)->name.c_str(), getMemDC(), _vInvenList[i * (8) + j]._rc.left, _vInvenList[i * (8) + j]._rc.top);
 
 					break;
 				case 3:
-					IMAGEMANAGER->render("ironGloves", getMemDC(), _vInvenList[i * (8) + j]._rc.left, _vInvenList[i * (8) + j]._rc.top);
+					IMAGEMANAGER->render(_vTool.at(_vInvenList[i * 8 + j]._category)->name.c_str(), getMemDC(), _vInvenList[i * (8) + j]._rc.left, _vInvenList[i * (8) + j]._rc.top);
 
 					break;
 				case 4:
-					IMAGEMANAGER->render("ironSword", getMemDC(), _vInvenList[i * (8) + j]._rc.left, _vInvenList[i * (8) + j]._rc.top);
+					IMAGEMANAGER->render(_vTool.at(_vInvenList[i * 8 + j]._category)->name.c_str(), getMemDC(), _vInvenList[i * (8) + j]._rc.left, _vInvenList[i * (8) + j]._rc.top);
+
+					break;
+				case 5:
+
+					IMAGEMANAGER->render(_vTool.at(_vInvenList[i * 8 + j]._category)->name.c_str(), getMemDC(), _vInvenList[i * (8) + j]._rc.left, _vInvenList[i * (8) + j]._rc.top);
+					break;
+				case 6:
+					IMAGEMANAGER->render(_vTool.at(_vInvenList[i * 8 + j]._category)->name.c_str(), getMemDC(), _vInvenList[i * (8) + j]._rc.left, _vInvenList[i * (8) + j]._rc.top);
+
+					break;
+				case 7:
+					IMAGEMANAGER->render(_vTool.at(_vInvenList[i * 8 + j]._category)->name.c_str(), getMemDC(), _vInvenList[i * (8) + j]._rc.left, _vInvenList[i * (8) + j]._rc.top);
+
+					break;
+				case 8:
+					IMAGEMANAGER->render(_vTool.at(_vInvenList[i * 8 + j]._category)->name.c_str(), getMemDC(), _vInvenList[i * (8) + j]._rc.left, _vInvenList[i * (8) + j]._rc.top);
 
 					break;
 				}
@@ -345,8 +386,8 @@ void Inventory::equipment_Slot()
 				switch (_vEquipmentSlot[i * 5 + j]._category)
 				{
 				case 1:
-					IMAGEMANAGER->render("ironBoots", getMemDC(), _vInvenList[i * (8) + j]._rc.left, _vInvenList[i * (8) + j]._rc.top);
-
+					//IMAGEMANAGER->render("ironBoots", getMemDC(), _vInvenList[i * (8) + j]._rc.left, _vInvenList[i * (8) + j]._rc.top);
+					//_vTool[i * 8 + j]->filePath;
 					break;
 				case 2:
 					IMAGEMANAGER->render("ironChestPlate", getMemDC(), _vInvenList[i * (8) + j]._rc.left, _vInvenList[i * (8) + j]._rc.top);
@@ -421,18 +462,41 @@ void Inventory::moveItemRender()
 
 		switch (_vInvenList[_selectedItem]._category)
 		{
+		case 0:
+
+			IMAGEMANAGER->render(_vTool.at(_vInvenList[_selectedItem]._category)->name.c_str(), getMemDC(), pt.x - 16, pt.y - 16);
+			break;
 		case 1:
-			// 이미지의 중심점을 기준으로 출력하도록 설정하였다면, 마우스 좌표에서 이미지의 절반 크기만큼 빼줌
-			IMAGEMANAGER->render("ironBoots", getMemDC(), pt.x - 16, pt.y - 16);
+			
+			IMAGEMANAGER->render(_vTool.at(_vInvenList[_selectedItem]._category)->name.c_str(), getMemDC(), pt.x - 16, pt.y - 16);
 			break;
 		case 2:
-			IMAGEMANAGER->render("ironChestPlate", getMemDC(), pt.x - 16, pt.y - 16);
+
+			IMAGEMANAGER->render(_vTool.at(_vInvenList[_selectedItem]._category)->name.c_str(), getMemDC(), pt.x - 16, pt.y - 16);
 			break;
 		case 3:
-			IMAGEMANAGER->render("ironGloves", getMemDC(), pt.x - 16, pt.y - 16);
+
+			IMAGEMANAGER->render(_vTool.at(_vInvenList[_selectedItem]._category)->name.c_str(), getMemDC(), pt.x - 16, pt.y - 16);
 			break;
 		case 4:
-			IMAGEMANAGER->render("ironSword", getMemDC(), pt.x - 16, pt.y - 16);
+
+			IMAGEMANAGER->render(_vTool.at(_vInvenList[_selectedItem]._category)->name.c_str(), getMemDC(), pt.x - 16, pt.y - 16);
+			break;
+		case 5:
+
+			IMAGEMANAGER->render(_vTool.at(_vInvenList[_selectedItem]._category)->name.c_str(), getMemDC(), pt.x - 16, pt.y - 16);
+			break;
+		case 6:
+
+			IMAGEMANAGER->render(_vTool.at(_vInvenList[_selectedItem]._category)->name.c_str(), getMemDC(), pt.x - 16, pt.y - 16);
+			break;
+		case 7:
+
+			IMAGEMANAGER->render(_vTool.at(_vInvenList[_selectedItem]._category)->name.c_str(), getMemDC(), pt.x - 16, pt.y - 16);
+			break;
+		case 8:
+
+			IMAGEMANAGER->render(_vTool.at(_vInvenList[_selectedItem]._category)->name.c_str(), getMemDC(), pt.x - 16, pt.y - 16);
 			break;
 		}
 	}

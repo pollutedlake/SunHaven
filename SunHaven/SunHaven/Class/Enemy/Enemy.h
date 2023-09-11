@@ -5,6 +5,7 @@ enum class EEnemyState
 {
 	IDLE,
 	MOVE,
+	TARGETON,
 	ATTACK,
 	DIE
 };
@@ -14,9 +15,13 @@ class Enemy : public GameNode
 protected:
 	EEnemyState _state;
 
+	deque<pair<float, float>> _patrolPoints;
+	pair<float, float> _nextPoints;
+
 	GImage* _image;
 
 	RECT _rc;
+	RECT _rcAttack;
 	float _detectRange;
 	float _attackRange;
 
@@ -29,6 +34,7 @@ protected:
 	float _detectW, _detectH;
 	float _timeCount;
 	float _worldTimeCount;
+	float _waitTime;
 
 	float _fireCount;
 	float _bulletFireCount;
@@ -46,6 +52,7 @@ public:
 	void render(void);
 
 	virtual void move(void);
+	virtual void targetOn(void);
 	virtual void attack(void);
 
 	virtual void draw(void);
@@ -71,7 +78,7 @@ public:
 	void setPlayerX(float playerX) { _playerX = playerX; }
 
 	float getPlayerY(void) { return _playerY; }
-	void setPlayerY(float _playerY) { _playerY = _playerY; }
+	void setPlayerY(float playerY) { _playerY = playerY; }
 
 	//void collisionCheck();
 

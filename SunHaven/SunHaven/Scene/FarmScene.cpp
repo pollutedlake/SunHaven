@@ -9,7 +9,7 @@ HRESULT FarmScene::init(void)
 	IMAGEMANAGER->addImage("충돌", "FarmMapCollision.bmp", 3600, 3600);
 
 	_player = new Player;
-	_player->init(2400, 1400);
+	_player->init(2400, 1400, "충돌");
 
 
 	_camera = new Camera;
@@ -68,6 +68,14 @@ void FarmScene::update(void)
 		}
 	}
 	Collision();
+
+	_player->UseTool(_om);
+
+	
+	if (KEYMANAGER->isOnceKeyDown(VK_F1))
+	{
+		SCENEMANAGER->changeScene("Shop");
+	}
 }
 
 void FarmScene::render(void)
@@ -81,6 +89,8 @@ void FarmScene::render(void)
 		_vRenderList.pop();
 	}
 
+	
+
 	_om->render();
 
 	if (KEYMANAGER->isToggleKey('W'))
@@ -88,7 +98,6 @@ void FarmScene::render(void)
 		IMAGEMANAGER->render("충돌", getMemDC(), _camera->worldToCameraX(0),
 			_camera->worldToCameraY(0));
 	}
-
 	_ui->render();
 }
 

@@ -541,6 +541,10 @@ void MapToolScene::render(void)
 
 	// 마우스 커서
 	IMAGEMANAGER->findImage("Cursor")->render(getMemDC(), _ptMouse.x, _ptMouse.y);
+	if (KEYMANAGER->isOnceKeyDown(VK_F1))
+	{
+		SCENEMANAGER->changeScene("Title");
+	}
 }
 
 void MapToolScene::changeLayer(int layerN)

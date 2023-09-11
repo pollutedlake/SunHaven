@@ -60,7 +60,8 @@ void TitleScene::update(void)
                         break;
 
                     case 1:
-                        SCENEMANAGER->changeScene("MapTool");
+						SOUNDMANAGER->stop("Main_Menu_Final");
+						SCENEMANAGER->changeScene("MapTool");
 
                         break;
 
@@ -77,7 +78,8 @@ void TitleScene::update(void)
                     switch (i)
                     {
                     case 0:
-                        //SCENEMANAGER->changeScene("DynusScene");
+                        SOUNDMANAGER->stop("Main_Menu_Final");
+                        SCENEMANAGER->changeScene("Intro");
 
                         break;
 

@@ -114,12 +114,12 @@ void FontManager::textOut(HDC hdc, int destX, int destY, char* fontName, int fon
 			else
 			{
 				charBuffer[bufferIndex] = L'\0';
-				textOut(hdc, destX, destY, fontName, fontSize, fontWeight, charBuffer, wcslen(charBuffer), i == 0 ? RGB(0, 255, 0) : color);
+				textOut(hdc, destX, destY, fontName, fontSize, fontWeight, charBuffer, wcslen(charBuffer), color);
 				return;
 			}
 		}
 		charBuffer[bufferIndex] = L'\0';
-		textOut(hdc, destX, destY, fontName, fontSize, fontWeight, charBuffer, wcslen(charBuffer), i == 0 ? RGB(0, 255, 0) : color);
+		textOut(hdc, destX, destY, fontName, fontSize, fontWeight, charBuffer, wcslen(charBuffer), color);
 		lineCount++;
 		MoveToEx(hdc, destX, destY + lineCount * fontSize, NULL);
 	}

@@ -160,6 +160,9 @@
     <ClCompile Include="Class\Skill\FarmingSkill.cpp" />
     <ClCompile Include="Class\Skill\FishingSkill.cpp" />
     <ClCompile Include="Class\Skill\MiningSkill.cpp" />
+    <ClCompile Include="Class\NPC\Lynn.cpp" />
+    <ClCompile Include="Scene\IntroScene.cpp" />
+    <ClCompile Include="Class\Data\EnemyData.cpp" />
     <ClCompile Include="Scene\Collision.cpp" />
     <ClCompile Include="Class\Enemy\Enemy.cpp" />
     <ClCompile Include="Class\Enemy\EnemyManager.cpp" />
@@ -208,6 +211,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="Class\Object\Tree.cpp" />
+    <ClCompile Include="Class\Skill\SkillManager.cpp" />
     <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -221,6 +225,7 @@
     <ClInclude Include="Class\Object\Object.h" />
     <ClInclude Include="Class\CraftingTable.h" />
     <ClInclude Include="Class\Data\JsonSaveLoader.h" />
+    <ClInclude Include="Class\Data\EnemyData.h" />
     <ClInclude Include="inc\FMOD\fmod.hpp" />
     <ClInclude Include="Class\Object\Grass.h" />
     <ClInclude Include="Class\Data\ItemData.h" />
@@ -229,6 +234,8 @@
     <ClInclude Include="Class\Skill\ExplorationSkill.h" />
     <ClInclude Include="Class\Skill\FarmingSkill.h" />
     <ClInclude Include="Class\Skill\FishingSkill.h" />
+    <ClInclude Include="Class\NPC\Lynn.h" />
+    <ClInclude Include="Scene\IntroScene.h" />
     <ClInclude Include="Json\json.h" />
     <ClInclude Include="Class\Data\INIData.h" />
     <ClInclude Include="Class\Inventory.h" />
@@ -277,6 +284,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="Class\Object\Tree.h" />
+    <ClInclude Include="Class\Skill\SkillManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Class\UI\UI.h" />
@@ -296,6 +304,7 @@
     <None Include="fmodex.dll" />
     <None Include="INIData\temp.ini.ini" />
     <None Include="INIData\tempINIFile.ini" />
+    <None Include="Schema\Enemy.json" />
     <None Include="Schema\Item.json" />
     <None Include="Schema\Object.json" />
     <None Include="Schema\Quest.json" />
@@ -317,6 +326,7 @@
     <Object Include="Debug\GImage.obj" />
     <Object Include="Debug\GPImage.obj" />
     <Object Include="Debug\ImageManager.obj" />
+    <Object Include="Debug\IntroScene.obj" />
     <Object Include="Debug\KeyManager.obj" />
     <Object Include="Debug\MainGame.obj" />
     <Object Include="Debug\MapToolScene.obj">

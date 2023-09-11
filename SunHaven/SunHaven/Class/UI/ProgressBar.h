@@ -5,15 +5,17 @@ class ProgressBar : public GameNode
 {
 private:
 	GImage* _progressBarTop;
-	GPImage* _progressBarBottom;
+	GImage* _progressBarBottom;
 	GImage* _progressBarFill;
 
 	RECT _rc;
 	int _x, _y;
+	float _maxWidth;
 	float _width;
+	float _height;
 
 public:
-	HRESULT init(int x, int y, int width, int height);
+	HRESULT init(string barTop, string barBottom, string barFill, int x, int y, int width, int height);
 	void release(void);
 	void update(void);
 	void render(void);

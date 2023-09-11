@@ -4,6 +4,7 @@
 #include "../Player/Player.h"
 #include "../Class/Camera.h"
 #include "../Class/Object/ObjectManager.h"
+#include "../Class/UI/ProgressBar.h"
 
 struct cmp {
 	bool operator()(pair<GameNode*, int> a, pair<GameNode*, int> b)
@@ -30,6 +31,7 @@ private:
 	ObjectManager* _om;
 	UI* _ui;
 	priority_queue<pair<GameNode*, int>, vector<pair<GameNode*, int>>, cmp> _vRenderList;
+	ProgressBar* _progressBar;
 
 public:
 	HRESULT init(void);

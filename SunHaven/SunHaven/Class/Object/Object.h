@@ -47,6 +47,8 @@ public:
 	RECT getCollisionRC() {return _collisionRC;}
 	RECT getRC() {return _rc;}
 
+	void setHP(int damage) { _curHp -= damage; }
+
 	Object() {}
 	~Object() {}
 };

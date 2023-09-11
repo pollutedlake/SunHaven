@@ -25,9 +25,9 @@ HRESULT Grass::init(LivingObjectType type, POINT tilePos)
 		_maxHp = 10;
 		break;
 	}
-	_curHp = _maxHp * RND->getFloat(1.0f);
+	_curHp = _maxHp;// *RND->getFloat(1.0f);
 	_hpBar = new ProgressBar;
-	_hpBar->init(NULL, NULL, NULL, NULL);
+	_hpBar->init("ObjectHpBarTop", "", "ObjectHpBarFill", NULL, NULL, 36, 7);
 	return S_OK;
 }
 
@@ -39,8 +39,8 @@ void Grass::update(void)
 {
 	_hpBar->setX(_cx - 5);
 	_hpBar->setY(_cy - 36);
-	_hpBar->setGauge(_curHp, _maxHp);
 	_hpBar->update();
+	_hpBar->setGauge(_curHp, _maxHp);
 }
 
 void Grass::render(void)

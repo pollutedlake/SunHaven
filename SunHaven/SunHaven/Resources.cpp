@@ -85,6 +85,10 @@ HRESULT Resources::init(void)
 		257, 169,
 		true, RGB(255, 0, 255));	// ´ÙÀÌ³Ê½º ³¯°³
 
+	IMAGEMANAGER->addImage("DynusBulletPortal", "Resources/Images/Boss/DynusBulletPortal.bmp",
+		22, 26,
+		true, RGB(255, 0, 255));	// ´ÙÀÌ³Ê½º Åº Æ÷Å»
+
 	IMAGEMANAGER->addGPFrameImage("DynusOrb", "Resources/Images/Boss/DynusOrb.png",
 		0, 0,
 		1, 1,
@@ -107,15 +111,39 @@ HRESULT Resources::init(void)
 
 	IMAGEMANAGER->addFrameImage("Shadeclow_Attack", "Resources/Images/Enemy/Ghost/Ghost_Attack.bmp",
 		0, 0,
-		440, 80,
+		440 * 2, 80 * 2,
 		11, 2,
 		true, RGB(255, 0, 255));	// ´ÙÀÌ³Ê½º ¼ÒÈ¯ ¸ó½ºÅÍ °í½ºÆ®
 
 	IMAGEMANAGER->addFrameImage("Shadeclow_Die", "Resources/Images/Enemy/Ghost/Ghost_Die.bmp",
 		0, 0,
-		560, 80,
+		560 * 2, 80 * 2,
 		14, 2,
 		true, RGB(255, 0, 255));	// ´ÙÀÌ³Ê½º ¼ÒÈ¯ ¸ó½ºÅÍ °í½ºÆ®
+
+	IMAGEMANAGER->addImage("DynusJumpPlatform", "Resources/Images/Boss/DynusJumpPlatform.bmp",
+		38 * 2, 54 * 2,
+		true, RGB(255, 0, 255));	// ´ÙÀÌ³Ê½º Á¡ÇÁ ÇÃ·§Æû
+
+	IMAGEMANAGER->addImage("DynusHpBar", "Resources/Images/UI/DynusHpBar.bmp",
+		425, 58,
+		true, RGB(255, 0, 255));	// ´ÙÀÌ³Ê½º HpBar
+
+	IMAGEMANAGER->addImage("DynusHpBarBorder", "Resources/Images/UI/DynusHpBarBorder.bmp",
+		425, 58,
+		true, RGB(255, 0, 255));	// ´ÙÀÌ³Ê½º HpBar
+
+	IMAGEMANAGER->addImage("ProgressBarW", "Resources/Images/UI/ProgressBarW.bmp",
+		92, 14,
+		true, RGB(255, 0, 255));	// ÇÁ·Î±×·¡½º ¹Ù °¡·Î
+
+	IMAGEMANAGER->addImage("ProgressBarBGW", "Resources/Images/UI/ProgressBarBGW.bmp",
+		92, 14,
+		true, RGB(255, 0, 255));	// ÇÁ·Î±×·¡½º ¹Ù ¹è°æ °¡·Î
+
+	//IMAGEMANAGER->addImage("DynusJumpPlatform", "Resources/Images/Boss/DynusJumpPlatform.bmp",
+	//	38 * 2, 54 * 2,
+	//	true, RGB(255, 0, 255));	// ´ÙÀÌ³Ê½º Á¡ÇÁ ÇÃ·§Æû
 
 	// Sound
 
@@ -125,6 +153,20 @@ HRESULT Resources::init(void)
 	// Sound
 
 	// ====================ShopScene====================
+	
+	// itemImage
+	IMAGEMANAGER->addImage("³ì½¼ °î±ªÀÌ", "Resources/Images/Item/icon_rusty_pickaxe.bmp", 32, 32, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("¾Æ´Ù¸¸Æ® °î±ªÀÌ", "Resources/Images/Item/icon_adamant_pickaxe.bmp", 32, 32, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("³ì½¼ ±ªÀÌ", "Resources/Images/Item/icon_rusty_hoe.bmp", 32, 32, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("¾Æ´Ù¸¸Æ® ±ªÀÌ", "Resources/Images/Item/icon_adamant_hoe.bmp", 32, 32, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("³ì½¼ µµ³¢", "Resources/Images/Item/icon_rusty_axe.bmp", 32, 32, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("¾Æ´Ù¸¸Æ® µµ³¢", "Resources/Images/Item/icon_adamant_axe.bmp", 32, 32, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("³ì½¼ ¹°»Ñ¸®°³", "Resources/Images/Item/icon_rusty_wateringCan.bmp", 32, 32, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("¾Æ´Ù¸¸Æ® ¹°»Ñ¸®°³", "Resources/Images/Item/icon_adamant_wateringCan.bmp", 32, 32, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("±âº» ³¬½Ë´ë", "Resources/Images/Item/icon_basic_fishingRod.bmp", 32, 32, true, RGB(255, 0, 255));
+	
+	 
+	
 	// invenImage
 	IMAGEMANAGER->addImage("invenBG", "Resources/Images/Inventory/invenBG.bmp", WINSIZE_X/2, WINSIZE_Y/2);
 	IMAGEMANAGER->addImage("player_bg", "Resources/Images/Inventory/player_bg.bmp", WINSIZE_X / 6, WINSIZE_Y / 2 - 80);
@@ -163,10 +205,11 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addImage("x_button", "Resources/Images/Inventory/x_button.bmp", 27, 28, true, RGB(255, 0, 255));
 
 	//CraftingImage
-
+	//IMAGEMANAGER->addImage("cooking_bg1" , "Resources/Images/CraftingTable/cooking_bg1.bmp",)
 
 
 	// shopImage
+	IMAGEMANAGER->addImage("Shop_Bg", "Resources/Images/Shop/Shop_Bg.bmp", WINSIZE_X, WINSIZE_Y);
 
 	// Sound
 
@@ -196,9 +239,35 @@ HRESULT Resources::init(void)
 		0, 0,
 		1, 1,
 		false, NULL, RotateNoneFlipNone);
-	IMAGEMANAGER->addImage("ProgressBarTop", "Resources/Images/UI/ProgressBarTop.bmp", 26, 7, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("ProgressBarFill", "Resources/Images/UI/ProgressBarFill.bmp", 24, 5);
+	IMAGEMANAGER->addImage("ObjectHpBarTop", "Resources/Images/UI/ProgressBarTop.bmp", 26, 7, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("ObjectHpBarFill", "Resources/Images/UI/ProgressBarFill.bmp", 24, 5);
 	//Sound
+
+	// =======================================Intro Scene=========================
+	// Image
+	IMAGEMANAGER->addFrameImage("LynnMom2", "Resources/Images/Intro/LynnMom2.bmp", 364, 354, 7, 6, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("LynnMom1", "Resources/Images/Intro/LynnMom1.bmp", 936, 59, 18, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("LynnMomHouse", "Resources/Images/Intro/LynnMomHouse.bmp", 654, 462, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Train1", "Resources/Images/Intro/Train1.bmp", 686, 357, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("LynnWalkSheet", "Resources/Images/Intro/LynnWalkSheet.bmp", 840, 104, 20, 2, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("LynnBlinkSheet", "Resources/Images/Intro/LynnBlinkSheet.bmp", 378, 52, 9, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("LynnBreathingSheet", "Resources/Images/Intro/LynnBreathingSheet.bmp", 1008, 52, 24, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("DialogWindow", "Resources/Images/Intro/image.bmp", 354, 146, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("Dialog¸°", "Resources/Images/Intro/DialogLynn.bmp", 648, 197, 6, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("LynnSadSheet", "Resources/Images/Intro/LynnSadSheet.bmp", 1680, 52, 40, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Black", "Resources/Images/Intro/Black.bmp", WINSIZE_X, WINSIZE_Y, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("LynnSadSheet", "Resources/Images/Intro/LynnSadSheet.bmp", 1680, 52, 40, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("TrainPassenger01", "Resources/Images/Intro/TrainPassenger01.bmp", 198, 185, 6, 5, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("TrainPassenger02", "Resources/Images/Intro/TrainPassenger02.bmp", 560, 39, 16, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("TrainPassenger03", "Resources/Images/Intro/TrainPassenger03.bmp", 228, 215, 6, 5, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("TrainPassenger04", "Resources/Images/Intro/TrainPassenger04.bmp", 232, 176, 8, 4, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("TrainPassenger05", "Resources/Images/Intro/TrainPassenger05.bmp", 680, 38, 20, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("TrainPassenger06", "Resources/Images/Intro/TrainPassenger06.bmp", 800, 39, 32, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("TrainPassenger07", "Resources/Images/Intro/TrainPassenger07.bmp", 256, 45, 8, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("CatSleep", "Resources/Images/Intro/CatSleep.bmp", 442, 22, 13, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("RainCloud", "Resources/Images/Intro/RainCloud.bmp", 860, 46, 20, 1, true, RGB(255, 0, 255));
+	// Sound
+
 	return S_OK;
 }
 

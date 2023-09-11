@@ -1,7 +1,8 @@
 #include "Stdafx.h"
 #include "MiningSkill.h"
 
-void MiningSkill::init(string index, string name, string type, int tier, string description, float value1[], float value2[], const char* filePath, int width, int height)
+void MiningSkill::init(string index, string name, string type, int tier, string description,
+	double value1[], double value2[])
 {
 	_index = index;
 	_type = type;
@@ -13,27 +14,35 @@ void MiningSkill::init(string index, string name, string type, int tier, string 
 		_value1[i] = value1[i];
 		_value2[i] = value2[i];
 	}
-
-	_filePath = filePath;
 }
 
 HRESULT MiningSkill::init()
 {
-	_image.skillIcon =
-		IMAGEMANAGER->addImage("채광스킬아이콘",
-			"Resources/Images/Skill/mining/mining_skill_tree_icons.bmp"
-			, 421, 147, true, RGB(255, 0, 255));
+	Skill::init();
 
-	_image.rc = RectMakeCenter(CENTER_X, CENTER_Y, 421, 147);
+	_img.skillIcon = IMAGEMANAGER->findImage("채광스킬아이콘");
+	_img.skillFrame = IMAGEMANAGER->findImage("채광스킬프레임");
+
+	_img.rc = RectMakeCenter(CENTER_X - 1, CENTER_Y + 18, 429, 147);
+	_img.frameRC = RectMakeCenter(CENTER_X, CENTER_Y, 452, 203);
 
 
 	for (int i = 0; i < 4; i++)
 	{
 		for (int j = 0; j < 10; j++)
 		{
-			/*_image[10 * i + j].rc = RectMakeCenter(200 + (17 * j), 200 + (17 * i),
-				IMAGEMANAGER->findImage(imgKey)->getWidth(),
-				IMAGEMANAGER->findImage(imgKey)->getHeight());*/
+			_borderImg[10 * i + j].maxSkillLV = 3;
+			_borderImg[10 * i + j].skillLV = 0;
+			
+			
+			_borderImg[10 * i + j].borderImg = IMAGEMANAGER->findImage("테두리0");
+			
+			_borderImg[10 * i + j].iconRC = RectMakeCenter(437 + (45 * j), 317 + (41 * i),
+				IMAGEMANAGER->findImage("테두리0")->getWidth(),
+				IMAGEMANAGER->findImage("테두리0")->getHeight());
+
+			_borderImg[10 * i + j].borderRC = RectMakeCenter(437 + (45 * j), 317 + (41 * i),
+				_borderImg[10 * i + j].borderImg->getWidth(), _borderImg[10 * i + j].borderImg->getHeight());
 		}
 	}
 
@@ -42,13 +51,67 @@ HRESULT MiningSkill::init()
 
 void MiningSkill::release()
 {
+
 }
 
 void MiningSkill::update()
 {
+	for (int i = 0; i < 40; i++)
+	{
+		if (PtInRect(&_borderImg[i].iconRC, _ptMouse))
+		{
+			if (KEYMANAGER->isOnceKeyDown(VK_MBUTTON))
+			{
+				cout << i << endl;
+				_borderImg[i].skillLV--;
+
+				if (_borderImg[i].skillLV < 0)
+					_borderImg[i].skillLV = 0;
+			}
+
+			if (KEYMANAGER->isOnceKeyDown(VK_RBUTTON))
+			{
+				cout << i << endl;
+				_borderImg[i].skillLV++;
+
+				if (_borderImg[i].skillLV > _borderImg[i].maxSkillLV)
+					_borderImg[i].skillLV = _borderImg[i].maxSkillLV;
+			}
+
+			wsprintf(str, "테두리%d", _borderImg[i].skillLV);
+			_borderImg[i].borderImg = IMAGEMANAGER->findImage(str);
+
+			_descriptionRC = RectMake(_ptMouse.x, _ptMouse.y, 500, 300);
+
+
+			_isDescription = true;
+		}
+
+		_borderImg[i].borderRC =
+			RectMakeCenter(_borderImg[i].iconRC.left + (_borderImg[i].iconRC.right - _borderImg[i].iconRC.left) / 2,
+				_borderImg[i].iconRC.top + (_borderImg[i].iconRC.bottom - _borderImg[i].iconRC.top) / 2,
+				_borderImg[i].borderImg->getWidth(), _borderImg[i].borderImg->getHeight());
+	}
 }
 
 void MiningSkill::render()
 {
-	_image.skillIcon->render(getMemDC(), _image.rc.left, _image.rc.top);
+	_img.skillFrame->render(getMemDC(), _img.frameRC.left, _img.frameRC.top);
+	_img.skillIcon->render(getMemDC(), _img.rc.left, _img.rc.top);
+	
+
+	for (int i = 0; i < 40; i++)
+	{
+		_borderImg[i].borderImg->render(getMemDC(), _borderImg[i].borderRC.left, _borderImg[i].borderRC.top);
+		/*
+		if (PtInRect(&_borderImg[i].iconRC, _ptMouse))
+		{
+			_isDescription = true;
+		}*/
+	}
+
+	if (_isDescription)
+	{
+		DrawRectMake(getMemDC(), _descriptionRC);
+	}
 }
