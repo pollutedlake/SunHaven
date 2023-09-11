@@ -31,6 +31,7 @@ HRESULT Lynn::init(float x, float y)
 	_lynnBlinkImage = IMAGEMANAGER->findImage("LynnBlinkSheet");
 	_lynnIdleImage = IMAGEMANAGER->findImage("LynnBreathingSheet");
 	_lynnSadImage = IMAGEMANAGER->findImage("LynnSadSheet");
+	_lynnTrainImage = IMAGEMANAGER->findImage("LynnTrainSheet");
 
 	_lynnWalkAnim = new Animation;
 	_lynnWalkAnim->init(_lynnWalkImage->getWidth(),
@@ -56,6 +57,12 @@ HRESULT Lynn::init(float x, float y)
 		42, 52);
 	_lynnSadAnim->setFPS(6);
 
+	_lynnTrainAnim = new Animation;
+	_lynnTrainAnim->init(_lynnTrainImage->getWidth(),
+		_lynnTrainImage->getHeight(),
+		50, 52);
+	_lynnTrainAnim->setFPS(6);
+
 	_actionStartTime = 0.0f;
 
 	_x = x;
@@ -76,6 +83,8 @@ void Lynn::release(void)
 	SAFE_DELETE(_lynnIdleAnim);
 	_lynnSadAnim->release();
 	SAFE_DELETE(_lynnSadAnim);
+	_lynnTrainAnim->release();
+	SAFE_DELETE(_lynnTrainAnim);
 }
 
 void Lynn::update(void)
@@ -103,6 +112,10 @@ void Lynn::update(void)
 		break;
 	}
 	_curAnim->frameUpdate(TIMEMANAGER->getElapsedTime());
+	if (!_curAnim->isPlay())
+	{
+		_isActionFinished = true;
+	}
 	_rc = RectMakeCenter(_x, _y, _curImg->getFrameWidth(), _curImg->getFrameHeight());
 }
 
@@ -224,6 +237,16 @@ void Lynn::popAction()
 		_moveTime = getDistance(_startX, _startY, _qMovePoints.front().first, _qMovePoints.front().second) / _speed;
 		setDir(_curAction->_dir);
 		_curAnim->setPlayFrame(4 * _dir, 4 * (_dir + 1) - 1, false, true);
+		break;
+	case TRAINSIT:
+		_curImg = _lynnTrainImage;
+		_curAnim = _lynnTrainAnim;
+		_curAnim->setPlayFrame(0, 14, false, false);
+		break;
+	case TRAINSITIDLE:
+		_curImg = _lynnTrainImage;
+		_curAnim = _lynnTrainAnim;
+		_curAnim->setPlayFrame(15, 20, false, true);
 		break;
 	}
 	_isActionFinished = false;

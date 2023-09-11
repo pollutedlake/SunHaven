@@ -254,10 +254,12 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addFrameImage("LynnWalkSheet", "Resources/Images/Intro/LynnWalkSheet.bmp", 840, 104, 20, 2, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("LynnBlinkSheet", "Resources/Images/Intro/LynnBlinkSheet.bmp", 378, 52, 9, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("LynnBreathingSheet", "Resources/Images/Intro/LynnBreathingSheet.bmp", 1008, 52, 24, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("LynnTrainSheet", "Resources/Images/Intro/LynnTrainSheet.bmp", 750, 104, 15, 2, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("DialogWindow", "Resources/Images/Intro/image.bmp", 354, 146, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("Dialog¸°", "Resources/Images/Intro/DialogLynn.bmp", 648, 197, 6, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("LynnSadSheet", "Resources/Images/Intro/LynnSadSheet.bmp", 1680, 52, 40, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("Black", "Resources/Images/Intro/Black.bmp", WINSIZE_X, WINSIZE_Y, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("SelectAnswerBG", "Resources/Images/Intro/SelectAnswerBG.bmp", 350, 30);
 	IMAGEMANAGER->addFrameImage("LynnSadSheet", "Resources/Images/Intro/LynnSadSheet.bmp", 1680, 52, 40, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("TrainPassenger01", "Resources/Images/Intro/TrainPassenger01.bmp", 198, 185, 6, 5, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("TrainPassenger02", "Resources/Images/Intro/TrainPassenger02.bmp", 560, 39, 16, 1, true, RGB(255, 0, 255));
@@ -269,6 +271,7 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addFrameImage("CatSleep", "Resources/Images/Intro/CatSleep.bmp", 442, 22, 13, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("RainCloud", "Resources/Images/Intro/RainCloud.bmp", 860, 46, 20, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("TrainWindow1", "Resources/Images/Intro/TrainWindow1.bmp", 870, 444, 10, 6, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("TrainWindow2", "Resources/Images/Intro/TrainWindow2.bmp", 870, 444, 10, 6, true, RGB(255, 0, 255));
 	// Sound
 
 	return S_OK;
