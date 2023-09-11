@@ -211,6 +211,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="Class\Object\Tree.cpp" />
+    <ClCompile Include="Class\Skill\SkillManager.cpp" />
     <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -283,6 +284,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="Class\Object\Tree.h" />
+    <ClInclude Include="Class\Skill\SkillManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Class\UI\UI.h" />

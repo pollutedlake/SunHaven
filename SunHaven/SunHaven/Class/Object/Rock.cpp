@@ -24,7 +24,7 @@ HRESULT Rock::init(LivingObjectType type, POINT tilePos)
 		_maxHp = 10;
 		break;
 	}
-	_curHp = _maxHp * RND->getFloat(1.0f);
+	_curHp = _maxHp;
 	_hpBar = new ProgressBar;
 	_hpBar->init("ObjectHpBarTop", "", "ObjectHpBarFill", NULL, NULL, 36, 7);
 	return S_OK;

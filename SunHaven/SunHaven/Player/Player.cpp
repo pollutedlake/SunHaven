@@ -2,18 +2,22 @@
 #include "Player.h"
 #include "../Class/Object/ObjectManager.h"
 
-HRESULT Player::init(float x, float y)
+HRESULT Player::init(float x, float y, string collisionMapKey)
 {
 	_x = x;
 	_y = y;
 
-	_mining = new Skill;
-	_mining->init();
+	_collisionMap = IMAGEMANAGER->findImage(collisionMapKey);
+
+
+	_skill = new SkillManager;
+	_skill->init();
 
 	_inven = new Inventory;
 	_inven->init();
 
-	
+	_eTools = eTools::SICKLE;
+
 
 	_playerImage = IMAGEMANAGER->addImage("임시플레이어",
 		"Resources/Images/Player/kittywalk.bmp",
@@ -69,7 +73,7 @@ HRESULT Player::init(float x, float y)
 		_swordSlash->getHeight(),
 		46, 66);
 
-	_swordSlashAnim->setFPS(12);
+	_swordSlashAnim->setFPS(20);
 	_swordSlashAnim->setPlayFrame(0, 4, false, false);
 
 	_swordSlashRC = RectMakeCenter(_x, _y,
@@ -86,6 +90,7 @@ HRESULT Player::init(float x, float y)
 	_isJump = false;
 
 
+	_playerState.playerName=INIDATAMANAGER->loadDataString("tempINIFile", "commonState", "playerName");
 	_playerState.HP = INIDATAMANAGER->loadDataInteger("tempINIFile", "commonState", "HP");
 	_playerState.MP = INIDATAMANAGER->loadDataInteger("tempINIFile", "commonState", "MP");
 	_playerState.gold = INIDATAMANAGER->loadDataInteger("tempINIFile", "commonState", "Gold");
@@ -105,12 +110,16 @@ HRESULT Player::init(float x, float y)
 	_miniRC[3] = RectMake(_playerRC.left-3, _playerRC.top, 3, 3);
 	
 
+
 	return S_OK;
 }
 
 void Player::release(void)
 {
 	_inven->release();
+
+	_skill->release();
+	SAFE_DELETE(_skill);
 
 	_playerMoveAnim->release();
 	SAFE_DELETE(_playerMoveAnim);
@@ -126,6 +135,7 @@ void Player::update(void)
 {
 	_inven->update();
 
+	cout << _playerState.playerName << endl;
 
 	if (KEYMANAGER->isOnceKeyDown(VK_LEFT) ||
 		KEYMANAGER->isOnceKeyDown(VK_RIGHT) ||
@@ -234,64 +244,79 @@ void Player::update(void)
 		_playerMoveAnim->getFrameHeight());
 
 
-	for (int i = _playerRC.left + 4; i <= _playerRC.right - 4; i++)
+	if (_collisionMap != nullptr)
 	{
-		COLORREF collisionT =
-			GetPixel(IMAGEMANAGER->findImage("충돌")->getMemDC(),
-				i, _playerRC.top);
-		COLORREF collisionB =
-			GetPixel(IMAGEMANAGER->findImage("충돌")->getMemDC(),
-				i, _playerRC.bottom);
+		for (int i = _playerRC.left + 4; i <= _playerRC.right - 4; i++)
+		{
+			COLORREF collisionT =
+				GetPixel(_collisionMap->getMemDC(),
+					i, _playerRC.top);
+			COLORREF collisionB =
+				GetPixel(_collisionMap->getMemDC(),
+					i, _playerRC.bottom);
 
-		if (collisionT == RGB(255, 0, 255))
-		{
-			_isCollisionTop = true;
-		}
-		else
-		{
-			_isCollisionTop = false;
+			if (collisionT == RGB(255, 0, 255))
+			{
+				_isCollisionTop = true;
+			}
+			else
+			{
+				_isCollisionTop = false;
+			}
+
+			if (collisionB == RGB(255, 0, 255))
+			{
+				_isCollisionBottom = true;
+			}
+			else
+			{
+				_isCollisionBottom = false;
+			}
 		}
 
-		if (collisionB == RGB(255, 0, 255))
+		for (int i = _playerRC.top + 4; i <= _playerRC.bottom - 4; i++)
 		{
-			_isCollisionBottom = true;
-		}
-		else
-		{
-			_isCollisionBottom = false;
+			COLORREF collisionL =
+				GetPixel(_collisionMap->getMemDC(),
+					_playerRC.left, i);
+
+			COLORREF collisionR =
+				GetPixel(_collisionMap->getMemDC(),
+					_playerRC.right, i);
+
+			if (collisionL == RGB(255, 0, 255))
+			{
+				_isCollisionLeft = true;
+
+			}
+			else
+			{
+				_isCollisionLeft = false;
+			}
+
+			if (collisionR == RGB(255, 0, 255))
+			{
+				_isCollisionRight = true;
+			}
+			else
+			{
+				_isCollisionRight = false;
+			}
 		}
 	}
 
-	for (int i = _playerRC.top + 4; i <= _playerRC.bottom - 4; i++)
+	if (KEYMANAGER->isStayKeyDown('1'))
 	{
-		COLORREF collisionL =
-			GetPixel(IMAGEMANAGER->findImage("충돌")->getMemDC(),
-				_playerRC.left, i);
-
-		COLORREF collisionR =
-			GetPixel(IMAGEMANAGER->findImage("충돌")->getMemDC(),
-				_playerRC.right, i);
-
-		if (collisionL == RGB(255, 0, 255))
-		{
-			_isCollisionLeft = true;
-			
-		}
-		else
-		{
-			_isCollisionLeft = false;
-		}
-
-		if (collisionR == RGB(255, 0, 255))
-		{
-			_isCollisionRight = true;
-		}
-		else
-		{
-			_isCollisionRight = false;
-		}
+		_eTools = eTools::SICKLE;
 	}
-
+	if (KEYMANAGER->isStayKeyDown('2'))
+	{
+		_eTools = eTools::AXE;
+	}
+	if (KEYMANAGER->isStayKeyDown('3'))
+	{
+		_eTools = eTools::PICKAXE;
+	}
 
 
 	if (KEYMANAGER->isStayKeyDown('U'))
@@ -305,7 +330,7 @@ void Player::update(void)
 	}
 
 
-	_mining->update();
+	_skill->update();
 	
 
 	if (_isCollisionLeft) _x += _moveSpeed;
@@ -334,6 +359,7 @@ void Player::render(void)
 
 	if(_swordSlashAnim->isPlay())
 	{
+		DrawRectMake(getMemDC(), _swordSlashRC);
 		_swordSlash->aniRender(getMemDC(), _swordSlashRC.left, _swordSlashRC.top,
 			_swordSlashAnim);
 	}
@@ -343,7 +369,7 @@ void Player::render(void)
 	_inven->render();
 	
 	if(KEYMANAGER->isToggleKey('K'))
-		_mining->render();
+		_skill->render();
 
 	/*DrawRectMake(getMemDC(), _miniRC[0]);
 	DrawRectMake(getMemDC(), _miniRC[1]);
@@ -353,10 +379,46 @@ void Player::render(void)
 
 void Player::UseTool(ObjectManager* object)
 {
+	RECT temp;
+
 	for (int i = 0; i < object->getObjectList().size(); i++)
 	{
-		if (object->getObjectList()[i]->getType() <= 1)
+		if (object->getObjectList()[i]->getType() / 2 == 0
+			&& _eTools == eTools::SICKLE)
 		{
+			if (IntersectRect(&temp,
+				&object->getObjectList()[i]->getRC(),
+				&_swordSlashRC)
+				&& _swordSlashAnim->getNowPlayIdx()==1)
+			{
+				object->getObjectList()[i]->setHP(1);
+			}
+
+		}
+
+		if (object->getObjectList()[i]->getType() / 2 == 1
+			&& _eTools == eTools::AXE)
+		{
+			if (IntersectRect(&temp,
+				&object->getObjectList()[i]->getRC(),
+				&_swordSlashRC)
+				&& _swordSlashAnim->getNowPlayIdx() == 1)
+			{
+				object->getObjectList()[i]->setHP(1);
+			}
+
+		}
+
+		if (object->getObjectList()[i]->getType() / 2 == 2
+			&& _eTools == eTools::PICKAXE)
+		{
+			if (IntersectRect(&temp,
+				&object->getObjectList()[i]->getRC(),
+				&_swordSlashRC)
+				&& _swordSlashAnim->getNowPlayIdx() == 1)
+			{
+				object->getObjectList()[i]->setHP(1);
+			}
 
 		}
 	}

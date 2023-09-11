@@ -2,13 +2,22 @@
 #include "../FrameWork/GameNode/GameNode.h"
 #include "../FrameWork/Animation/Animation.h"
 #include "../Class/Inventory.h"
-#include "../Class/Skill/MiningSkill.h"
+#include "../Class/Skill/SkillManager.h"
 
 class ObjectManager;
 
+enum class eTools
+{
+	SICKLE=0,
+	HOE,
+	AXE,
+	PICKAXE,
+	FISHINGLOD
+};
+
 struct tagPlayerState
 {
-	string playerName;
+	char* playerName;
 	float playerSpeed;
 	int HP;
 	int MP;
@@ -33,7 +42,8 @@ private:
 	tagPlayerState _playerState;
 	int a;
 
-	Skill* _mining;
+	SkillManager* _skill;
+	eTools _eTools;
 
 private:
 	GImage* _playerImage;
@@ -60,6 +70,8 @@ private:
 	Inventory* _inven;
 
 
+	GImage* _collisionMap;
+
 	float _x, _y;
 	float _moveSpeed;
 
@@ -73,7 +85,7 @@ private:
 	bool _isJump;
 
 public:
-	HRESULT init(float x, float y);
+	HRESULT init(float x, float y, string collisionMapkey);
 	void release(void);
 	void update(void);
 	void render(void);
