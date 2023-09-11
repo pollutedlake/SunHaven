@@ -127,6 +127,7 @@ public:
 	queue<tagArmor*>* getArmor() { return &this->_armor; }
 	queue<tagIngredient*>* getIngredient() { return &this->_ingredient; }
 	queue<tagConsumable*>* getConsumable() { return &this->_consumable; }
+	queue<tagAccessory*>* getAccessory() { return &this->_acc; }
 
 	ItemData() {}
 	~ItemData() {}

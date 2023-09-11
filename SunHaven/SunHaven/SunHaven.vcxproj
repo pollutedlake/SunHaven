@@ -346,6 +346,7 @@
   <ItemGroup>
     <Image Include="FarmMap.bmp" />
     <Image Include="FarmMapCollision.bmp" />
+    <Image Include="Shop_Bg_Collision.bmp" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="lib\FMOD\fmodex_vc.lib" />

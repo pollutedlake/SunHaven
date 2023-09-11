@@ -39,6 +39,9 @@ private:
 	int _getItem;
 	int _selectedItem;
 
+	bool _seeInven;
+	
+
 	vector<inventoryList> _vInvenList;
 	vector<inventoryList>::iterator _viInvenList;
 
@@ -47,6 +50,9 @@ private:
 
 	vector<tagTool*> _vTool;
 	vector<tagTool*>::iterator _viTool;
+
+	
+
 
 	ItemData* _ID;
 	
@@ -65,6 +71,8 @@ public:
 	void equipment_Slot();
 	void moveItemRender();
 	void popupItem();
+
+	
 
 	Inventory(){}
 	~Inventory(){}

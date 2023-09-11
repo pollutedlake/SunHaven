@@ -147,6 +147,8 @@ public:
 
 	RECT getRect(void) { return _playerRC; }
 
+	Inventory* getInven() { return _inven; }
+
 	Player() {}
 	~Player() {}
 };

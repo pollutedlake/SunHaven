@@ -164,6 +164,15 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addImage("³ì½¼ ¹°»Ñ¸®°³", "Resources/Images/Item/icon_rusty_wateringCan.bmp", 32, 32, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("¾Æ´Ù¸¸Æ® ¹°»Ñ¸®°³", "Resources/Images/Item/icon_adamant_wateringCan.bmp", 32, 32, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("±âº» ³¬½Ë´ë", "Resources/Images/Item/icon_basic_fishingRod.bmp", 32, 32, true, RGB(255, 0, 255));
+
+	IMAGEMANAGER->addImage("ÄíÅ°", "Resources/Images/Item/icon_cookies.bmp", 32, 32, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("¾Æ´Ù¸¸Æ® ¹ÝÁö", "Resources/Images/Item/icon_adamant_accessory.bmp", 32, 32, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("¾Æ´Ù¸¸Æ® °Ë", "Resources/Images/Item/icon_adamant_sword.bmp", 32, 32, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("°Ë", "Resources/Images/Item/icon_basic_sword.bmp", 32, 32, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("¾Æ´Ù¸¸Æ® ¼è³ú", "Resources/Images/Item/icon_adamant_crossbow.bmp", 32, 32, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("¼è³ú", "Resources/Images/Item/icon_basic_crossbow.bmp", 32, 32, true, RGB(255, 0, 255));
+
+	
 	
 	 
 	
@@ -209,7 +218,19 @@ HRESULT Resources::init(void)
 
 
 	// shopImage
-	IMAGEMANAGER->addImage("Shop_Bg", "Resources/Images/Shop/Shop_Bg.bmp", WINSIZE_X, WINSIZE_Y);
+	IMAGEMANAGER->addImage("Shop_Bg", "Resources/Images/Shop/Shop_Bg.bmp", WINSIZE_X, WINSIZE_Y,true,RGB(255,0,255));
+	IMAGEMANAGER->addImage("store_bg", "Resources/Images/Shop/store_bg.bmp", 522, 654, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("store_item_bg", "Resources/Images/Shop/store_item_bg.bmp", 231, 93, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("store_upper_icon_wip", "Resources/Images/Shop/store_upper_icon_wip.bmp", 56, 54, true, RGB(255, 0, 255));
+
+	IMAGEMANAGER->addImage("x1_button", "Resources/Images/Shop/x1_button.bmp", 22, 20, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("x1_button_normal", "Resources/Images/Shop/x1_button_normal.bmp", 22, 20, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("x5_button", "Resources/Images/Shop/x5_button.bmp", 23, 20, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("x5_button_normal", "Resources/Images/Shop/x5_button_normal.bmp", 23, 20, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("x20_button", "Resources/Images/Shop/x20_button.bmp", 28, 20, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("x20_button_normal", "Resources/Images/Shop/x20_button_normal.bmp", 28, 20, true, RGB(255, 0, 255));
+
+	IMAGEMANAGER->addImage("UI_icon_coin", "Resources/Images/Shop/UI_icon_coin.bmp", 10, 9, true, RGB(255, 0, 255));
 
 	// Sound
 

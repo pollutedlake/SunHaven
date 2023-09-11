@@ -8,6 +8,7 @@ HRESULT Inventory::init(void)
 	_ID = new ItemData;
 	_ID->init();
 
+	_seeInven = false;
 
 	_invenBG = RectMake(WINSIZE_X / 4, WINSIZE_Y / 4, WINSIZE_X / 2, WINSIZE_Y / 2);
 	_playerBG = RectMake(_invenBG.left + 30, _invenBG.top + 50, WINSIZE_X / 6, WINSIZE_Y / 2 - 80);
@@ -117,8 +118,11 @@ HRESULT Inventory::init(void)
 		_ID->getTool()->pop();
 	}
 
+
 	
 
+
+	
 
 	return S_OK;
 }
@@ -140,23 +144,28 @@ void Inventory::update(void)
 
 void Inventory::render(void)
 {
-	if (KEYMANAGER->isToggleKey('I'))
+	if (KEYMANAGER->isOnceKeyDown('I') && !_seeInven)
 	{
+		_seeInven = true;
 
+	}
+	
+	
+	if (_seeInven)
+	{
 		invenMold();
-		
+
 		invenSlot();
 
 		equipment_Slot();
 
 		moveItemRender();
 
-	}
+		if ((PtInRect(&_xButton, _ptMouse) && KEYMANAGER->isOnceKeyDown(VK_LBUTTON)) || KEYMANAGER->isOnceKeyDown('I'))
+		{
+			_seeInven = false;
+		}
 
-
-	if (PtInRect(&_xButton, _ptMouse) && KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
-	{
-		
 	}
 	
 	popupItem();
@@ -192,17 +201,13 @@ void Inventory::itemMove()
 {
 	if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
 	{
-		// 마우스 좌표를 얻음
-		POINT pt;
-		GetCursorPos(&pt);
-		ScreenToClient(_hWnd, &pt);
 
 		// 해당하는 인덱스를 찾음
 		int index = -1;
 		int temp = 0;
 		for (int i = 0; i < _vInvenList.size(); i++)
 		{
-			if (PtInRect(&_vInvenList[i]._rc, pt))
+			if (PtInRect(&_vInvenList[i]._rc, _ptMouse))
 			{
 				index = i;
 				break;
@@ -230,7 +235,7 @@ void Inventory::itemMove()
 		}
 
 		//완전삭제로 수정예정
-		if (PtInRect(&_trashButton, pt)&& _selectedItem != -1)
+		if (PtInRect(&_trashButton, _ptMouse)&& _selectedItem != -1)
 		{
 			_vInvenList[_selectedItem]._draw = false;
 			_selectedItem = -1;
@@ -238,7 +243,7 @@ void Inventory::itemMove()
 
 
 		//바닥에버리기로 수정예정
-		if (PtInRect(&_dropButton, pt) && _selectedItem != -1)
+		if (PtInRect(&_dropButton, _ptMouse) && _selectedItem != -1)
 		{
 			_vInvenList[_selectedItem]._draw = false;
 			_selectedItem = -1;
@@ -248,16 +253,12 @@ void Inventory::itemMove()
 
 	if (KEYMANAGER->isOnceKeyUp(VK_LBUTTON))
 	{
-		// 마우스 좌표를 얻음
-		POINT pt;
-		GetCursorPos(&pt);
-		ScreenToClient(_hWnd, &pt);
-
+		
 		// 빈칸에 해당하는 인덱스를 찾음
 		int index = -1;
 		for (int i = 0; i < _vInvenList.size(); i++)
 		{
-			if (PtInRect(&_vInvenList[i]._rc, pt) && !_vInvenList[i]._draw)
+			if (PtInRect(&_vInvenList[i]._rc, _ptMouse) && !_vInvenList[i]._draw)
 			{
 				index = i;
 				break;
@@ -524,3 +525,5 @@ void Inventory::popupItem()
 		}
 	}
 }
+
+
