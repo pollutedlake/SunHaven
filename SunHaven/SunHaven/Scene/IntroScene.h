@@ -17,7 +17,8 @@ struct Dialog
 	string _dialog;
 	int _letterN;
 	int _answerN;
-	string _answer[4];
+	int _nextDialog;
+	pair<string, int> _answer[4];
 };
 
 class IntroScene : public GameNode
@@ -28,9 +29,10 @@ private:
 	GImage* _lynnMom;
 	GImage* _dialogWindow;
 	GImage* _changeCutImg;
-	GImage* _trainPassengers[7];
+	GImage* _trainPassengers[11];
 	GImage* _catSleep;
 	GImage* _trainWindow;
+	Animation* _catAnim;
 
 	GImage* _lynnMomHouse;
 	GImage* _train1;
@@ -49,7 +51,7 @@ private:
 	queue<int> _nextActionTiming;
 
 	RECT _dialogRC;
-	Dialog _arrDialogs[59];
+	Dialog _arrDialogs[60];
 	int _dialogIdx;
 	GImage* _speaker;
 	float _typingTime;
@@ -58,10 +60,9 @@ private:
 
 	bool _changeCut;
 	bool _dark;
-
 	int _darkAlpha;
-
 	int _cutIdx;
+	int _answerN;
 
 public:
 	HRESULT init(void);

@@ -42,7 +42,7 @@ void Grass::update(void)
 	_hpBar->setY(_cy - _hpBarOffsetY);
 	_hpBar->update();
 	_hpBar->setGauge(_curHp, _maxHp);
-	_collisionRC = RectMake(_cx, _cy, TILEWIDTH * 1.5f, TILEHEIGHT * 1.5f);
+	_collisionRC = RectMakeCenter(_cx, _cy, TILEWIDTH * 1.5f, TILEHEIGHT * 1.5f);
 }
 
 void Grass::render(void)
