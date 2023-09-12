@@ -7,7 +7,9 @@ enum State
 	IDLE,
 	WALK,
 	SADIDLE,
-	SADWALK
+	SADWALK,
+	TRAINSITIDLE,
+	TRAINSIT
 };
 
 enum Direction
@@ -34,12 +36,14 @@ private:
 	GImage* _lynnIdleImage;
 	GImage* _lynnBlinkImage;
 	GImage* _lynnSadImage;
+	GImage* _lynnTrainImage;
 	GImage* _curImg;
 
 	Animation* _lynnWalkAnim;
 	Animation* _lynnBlinkAnim;
 	Animation* _lynnIdleAnim;
 	Animation* _lynnSadAnim;
+	Animation* _lynnTrainAnim;
 	Animation* _curAnim;
 	
 	queue<Action*> _qAction;
@@ -71,6 +75,8 @@ public:
 	void render(HDC hdc);
 	void move();
 	void idle();
+	/*void trainSitIdle();
+	void trainSit*/
 	void pushMovePoint(pair<float, float> movePoint);
 
 	void setState(State state) {_state = state;}

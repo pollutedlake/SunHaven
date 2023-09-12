@@ -20,7 +20,7 @@ bool Dynus::hpMinusTemp(void)
 HRESULT Dynus::init(void)
 {
 	//_state = EDynusState::BREATHE;
-	_phase = EDynusPhase::THIRD;
+	_phase = EDynusPhase::FIRST;
 	//_spell = EDynusSpell::SPREAD_X;
 
 	_hp = 10000.0f;
@@ -781,7 +781,6 @@ void Dynus::draw(void)
 			DrawRectMake(getMemDC(), _rcPa3Start[i]);
 		}
 
-		DrawRectMake(getMemDC(), _player->getRect());
 
 		SelectObject(getMemDC(), oldBrush);
 		DeleteObject(myBrush);

@@ -7,39 +7,11 @@ HRESULT ShopScene::init(void)
 {
 	IMAGEMANAGER->addImage("충돌", "Shop_Bg_Collision.bmp", WINSIZE_X, WINSIZE_Y);
 	_player = new Player;
-	_player->init(700,500);
+	_player->init(700,500, "충돌");
 	
 	_solonRc = RectMake(600, 320, 100, 100);
 	_shopBg = RectMake(WINSIZE_X / 2 - 261, WINSIZE_Y / 2 - 327, 522, 654);
 
-	/*_ID = new ItemData;
-	_ID->init();
-
-	for (int i = 0; i < 6; i++)
-	{
-		if (i < 4)
-		{
-			_vWeapon.push_back(_ID->getWeapon()->front());
-			_ID->getWeapon()->pop();
-		}
-
-		if (i == 4)
-		{
-			_vAccessory.push_back(_ID->getAccessory()->front());
-			_ID->getAccessory()->pop();
-
-		}
-
-		if (i == 5)
-		{
-			_vConsumable.push_back(_ID->getConsumable()->front());
-			_ID->getConsumable()->pop();
-
-		}
-	}*/
-	
-	
-	// 쇠뇌 /아다만트 쇠뇌/ 검 /아다만트 검/ 아다만트 반지/ 쿠키
 
 	shopList temp;
 
@@ -52,10 +24,6 @@ HRESULT ShopScene::init(void)
 			if (i < 2)
 			{
 				temp._rc = RectMake(_shopBg.left + 25 + 241 * j, _shopBg.top + 60 + (10 + 103 * i), 231, 93);
-				/*temp._name = _vWeapon[i * 2 + j]->name;
-				temp._buyGold = _vWeapon[i * 2 + j]->gold;
-				temp._sellGold = _vWeapon[i * 2 + j]->sellGold;*/
-
 				temp._name = _player->getInven()->getWeapon()[i * 2 + j]->name;
 				temp._buyGold = _player->getInven()->getWeapon()[i * 2 + j]->gold;
 				temp._sellGold = _player->getInven()->getWeapon()[i * 2 + j]->sellGold;
@@ -86,9 +54,6 @@ HRESULT ShopScene::init(void)
 				if (j < 1)
 				{
 					temp._rc = RectMake(_shopBg.left + 25 + 241 * j, _shopBg.top + 60 + (10 + 103 * i), 231, 93);
-					/*temp._name = _vAccessory.front()->name;
-					temp._buyGold = _vAccessory.front()->gold;
-					temp._sellGold = _vAccessory.front()->sellGold;*/
 					temp._name = _player->getInven()->getAccessory().front()->name;
 					temp._buyGold = _player->getInven()->getAccessory().front()->gold;
 					temp._sellGold = _player->getInven()->getAccessory().front()->sellGold;
@@ -117,9 +82,6 @@ HRESULT ShopScene::init(void)
 				if(j==1)
 				{
 					temp._rc = RectMake(_shopBg.left + 25 + 241 * j, _shopBg.top + 60 + (10 + 103 * i), 231, 93);
-					/*temp._name = _vConsumable.front()->name;
-					temp._buyGold = _vConsumable.front()->gold;
-					temp._sellGold = _vConsumable.front()->sellGold;*/
 					temp._name = _player->getInven()->getConsumable().front()->name;
 					temp._buyGold = _player->getInven()->getConsumable().front()->gold;
 					temp._sellGold = _player->getInven()->getConsumable().front()->sellGold;

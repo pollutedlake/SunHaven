@@ -89,6 +89,17 @@
     <ClCompile Include="Player\Skill\Skill.cpp" />
     <ClCompile Include="Class\Object\Tree.cpp" />
     <ClCompile Include="WinMain.cpp" />
+    <ClCompile Include="Class\Skill\SkillManager.cpp" />
+    <ClCompile Include="Scene\IntroScene.cpp" />
+    <ClCompile Include="Class\NPC\Lynn.cpp" />
+=======
+    <ClCompile Include="Class\Data\EnemyData.cpp" />
+>>>>>>> JSJ
+    <ClCompile Include="Scene\IntroScene.cpp" />
+    <ClCompile Include="Class\NPC\Lynn.cpp" />
+=======
+    <ClCompile Include="Class\Data\EnemyData.cpp" />
+>>>>>>> JSJ
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Class\UI\Buttons.h" />
@@ -146,16 +157,17 @@
     <ClInclude Include="FrameWork\Timer\Timer.h" />
     <ClInclude Include="Scene\TitleScene.h" />
     <ClInclude Include="FrameWork\PCH\Stdafx.h" />
-    <ClInclude Include="Scene\ShopScene.h" />
-    <ClInclude Include="Scene\TownScene.h" />
-    <ClInclude Include="FrameWork\Utility\Utils.h" />
-    <ClInclude Include="Class\Enemy\SteelSlug.h" />
-    <ClInclude Include="Class\Enemy\TrapWeed.h" />
-    <ClInclude Include="Class\Enemy\Shadeclaw.h" />
-    <ClInclude Include="Class\Skill\Skill.h" />
-    <ClInclude Include="Player\Skill\Skill.h" />
-    <ClInclude Include="Class\Object\Tree.h" />
+    <ClInclude Include="Class\Skill\SkillManager.h" />
     <ClInclude Include="Class\UI\UI.h" />
+<<<<<<< HEAD
+    <ClInclude Include="Scene\IntroScene.h" />
+    <ClInclude Include="Class\NPC\Lynn.h" />
+=======
+>>>>>>> MYS
+=======
+    <ClInclude Include="Class\UI.h" />
+    <ClInclude Include="Class\Data\EnemyData.h" />
+>>>>>>> JSJ
   </ItemGroup>
   <ItemGroup>
     <Library Include="lib\FMOD\fmodex_vc.lib" />

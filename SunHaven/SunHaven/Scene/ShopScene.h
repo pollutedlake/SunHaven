@@ -4,7 +4,7 @@
 #include "../Player/Player.h"
 
 
-//class Inventory;
+
 
 struct shopList
 {
@@ -21,7 +21,7 @@ class ShopScene : public GameNode
 
 private:
 	Player* _player;
-	//ItemData* _ID;
+
 	
 	RECT _solonRc;
 	RECT _shopBg;
@@ -31,14 +31,6 @@ private:
 	vector<shopList> _vShopList;
 	vector<shopList>::iterator _viShopList;
 
-	/*vector<tagWeapon*> _vWeapon;
-	vector<tagWeapon*>::iterator _viWeapon;
-
-	vector<tagAccessory*> _vAccessory;
-	vector<tagAccessory*>::iterator _viAccessory;
-
-	vector<tagConsumable*> _vConsumable;
-	vector<tagConsumable*>::iterator _viConsumable;*/
 
 public:
 	HRESULT init(void);

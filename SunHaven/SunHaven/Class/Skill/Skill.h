@@ -22,7 +22,7 @@ class Skill : public GameNode
 {
 protected:
 	typedef tagSkillImg skillImg;
-	typedef tagSkillBorder skillImage;
+	typedef tagSkillBorder skillBorderImg;
 
 protected:
 	string _index;
@@ -37,24 +37,23 @@ protected:
 
 protected:
 	skillImg _image;
-	skillImage _img[40];
+	skillBorderImg _img[40];
 
 
 	RECT tmpRC[40];
 	RECT borderRC[40];
-
+	RECT _descriptionRC;
 
 private:
-	char str[10];
 
 public:
 	virtual void init(string index, string name, string type, int tier, string description,
 		double value1[], double value2[]);
 
-	HRESULT init();
-    void release();
-    void update();
-    void render();
+	virtual HRESULT init();
+    virtual void release();
+    virtual void update();
+    virtual void render();
 
 
 
@@ -64,5 +63,8 @@ public:
 	string getDescription(void) { return _description; }
 	double getValue1(int index) { return _value1[index]; }
 	double getValue2(int index) { return _value2[index]; }
+
+	Skill() {}
+	~Skill() {}
 };
 
