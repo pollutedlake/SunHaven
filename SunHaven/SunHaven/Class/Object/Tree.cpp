@@ -13,7 +13,6 @@ HRESULT Tree::init(LivingObjectType type, POINT tilePos)
 	wsprintf(str, "Object%d", (int)type + 1);
 	_image = IMAGEMANAGER->findImage(str);
 	_tilePos = tilePos;
-	_collisionRC = RectMake(tilePos.x * TILEWIDTH * 2, tilePos.y * TILEHEIGHT * 2, TILEWIDTH * 2, TILEHEIGHT * 2);
 	_halfTrans = false;
 	switch (_type)
 	{
@@ -28,18 +27,21 @@ HRESULT Tree::init(LivingObjectType type, POINT tilePos)
 		_maxHp = 120;
 		break;
 	}
-	_curHp = _maxHp * RND->getFloat(1.0f);
+	_curHp = _maxHp;
 	_hpBar = new ProgressBar;
 	_hpBar->init("ObjectHpBarTop", "", "ObjectHpBarFill", NULL, NULL, 36, 7);
+	_hpBarOffsetX = 1;
+	_hpBarOffsetY = 30;
 	return S_OK;
 }
 
 void Tree::update(void)
 {
-	_hpBar->setX(_cx - 25);
-	_hpBar->setY(_cy - 50);
+	_hpBar->setX(_cx - _hpBarOffsetX);
+	_hpBar->setY(_cy - _hpBarOffsetY);
 	_hpBar->update();
 	_hpBar->setGauge(_curHp, _maxHp);
+	_collisionRC = RectMakeCenter(_cx, _cy, TILEWIDTH * 1.5f, TILEHEIGHT * 1.5f);
 }
 
 void Tree::render(void)
@@ -56,4 +58,20 @@ void Tree::render(void)
 
 void Tree::release(void)
 {
+}
+
+void Tree::setHP(int damage)
+{
+	_curHp -= damage;
+	if (_curHp <= 0 && _hpBarOffsetX == 1)
+	{
+		_maxHp /= 2;
+		_curHp = _maxHp;
+		_image = IMAGEMANAGER->findImage("Stump");
+		_offsetX = 0;
+		_offsetY = 0;
+		_hpBarOffsetX = 5;
+		_hpBarOffsetY = 36;
+		_rc = RectMake(_cx + (_offsetX - _image->getWidth() / 2) * 1.5f, _cy + (_offsetY - _image->getHeight() / 2) * 1.5f, _image->getWidth() * 1.5, _image->getHeight() * 1.5);
+	}
 }

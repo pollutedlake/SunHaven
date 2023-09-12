@@ -2,18 +2,24 @@
 #include "Player.h"
 #include "../Class/Object/ObjectManager.h"
 
-HRESULT Player::init(float x, float y)
+HRESULT Player::init(float x, float y, string collisionMapKey)
 {
 	_x = x;
 	_y = y;
 
-	_mining = new Skill;
-	_mining->init();
+	_collisionMap = IMAGEMANAGER->findImage(collisionMapKey);
+
+
+
+
+	_skill = new SkillManager;
+	_skill->init();
 
 	_inven = new Inventory;
 	_inven->init();
 
-	
+	_eTools = eTools::SICKLE;
+
 
 	_playerImage = IMAGEMANAGER->addImage("임시플레이어",
 		"Resources/Images/Player/kittywalk.bmp",
@@ -28,6 +34,8 @@ HRESULT Player::init(float x, float y)
 	_playerRC = RectMakeCenter(_x, _y,
 		_playerMoveAnim->getFrameWidth(),
 		_playerMoveAnim->getFrameHeight());
+
+
 
 	_isCollisionLeft = _isCollisionRight =
 		_isCollisionTop =_isCollisionBottom = false;
@@ -59,33 +67,118 @@ HRESULT Player::init(float x, float y)
 
 
 
-
+	IMAGEMANAGER->addImage("칼 위아래 휘두르기",
+		"Resources/Images/Player/IronSwordSlashUpDown.bmp",
+		330, 90, true, RGB(255, 0, 255));
 
 	_swordSlash = IMAGEMANAGER->addImage("칼휘두르기",
 		"Resources/Images/Player/IronSwordSlash.bmp",
 		230, 132, true, RGB(255, 0, 255));
+
 	_swordSlashAnim = new Animation;
 	_swordSlashAnim->init(_swordSlash->getWidth(),
 		_swordSlash->getHeight(),
 		46, 66);
 
-	_swordSlashAnim->setFPS(12);
-	_swordSlashAnim->setPlayFrame(0, 4, false, false);
+	_swordSlashUpDownAnim = new Animation;
+	_swordSlashUpDownAnim->init(_swordSlash->getWidth(),
+		_swordSlash->getHeight(),
+		66, 45);
+
+	_swordAnim = _swordSlashAnim;
+
+	_swordAnim->setFPS(10);
+	_swordAnim->setPlayFrame(0, 4, false, false);
 
 	_swordSlashRC = RectMakeCenter(_x, _y,
-		_swordSlashAnim->getFrameWidth(),
-		_swordSlashAnim->getFrameHeight());
+		_swordAnim->getFrameWidth(),
+		_swordAnim->getFrameHeight());
 
 
 
-	
+	//=============================================//
 
+
+
+	_axeSwing = IMAGEMANAGER->addImage("도끼휘두르기",
+		"Resources/Images/Player/rustyaxeswing.bmp",
+		3360, 168, true, RGB(255, 0, 255));
+
+	_axeSwingAnim = new Animation;
+	_axeSwingAnim->init(_axeSwing->getWidth(),
+		_axeSwing->getHeight(),
+		168, 168);
+
+	_axeSwingAnim->setFPS(10);
+	_axeSwingAnim->setPlayFrame(5, 9, false, false);
+
+	_axeSwingRC = RectMakeCenter(_x, _y,
+		_axeSwingAnim->getFrameWidth(),
+		_axeSwingAnim->getFrameHeight());
+
+	//=============================================//
+
+	_pickaxeSwing = IMAGEMANAGER->addImage("곡괭이휘두르기",
+		"Resources/Images/Player/rustypickaxeswing.bmp",
+		960, 101, true, RGB(255, 0, 255));
+
+	_pickaxeSwingAnim = new Animation;
+	_pickaxeSwingAnim->init(_pickaxeSwing->getWidth(),
+		_pickaxeSwing->getHeight(),
+		60, 101);
+
+	_pickaxeSwingAnim->setFPS(10);
+	_pickaxeSwingAnim->setPlayFrame(5, 9, false, false);
+
+	_pickaxeSwingRC = RectMakeCenter(_x, _y,
+		_pickaxeSwingAnim->getFrameWidth(),
+		_pickaxeSwingAnim->getFrameHeight());
+
+	//=============================================//
+
+	_hoeSwing = IMAGEMANAGER->addImage("괭이휘두르기",
+		"Resources/Images/Player/rustyhoe.bmp",
+		960, 100, true, RGB(255, 0, 255));
+
+	_hoeSwingAnim = new Animation;
+	_hoeSwingAnim->init(_hoeSwing->getWidth(),
+		_hoeSwing->getHeight(),
+		60, 100);
+
+	_hoeSwingAnim->setFPS(10);
+	_hoeSwingAnim->setPlayFrame(5, 9, false, false);
+
+	_hoeSwingRC = RectMakeCenter(_x, _y,
+		_hoeSwingAnim->getFrameWidth(),
+		_hoeSwingAnim->getFrameHeight());
+
+
+	//=============================================//
+
+	_scytheSwing = IMAGEMANAGER->addImage("낫휘두르기",
+		"Resources/Images/Player/scytheswing.bmp",
+		3360, 168, true, RGB(255, 0, 255));
+
+	_scytheSwingAnim = new Animation;
+	_scytheSwingAnim->init(_scytheSwing->getWidth(),
+		_scytheSwing->getHeight(),
+		168, 168);
+
+	_scytheSwingAnim->setFPS(10);
+	_scytheSwingAnim->setPlayFrame(5, 9, false, false);
+
+	_scytheSwingRC = RectMakeCenter(_x, _y,
+		_scytheSwingAnim->getFrameWidth(),
+		_scytheSwingAnim->getFrameHeight());
+
+
+	//=============================================//
 
 
 	_jump = 5.5f;
 	_isJump = false;
 
-
+	_playerState.playerName=INIDATAMANAGER->loadDataString("tempINIFile", "commonState", "playerName");
 	_playerState.HP = INIDATAMANAGER->loadDataInteger("tempINIFile", "commonState", "HP");
 	_playerState.MP = INIDATAMANAGER->loadDataInteger("tempINIFile", "commonState", "MP");
 	_playerState.gold = INIDATAMANAGER->loadDataInteger("tempINIFile", "commonState", "Gold");
@@ -97,13 +190,16 @@ HRESULT Player::init(float x, float y)
 	_playerState.spellDamage = INIDATAMANAGER->loadDataInteger("tempINIFile", "combatState", "spellDamage");
 	_playerState.defence = INIDATAMANAGER->loadDataInteger("tempINIFile", "combatState", "defence");
 	
+	_toolImage = _scytheSwing;
+	_toolAnim = _scytheSwingAnim;
+	_toolAnimRC = _scytheSwingRC;
 
-	
 	_miniRC[0] = RectMake(_playerRC.left, _playerRC.top - 3, 3, 3);
 	_miniRC[1] = RectMake(_playerRC.right + 3, _playerRC.top, 3, 3);
 	_miniRC[2] = RectMake(_playerRC.right -3, _playerRC.top + 3, 3, 3);
 	_miniRC[3] = RectMake(_playerRC.left-3, _playerRC.top, 3, 3);
 	
+	_isLoop = false;
 
 	return S_OK;
 }
@@ -112,25 +208,30 @@ void Player::release(void)
 {
 	_inven->release();
 
+	_skill->release();
+	SAFE_DELETE(_skill);
+
 	_playerMoveAnim->release();
 	SAFE_DELETE(_playerMoveAnim);
 	
 	_fireballAnim->release();
 	SAFE_DELETE(_fireballAnim);
-	
+
 	_swordSlashAnim->release();
 	SAFE_DELETE(_swordSlashAnim);
+
+	_axeSwingAnim->release();
+	SAFE_DELETE(_axeSwingAnim);
 }
 
 void Player::update(void)
 {
-	_inven->update();
+	//_inven->update();
 
-
-	if (KEYMANAGER->isOnceKeyDown(VK_LEFT) ||
-		KEYMANAGER->isOnceKeyDown(VK_RIGHT) ||
-		KEYMANAGER->isOnceKeyDown(VK_UP) ||
-		KEYMANAGER->isOnceKeyDown(VK_DOWN))
+	if (KEYMANAGER->isOnceKeyDown('W') ||
+		KEYMANAGER->isOnceKeyDown('S') ||
+		KEYMANAGER->isOnceKeyDown('A') ||
+		KEYMANAGER->isOnceKeyDown('D'))
 	{
 		_playerMoveAnim->AniStart();
 	}
@@ -139,69 +240,124 @@ void Player::update(void)
 		GetPixel(IMAGEMANAGER->findImage("충돌")->getMemDC(),
 			_x, _y);
 	
+	if (_collisionMap) cout << "충돌맵은 존재한다" << endl;
 
-	if (KEYMANAGER->isStayKeyDown(VK_LEFT))
+	if (!_toolAnim->isPlay())
 	{
-		_x -= _moveSpeed;
-		_swordSlashAnim->setPlayFrame(0, 4, false, false);
-
-		if (KEYMANAGER->isOnceKeyDown('Z'))
+		if (KEYMANAGER->isStayKeyDown('A'))
 		{
-			_x -= 220;
+			_x -= _moveSpeed;
+			_swordSlash = IMAGEMANAGER->findImage("칼휘두르기");
+			_swordAnim = _swordSlashAnim;
+			_swordAnim->setPlayFrame(0, 4, false, false);
 
-			_swordSlashAnim->AniStart();
+			for (int i = 0; i < 4; i++)
+			{
+				axeSwingAnimArr[i] = i + 15;
+				pickaxeSwingAnimArr[i] = i + 12;
+				hoeSwingAnimArr[i] = i + 12;
+				scytheSwingAnimArr[i] = i + 15;
+			}
+
+			if (KEYMANAGER->isOnceKeyDown('Z'))
+			{
+				_x -= 220;
+
+				_swordSlashAnim->AniStart();
+			}
+
+			if (stairCol == RGB(2, 62, 156))
+			{
+				_y -= _moveSpeed;
+			}
+			_playerMoveAnim->setPlayFrame(5, 9, false, true);
 		}
+		else if (KEYMANAGER->isStayKeyDown('D'))
+		{
+			_x += _moveSpeed;
+			_swordSlash = IMAGEMANAGER->findImage("칼휘두르기");
+			_swordAnim = _swordSlashAnim;
+			int arr[5] = { 9,8,7,6,5 };
 
-		if (stairCol == RGB(2, 62, 156))
+			for (int i = 0; i < 4; i++)
+			{
+				axeSwingAnimArr[i] = i + 5;
+				pickaxeSwingAnimArr[i] = i + 4;
+				hoeSwingAnimArr[i] = i + 4;
+				scytheSwingAnimArr[i] = i + 5;
+			}
+
+			_swordAnim->setPlayFrame(arr, 5, false);
+
+			if (KEYMANAGER->isOnceKeyDown('Z'))
+			{
+				_x += 220;
+				_swordSlashAnim->AniStart();
+			}
+
+			if (stairCol == RGB(2, 62, 156))
+			{
+				_y += _moveSpeed;
+			}
+			_playerMoveAnim->setPlayFrame(15, 19, false, true);
+		}
+		else if (KEYMANAGER->isStayKeyDown('W'))
 		{
 			_y -= _moveSpeed;
-		}
-		_playerMoveAnim->setPlayFrame(5, 9, false, true);
-	}
-	else if (KEYMANAGER->isStayKeyDown(VK_RIGHT))
-	{
-		_x += _moveSpeed;
-		int arr[5] = { 9,8,7,6,5 };
-		_swordSlashAnim->setPlayFrame(arr, 5, false);
+			_swordSlash = IMAGEMANAGER->findImage("칼 위아래 휘두르기");
+			_swordSlashUpDownAnim->setPlayFrame(0, 4, false, false);
 
-		if (KEYMANAGER->isOnceKeyDown('Z'))
-		{
-			_x += 220;
-			_swordSlashAnim->AniStart();
-		}
+			for (int i = 0; i < 4; i++)
+			{
+				axeSwingAnimArr[i] = i + 10;
+				pickaxeSwingAnimArr[i] = i + 8;
+				hoeSwingAnimArr[i] = i + 8;
+				scytheSwingAnimArr[i] = i + 10;
+			}
+			_swordAnim = _swordSlashUpDownAnim;
 
-		if (stairCol == RGB(2, 62, 156))
+			if (KEYMANAGER->isOnceKeyDown('Z'))
+			{
+				_y -= 220;
+			}
+			_playerMoveAnim->setPlayFrame(10, 14, false, true);
+		}
+		else if (KEYMANAGER->isStayKeyDown('S'))
 		{
 			_y += _moveSpeed;
+			_swordSlash = IMAGEMANAGER->findImage("칼 위아래 휘두르기");
+			int arr[5] = { 9,8,7,6,5 };
+			_swordSlashUpDownAnim->setPlayFrame(arr, 5, false);
+
+			for (int i = 0; i < 4; i++)
+			{
+				axeSwingAnimArr[i] = i;
+				pickaxeSwingAnimArr[i] = i;
+				hoeSwingAnimArr[i] = i;
+				scytheSwingAnimArr[i] = i;
+			}
+
+			_swordAnim = _swordSlashUpDownAnim;
+
+			if (KEYMANAGER->isOnceKeyDown('Z'))
+			{
+				_y += 220;
+			}
+			_playerMoveAnim->setPlayFrame(0, 4, false, true);
 		}
-		_playerMoveAnim->setPlayFrame(15, 19, false, true);
-	}
-	else if (KEYMANAGER->isStayKeyDown(VK_UP))
-	{
-		_y -= _moveSpeed;
-		if (KEYMANAGER->isOnceKeyDown('Z'))
+		else
 		{
-			_y -= 220;
+			_playerMoveAnim->AniStop();
 		}
-		_playerMoveAnim->setPlayFrame(10, 14, false, true);
-	}
-	else if (KEYMANAGER->isStayKeyDown(VK_DOWN))
-	{
-		_y += _moveSpeed;
-		if (KEYMANAGER->isOnceKeyDown('Z'))
-		{
-			_y += 220;
-		}
-		_playerMoveAnim->setPlayFrame(0, 4, false, true);
-	}
-	else
-	{
-		_playerMoveAnim->AniStop();
 	}
 
-	_playerRC = RectMakeCenter(_x, _y,
-		_playerMoveAnim->getFrameWidth(),
-		_playerMoveAnim->getFrameHeight());
+	
+	_axeSwingAnim->setPlayFrame(axeSwingAnimArr, 4, _isLoop);
+	_pickaxeSwingAnim->setPlayFrame(pickaxeSwingAnimArr, 4, _isLoop);
+	_hoeSwingAnim->setPlayFrame(hoeSwingAnimArr, 4, _isLoop);
+	_scytheSwingAnim->setPlayFrame(scytheSwingAnimArr, 4, _isLoop);
+
+
 
 	if (KEYMANAGER->isOnceKeyDown(VK_SPACE))
 	{
@@ -226,70 +382,75 @@ void Player::update(void)
 
 	if (KEYMANAGER->isOnceKeyDown('X'))
 	{
-		_swordSlashAnim->AniStart();
+		_swordAnim->AniStart();
 	}
 
-	_playerRC = RectMakeCenter(_x, _y,
-		_playerMoveAnim->getFrameWidth(),
-		_playerMoveAnim->getFrameHeight());
+
+	
 
 
-	for (int i = _playerRC.left + 4; i <= _playerRC.right - 4; i++)
+	if (_collisionMap != nullptr)
 	{
-		COLORREF collisionT =
-			GetPixel(IMAGEMANAGER->findImage("충돌")->getMemDC(),
-				i, _playerRC.top);
-		COLORREF collisionB =
-			GetPixel(IMAGEMANAGER->findImage("충돌")->getMemDC(),
-				i, _playerRC.bottom);
+		for (int i = _playerRC.left + 4; i <= _playerRC.right - 4; i++)
+		{
+			COLORREF collisionT =
+				GetPixel(_collisionMap->getMemDC(),
+					i, _playerRC.top);
+			COLORREF collisionB =
+				GetPixel(_collisionMap->getMemDC(),
+					i, _playerRC.bottom);
 
-		if (collisionT == RGB(255, 0, 255))
-		{
-			_isCollisionTop = true;
-		}
-		else
-		{
-			_isCollisionTop = false;
+			if (collisionT == RGB(255, 0, 255))
+			{
+				_isCollisionTop = true;
+			}
+			else
+			{
+				_isCollisionTop = false;
+			}
+			if (collisionB == RGB(255, 0, 255))
+			{
+				_isCollisionBottom = true;
+			}
+			else
+			{
+				_isCollisionBottom = false;
+			}
 		}
 
-		if (collisionB == RGB(255, 0, 255))
+		for (int i = _playerRC.top + 4; i <= _playerRC.bottom - 4; i++)
 		{
-			_isCollisionBottom = true;
-		}
-		else
-		{
-			_isCollisionBottom = false;
+			COLORREF collisionL =
+				GetPixel(_collisionMap->getMemDC(),
+					_playerRC.left, i);
+
+			COLORREF collisionR =
+				GetPixel(_collisionMap->getMemDC(),
+					_playerRC.right, i);
+
+
+			_isCollisionLeft =
+				collisionL == RGB(255, 0, 255) ? true : false;
+			_isCollisionRight =
+				collisionR == RGB(255, 0, 255) ? true : false;
 		}
 	}
 
-	for (int i = _playerRC.top + 4; i <= _playerRC.bottom - 4; i++)
+	if (KEYMANAGER->isOnceKeyDown('1'))
 	{
-		COLORREF collisionL =
-			GetPixel(IMAGEMANAGER->findImage("충돌")->getMemDC(),
-				_playerRC.left, i);
-
-		COLORREF collisionR =
-			GetPixel(IMAGEMANAGER->findImage("충돌")->getMemDC(),
-				_playerRC.right, i);
-
-		if (collisionL == RGB(255, 0, 255))
-		{
-			_isCollisionLeft = true;
-			
-		}
-		else
-		{
-			_isCollisionLeft = false;
-		}
-
-		if (collisionR == RGB(255, 0, 255))
-		{
-			_isCollisionRight = true;
-		}
-		else
-		{
-			_isCollisionRight = false;
-		}
+		_eTools = eTools::SICKLE;
+	}
+	if (KEYMANAGER->isOnceKeyDown('2'))
+	{
+		_eTools = eTools::HOE;
+	}
+	if (KEYMANAGER->isOnceKeyDown('3'))
+	{
+		_eTools = eTools::AXE;
+	}
+	if (KEYMANAGER->isOnceKeyDown('4'))
+	{
+		_eTools = eTools::PICKAXE;
 	}
 
 
@@ -305,8 +466,12 @@ void Player::update(void)
 	}
 
 
-	_mining->update();
-	
+
+	_skill->update();
+
+	_playerRC = RectMakeCenter(_x, _y,
+		_playerMoveAnim->getFrameWidth(),
+		_playerMoveAnim->getFrameHeight());
 
 	if (_isCollisionLeft) _x += _moveSpeed;
 	if (_isCollisionRight) _x -= _moveSpeed;
@@ -315,7 +480,11 @@ void Player::update(void)
 
 	_playerMoveAnim->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);
 	_fireballAnim->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);
-	_swordSlashAnim->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);
+	_swordAnim->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);
+	_axeSwingAnim->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);
+	_pickaxeSwingAnim->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);
+	_hoeSwingAnim->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);
+	_scytheSwingAnim->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);
 }
 
 void Player::render(void)
@@ -332,39 +501,219 @@ void Player::render(void)
 
 	_playerImage->aniRender(getMemDC(), _playerRC.left, _playerRC.top, _playerMoveAnim);
 
-	if(_swordSlashAnim->isPlay())
+	if(_swordAnim->isPlay())
 	{
 		_swordSlash->aniRender(getMemDC(), _swordSlashRC.left, _swordSlashRC.top,
-			_swordSlashAnim);
+			_swordAnim);
 	}
 
-
+	if (_toolAnim->isPlay())
+	{
+		_toolImage->aniRender(getMemDC(), _toolAnimRC.left, _toolAnimRC.top,
+			_toolAnim);
+	}
 
 	_inven->render();
 	
-	if(KEYMANAGER->isToggleKey('K'))
-		_mining->render();
 
-	/*DrawRectMake(getMemDC(), _miniRC[0]);
-	DrawRectMake(getMemDC(), _miniRC[1]);
-	DrawRectMake(getMemDC(), _miniRC[2]);
-	DrawRectMake(getMemDC(), _miniRC[3]);*/
+
+
+	if(KEYMANAGER->isToggleKey('K'))
+		_skill->render();
 }
 
-void Player::UseTool(ObjectManager* object)
+void Player::MouseOver(ObjectManager* object, POINT point)
 {
 	for (int i = 0; i < object->getObjectList().size(); i++)
 	{
-		if (object->getObjectList()[i]->getType() <= 1)
+		if (PtInRect(&object->getObjectList()[i]->getCollisionRC(),
+			point) &&
+			object->getObjectList()[i]->getType() > 1)
 		{
-
+			if (getDistance(_cx, _cy, point.x, point.y) < OBJECT_RANGE)
+			{
+				IMAGEMANAGER->render("오브젝트 선택", getMemDC(),
+					object->getObjectList()[i]->getCollisionRC().left,
+					object->getObjectList()[i]->getCollisionRC().top);
+			}
 		}
 	}
 }
 
-void Player::UseFishingLod()
+void Player::UseTool(ObjectManager* object, POINT point)
 {
+	RECT temp;
+	float updown = point.y - _cy;
+	float leftright = point.x - _cx;
 
+	switch (_eTools)
+	{
+	case eTools::SICKLE:
+		_toolImage = _scytheSwing;
+		_toolAnim = _scytheSwingAnim;
+		_toolAnimRC = _scytheSwingRC;
+		break;
+
+	case eTools::HOE:
+		_toolImage = _hoeSwing;
+		_toolAnim = _hoeSwingAnim;
+		_toolAnimRC = _hoeSwingRC;
+		break;
+
+	case eTools::AXE:
+		_toolImage = _axeSwing;
+		_toolAnim = _axeSwingAnim;
+		_toolAnimRC = _axeSwingRC;
+		break;
+
+	case eTools::PICKAXE:
+		_toolImage = _pickaxeSwing;
+		_toolAnim = _pickaxeSwingAnim;
+		_toolAnimRC = _pickaxeSwingRC;
+		break;
+	}
+
+	if (updown < 0 && abs(updown) > leftright)
+	{
+		for (int i = 0; i < 4; i++)
+		{
+			axeSwingAnimArr[i] = i + 10;
+			pickaxeSwingAnimArr[i] = i + 8;
+			hoeSwingAnimArr[i] = i + 8;
+			scytheSwingAnimArr[i] = i + 10;
+		}
+		_playerMoveAnim->setPlayFrame(10, 14, false, true);
+	}
+	else if (updown > 0 && abs(leftright) < updown)
+	{
+		for (int i = 0; i < 4; i++)
+		{
+			axeSwingAnimArr[i] = i;
+			pickaxeSwingAnimArr[i] = i;
+			hoeSwingAnimArr[i] = i;
+			scytheSwingAnimArr[i] = i;
+		}
+		_playerMoveAnim->setPlayFrame(0, 4, false, true);
+	}
+	else if (leftright < 0)
+	{
+		for (int i = 0; i < 4; i++)
+		{
+			axeSwingAnimArr[i] = i + 15;
+			pickaxeSwingAnimArr[i] = i + 12;
+			hoeSwingAnimArr[i] = i + 12;
+			scytheSwingAnimArr[i] = i + 15;
+		}
+		_playerMoveAnim->setPlayFrame(5, 9, false, true);
+	}
+	else
+	{
+		for (int i = 0; i < 4; i++)
+		{
+			axeSwingAnimArr[i] = i + 5;
+			pickaxeSwingAnimArr[i] = i + 4;
+			hoeSwingAnimArr[i] = i + 4;
+			scytheSwingAnimArr[i] = i + 5;
+		}
+		_playerMoveAnim->setPlayFrame(15, 19, false, true);
+	}
+
+	_axeSwingAnim->setPlayFrame(axeSwingAnimArr, 4, _isLoop);
+	_pickaxeSwingAnim->setPlayFrame(pickaxeSwingAnimArr, 4, _isLoop);
+	_hoeSwingAnim->setPlayFrame(hoeSwingAnimArr, 4, _isLoop);
+	_scytheSwingAnim->setPlayFrame(scytheSwingAnimArr, 4, _isLoop);
+
+	
+	_toolAnim->AniStart();
+
+	/*if (updown < 0)
+	{
+		if (abs(updown) > leftright)
+		{
+			cout << "위" << endl;
+		}
+		else if (leftright < 0)
+		{
+			cout << "왼쪽" << endl;
+		}
+		else
+		{
+			cout << "오른쪽" << endl;
+		}
+	}
+	else
+	{
+		if (abs(leftright) < updown)
+		{
+			cout << "아래" << endl;
+		}
+		else if (leftright < 0)
+		{
+			cout << "왼쪽" << endl;
+		}
+		else
+		{
+			cout << "오른쪽" << endl;
+		}
+	}*/
+	
+	
+
+	for (int i = 0; i < object->getObjectList().size(); i++)
+	{
+		if (object->getObjectList()[i]->getType() / 2 == 0
+			&& _eTools == eTools::SICKLE)
+		{
+			if (IntersectRect(&temp,
+				&object->getObjectList()[i]->getCollisionRC(),
+				&_toolAnimRC)
+				&& _toolAnim->isPlay())
+			{
+				// SD : 풀베는 소리
+				object->getObjectList()[i]->setHP(1);
+			}
+		}
+
+		else if (object->getObjectList()[i]->getType() / 2 == 1
+			&& _eTools == eTools::AXE)
+		{
+			if (PtInRect(&object->getObjectList()[i]->getCollisionRC(),
+				point)
+				&& _toolAnim->isPlay()
+				&& getDistance(_cx, _cy, point.x, point.y) < OBJECT_RANGE)
+			{
+				// SD : 나무 베는 소리
+				object->getObjectList()[i]->setHP(10);
+			}
+		}
+
+		else if (object->getObjectList()[i]->getType() / 2 == 2
+			&& _eTools == eTools::PICKAXE
+			&& getDistance(_cx, _cy, point.x, point.y) < OBJECT_RANGE)
+		{
+			if (PtInRect(&object->getObjectList()[i]->getCollisionRC(),
+				point)
+				&& _toolAnim->isPlay())
+			{
+				// SD : 돌캐는 소리
+				object->getObjectList()[i]->setHP(5);
+			}
+		}
+	}
+}
+
+void Player::UseFishingLod(POINT point)
+{
+	if (KEYMANAGER->isStayKeyDown(VK_RBUTTON))
+	{
+		cout << "기를 모으고..." << endl;
+
+		if (GetPixel(_collisionMap->getMemDC(), point.x, point.y)
+			== RGB(255, 0, 0))
+		{
+			cout << "던진다" << endl;
+		}
+	}
 }
 
 void Player::UseSword()
@@ -377,4 +726,17 @@ void Player::UseCrossBow()
 
 }
 
+void Player::ObjectCollision(ObjectManager* object)
+{
+	for (int i = 0; i < object->getObjectList().size(); i++)
+	{
+		RECT temp;
 
+		if (IntersectRect(&temp,
+			&_playerRC,
+			&object->getObjectList()[i]->getRC()))
+		{
+			//_x -= _moveSpeed;
+		}
+	}
+}

@@ -27,7 +27,7 @@ HRESULT DynusScene::init(void)
 	_dynus->setEnemyManagerMemoryAddress(_em);
 	_em->setPlayerMemoryAddress(_player);
 	_dynus->setPlayerMemoryAddress(_player);
-	_player->init(CENTER_X, CENTER_Y + 200);
+	_player->init(CENTER_X, CENTER_Y + 200, "/*Ãæµ¹¸Ê*/");
 	_dynus->init();
 
 	wsprintf(_text, "DynusScene");

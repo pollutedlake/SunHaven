@@ -25,6 +25,8 @@ protected:
 	int _offsetX;
 	int _offsetY;
 	float _cx, _cy;
+	int _hpBarOffsetX;
+	int _hpBarOffsetY;
 	int _maxHp;
 	int _curHp;
 
@@ -46,6 +48,11 @@ public:
 	LivingObjectType getType() {return _type;}
 	RECT getCollisionRC() {return _collisionRC;}
 	RECT getRC() {return _rc;}
+
+	virtual void setHP(int damage);
+	int getCurHP() {return _curHp;}
+
+	void dropItem();
 
 	Object() {}
 	~Object() {}

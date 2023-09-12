@@ -3,10 +3,12 @@
 
 HRESULT DizzyScene::init(void)
 {
+	IMAGEMANAGER->addImage("Ãæµ¹", "FarmMapCollision.bmp", 3600, 3600);
+
 	_dizzy = new Dizzy;
 	_player = new Player;
 
-	_player->init(CENTER_X, CENTER_Y + 200);
+	_player->init(CENTER_X, CENTER_Y + 200, "/*Ãæµ¹¸Ê*/");
 	_dizzy->init();
 
 	wsprintf(_text, "DizzyScene");

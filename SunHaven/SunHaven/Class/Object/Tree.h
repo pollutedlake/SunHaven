@@ -10,6 +10,8 @@ public:
 	void render(void);
 	void release(void);
 
+	void setHP(int damage);
+
 	Tree() {}
 	~Tree() {}
 };

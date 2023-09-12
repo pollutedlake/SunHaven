@@ -7,7 +7,7 @@ HRESULT ShopScene::init(void)
 {
 	IMAGEMANAGER->addImage("Ãæµ¹", "FarmMapCollision.bmp", 3600, 3600);
 	_player = new Player;
-	_player->init(700,500);
+	_player->init(700,500, "/*Ãæµ¹¸Ê*/");
 	
 	
 	

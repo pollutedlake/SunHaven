@@ -90,8 +90,12 @@
     <ClCompile Include="Player\Skill\Skill.cpp" />
     <ClCompile Include="Class\Object\Tree.cpp" />
     <ClCompile Include="WinMain.cpp" />
+<<<<<<< HEAD
     <ClCompile Include="Scene\DizzyScene.cpp" />
     <ClCompile Include="Class\Boss\Dizzy.cpp" />
+=======
+    <ClCompile Include="Class\Skill\SkillManager.cpp" />
+>>>>>>> main
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Class\UI\Buttons.h" />
@@ -160,8 +164,12 @@
     <ClInclude Include="Player\Skill\Skill.h" />
     <ClInclude Include="Class\Object\Tree.h" />
     <ClInclude Include="Class\UI\UI.h" />
+<<<<<<< HEAD
     <ClInclude Include="Scene\DizzyScene.h" />
     <ClInclude Include="Class\Boss\Dizzy.h" />
+=======
+    <ClInclude Include="Class\Skill\SkillManager.h" />
+>>>>>>> main
   </ItemGroup>
   <ItemGroup>
     <Library Include="lib\FMOD\fmodex_vc.lib" />
