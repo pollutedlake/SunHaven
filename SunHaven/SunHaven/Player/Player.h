@@ -154,6 +154,7 @@ public:
 		_cx = position.x;
 		_cy = position.y;
 
+
 		_playertoCameraRC = RectMakeCenter(_cx, _cy,
 			_playerMoveAnim->getFrameWidth(),
 			_playerMoveAnim->getFrameHeight());
@@ -281,7 +282,7 @@ public:
 
 	RECT getPlayerRC() { return _playerRC; }
 
-	RECT getRect(void) { return _playerRC; }
+	RECT getPlayertoCameraRect(void) { return _playertoCameraRC; }
 
 	RECT getSwordSlashRC() { return _swordSlashRC; }
 
