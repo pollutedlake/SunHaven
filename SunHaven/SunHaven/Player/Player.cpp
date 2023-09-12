@@ -240,7 +240,7 @@ void Player::update(void)
 		GetPixel(IMAGEMANAGER->findImage("충돌")->getMemDC(),
 			_x, _y);
 	
-	if (_collisionMap) cout << "충돌맵은 존재한다" << endl;
+	//if (_collisionMap) cout << "충돌맵은 존재한다" << endl;
 
 	if (!_toolAnim->isPlay())
 	{
@@ -403,6 +403,7 @@ void Player::update(void)
 			if (collisionT == RGB(255, 0, 255))
 			{
 				_isCollisionTop = true;
+				cout << "test" << endl;
 			}
 			else
 			{
