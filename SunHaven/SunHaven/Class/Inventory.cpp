@@ -34,7 +34,7 @@ HRESULT Inventory::init(void)
 
 			temp._rc = RectMake(_itemListBG.left + j * 42 + 7, _itemListBG.top + 10 + i * 42, 32, 32);
 			temp._draw = false;
-			temp._category = 0;
+			temp._category = "";
 		
 			_vInvenList.push_back(temp);
 
@@ -53,7 +53,7 @@ HRESULT Inventory::init(void)
 			{
 				temp2._rc = RectMake(_playerBG.right - 97 + i * 55, _playerBG.top + 40 + j * 50, 32, 32);
 				temp2._draw = false;
-				temp2._category = 0;
+				temp2._category = "";
 
 				_vEquipmentSlot.push_back(temp2);
 			}
@@ -63,7 +63,7 @@ HRESULT Inventory::init(void)
 				{
 					temp2._rc = RectMake(_playerBG.left + 13, _playerBG.bottom - 95, 32, 32);
 					temp2._draw = false;
-					temp2._category = 0;
+					temp2._category = "";
 
 					_vEquipmentSlot.push_back(temp2);
 				}
@@ -72,7 +72,7 @@ HRESULT Inventory::init(void)
 				{
 					temp2._rc = RectMake(_playerBG.left + 60, _playerBG.bottom - 95, 32, 32);
 					temp2._draw = false;
-					temp2._category = 0;
+					temp2._category = "";
 
 					_vEquipmentSlot.push_back(temp2);
 				}
@@ -81,7 +81,7 @@ HRESULT Inventory::init(void)
 				{
 					temp2._rc = RectMake(_playerBG.left + 13, _playerBG.bottom - 50, 32, 32);
 					temp2._draw = false;
-					temp2._category = 0;
+					temp2._category = "";
 
 					_vEquipmentSlot.push_back(temp2);
 				}
@@ -90,7 +90,7 @@ HRESULT Inventory::init(void)
 				{
 					temp2._rc = RectMake(_playerBG.left + 60, _playerBG.bottom - 50, 32, 32);
 					temp2._draw = false;
-					temp2._category = 0;
+					temp2._category = "";
 
 					_vEquipmentSlot.push_back(temp2);
 				}
@@ -107,7 +107,7 @@ HRESULT Inventory::init(void)
 		}
 	}
 
-	_getItem = 0;
+	
 	_selectedItem = -1;
 
 	//tagTool* temp3;
@@ -118,9 +118,40 @@ HRESULT Inventory::init(void)
 		_ID->getTool()->pop();
 	}
 
+	for (int i = 0; i < 6; i++)
+	{
+		if (i < 4)
+		{
+			_vWeapon.push_back(_ID->getWeapon()->front());
+			_ID->getWeapon()->pop();
 
-	
+			_vArmor.push_back(_ID->getArmor()->front());
+			_ID->getArmor()->pop();
+		}
 
+		if (i == 4)
+		{
+			_vAccessory.push_back(_ID->getAccessory()->front());
+			_ID->getAccessory()->pop();
+
+			_vAccessory.push_back(_ID->getAccessory()->front());
+			_ID->getAccessory()->pop();
+
+		}
+
+		if (i == 5)
+		{
+			_vConsumable.push_back(_ID->getConsumable()->front());
+			_ID->getConsumable()->pop();
+
+		}
+	}
+
+	for (int i = 0; i < 8; i++)
+	{
+		_vIngredient.push_back(_ID->getIngredient()->front());
+		_ID->getIngredient()->pop();
+	}
 
 	
 
@@ -136,20 +167,20 @@ void Inventory::update(void)
 {
 	
 	getItem();
-
+	
 	itemMove();
-	
-	
-}
 
-void Inventory::render(void)
-{
 	if (KEYMANAGER->isOnceKeyDown('I') && !_seeInven)
 	{
 		_seeInven = true;
 
 	}
 	
+
+}
+
+void Inventory::render(void)
+{
 	
 	if (_seeInven)
 	{
@@ -176,7 +207,39 @@ void Inventory::getItem()
 {
 	if (KEYMANAGER->isOnceKeyDown('O'))
 	{
-		_getItem = RND->getFromIntTo(0, 8);
+		// getitem(string name, string arrIndex)?
+		// 네임과 인덱스 받아오고
+		/*  string a;
+		a = "5-0";
+		cout << a[1] << endl;*/
+		_getItem = "1-1";
+
+		for (int i = 0; i < _vInvenList.size(); i++)
+		{
+
+			if (!_vInvenList[i]._draw)
+			{
+				_vInvenList[i]._category = _getItem;
+
+				_vInvenList[i]._draw = true;
+
+				_lastItemTime = GetTickCount64();
+
+				return;
+			}
+
+		}
+
+	}
+
+	if (KEYMANAGER->isOnceKeyDown('P'))
+	{
+		// getitem(string name, string arrIndex)?
+		// 네임과 인덱스 받아오고
+		/*  string a;
+		a = "5-0";
+		cout << a[1] << endl;*/
+		_getItem = "2-1";
 
 		for (int i = 0; i < _vInvenList.size(); i++)
 		{
@@ -197,6 +260,25 @@ void Inventory::getItem()
 	}
 }
 
+void Inventory::get_Item(string index)
+{
+	for (int i = 0; i < _vInvenList.size(); i++)
+	{
+
+		if (!_vInvenList[i]._draw)
+		{
+			_vInvenList[i]._category = index;
+
+			_vInvenList[i]._draw = true;
+
+			_lastItemTime = GetTickCount64();
+
+			return;
+		}
+
+	}
+}
+
 void Inventory::itemMove()
 {
 	if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
@@ -204,7 +286,7 @@ void Inventory::itemMove()
 
 		// 해당하는 인덱스를 찾음
 		int index = -1;
-		int temp = 0;
+		string temp = "";
 		for (int i = 0; i < _vInvenList.size(); i++)
 		{
 			if (PtInRect(&_vInvenList[i]._rc, _ptMouse))
@@ -318,6 +400,7 @@ void Inventory::invenMold()
 
 void Inventory::invenSlot()
 {
+	int _index;
 	//인벤칸
 	for (int i = 0; i < 5; i++)
 	{
@@ -326,45 +409,42 @@ void Inventory::invenSlot()
 
 			if (_vInvenList[i * 8 + j]._draw)
 			{
-				switch (_vInvenList[i * 8 + j]._category)
+				switch (_vInvenList[i * 8 + j]._category[0])
 				{
-				case 0:
+				case '0':
+					_index = (int)_vInvenList[i * 8 + j]._category[2] - 48;
+					IMAGEMANAGER->render(_vTool[_index]->name.c_str(), getMemDC(), _vInvenList[i * 8 + j]._rc.left, _vInvenList[i * 8 + j]._rc.top);
+					break;
 
-					IMAGEMANAGER->render(_vTool.at(_vInvenList[i * 8 + j]._category)->name.c_str(), getMemDC(), _vInvenList[i * (8) + j]._rc.left, _vInvenList[i * (8) + j]._rc.top);
+				case '1':
+					_index = (int)_vInvenList[i * 8 + j]._category[2] - 48;
+					IMAGEMANAGER->render(_vWeapon[_index]->name.c_str(), getMemDC(), _vInvenList[i * 8 + j]._rc.left, _vInvenList[i * 8 + j]._rc.top);
 					break;
-				case 1:
-					
-					IMAGEMANAGER->render(_vTool.at(_vInvenList[i * 8 + j]._category)->name.c_str(), getMemDC(), _vInvenList[i * (8) + j]._rc.left, _vInvenList[i * (8) + j]._rc.top);
-					break;
-				case 2:
-					IMAGEMANAGER->render(_vTool.at(_vInvenList[i * 8 + j]._category)->name.c_str(), getMemDC(), _vInvenList[i * (8) + j]._rc.left, _vInvenList[i * (8) + j]._rc.top);
 
+				case '2':
+					_index = (int)_vInvenList[i * 8 + j]._category[2] - 48;
+					IMAGEMANAGER->render(_vArmor[_index]->name.c_str(), getMemDC(), _vInvenList[i * 8 + j]._rc.left, _vInvenList[i * 8 + j]._rc.top);
 					break;
-				case 3:
-					IMAGEMANAGER->render(_vTool.at(_vInvenList[i * 8 + j]._category)->name.c_str(), getMemDC(), _vInvenList[i * (8) + j]._rc.left, _vInvenList[i * (8) + j]._rc.top);
 
+				case '3':
+					_index = (int)_vInvenList[i * 8 + j]._category[2] - 48;
+					IMAGEMANAGER->render(_vAccessory[_index]->name.c_str(), getMemDC(), _vInvenList[i * 8 + j]._rc.left, _vInvenList[i * 8 + j]._rc.top);
 					break;
-				case 4:
-					IMAGEMANAGER->render(_vTool.at(_vInvenList[i * 8 + j]._category)->name.c_str(), getMemDC(), _vInvenList[i * (8) + j]._rc.left, _vInvenList[i * (8) + j]._rc.top);
 
+				case '4':
+					_index = (int)_vInvenList[i * 8 + j]._category[2] - 48;
+					IMAGEMANAGER->render(_vIngredient[_index]->name.c_str(), getMemDC(), _vInvenList[i * 8 + j]._rc.left, _vInvenList[i * 8 + j]._rc.top);
 					break;
-				case 5:
 
-					IMAGEMANAGER->render(_vTool.at(_vInvenList[i * 8 + j]._category)->name.c_str(), getMemDC(), _vInvenList[i * (8) + j]._rc.left, _vInvenList[i * (8) + j]._rc.top);
+				case '5':
+					_index = (int)_vInvenList[i * 8 + j]._category[2] - 48;
+					IMAGEMANAGER->render(_vConsumable[_index]->name.c_str(), getMemDC(), _vInvenList[i * 8 + j]._rc.left, _vInvenList[i * 8 + j]._rc.top);
 					break;
-				case 6:
-					IMAGEMANAGER->render(_vTool.at(_vInvenList[i * 8 + j]._category)->name.c_str(), getMemDC(), _vInvenList[i * (8) + j]._rc.left, _vInvenList[i * (8) + j]._rc.top);
 
-					break;
-				case 7:
-					IMAGEMANAGER->render(_vTool.at(_vInvenList[i * 8 + j]._category)->name.c_str(), getMemDC(), _vInvenList[i * (8) + j]._rc.left, _vInvenList[i * (8) + j]._rc.top);
-
-					break;
-				case 8:
-					IMAGEMANAGER->render(_vTool.at(_vInvenList[i * 8 + j]._category)->name.c_str(), getMemDC(), _vInvenList[i * (8) + j]._rc.left, _vInvenList[i * (8) + j]._rc.top);
-
-					break;
 				}
+				
+				
+				
 			}
 			else
 			{
@@ -384,25 +464,25 @@ void Inventory::equipment_Slot()
 		{
 			if (_vEquipmentSlot[i * 5 + j]._draw)
 			{
-				switch (_vEquipmentSlot[i * 5 + j]._category)
-				{
-				case 1:
-					//IMAGEMANAGER->render("ironBoots", getMemDC(), _vInvenList[i * (8) + j]._rc.left, _vInvenList[i * (8) + j]._rc.top);
-					//_vTool[i * 8 + j]->filePath;
-					break;
-				case 2:
-					IMAGEMANAGER->render("ironChestPlate", getMemDC(), _vInvenList[i * (8) + j]._rc.left, _vInvenList[i * (8) + j]._rc.top);
+				//switch (_vEquipmentSlot[i * 5 + j]._category)
+				//{
+				//case 1:
+				//	//IMAGEMANAGER->render("ironBoots", getMemDC(), _vInvenList[i * (8) + j]._rc.left, _vInvenList[i * (8) + j]._rc.top);
+				//	//_vTool[i * 8 + j]->filePath;
+				//	break;
+				//case 2:
+				//	IMAGEMANAGER->render("ironChestPlate", getMemDC(), _vInvenList[i * (8) + j]._rc.left, _vInvenList[i * (8) + j]._rc.top);
 
-					break;
-				case 3:
-					IMAGEMANAGER->render("ironGloves", getMemDC(), _vInvenList[i * (8) + j]._rc.left, _vInvenList[i * (8) + j]._rc.top);
+				//	break;
+				//case 3:
+				//	IMAGEMANAGER->render("ironGloves", getMemDC(), _vInvenList[i * (8) + j]._rc.left, _vInvenList[i * (8) + j]._rc.top);
 
-					break;
-				case 4:
-					IMAGEMANAGER->render("ironSword", getMemDC(), _vInvenList[i * (8) + j]._rc.left, _vInvenList[i * (8) + j]._rc.top);
+				//	break;
+				//case 4:
+				//	IMAGEMANAGER->render("ironSword", getMemDC(), _vInvenList[i * (8) + j]._rc.left, _vInvenList[i * (8) + j]._rc.top);
 
-					break;
-				}
+				//	break;
+				//}
 			}
 			else
 			{
@@ -455,51 +535,43 @@ void Inventory::equipment_Slot()
 
 void Inventory::moveItemRender()
 {
+	int _index;
 	if (_selectedItem != -1)
 	{
-		POINT pt;
-		GetCursorPos(&pt);
-		ScreenToClient(_hWnd, &pt);
-
-		switch (_vInvenList[_selectedItem]._category)
+		switch (_vInvenList[_selectedItem]._category[0])
 		{
-		case 0:
+		case '0':
+			_index = (int)_vInvenList[_selectedItem]._category[2] - 48;
+			IMAGEMANAGER->render(_vTool[_index]->name.c_str(), getMemDC(), _ptMouse.x - 16, _ptMouse.y -16);
+			break;
 
-			IMAGEMANAGER->render(_vTool.at(_vInvenList[_selectedItem]._category)->name.c_str(), getMemDC(), pt.x - 16, pt.y - 16);
+		case '1':
+			_index = (int)_vInvenList[_selectedItem]._category[2] - 48;
+			IMAGEMANAGER->render(_vWeapon[_index]->name.c_str(), getMemDC(), _ptMouse.x - 16, _ptMouse.y - 16);
 			break;
-		case 1:
-			
-			IMAGEMANAGER->render(_vTool.at(_vInvenList[_selectedItem]._category)->name.c_str(), getMemDC(), pt.x - 16, pt.y - 16);
-			break;
-		case 2:
 
-			IMAGEMANAGER->render(_vTool.at(_vInvenList[_selectedItem]._category)->name.c_str(), getMemDC(), pt.x - 16, pt.y - 16);
+		case '2':
+			_index = (int)_vInvenList[_selectedItem]._category[2] - 48;
+			IMAGEMANAGER->render(_vArmor[_index]->name.c_str(), getMemDC(), _ptMouse.x - 16, _ptMouse.y - 16);
 			break;
-		case 3:
 
-			IMAGEMANAGER->render(_vTool.at(_vInvenList[_selectedItem]._category)->name.c_str(), getMemDC(), pt.x - 16, pt.y - 16);
+		case '3':
+			_index = (int)_vInvenList[_selectedItem]._category[2] - 48;
+			IMAGEMANAGER->render(_vAccessory[_index]->name.c_str(), getMemDC(), _ptMouse.x - 16, _ptMouse.y - 16);
 			break;
-		case 4:
 
-			IMAGEMANAGER->render(_vTool.at(_vInvenList[_selectedItem]._category)->name.c_str(), getMemDC(), pt.x - 16, pt.y - 16);
+		case '4':
+			_index = (int)_vInvenList[_selectedItem]._category[2] - 48;
+			IMAGEMANAGER->render(_vIngredient[_index]->name.c_str(), getMemDC(), _ptMouse.x - 16, _ptMouse.y - 16);
 			break;
-		case 5:
 
-			IMAGEMANAGER->render(_vTool.at(_vInvenList[_selectedItem]._category)->name.c_str(), getMemDC(), pt.x - 16, pt.y - 16);
+		case '5':
+			_index = (int)_vInvenList[_selectedItem]._category[2] - 48;
+			IMAGEMANAGER->render(_vConsumable[_index]->name.c_str(), getMemDC(), _ptMouse.x - 16, _ptMouse.y - 16);
 			break;
-		case 6:
 
-			IMAGEMANAGER->render(_vTool.at(_vInvenList[_selectedItem]._category)->name.c_str(), getMemDC(), pt.x - 16, pt.y - 16);
-			break;
-		case 7:
-
-			IMAGEMANAGER->render(_vTool.at(_vInvenList[_selectedItem]._category)->name.c_str(), getMemDC(), pt.x - 16, pt.y - 16);
-			break;
-		case 8:
-
-			IMAGEMANAGER->render(_vTool.at(_vInvenList[_selectedItem]._category)->name.c_str(), getMemDC(), pt.x - 16, pt.y - 16);
-			break;
 		}
+		
 	}
 }
 
@@ -508,7 +580,7 @@ void Inventory::popupItem()
 	DWORD currentTime = GetTickCount64();
 	if (currentTime - _lastItemTime < 3000) // 3초 동안만 출력
 	{
-		switch (_getItem)
+		/*switch (_getItem)
 		{
 		case 1:
 			FONTMANAGER->textOut(getMemDC(), 10, WINSIZE_Y - 35, "한컴 말랑말랑 Bold", 35, 600, "철 부츠를 얻었습니다.", strlen("철 부츠를 얻었습니다."), RGB(0, 0, 0));
@@ -522,7 +594,7 @@ void Inventory::popupItem()
 		case 4:
 			FONTMANAGER->textOut(getMemDC(), 10, WINSIZE_Y - 35, "한컴 말랑말랑 Bold", 35, 600, "철 검을 얻었습니다.", strlen("철 검을 얻었습니다."), RGB(0, 0, 0));
 			break;
-		}
+		}*/
 	}
 }
 

@@ -1,5 +1,13 @@
 #pragma once
-#include "../Item/Item.h"
+
+enum class EItemType
+{
+	TOOL,
+	WEAPON,
+	ARMOR,
+	MATERIAL,
+	CONSUMABLE
+};
 
 struct tagTool
 {
@@ -16,7 +24,6 @@ struct tagTool
 	int attackSpeed;
 	int requireLv;
 	int time;
-	int gold;
 	int sellGold;
 };
 
@@ -128,6 +135,8 @@ public:
 	queue<tagIngredient*>* getIngredient() { return &this->_ingredient; }
 	queue<tagConsumable*>* getConsumable() { return &this->_consumable; }
 	queue<tagAccessory*>* getAccessory() { return &this->_acc; }
+
+	void getItem(string addItemName, string addItemArrIndex);
 
 	ItemData() {}
 	~ItemData() {}

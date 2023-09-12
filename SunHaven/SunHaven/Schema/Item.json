@@ -231,6 +231,7 @@
           7, // maxDamage
           22, // attackSpeed
           0, // requireLv
+          8,
           1000, // gold
           100 // sellGold
         ]
@@ -253,6 +254,7 @@
           24, // maxDamage
           13, // attackSpeed
           20, // requireLv
+          8,
           20000, // gold
           1000 // sellGold
         ]
@@ -275,6 +277,7 @@
           8, // maxDamage
           11, // attackSpeed
           0, // requireLv
+          8,
           800, // gold
           100 // sellGold
         ]
@@ -296,6 +299,7 @@
           24, // maxDamage
           13, // attackSpeed
           20, // requireLv
+          8,
           20000, // gold
           500 // sellGold
         ]
@@ -319,6 +323,7 @@
           4, // defense
           15, // maxHp
           20, // requireLv
+          8,
           null, // gold
           1035 // sellGold
         ]
@@ -340,6 +345,7 @@
           6, // defense
           15, // maxHp
           20, // requireLv
+          8,
           null, // gold
           1242 // sellGold
         ]
@@ -361,6 +367,7 @@
           4, // defense
           8, // maxHp
           20, // requireLv
+          8,
           null, // gold
           1035 // sellGold
         ]
@@ -382,6 +389,7 @@
           3, // defense
           6, // maxHp
           20, // requireLv
+          8,
           null, // gold
           828 // sellGold
         ]
@@ -405,6 +413,7 @@
           4, // attackDamage
           4, // spellDamage
           20, // combatLv
+          8,
           7500, // gold
           500 // sellGold
         ]
@@ -426,6 +435,7 @@
           null, // attackDamage
           null, // spellDamage
           null, // combatLv
+          8,
           null, // gold
           50 // sellGold
         ]

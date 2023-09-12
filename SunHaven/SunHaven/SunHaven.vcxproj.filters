@@ -29,7 +29,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Class\UI\Buttons.cpp" />
-    <ClCompile Include="Class\Item\Item.cpp" />
     <ClCompile Include="Class\Boss\Dynus.cpp" />
     <ClCompile Include="Class\Bullets\Bullets.cpp" />
     <ClCompile Include="Class\Data\ItemData.cpp" />
@@ -106,7 +105,6 @@
     <ClInclude Include="inc\FMOD\fmod.hpp" />
     <ClInclude Include="Class\Object\Grass.h" />
     <ClInclude Include="Class\Data\ItemData.h" />
-    <ClInclude Include="Class\Item\Item.h" />
     <ClInclude Include="Class\Skill\CombatSkill.h" />
     <ClInclude Include="Class\Skill\ExplorationSkill.h" />
     <ClInclude Include="Class\Skill\FarmingSkill.h" />

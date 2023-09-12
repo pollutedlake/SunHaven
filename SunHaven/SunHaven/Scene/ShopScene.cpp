@@ -12,7 +12,7 @@ HRESULT ShopScene::init(void)
 	_solonRc = RectMake(600, 320, 100, 100);
 	_shopBg = RectMake(WINSIZE_X / 2 - 261, WINSIZE_Y / 2 - 327, 522, 654);
 
-	_ID = new ItemData;
+	/*_ID = new ItemData;
 	_ID->init();
 
 	for (int i = 0; i < 6; i++)
@@ -36,7 +36,7 @@ HRESULT ShopScene::init(void)
 			_ID->getConsumable()->pop();
 
 		}
-	}
+	}*/
 	
 	
 	// 쇠뇌 /아다만트 쇠뇌/ 검 /아다만트 검/ 아다만트 반지/ 쿠키
@@ -52,9 +52,13 @@ HRESULT ShopScene::init(void)
 			if (i < 2)
 			{
 				temp._rc = RectMake(_shopBg.left + 25 + 241 * j, _shopBg.top + 60 + (10 + 103 * i), 231, 93);
-				temp._name = _vWeapon[i * 2 + j]->name;
+				/*temp._name = _vWeapon[i * 2 + j]->name;
 				temp._buyGold = _vWeapon[i * 2 + j]->gold;
-				temp._sellGold = _vWeapon[i * 2 + j]->sellGold;
+				temp._sellGold = _vWeapon[i * 2 + j]->sellGold;*/
+
+				temp._name = _player->getInven()->getWeapon()[i * 2 + j]->name;
+				temp._buyGold = _player->getInven()->getWeapon()[i * 2 + j]->gold;
+				temp._sellGold = _player->getInven()->getWeapon()[i * 2 + j]->sellGold;
 				 
 				for (int k = 0; k < 3; k++)
 				{
@@ -82,9 +86,12 @@ HRESULT ShopScene::init(void)
 				if (j < 1)
 				{
 					temp._rc = RectMake(_shopBg.left + 25 + 241 * j, _shopBg.top + 60 + (10 + 103 * i), 231, 93);
-					temp._name = _vAccessory.front()->name;
+					/*temp._name = _vAccessory.front()->name;
 					temp._buyGold = _vAccessory.front()->gold;
-					temp._sellGold = _vAccessory.front()->sellGold;
+					temp._sellGold = _vAccessory.front()->sellGold;*/
+					temp._name = _player->getInven()->getAccessory().front()->name;
+					temp._buyGold = _player->getInven()->getAccessory().front()->gold;
+					temp._sellGold = _player->getInven()->getAccessory().front()->sellGold;
 					
 					for (int k = 0; k < 3; k++)
 					{
@@ -110,9 +117,12 @@ HRESULT ShopScene::init(void)
 				if(j==1)
 				{
 					temp._rc = RectMake(_shopBg.left + 25 + 241 * j, _shopBg.top + 60 + (10 + 103 * i), 231, 93);
-					temp._name = _vConsumable.front()->name;
+					/*temp._name = _vConsumable.front()->name;
 					temp._buyGold = _vConsumable.front()->gold;
-					temp._sellGold = _vConsumable.front()->sellGold;
+					temp._sellGold = _vConsumable.front()->sellGold;*/
+					temp._name = _player->getInven()->getConsumable().front()->name;
+					temp._buyGold = _player->getInven()->getConsumable().front()->gold;
+					temp._sellGold = _player->getInven()->getConsumable().front()->sellGold;
 					
 					for (int k = 0; k < 3; k++)
 					{
@@ -154,7 +164,18 @@ void ShopScene::update(void)
 {
 	_player->update();
 
-	cout << _vShopList[0]._name.c_str() << endl;
+	for (int i = 0; i < _vShopList.size(); i++)
+	{
+		for (int j = 0; j < 3; j++)
+		{
+			if (PtInRect(&(_vShopList[i]._buttonRc[j]), _ptMouse) && KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
+			{
+				// 0 이면 한개 1이면5개 2면 20개로 인벤에 getitem
+			}
+		}
+		
+	}
+
 
 	
 	if (KEYMANAGER->isOnceKeyDown(VK_F1))
@@ -167,7 +188,7 @@ void ShopScene::render(void)
 {
 	IMAGEMANAGER->render("Shop_Bg", getMemDC());
 	_player->render();
-	DrawRectMake(getMemDC(), _solonRc);
+	
 	RECT temp;
 
 	if (IntersectRect(&temp, &_player->getPlayerRC(), &_solonRc))
@@ -179,6 +200,7 @@ void ShopScene::render(void)
 			shopSlot();
 		}
 	}
+	
 	
 	IMAGEMANAGER->render("Cursor", getMemDC(), _ptMouse.x, _ptMouse.y);
 }
@@ -202,25 +224,47 @@ void ShopScene::shopSlot()
 		IMAGEMANAGER->render("UI_icon_coin", getMemDC(), _vShopList[i]._rc.right - 15, _vShopList[i]._rc.top + 5);
 		//FONTMANAGER->textOut(getMemDC(), _playerStat[0].left + 15, _playerStat[0].top, "배달의민족 을지로체", 12, 5, "체력", strlen("체력"), RGB(255, 255, 255));
 		FONTMANAGER->textOut(getMemDC(), _vShopList[i]._rc.left + 5, _vShopList[i]._rc.top + 6, "", 12, 5, const_cast <char*> (_vShopList[i]._name.c_str()), strlen(_vShopList[i]._name.c_str()), RGB(255, 255, 255));
+		char showGold[2000];
 		
-		FONTMANAGER->textOut(getMemDC(), (_vShopList[i]._rc.right - 5 -_vShopList[i]._buyGold + 48), _vShopList[i]._rc.top + 6, "", 12, 5, (char*)(_vShopList[i]._buyGold + 48), strlen((char*)(_vShopList[i]._buyGold + 48)), RGB(255, 255, 255));
+		if (PtInRect(&_vShopList[i]._buttonRc[2], _ptMouse))
+		{
+			sprintf_s(showGold, "%d", (_vShopList[i]._buyGold * 20));
+			FONTMANAGER->textOut(getMemDC(), (_vShopList[i]._rc.right - 55), _vShopList[i]._rc.top + 6, "", 12, 5, showGold, strlen(showGold), RGB(255, 255, 255));
 
+		}
+		else if (PtInRect(&_vShopList[i]._buttonRc[1], _ptMouse))
+		{
+			sprintf_s(showGold, "%d", (_vShopList[i]._buyGold * 5));
+			FONTMANAGER->textOut(getMemDC(), (_vShopList[i]._rc.right - 55), _vShopList[i]._rc.top + 6, "", 12, 5, showGold , strlen(showGold), RGB(255, 255, 255));
+
+		}
+		else
+		{
+			sprintf_s(showGold, "%d", (_vShopList[i]._buyGold));
+			FONTMANAGER->textOut(getMemDC(), (_vShopList[i]._rc.right - 50), _vShopList[i]._rc.top + 6, "", 12, 5, showGold, strlen(showGold), RGB(255, 255, 255));
+
+		}
+		
 
 		for (int j = 0; j < 3; j++)
 		{
 			if (j == 0)
 			{
+				//소지골드에 따라 버튼활성화추가예정
 				IMAGEMANAGER->render("x1_button", getMemDC(), _vShopList[i]._buttonRc[j].left, _vShopList[i]._buttonRc[j].top);
+				FONTMANAGER->textOut(getMemDC(), _vShopList[i]._buttonRc[j].left + 5, _vShopList[i]._buttonRc[j].top + 3, "", 10, 5, "x1", strlen("x1"), RGB(255, 255, 255));
 			}
 
 			if (j == 1)
 			{
 				IMAGEMANAGER->render("x5_button", getMemDC(), _vShopList[i]._buttonRc[j].left, _vShopList[i]._buttonRc[j].top);
+				FONTMANAGER->textOut(getMemDC(), _vShopList[i]._buttonRc[j].left + 5, _vShopList[i]._buttonRc[j].top + 3, "", 10, 5, "x5", strlen("x5"), RGB(255, 255, 255));
 			}
 
 			if (j == 2)
 			{
 				IMAGEMANAGER->render("x20_button", getMemDC(), _vShopList[i]._buttonRc[j].left, _vShopList[i]._buttonRc[j].top);
+				FONTMANAGER->textOut(getMemDC(), _vShopList[i]._buttonRc[j].left + 5, _vShopList[i]._buttonRc[j].top + 3, "", 10, 5, "x20", strlen("x20"), RGB(255, 255, 255));
 			}
 
 		}
