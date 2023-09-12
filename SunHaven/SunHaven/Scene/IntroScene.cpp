@@ -8,10 +8,15 @@ HRESULT IntroScene::init(void)
 	_train2 = IMAGEMANAGER->findImage("Train2");
 	_lynnMom = IMAGEMANAGER->findImage("LynnMom1");
 	_catSleep = IMAGEMANAGER->findImage("CatSleep");
-	for (int i = 0; i < 7; i++)
+	_catAnim = new Animation;
+	_catAnim->init(_catSleep->getWidth(), _catSleep->getHeight(), 34, 22);
+	_catAnim->setDefPlayFrame(true, true);
+	_catAnim->setFPS(1);
+	_catAnim->AniStart();
+	for (int i = 0; i < 11; i++)
 	{
 		char text[64];
-		wsprintf(text, "TrainPassenger0%d", i + 1);
+		wsprintf(text, "TrainPassenger%d", i + 1);
 		_trainPassengers[i] = IMAGEMANAGER->findImage(text);
 	}
 	_dialogWindow = IMAGEMANAGER->findImage("DialogWindow");
@@ -121,19 +126,23 @@ HRESULT IntroScene::init(void)
 	_nextActionTiming.push(29);
 	_nextActionTiming.push(32);
 	_nextActionTiming.push(33);
-	_nextActionTiming.push(37);
+	_nextActionTiming.push(38);
 	FILE* fp;
 	fopen_s(&fp, "IntroText.txt", "r");
 	if (fp != nullptr)
 	{
-		for (int i = 0; i < 59; i++)
+		for (int i = 0; i < 67; i++)
 		{
 			char name[256];
 			fscanf_s(fp, "%[^\t]\t", name, _countof(name));
 			name[strlen(name)] = '\0';
 			_arrDialogs[i]._charName = name;
 			fscanf_s(fp, "%d ", &_arrDialogs[i]._expression);
-			fscanf_s(fp, "%d\n", &_arrDialogs[i]._answerN);
+			fscanf_s(fp, "%d ", &_arrDialogs[i]._answerN);
+			if(_arrDialogs[i]._answerN == 0)
+			{
+				fscanf_s(fp, "%d\n", &_arrDialogs[i]._nextDialog);
+			}
 			char dialog[256];
 			fscanf_s(fp, "%[^\n]\n", dialog, _countof(dialog));
 			dialog[strlen(dialog)] = '\0';
@@ -141,9 +150,11 @@ HRESULT IntroScene::init(void)
 			for (int j = 0; j < _arrDialogs[i]._answerN; j++)
 			{
 				char answer[256];
-				fscanf_s(fp, "%[^\n]\n", answer, _countof(answer));
+				fscanf_s(fp, "%[^\t]\t", answer, _countof(answer));
+				int nextDialog;
+				fscanf_s(fp, "%d\n", &nextDialog);
 				answer[strlen(answer)] = '\0';
-				_arrDialogs[i]._answer[j] = answer;
+				_arrDialogs[i]._answer[j] = make_pair(answer, nextDialog);
 			}
 			_arrDialogs[i]._letterN = 0;
 		}
@@ -164,6 +175,7 @@ HRESULT IntroScene::init(void)
 	_dark = false;
 	_darkAlpha = 0;
 	_dialogState = HIDE;
+	_answerN = 0;
 	return S_OK;
 }
 
@@ -177,14 +189,14 @@ void IntroScene::update(void)
 {
 	if(_cutIdx == 0)
 	{
-		_time += TIMEMANAGER->getElapsedTime();
+		//_time += TIMEMANAGER->getElapsedTime();
 		_lynn->update();
 		_cameraPos.x = _lynn->getX();
 		_cameraPos.y = _lynn->getY();
-		if (_time > 0.1f)
+		/*if (_time > 0.1f)
 		{
 			_time = 0.0f;
-			_count++;
+			_count++;*/
 			if (_count2 < 3)
 			{
 				if(_count > 8)
@@ -201,7 +213,7 @@ void IntroScene::update(void)
 					_count2 = 0;
 				}
 			}
-		}
+		//}
 		if (_changeCut)
 		{
 			_changeCutTime -= TIMEMANAGER->getElapsedTime() * 1000.0f;
@@ -312,12 +324,12 @@ void IntroScene::update(void)
 				_changeCut = WINSIZE_X;
 			}
 		}
-		if (_time + 0.1f < TIMEMANAGER->getWorldTime())
+		/*if (_time + 0.1f < TIMEMANAGER->getWorldTime())
 		{
 			_count++;
 			_time = TIMEMANAGER->getWorldTime();
-		}
-		cout << _lynn->getActionIdx() << endl;
+		}*/
+		//cout << _lynn->getActionIdx() << endl;
 		_lynn->update();
 	}
 	else if (_cutIdx == 2)
@@ -337,19 +349,19 @@ void IntroScene::update(void)
 				if (_dialogState == HIDE)
 				{
 					_dialogState = OPEN;
-					if (_dialogIdx == 53)
+					if (_dialogIdx == 61)
 					{
 						_trainWindow = IMAGEMANAGER->findImage("TrainWindow2");
 						_dark = true;
-						_darkAlpha = 200;
+						_darkAlpha = 128;
 					}
-					if (_dialogIdx == 55)
+					if (_dialogIdx == 63)
 					{
 						_trainWindow = IMAGEMANAGER->findImage("TrainWindow1");
 						_dark = false;
 						_darkAlpha = 0;
 					}
-					if (_dialogIdx == 58)
+					if (_dialogIdx == 66)
 					{
 						_dark = true;
 						_darkAlpha++;
@@ -372,47 +384,72 @@ void IntroScene::update(void)
 				}
 			}
 		}
-		if (_time + 0.1f < TIMEMANAGER->getWorldTime())
+		/*if (_time + 0.1f < TIMEMANAGER->getWorldTime())
 		{
 			_count++;
 			_time = TIMEMANAGER->getWorldTime();
-		}
+		}*/
 		_lynn->update();
 	}
+	if (_time + 0.1f < TIMEMANAGER->getWorldTime())
+	{
+		_count++;
+		_time = TIMEMANAGER->getWorldTime();
+	}
+	_catAnim->frameUpdate(0.1f);
 	updateDialog();
 	if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
 	{
-		if (_dialogState == SHOW)
+		if (_dialogState == SHOW && PtInRect(&_dialogRC, _ptMouse))
 		{
+			bool next = false;
 			if (_arrDialogs[_dialogIdx]._letterN < strlen(_arrDialogs[_dialogIdx]._dialog.c_str()))
 			{
 				_arrDialogs[_dialogIdx]._letterN = strlen(_arrDialogs[_dialogIdx]._dialog.c_str());
 			}
 			else
 			{
-				_dialogIdx++;
-				cout << _dialogIdx << endl;
-				if (_dialogIdx == 15 || _dialogIdx == 28 || _dialogIdx == 32 || _dialogIdx == 34 || _dialogIdx == 53 || _dialogIdx == 55 || _dialogIdx == 58)
+				if (_arrDialogs[_dialogIdx]._answerN > 0)
 				{
-					if (_dialogState == SHOW)
+					for (int i = 0; i < _arrDialogs[_dialogIdx]._answerN; i++)
 					{
-						_dialogState = CLOSE;
+						if (PtInRect(&RectMake(314, 570 + 30 * i, _dialogWindow->getWidth() * _dialogSize - 344, 30), _ptMouse))
+						{
+							_dialogIdx += _arrDialogs[_dialogIdx]._answer[i].second;
+							next = true;
+						}
 					}
 				}
-				if (checkNextActionTiming())
-				{
-					_lynn->popAction();
+				else
+				{				
+					_dialogIdx += _arrDialogs[_dialogIdx]._nextDialog;
+					next = true;
 				}
-				if (_dialogIdx > 23 && _cutIdx == 0)
+				cout << _dialogIdx << endl;
+				if(next)
 				{
-					_changeCut = true;
-					_dialogState = CLOSE;
-					_dialogIdx = 23;
-					_changeCutTime = WINSIZE_X;
-				}
-				if (_dialogIdx == 59)
-				{
-					SCENEMANAGER->changeScene("Farm");
+					if (_dialogIdx == 15 || _dialogIdx == 28 || _dialogIdx == 32 || _dialogIdx == 34 || _dialogIdx == 61 || _dialogIdx == 63 || _dialogIdx == 66 || _dialogIdx == 38)
+					{
+						if (_dialogState == SHOW)
+						{
+							_dialogState = CLOSE;
+						}
+					}
+					if (checkNextActionTiming())
+					{
+						_lynn->popAction();
+					}
+					if (_dialogIdx > 23 && _cutIdx == 0)
+					{
+						_changeCut = true;
+						_dialogState = CLOSE;
+						_dialogIdx = 23;
+						_changeCutTime = WINSIZE_X;
+					}
+					if (_dialogIdx == 67)
+					{
+						SCENEMANAGER->changeScene("Farm");
+					}
 				}
 			}
 		}
@@ -442,14 +479,14 @@ void IntroScene::render(void)
 			_trainWindow->frameRender(_introCut[1]->getMemDC(), 45 + 84 * i, 61, (_count % 51) % 10, (_count % 51) / 10);
 		}
 		_train1->render(_introCut[1]->getMemDC());
-		_trainPassengers[0]->frameRender(_introCut[1]->getMemDC(), 190, 140, _count % 6, 0);
+		_trainPassengers[0]->frameRender(_introCut[1]->getMemDC(), 190, 140, _count % (_trainPassengers[0]->getMaxFrameX() + 1), 0);
 		_trainPassengers[1]->frameRender(_introCut[1]->getMemDC(), 323, 140, _count % (_trainPassengers[1]->getMaxFrameX() + 1), 0);
 		_trainPassengers[2]->frameRender(_introCut[1]->getMemDC(), 475, 160, _count % (_trainPassengers[2]->getMaxFrameX() + 1), 0);
 		_trainPassengers[3]->frameRender(_introCut[1]->getMemDC(), 323, 175, _count % (_trainPassengers[3]->getMaxFrameX() + 1), 0);
 		_trainPassengers[4]->frameRender(_introCut[1]->getMemDC(), 138, 183, _count % (_trainPassengers[4]->getMaxFrameX() + 1), 0);
 		_trainPassengers[5]->frameRender(_introCut[1]->getMemDC(), 405, 180, _count % (_trainPassengers[5]->getMaxFrameX() + 1), 0);
 		_trainPassengers[6]->frameRender(_introCut[1]->getMemDC(), 215, 180, _count % (_trainPassengers[6]->getMaxFrameX() + 1), 0);
-		_catSleep->frameRender(_introCut[1]->getMemDC(), 60, 195, _count % (_catSleep->getMaxFrameX() + 1), 0);
+		_catSleep->aniRender(_introCut[1]->getMemDC(), 60, 195, _catAnim);
 		_lynn->render(_introCut[1]->getMemDC());
 		if(_lynn->getActionIdx() >= 24)
 		{
@@ -465,6 +502,15 @@ void IntroScene::render(void)
 			_trainWindow->frameRender(_introCut[2]->getMemDC(), 5 + 84 * i, 61, (_count % 51) % 10, (_count % 51) / 10);
 		}
 		_train2->render(_introCut[2]->getMemDC());
+		_trainPassengers[7]->frameRender(_introCut[2]->getMemDC(), 355, 165, _darkAlpha == 128 ? _count % (_trainPassengers[7]->getMaxFrameX() + 1) : _count % 6, 
+			_darkAlpha == 128 ? 1 : 0);
+		_trainPassengers[8]->frameRender(_introCut[2]->getMemDC(), 570, 130, _darkAlpha == 128 ? _count % (_trainPassengers[8]->getMaxFrameX() + 1) : _count % 6, 
+			_darkAlpha == 128 ? 1 : 0);
+		_trainPassengers[9]->frameRender(_introCut[2]->getMemDC(), 55, 160, _darkAlpha == 128 ? _count % 8 : _count % (_trainPassengers[9]->getMaxFrameX() + 1), 
+			_darkAlpha == 128 ? 1 : 0);
+		_trainPassengers[10]->frameRender(_introCut[2]->getMemDC(), 425, 160, _count % (_trainPassengers[10]->getMaxFrameX() + 1), _darkAlpha == 128 ? 1 : 0);
+		_catSleep->aniRender(_introCut[2]->getMemDC(), 375, 0, _catAnim);
+		IMAGEMANAGER->frameRender("Frog", _introCut[2]->getMemDC(), 90, 140, _catSleep->getMaxFrameX() - ((_count / 10) % 2), 0);
 		_lynn->render(_introCut[2]->getMemDC());
 		_introCut[2]->render(getMemDC(), WINSIZE_X / 2 - _train2->getWidth() * 0.65f, 0, _train2->getWidth() * 1.3f, _train2->getHeight() * 1.3f, 0, 0, _train2->getWidth(), _train2->getHeight());
 		if(_dark)
@@ -522,19 +568,28 @@ void IntroScene::dialog(Dialog dialog)
 	}
 	if(dialog._letterN == dialog._dialog.length())
 	{
-		for (int i = 0; i < dialog._answerN; i++)
+		if (_typingTime + 0.1f < TIMEMANAGER->getWorldTime())
 		{
-			if(PtInRect(&answerRC[i], _ptMouse))
+			_typingTime = TIMEMANAGER->getWorldTime();
+			_answerN++;
+			if (_answerN > dialog._answerN)
+			{
+				_answerN = dialog._answerN;
+			}
+		}
+		for (int i = 0; i < _answerN; i++)
+		{
+			if(PtInRect(&answerRC[i], _ptMouse) && _answerN == dialog._answerN)
 			{
 				IMAGEMANAGER->alphaRender("SelectAnswerBG", getMemDC(), rc.left - 6, answerRC[i].top, rc.right - rc.left + 6, answerRC[i].bottom - answerRC[i].top, 
 					0, 0, IMAGEMANAGER->findImage("SelectAnswerBG")->getWidth(), IMAGEMANAGER->findImage("SelectAnswerBG")->getHeight(), 200);
 				char str[256];
-				wsprintf(str, "> %s", dialog._answer[i].c_str());
+				wsprintf(str, "> %s", dialog._answer[i].first.c_str());
 				FONTMANAGER->textOut(getMemDC(), answerRC[i].left, answerRC[i].top + 5, "배달의민족 을지로체", 20, 100, str, strlen(str), RGB(171, 174, 46));
 			}
 			else
 			{
-				FONTMANAGER->textOut(getMemDC(), answerRC[i].left, answerRC[i].top + 5, "배달의민족 을지로체", 20, 100, const_cast<char*>(dialog._answer[i].c_str()), dialog._answer[i].length(), RGB(123, 148, 162));
+				FONTMANAGER->textOut(getMemDC(), answerRC[i].left, answerRC[i].top + 5, "배달의민족 을지로체", 20, 100, const_cast<char*>(dialog._answer[i].first.c_str()), dialog._answer[i].first.length(), RGB(123, 148, 162));
 			}
 		}
 	}
@@ -553,12 +608,12 @@ void IntroScene::updateDialog()
 	break;
 	case SHOW:
 		_dialogSize = 2.2f;
-		if (_typingTime + 0.05f < TIMEMANAGER->getWorldTime())
+		if (_arrDialogs[_dialogIdx]._letterN < strlen(_arrDialogs[_dialogIdx]._dialog.c_str()))
 		{
-			_typingTime = TIMEMANAGER->getWorldTime();
-			if (_arrDialogs[_dialogIdx]._letterN < strlen(_arrDialogs[_dialogIdx]._dialog.c_str()))
+			if (_typingTime + 0.05f < TIMEMANAGER->getWorldTime())
 			{
-				_arrDialogs[_dialogIdx]._letterN++;
+				_typingTime = TIMEMANAGER->getWorldTime();
+					_arrDialogs[_dialogIdx]._letterN++;
 			}
 		}
 	break;
