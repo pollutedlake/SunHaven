@@ -781,7 +781,6 @@ void Dynus::draw(void)
 			DrawRectMake(getMemDC(), _rcPa3Start[i]);
 		}
 
-		DrawRectMake(getMemDC(), _player->getRect());
 
 		SelectObject(getMemDC(), oldBrush);
 		DeleteObject(myBrush);

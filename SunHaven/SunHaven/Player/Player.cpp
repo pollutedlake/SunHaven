@@ -35,7 +35,9 @@ HRESULT Player::init(float x, float y, string collisionMapKey)
 		_playerMoveAnim->getFrameWidth(),
 		_playerMoveAnim->getFrameHeight());
 
-
+	_playertoCameraRC = RectMakeCenter(_cx, _cy,
+		_playerMoveAnim->getFrameWidth(),
+		_playerMoveAnim->getFrameHeight());
 
 	_isCollisionLeft = _isCollisionRight =
 		_isCollisionTop =_isCollisionBottom = false;
@@ -239,8 +241,6 @@ void Player::update(void)
 	COLORREF stairCol =
 		GetPixel(IMAGEMANAGER->findImage("충돌")->getMemDC(),
 			_x, _y);
-	
-	//if (_collisionMap) cout << "충돌맵은 존재한다" << endl;
 
 	if (!_toolAnim->isPlay())
 	{
@@ -466,6 +466,7 @@ void Player::update(void)
 		_firebeamRC = RectMakeCenter(_x, _y, 50, 50);
 	}
 
+	cout << _toolAnim->getNowPlayIdx() << endl;
 
 
 	_skill->update();
@@ -500,7 +501,8 @@ void Player::render(void)
 			offsetX, 0);
 	}
 
-	_playerImage->aniRender(getMemDC(), _playerRC.left, _playerRC.top, _playerMoveAnim);
+	_playerImage->aniRender(getMemDC(),
+		_playertoCameraRC.left, _playertoCameraRC.top, _playerMoveAnim);
 
 	if(_swordAnim->isPlay())
 	{
@@ -627,38 +629,6 @@ void Player::UseTool(ObjectManager* object, POINT point)
 	
 	_toolAnim->AniStart();
 
-	/*if (updown < 0)
-	{
-		if (abs(updown) > leftright)
-		{
-			cout << "위" << endl;
-		}
-		else if (leftright < 0)
-		{
-			cout << "왼쪽" << endl;
-		}
-		else
-		{
-			cout << "오른쪽" << endl;
-		}
-	}
-	else
-	{
-		if (abs(leftright) < updown)
-		{
-			cout << "아래" << endl;
-		}
-		else if (leftright < 0)
-		{
-			cout << "왼쪽" << endl;
-		}
-		else
-		{
-			cout << "오른쪽" << endl;
-		}
-	}*/
-	
-	
 
 	for (int i = 0; i < object->getObjectList().size(); i++)
 	{
@@ -668,7 +638,7 @@ void Player::UseTool(ObjectManager* object, POINT point)
 			if (IntersectRect(&temp,
 				&object->getObjectList()[i]->getCollisionRC(),
 				&_toolAnimRC)
-				&& _toolAnim->isPlay())
+				&& _toolAnim->getNowPlayIdx() >= 0)
 			{
 				// SD : 풀베는 소리
 				object->getObjectList()[i]->setHP(1);
@@ -680,7 +650,7 @@ void Player::UseTool(ObjectManager* object, POINT point)
 		{
 			if (PtInRect(&object->getObjectList()[i]->getCollisionRC(),
 				point)
-				&& _toolAnim->isPlay()
+				&& _toolAnim->getNowPlayIdx() >= 0
 				&& getDistance(_cx, _cy, point.x, point.y) < OBJECT_RANGE)
 			{
 				// SD : 나무 베는 소리
@@ -694,7 +664,7 @@ void Player::UseTool(ObjectManager* object, POINT point)
 		{
 			if (PtInRect(&object->getObjectList()[i]->getCollisionRC(),
 				point)
-				&& _toolAnim->isPlay())
+				&& _toolAnim->getNowPlayIdx() >= 0)
 			{
 				// SD : 돌캐는 소리
 				object->getObjectList()[i]->setHP(5);
