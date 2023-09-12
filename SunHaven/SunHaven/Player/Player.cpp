@@ -650,7 +650,7 @@ void Player::UseTool(ObjectManager* object, POINT point)
 		{
 			if (PtInRect(&object->getObjectList()[i]->getCollisionRC(),
 				point)
-				&& _toolAnim->getNowPlayIdx() > 0
+				&& _toolAnim->getNowPlayIdx() >= 0
 				&& getDistance(_cx, _cy, point.x, point.y) < OBJECT_RANGE)
 			{
 				// SD : 唱公 海绰 家府
@@ -664,7 +664,7 @@ void Player::UseTool(ObjectManager* object, POINT point)
 		{
 			if (PtInRect(&object->getObjectList()[i]->getCollisionRC(),
 				point)
-				&& _toolAnim->getNowPlayIdx() > 0)
+				&& _toolAnim->getNowPlayIdx() >= 0)
 			{
 				// SD : 倒某绰 家府
 				object->getObjectList()[i]->setHP(5);

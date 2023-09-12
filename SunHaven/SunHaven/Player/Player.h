@@ -284,7 +284,7 @@ public:
 
 	RECT getPlayerRC() { return _playerRC; }
 
-	RECT getRect(void) { return _playerRC; }
+	RECT getPlayertoCameraRect(void) { return _playertoCameraRC; }
 
 	Player() {}
 	~Player() {}
