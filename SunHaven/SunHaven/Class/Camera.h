@@ -21,6 +21,7 @@ public:
 	void setLimitBottom(int limitBottom) { _limitRC.bottom = limitBottom; }
 
 	POINT worldToCamera(POINT point);
+	POINT cameraToWorld(POINT point);
 	float worldToCameraX(float x);
 	float worldToCameraY(float y);
 

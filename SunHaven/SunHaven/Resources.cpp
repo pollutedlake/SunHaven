@@ -63,6 +63,7 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addImage("Object4", "Resources/Images/Object/Tree2.bmp", 82, 108, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("Object5", "Resources/Images/Object/Stone1.bmp", 24, 24, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("Object6", "Resources/Images/Object/Stone2.bmp", 24, 24, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Stump", "Resources/Images/Object/Stump.bmp", 24, 24, true, RGB(255, 0, 255));
 	// Sound
 
 	// ====================DynusScene====================

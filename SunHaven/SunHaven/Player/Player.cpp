@@ -10,6 +10,8 @@ HRESULT Player::init(float x, float y, string collisionMapKey)
 	_collisionMap = IMAGEMANAGER->findImage(collisionMapKey);
 
 
+
+
 	_skill = new SkillManager;
 	_skill->init();
 
@@ -32,6 +34,8 @@ HRESULT Player::init(float x, float y, string collisionMapKey)
 	_playerRC = RectMakeCenter(_x, _y,
 		_playerMoveAnim->getFrameWidth(),
 		_playerMoveAnim->getFrameHeight());
+
+
 
 	_isCollisionLeft = _isCollisionRight =
 		_isCollisionTop =_isCollisionBottom = false;
@@ -92,13 +96,87 @@ HRESULT Player::init(float x, float y, string collisionMapKey)
 
 
 
-	
+	//=============================================//
 
+
+
+	_axeSwing = IMAGEMANAGER->addImage("µµ³¢ÈÖµÎ¸£±â",
+		"Resources/Images/Player/rustyaxeswing.bmp",
+		3360, 168, true, RGB(255, 0, 255));
+
+	_axeSwingAnim = new Animation;
+	_axeSwingAnim->init(_axeSwing->getWidth(),
+		_axeSwing->getHeight(),
+		168, 168);
+
+	_axeSwingAnim->setFPS(10);
+	_axeSwingAnim->setPlayFrame(5, 9, false, false);
+
+	_axeSwingRC = RectMakeCenter(_x, _y,
+		_axeSwingAnim->getFrameWidth(),
+		_axeSwingAnim->getFrameHeight());
+
+	//=============================================//
+
+	_pickaxeSwing = IMAGEMANAGER->addImage("°î±ªÀÌÈÖµÎ¸£±â",
+		"Resources/Images/Player/rustypickaxeswing.bmp",
+		960, 101, true, RGB(255, 0, 255));
+
+	_pickaxeSwingAnim = new Animation;
+	_pickaxeSwingAnim->init(_pickaxeSwing->getWidth(),
+		_pickaxeSwing->getHeight(),
+		60, 101);
+
+	_pickaxeSwingAnim->setFPS(10);
+	_pickaxeSwingAnim->setPlayFrame(5, 9, false, false);
+
+	_pickaxeSwingRC = RectMakeCenter(_x, _y,
+		_pickaxeSwingAnim->getFrameWidth(),
+		_pickaxeSwingAnim->getFrameHeight());
+
+	//=============================================//
+
+	_hoeSwing = IMAGEMANAGER->addImage("±ªÀÌÈÖµÎ¸£±â",
+		"Resources/Images/Player/rustyhoe.bmp",
+		960, 100, true, RGB(255, 0, 255));
+
+	_hoeSwingAnim = new Animation;
+	_hoeSwingAnim->init(_hoeSwing->getWidth(),
+		_hoeSwing->getHeight(),
+		60, 100);
+
+	_hoeSwingAnim->setFPS(10);
+	_hoeSwingAnim->setPlayFrame(5, 9, false, false);
+
+	_hoeSwingRC = RectMakeCenter(_x, _y,
+		_hoeSwingAnim->getFrameWidth(),
+		_hoeSwingAnim->getFrameHeight());
+
+
+	//=============================================//
+
+	_scytheSwing = IMAGEMANAGER->addImage("³´ÈÖµÎ¸£±â",
+		"Resources/Images/Player/scytheswing.bmp",
+		3360, 168, true, RGB(255, 0, 255));
+
+	_scytheSwingAnim = new Animation;
+	_scytheSwingAnim->init(_scytheSwing->getWidth(),
+		_scytheSwing->getHeight(),
+		168, 168);
+
+	_scytheSwingAnim->setFPS(10);
+	_scytheSwingAnim->setPlayFrame(5, 9, false, false);
+
+	_scytheSwingRC = RectMakeCenter(_x, _y,
+		_scytheSwingAnim->getFrameWidth(),
+		_scytheSwingAnim->getFrameHeight());
+
+
+	//=============================================//
 
 
 	_jump = 5.5f;
 	_isJump = false;
-
 
 	_playerState.playerName=INIDATAMANAGER->loadDataString("tempINIFile", "commonState", "playerName");
 	_playerState.HP = INIDATAMANAGER->loadDataInteger("tempINIFile", "commonState", "HP");
@@ -112,14 +190,16 @@ HRESULT Player::init(float x, float y, string collisionMapKey)
 	_playerState.spellDamage = INIDATAMANAGER->loadDataInteger("tempINIFile", "combatState", "spellDamage");
 	_playerState.defence = INIDATAMANAGER->loadDataInteger("tempINIFile", "combatState", "defence");
 	
+	_toolImage = _scytheSwing;
+	_toolAnim = _scytheSwingAnim;
+	_toolAnimRC = _scytheSwingRC;
 
-	
 	_miniRC[0] = RectMake(_playerRC.left, _playerRC.top - 3, 3, 3);
 	_miniRC[1] = RectMake(_playerRC.right + 3, _playerRC.top, 3, 3);
 	_miniRC[2] = RectMake(_playerRC.right -3, _playerRC.top + 3, 3, 3);
 	_miniRC[3] = RectMake(_playerRC.left-3, _playerRC.top, 3, 3);
 	
-
+	_isLoop = false;
 
 	return S_OK;
 }
@@ -136,29 +216,22 @@ void Player::release(void)
 	
 	_fireballAnim->release();
 	SAFE_DELETE(_fireballAnim);
-	
+
 	_swordSlashAnim->release();
 	SAFE_DELETE(_swordSlashAnim);
+
+	_axeSwingAnim->release();
+	SAFE_DELETE(_axeSwingAnim);
 }
 
 void Player::update(void)
 {
-	_inven->update();
+	//_inven->update();
 
-	//cout << _ptMouse.x << ", " << _ptMouse.y << endl;
-
-	//COLORREF waterCol =
-	//	GetPixel(_collisionMap->getMemDC(),
-	//		_ptMouse.x, _ptMouse.y);
-	//int r = GetRValue(waterCol);
-	//int g = GetGValue(waterCol);
-	//int b = GetBValue(waterCol);
-	//cout << r << ", " << g << ", " << b << endl;
-
-	if (KEYMANAGER->isOnceKeyDown(VK_LEFT) ||
-		KEYMANAGER->isOnceKeyDown(VK_RIGHT) ||
-		KEYMANAGER->isOnceKeyDown(VK_UP) ||
-		KEYMANAGER->isOnceKeyDown(VK_DOWN))
+	if (KEYMANAGER->isOnceKeyDown('W') ||
+		KEYMANAGER->isOnceKeyDown('S') ||
+		KEYMANAGER->isOnceKeyDown('A') ||
+		KEYMANAGER->isOnceKeyDown('D'))
 	{
 		_playerMoveAnim->AniStart();
 	}
@@ -167,84 +240,124 @@ void Player::update(void)
 		GetPixel(IMAGEMANAGER->findImage("Ãæµ¹")->getMemDC(),
 			_x, _y);
 	
+	if (_collisionMap) cout << "Ãæµ¹¸ÊÀº Á¸ÀçÇÑ´Ù" << endl;
 
-	if (KEYMANAGER->isStayKeyDown(VK_LEFT))
+	if (!_toolAnim->isPlay())
 	{
-		_x -= _moveSpeed;
-		_swordSlash = IMAGEMANAGER->findImage("Ä®ÈÖµÎ¸£±â");
-		_swordAnim = _swordSlashAnim;
-		_swordAnim->setPlayFrame(0, 4, false, false);
-
-		if (KEYMANAGER->isOnceKeyDown('Z'))
+		if (KEYMANAGER->isStayKeyDown('A'))
 		{
-			_x -= 220;
+			_x -= _moveSpeed;
+			_swordSlash = IMAGEMANAGER->findImage("Ä®ÈÖµÎ¸£±â");
+			_swordAnim = _swordSlashAnim;
+			_swordAnim->setPlayFrame(0, 4, false, false);
 
-			_swordSlashAnim->AniStart();
+			for (int i = 0; i < 4; i++)
+			{
+				axeSwingAnimArr[i] = i + 15;
+				pickaxeSwingAnimArr[i] = i + 12;
+				hoeSwingAnimArr[i] = i + 12;
+				scytheSwingAnimArr[i] = i + 15;
+			}
+
+			if (KEYMANAGER->isOnceKeyDown('Z'))
+			{
+				_x -= 220;
+
+				_swordSlashAnim->AniStart();
+			}
+
+			if (stairCol == RGB(2, 62, 156))
+			{
+				_y -= _moveSpeed;
+			}
+			_playerMoveAnim->setPlayFrame(5, 9, false, true);
 		}
+		else if (KEYMANAGER->isStayKeyDown('D'))
+		{
+			_x += _moveSpeed;
+			_swordSlash = IMAGEMANAGER->findImage("Ä®ÈÖµÎ¸£±â");
+			_swordAnim = _swordSlashAnim;
+			int arr[5] = { 9,8,7,6,5 };
 
-		if (stairCol == RGB(2, 62, 156))
+			for (int i = 0; i < 4; i++)
+			{
+				axeSwingAnimArr[i] = i + 5;
+				pickaxeSwingAnimArr[i] = i + 4;
+				hoeSwingAnimArr[i] = i + 4;
+				scytheSwingAnimArr[i] = i + 5;
+			}
+
+			_swordAnim->setPlayFrame(arr, 5, false);
+
+			if (KEYMANAGER->isOnceKeyDown('Z'))
+			{
+				_x += 220;
+				_swordSlashAnim->AniStart();
+			}
+
+			if (stairCol == RGB(2, 62, 156))
+			{
+				_y += _moveSpeed;
+			}
+			_playerMoveAnim->setPlayFrame(15, 19, false, true);
+		}
+		else if (KEYMANAGER->isStayKeyDown('W'))
 		{
 			_y -= _moveSpeed;
-		}
-		_playerMoveAnim->setPlayFrame(5, 9, false, true);
-	}
-	else if (KEYMANAGER->isStayKeyDown(VK_RIGHT))
-	{
-		_x += _moveSpeed;
-		_swordSlash = IMAGEMANAGER->findImage("Ä®ÈÖµÎ¸£±â");
-		_swordAnim = _swordSlashAnim;
-		int arr[5] = { 9,8,7,6,5 };
-		_swordAnim->setPlayFrame(arr, 5, false);
+			_swordSlash = IMAGEMANAGER->findImage("Ä® À§¾Æ·¡ ÈÖµÎ¸£±â");
+			_swordSlashUpDownAnim->setPlayFrame(0, 4, false, false);
 
-		if (KEYMANAGER->isOnceKeyDown('Z'))
-		{
-			_x += 220;
-			_swordSlashAnim->AniStart();
-		}
+			for (int i = 0; i < 4; i++)
+			{
+				axeSwingAnimArr[i] = i + 10;
+				pickaxeSwingAnimArr[i] = i + 8;
+				hoeSwingAnimArr[i] = i + 8;
+				scytheSwingAnimArr[i] = i + 10;
+			}
+			_swordAnim = _swordSlashUpDownAnim;
 
-		if (stairCol == RGB(2, 62, 156))
+			if (KEYMANAGER->isOnceKeyDown('Z'))
+			{
+				_y -= 220;
+			}
+			_playerMoveAnim->setPlayFrame(10, 14, false, true);
+		}
+		else if (KEYMANAGER->isStayKeyDown('S'))
 		{
 			_y += _moveSpeed;
-		}
-		_playerMoveAnim->setPlayFrame(15, 19, false, true);
-	}
-	else if (KEYMANAGER->isStayKeyDown(VK_UP))
-	{
-		_y -= _moveSpeed;
-		_swordSlash = IMAGEMANAGER->findImage("Ä® À§¾Æ·¡ ÈÖµÎ¸£±â");
-		_swordSlashUpDownAnim->setPlayFrame(0, 4, false, false);
-		_swordAnim = _swordSlashUpDownAnim;
+			_swordSlash = IMAGEMANAGER->findImage("Ä® À§¾Æ·¡ ÈÖµÎ¸£±â");
+			int arr[5] = { 9,8,7,6,5 };
+			_swordSlashUpDownAnim->setPlayFrame(arr, 5, false);
 
-		if (KEYMANAGER->isOnceKeyDown('Z'))
+			for (int i = 0; i < 4; i++)
+			{
+				axeSwingAnimArr[i] = i;
+				pickaxeSwingAnimArr[i] = i;
+				hoeSwingAnimArr[i] = i;
+				scytheSwingAnimArr[i] = i;
+			}
+
+			_swordAnim = _swordSlashUpDownAnim;
+
+			if (KEYMANAGER->isOnceKeyDown('Z'))
+			{
+				_y += 220;
+			}
+			_playerMoveAnim->setPlayFrame(0, 4, false, true);
+		}
+		else
 		{
-			_y -= 220;
+			_playerMoveAnim->AniStop();
 		}
-		_playerMoveAnim->setPlayFrame(10, 14, false, true);
-	}
-	else if (KEYMANAGER->isStayKeyDown(VK_DOWN))
-	{
-		_y += _moveSpeed;
-		_swordSlash = IMAGEMANAGER->findImage("Ä® À§¾Æ·¡ ÈÖµÎ¸£±â");
-		int arr[5] = { 9,8,7,6,5 };
-		_swordSlashUpDownAnim->setPlayFrame(arr, 5, false);
-		_swordAnim = _swordSlashUpDownAnim;
-
-		if (KEYMANAGER->isOnceKeyDown('Z'))
-		{
-			_y += 220;
-		}
-		_playerMoveAnim->setPlayFrame(0, 4, false, true);
-	}
-	else
-	{
-		_playerMoveAnim->AniStop();
 	}
 
-	cout << _swordAnim->getNowPlayIdx() << endl;
+	
+	_axeSwingAnim->setPlayFrame(axeSwingAnimArr, 4, _isLoop);
+	_pickaxeSwingAnim->setPlayFrame(pickaxeSwingAnimArr, 4, _isLoop);
+	_hoeSwingAnim->setPlayFrame(hoeSwingAnimArr, 4, _isLoop);
+	_scytheSwingAnim->setPlayFrame(scytheSwingAnimArr, 4, _isLoop);
 
-	_playerRC = RectMakeCenter(_x, _y,
-		_playerMoveAnim->getFrameWidth(),
-		_playerMoveAnim->getFrameHeight());
+
 
 	if (KEYMANAGER->isOnceKeyDown(VK_SPACE))
 	{
@@ -272,9 +385,8 @@ void Player::update(void)
 		_swordAnim->AniStart();
 	}
 
-	_playerRC = RectMakeCenter(_x, _y,
-		_playerMoveAnim->getFrameWidth(),
-		_playerMoveAnim->getFrameHeight());
+
+	
 
 
 	if (_collisionMap != nullptr)
@@ -296,7 +408,6 @@ void Player::update(void)
 			{
 				_isCollisionTop = false;
 			}
-
 			if (collisionB == RGB(255, 0, 255))
 			{
 				_isCollisionBottom = true;
@@ -317,39 +428,32 @@ void Player::update(void)
 				GetPixel(_collisionMap->getMemDC(),
 					_playerRC.right, i);
 
-			if (collisionL == RGB(255, 0, 255))
-			{
-				_isCollisionLeft = true;
 
-			}
-			else
-			{
-				_isCollisionLeft = false;
-			}
-
-			if (collisionR == RGB(255, 0, 255))
-			{
-				_isCollisionRight = true;
-			}
-			else
-			{
-				_isCollisionRight = false;
-			}
+			_isCollisionLeft =
+				collisionL == RGB(255, 0, 255) ? true : false;
+			_isCollisionRight =
+				collisionR == RGB(255, 0, 255) ? true : false;
 		}
 	}
 
-	if (KEYMANAGER->isStayKeyDown('1'))
+	if (KEYMANAGER->isOnceKeyDown('1'))
 	{
 		_eTools = eTools::SICKLE;
 	}
-	if (KEYMANAGER->isStayKeyDown('2'))
+	if (KEYMANAGER->isOnceKeyDown('2'))
+	{
+		_eTools = eTools::HOE;
+	}
+	if (KEYMANAGER->isOnceKeyDown('3'))
 	{
 		_eTools = eTools::AXE;
 	}
-	if (KEYMANAGER->isStayKeyDown('3'))
+	if (KEYMANAGER->isOnceKeyDown('4'))
 	{
 		_eTools = eTools::PICKAXE;
 	}
+
+
 
 	if (KEYMANAGER->isStayKeyDown('U'))
 	{
@@ -362,8 +466,12 @@ void Player::update(void)
 	}
 
 
+
 	_skill->update();
-	
+
+	_playerRC = RectMakeCenter(_x, _y,
+		_playerMoveAnim->getFrameWidth(),
+		_playerMoveAnim->getFrameHeight());
 
 	if (_isCollisionLeft) _x += _moveSpeed;
 	if (_isCollisionRight) _x -= _moveSpeed;
@@ -373,6 +481,10 @@ void Player::update(void)
 	_playerMoveAnim->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);
 	_fireballAnim->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);
 	_swordAnim->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);
+	_axeSwingAnim->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);
+	_pickaxeSwingAnim->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);
+	_hoeSwingAnim->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);
+	_scytheSwingAnim->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);
 }
 
 void Player::render(void)
@@ -389,28 +501,163 @@ void Player::render(void)
 
 	_playerImage->aniRender(getMemDC(), _playerRC.left, _playerRC.top, _playerMoveAnim);
 
-	DrawRectMake(getMemDC(), _swordSlashRC);
 	if(_swordAnim->isPlay())
 	{
 		_swordSlash->aniRender(getMemDC(), _swordSlashRC.left, _swordSlashRC.top,
 			_swordAnim);
 	}
 
+	if (_toolAnim->isPlay())
+	{
+		_toolImage->aniRender(getMemDC(), _toolAnimRC.left, _toolAnimRC.top,
+			_toolAnim);
+	}
 
 	_inven->render();
 	
+
+
+
 	if(KEYMANAGER->isToggleKey('K'))
 		_skill->render();
-
-	/*DrawRectMake(getMemDC(), _miniRC[0]);
-	DrawRectMake(getMemDC(), _miniRC[1]);
-	DrawRectMake(getMemDC(), _miniRC[2]);
-	DrawRectMake(getMemDC(), _miniRC[3]);*/
 }
 
-void Player::UseTool(ObjectManager* object)
+void Player::MouseOver(ObjectManager* object, POINT point)
+{
+	for (int i = 0; i < object->getObjectList().size(); i++)
+	{
+		if (PtInRect(&object->getObjectList()[i]->getCollisionRC(),
+			point) &&
+			object->getObjectList()[i]->getType() > 1)
+		{
+			if (getDistance(_cx, _cy, point.x, point.y) < OBJECT_RANGE)
+			{
+				IMAGEMANAGER->render("¿ÀºêÁ§Æ® ¼±ÅÃ", getMemDC(),
+					object->getObjectList()[i]->getCollisionRC().left,
+					object->getObjectList()[i]->getCollisionRC().top);
+			}
+		}
+	}
+}
+
+void Player::UseTool(ObjectManager* object, POINT point)
 {
 	RECT temp;
+	float updown = point.y - _cy;
+	float leftright = point.x - _cx;
+
+	switch (_eTools)
+	{
+	case eTools::SICKLE:
+		_toolImage = _scytheSwing;
+		_toolAnim = _scytheSwingAnim;
+		_toolAnimRC = _scytheSwingRC;
+		break;
+
+	case eTools::HOE:
+		_toolImage = _hoeSwing;
+		_toolAnim = _hoeSwingAnim;
+		_toolAnimRC = _hoeSwingRC;
+		break;
+
+	case eTools::AXE:
+		_toolImage = _axeSwing;
+		_toolAnim = _axeSwingAnim;
+		_toolAnimRC = _axeSwingRC;
+		break;
+
+	case eTools::PICKAXE:
+		_toolImage = _pickaxeSwing;
+		_toolAnim = _pickaxeSwingAnim;
+		_toolAnimRC = _pickaxeSwingRC;
+		break;
+	}
+
+	if (updown < 0 && abs(updown) > leftright)
+	{
+		for (int i = 0; i < 4; i++)
+		{
+			axeSwingAnimArr[i] = i + 10;
+			pickaxeSwingAnimArr[i] = i + 8;
+			hoeSwingAnimArr[i] = i + 8;
+			scytheSwingAnimArr[i] = i + 10;
+		}
+		_playerMoveAnim->setPlayFrame(10, 14, false, true);
+	}
+	else if (updown > 0 && abs(leftright) < updown)
+	{
+		for (int i = 0; i < 4; i++)
+		{
+			axeSwingAnimArr[i] = i;
+			pickaxeSwingAnimArr[i] = i;
+			hoeSwingAnimArr[i] = i;
+			scytheSwingAnimArr[i] = i;
+		}
+		_playerMoveAnim->setPlayFrame(0, 4, false, true);
+	}
+	else if (leftright < 0)
+	{
+		for (int i = 0; i < 4; i++)
+		{
+			axeSwingAnimArr[i] = i + 15;
+			pickaxeSwingAnimArr[i] = i + 12;
+			hoeSwingAnimArr[i] = i + 12;
+			scytheSwingAnimArr[i] = i + 15;
+		}
+		_playerMoveAnim->setPlayFrame(5, 9, false, true);
+	}
+	else
+	{
+		for (int i = 0; i < 4; i++)
+		{
+			axeSwingAnimArr[i] = i + 5;
+			pickaxeSwingAnimArr[i] = i + 4;
+			hoeSwingAnimArr[i] = i + 4;
+			scytheSwingAnimArr[i] = i + 5;
+		}
+		_playerMoveAnim->setPlayFrame(15, 19, false, true);
+	}
+
+	_axeSwingAnim->setPlayFrame(axeSwingAnimArr, 4, _isLoop);
+	_pickaxeSwingAnim->setPlayFrame(pickaxeSwingAnimArr, 4, _isLoop);
+	_hoeSwingAnim->setPlayFrame(hoeSwingAnimArr, 4, _isLoop);
+	_scytheSwingAnim->setPlayFrame(scytheSwingAnimArr, 4, _isLoop);
+
+	
+	_toolAnim->AniStart();
+
+	/*if (updown < 0)
+	{
+		if (abs(updown) > leftright)
+		{
+			cout << "À§" << endl;
+		}
+		else if (leftright < 0)
+		{
+			cout << "¿ÞÂÊ" << endl;
+		}
+		else
+		{
+			cout << "¿À¸¥ÂÊ" << endl;
+		}
+	}
+	else
+	{
+		if (abs(leftright) < updown)
+		{
+			cout << "¾Æ·¡" << endl;
+		}
+		else if (leftright < 0)
+		{
+			cout << "¿ÞÂÊ" << endl;
+		}
+		else
+		{
+			cout << "¿À¸¥ÂÊ" << endl;
+		}
+	}*/
+	
+	
 
 	for (int i = 0; i < object->getObjectList().size(); i++)
 	{
@@ -418,52 +665,53 @@ void Player::UseTool(ObjectManager* object)
 			&& _eTools == eTools::SICKLE)
 		{
 			if (IntersectRect(&temp,
-				&object->getObjectList()[i]->getRC(),
-				&_swordSlashRC)
-				&& _swordSlashAnim->getNowPlayIdx()==1)
+				&object->getObjectList()[i]->getCollisionRC(),
+				&_toolAnimRC)
+				&& _toolAnim->isPlay())
 			{
+				// SD : Ç®º£´Â ¼Ò¸®
 				object->getObjectList()[i]->setHP(1);
 			}
-
 		}
 
 		else if (object->getObjectList()[i]->getType() / 2 == 1
 			&& _eTools == eTools::AXE)
 		{
-			if (IntersectRect(&temp,
-				&object->getObjectList()[i]->getRC(),
-				&_swordSlashRC)
-				&& _swordSlashAnim->getNowPlayIdx() == 1)
+			if (PtInRect(&object->getObjectList()[i]->getCollisionRC(),
+				point)
+				&& _toolAnim->isPlay()
+				&& getDistance(_cx, _cy, point.x, point.y) < OBJECT_RANGE)
 			{
-				object->getObjectList()[i]->setHP(1);
+				// SD : ³ª¹« º£´Â ¼Ò¸®
+				object->getObjectList()[i]->setHP(10);
 			}
-
 		}
 
 		else if (object->getObjectList()[i]->getType() / 2 == 2
-			&& _eTools == eTools::PICKAXE)
+			&& _eTools == eTools::PICKAXE
+			&& getDistance(_cx, _cy, point.x, point.y) < OBJECT_RANGE)
 		{
-			if (IntersectRect(&temp,
-				&object->getObjectList()[i]->getRC(),
-				&_swordSlashRC)
-				&& _swordSlashAnim->getNowPlayIdx() == 1)
+			if (PtInRect(&object->getObjectList()[i]->getCollisionRC(),
+				point)
+				&& _toolAnim->isPlay())
 			{
-				object->getObjectList()[i]->setHP(1);
+				// SD : µ¹Ä³´Â ¼Ò¸®
+				object->getObjectList()[i]->setHP(5);
 			}
-
 		}
 	}
 }
 
-void Player::UseFishingLod()
+void Player::UseFishingLod(POINT point)
 {
-	
-	if (KEYMANAGER->isOnceKeyUp(VK_RBUTTON))
+	if (KEYMANAGER->isStayKeyDown(VK_RBUTTON))
 	{
-		if (GetPixel(_collisionMap->getMemDC(), _ptMouse.x, _ptMouse.y)
+		cout << "±â¸¦ ¸ðÀ¸°í..." << endl;
+
+		if (GetPixel(_collisionMap->getMemDC(), point.x, point.y)
 			== RGB(255, 0, 0))
 		{
-			cout << "³¬½ÃÇÏ°Ô?" << endl;
+			cout << "´øÁø´Ù" << endl;
 		}
 	}
 }
@@ -489,9 +737,6 @@ void Player::ObjectCollision(ObjectManager* object)
 			&object->getObjectList()[i]->getRC()))
 		{
 			//_x -= _moveSpeed;
-			cout << "Ãæµ¹µÊ" << endl;
 		}
 	}
 }
-
-

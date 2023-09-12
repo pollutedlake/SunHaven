@@ -13,7 +13,6 @@ HRESULT Rock::init(LivingObjectType type, POINT tilePos)
 	wsprintf(str, "Object%d", (int)type + 1);
 	_image = IMAGEMANAGER->findImage(str);
 	_tilePos = tilePos;
-	_collisionRC = RectMake(tilePos.x * TILEWIDTH * 2, tilePos.y * TILEHEIGHT * 2, TILEWIDTH * 2, TILEHEIGHT * 2);
 	_halfTrans = false;
 	switch (_type)
 	{
@@ -27,6 +26,8 @@ HRESULT Rock::init(LivingObjectType type, POINT tilePos)
 	_curHp = _maxHp;
 	_hpBar = new ProgressBar;
 	_hpBar->init("ObjectHpBarTop", "", "ObjectHpBarFill", NULL, NULL, 36, 7);
+	_hpBarOffsetX = 4;
+	_hpBarOffsetY = 36;
 	return S_OK;
 }
 
@@ -36,10 +37,11 @@ void Rock::release(void)
 
 void Rock::update(void)
 {
-	_hpBar->setX(_cx - 5);
-	_hpBar->setY(_cy - 36);
+	_hpBar->setX(_cx - _hpBarOffsetX);
+	_hpBar->setY(_cy - _hpBarOffsetY);
 	_hpBar->update();
 	_hpBar->setGauge(_curHp, _maxHp);
+	_collisionRC = RectMakeCenter(_cx, _cy, TILEWIDTH * 1.5f, TILEHEIGHT * 1.5f);
 }
 
 void Rock::render(void)

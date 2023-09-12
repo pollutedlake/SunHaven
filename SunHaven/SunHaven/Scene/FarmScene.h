@@ -33,6 +33,9 @@ private:
 	priority_queue<pair<GameNode*, int>, vector<pair<GameNode*, int>>, cmp> _vRenderList;
 	ProgressBar* _progressBar;
 
+	GImage* _MouseOver;
+	RECT _MouseRC;
+
 public:
 	HRESULT init(void);
 	void release(void);

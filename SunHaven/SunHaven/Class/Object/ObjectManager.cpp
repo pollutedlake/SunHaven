@@ -56,10 +56,21 @@ void ObjectManager::release(void)
 
 void ObjectManager::update(void)
 {
-	for (_viObject = _vObject.begin(); _viObject != _vObject.end(); ++_viObject)
+	for (_viObject = _vObject.begin(); _viObject != _vObject.end();)
 	{
 		(*_viObject)->updateCameraPos(_camera->worldToCameraX((*_viObject)->getTilePos().x * 36 + 18), _camera->worldToCameraY((*_viObject)->getTilePos().y * 36 + 18));
 		(*_viObject)->update();
+		if ((*_viObject)->getCurHP() <= 0)
+		{
+			(*_viObject)->dropItem();
+			(*_viObject)->release();
+			delete(*_viObject);
+			_viObject = _vObject.erase(_viObject);
+		}
+		else
+		{
+			++_viObject;
+		}
 	}
 }
 
