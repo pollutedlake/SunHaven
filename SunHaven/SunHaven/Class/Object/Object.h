@@ -15,6 +15,7 @@ enum LivingObjectType
 class Object : public GameNode
 {
 protected:
+	queue<string> _dropItemList;
 	ProgressBar* _hpBar;
 	GImage* _image;
 	POINT _tilePos;

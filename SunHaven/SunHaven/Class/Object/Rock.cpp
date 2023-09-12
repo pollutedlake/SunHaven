@@ -18,9 +18,11 @@ HRESULT Rock::init(LivingObjectType type, POINT tilePos)
 	{
 	case ROCK1:
 		_maxHp = 5;
+		_dropItemList.push("4-1");
 		break;
 	case ROCK2:
 		_maxHp = 10;
+		_dropItemList.push("4-6");
 		break;
 	}
 	_curHp = _maxHp;

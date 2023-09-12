@@ -20,11 +20,13 @@ HRESULT Tree::init(LivingObjectType type, POINT tilePos)
 		_offsetX = -3;
 		_offsetY = -48;
 		_maxHp = 100;
+		_dropItemList.push("4-0");
 		break;
 	case TREE2:
 		_offsetX = 3;
 		_offsetY = -42;
 		_maxHp = 120;
+		_dropItemList.push("4-2");
 		break;
 	}
 	_curHp = _maxHp;

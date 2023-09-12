@@ -93,7 +93,6 @@ void FarmScene::update(void)
 
 void FarmScene::render(void)
 {
-	_camera->setPosition(_player->getPlayerPosition());
 	_bg->render(getMemDC(), 0, 0, _camera->getPosition().x - WINSIZE_X / 2,
 		_camera->getPosition().y - WINSIZE_Y / 2, WINSIZE_X, WINSIZE_Y);
 	// 정렬된 순서로 렌더

@@ -9,9 +9,6 @@ HRESULT Player::init(float x, float y, string collisionMapKey)
 
 	_collisionMap = IMAGEMANAGER->findImage(collisionMapKey);
 
-
-
-
 	_skill = new SkillManager;
 	_skill->init();
 
@@ -239,7 +236,7 @@ void Player::update(void)
 	}
 
 	COLORREF stairCol =
-		GetPixel(IMAGEMANAGER->findImage("Ãæµ¹")->getMemDC(),
+		GetPixel(_collisionMap->getMemDC(),
 			_x, _y);
 
 	if (!_toolAnim->isPlay())
