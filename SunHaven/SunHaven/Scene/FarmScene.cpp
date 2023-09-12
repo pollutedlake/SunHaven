@@ -55,7 +55,7 @@ void FarmScene::update(void)
 	_player->worldToCamera(_camera->worldToCamera
 	(_player->getPlayerPosition()));
 	_om->update();
-	_vRenderList.push(make_pair(_player, _player->getPlayerRC().bottom));
+	_vRenderList.push(make_pair(_player, _player->getPlayertoCameraRect().bottom));
 	for (int i = 0; i < _om->getObjectList().size(); i++)
 	{
 		RECT temp;
@@ -63,7 +63,7 @@ void FarmScene::update(void)
 		if (IntersectRect(&temp, &RectMake(0, 0, WINSIZE_X, WINSIZE_Y), &_om->getObjectList()[i]->getRC()))
 		{
 			// 이미지가 겹치면 반투명화
-			if (IntersectRect(&temp, &_player->getPlayerRC(), &_om->getObjectList()[i]->getRC()) && _om->getObjectList()[i]->getRC().bottom > _player->getPlayerRC().bottom)
+			if (IntersectRect(&temp, &_player->getPlayertoCameraRect(), &_om->getObjectList()[i]->getRC()) && _om->getObjectList()[i]->getRC().bottom > _player->getPlayertoCameraRect().bottom)
 			{
 				_om->getObjectList()[i]->setHalfTrans(true);
 			}
