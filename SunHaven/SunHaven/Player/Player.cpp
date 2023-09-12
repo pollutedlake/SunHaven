@@ -463,8 +463,6 @@ void Player::update(void)
 		_firebeamRC = RectMakeCenter(_x, _y, 50, 50);
 	}
 
-	cout << _toolAnim->getNowPlayIdx() << endl;
-
 
 	_skill->update();
 

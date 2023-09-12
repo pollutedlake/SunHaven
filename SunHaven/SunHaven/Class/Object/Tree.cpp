@@ -34,6 +34,9 @@ HRESULT Tree::init(LivingObjectType type, POINT tilePos)
 	_hpBar->init("ObjectHpBarTop", "", "ObjectHpBarFill", NULL, NULL, 36, 7);
 	_hpBarOffsetX = 1;
 	_hpBarOffsetY = 30;
+	_beforeHitRC = {NULL, NULL, NULL, NULL};
+	_hitRC = {NULL, NULL, NULL, NULL};
+	_hit = false;
 	return S_OK;
 }
 
@@ -44,6 +47,19 @@ void Tree::update(void)
 	_hpBar->update();
 	_hpBar->setGauge(_curHp, _maxHp);
 	_collisionRC = RectMakeCenter(_cx, _cy, TILEWIDTH * 1.5f, TILEHEIGHT * 1.5f);
+	if (_hitTime + 0.1f < TIMEMANAGER->getWorldTime() && _hit)
+	{
+		_hit = false;
+	}
+	if (_hit)
+	{
+		_hitRC = _rc;
+		_hitRC.top = _rc.bottom - (_rc.bottom - _rc.top) * 0.9f;
+		float width = (_rc.right - _rc.left);
+		_hitRC.left = _rc.left - width * 0.05f;
+		_hitRC.right = _rc.right + width * 0.05f;
+		_rc = _hitRC;
+	}
 }
 
 void Tree::render(void)
@@ -60,11 +76,14 @@ void Tree::render(void)
 
 void Tree::release(void)
 {
+	
 }
 
 void Tree::setHP(int damage)
 {
 	_curHp -= damage;
+	_hitTime = TIMEMANAGER->getWorldTime();
+	_hit = true;
 	if (_curHp <= 0 && _hpBarOffsetX == 1)
 	{
 		_maxHp /= 2;
