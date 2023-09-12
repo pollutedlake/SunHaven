@@ -725,15 +725,7 @@ void Dynus::update(void)
 		_hp -= 1000;
 	}
 
-	if (KEYMANAGER->isOnceKeyDown('B'))
-	{
-		_phase = EDynusPhase::SECOND;
-	}
-
 	_curAni->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);
-
-	/*_breatheAni->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);
-	_spellAni->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);*/
 
 	_bullet->update();
 	_beam->update();
@@ -898,7 +890,7 @@ void Dynus::draw(void)
 			DrawRectMake(getMemDC(), _rcPa3Start[i]);
 		}
 
-		DrawRectMake(getMemDC(), _player->getRect());
+		DrawRectMake(getMemDC(), _player->getPlayerRC());
 
 		SelectObject(getMemDC(), oldBrush);
 		DeleteObject(myBrush);

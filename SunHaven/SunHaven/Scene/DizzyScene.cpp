@@ -11,6 +11,9 @@ HRESULT DizzyScene::init(void)
 	_player->init(CENTER_X, CENTER_Y + 200, "/*Ãæµ¹¸Ê*/");
 	_dizzy->init();
 
+
+	_dizzy->setPlayerMemoryAddress(_player);
+
 	wsprintf(_text, "DizzyScene");
 
 	return S_OK;
@@ -28,7 +31,8 @@ void DizzyScene::release(void)
 
 void DizzyScene::update(void)
 {
-
+	_dizzy->update();
+	_player->update();
 }
 
 void DizzyScene::render(void)

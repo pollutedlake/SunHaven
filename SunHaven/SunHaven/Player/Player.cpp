@@ -35,6 +35,9 @@ HRESULT Player::init(float x, float y, string collisionMapKey)
 		_playerMoveAnim->getFrameWidth(),
 		_playerMoveAnim->getFrameHeight());
 
+	_playertoCameraRC = RectMakeCenter(_cx, _cy,
+		_playerMoveAnim->getFrameWidth(),
+		_playerMoveAnim->getFrameHeight());
 
 
 	_isCollisionLeft = _isCollisionRight =
@@ -499,7 +502,7 @@ void Player::render(void)
 			offsetX, 0);
 	}
 
-	_playerImage->aniRender(getMemDC(), _playerRC.left, _playerRC.top, _playerMoveAnim);
+	_playerImage->aniRender(getMemDC(), _playertoCameraRC.left, _playertoCameraRC.top, _playerMoveAnim);
 
 	if(_swordAnim->isPlay())
 	{
