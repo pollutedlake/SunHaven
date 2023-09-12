@@ -161,6 +161,7 @@
     <ClCompile Include="Class\Skill\FishingSkill.cpp" />
     <ClCompile Include="Class\Skill\MiningSkill.cpp" />
     <ClCompile Include="Class\NPC\Lynn.cpp" />
+    <ClCompile Include="Manager\DataManager.cpp" />
     <ClCompile Include="Scene\IntroScene.cpp" />
     <ClCompile Include="Class\Data\EnemyData.cpp" />
     <ClCompile Include="Scene\Collision.cpp" />
@@ -226,6 +227,7 @@
     <ClInclude Include="Class\CraftingTable.h" />
     <ClInclude Include="Class\Data\JsonSaveLoader.h" />
     <ClInclude Include="Class\Data\EnemyData.h" />
+    <ClInclude Include="Manager\DataManager.h" />
     <ClInclude Include="inc\FMOD\fmod.hpp" />
     <ClInclude Include="Class\Object\Grass.h" />
     <ClInclude Include="Class\Data\ItemData.h" />
@@ -346,6 +348,7 @@
     <Object Include="Debug\WinMain.obj" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="DynusMapCollision.bmp" />
     <Image Include="FarmMap.bmp" />
     <Image Include="FarmMapCollision.bmp" />
   </ItemGroup>

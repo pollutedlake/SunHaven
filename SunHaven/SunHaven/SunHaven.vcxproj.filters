@@ -91,6 +91,7 @@
     <ClCompile Include="Class\Object\Tree.cpp" />
     <ClCompile Include="WinMain.cpp" />
     <ClCompile Include="Class\Skill\SkillManager.cpp" />
+    <ClCompile Include="Manager\DataManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Class\UI\Buttons.h" />
@@ -160,6 +161,7 @@
     <ClInclude Include="Class\Object\Tree.h" />
     <ClInclude Include="Class\UI\UI.h" />
     <ClInclude Include="Class\Skill\SkillManager.h" />
+    <ClInclude Include="Manager\DataManager.h" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="lib\FMOD\fmodex_vc.lib" />
@@ -167,6 +169,7 @@
   <ItemGroup>
     <Image Include="FarmMap.bmp" />
     <Image Include="FarmMapCollision.bmp" />
+    <Image Include="DynusMapCollision.bmp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Debug\SunHaven.pch" />

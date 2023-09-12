@@ -25,14 +25,19 @@ class UI;
 class FarmScene : public GameNode
 {
 private:
+	typedef list<pair<string, POINT>> lDropItem;
+	typedef list<pair<string, POINT>>::iterator liDropItem;
+
+private:
 	Player* _player;
 	GImage* _bg;
 	Camera* _camera;
 	ObjectManager* _om;
 	UI* _ui;
 	priority_queue<pair<GameNode*, int>, vector<pair<GameNode*, int>>, cmp> _vRenderList;
-	ProgressBar* _progressBar;
-
+	
+	lDropItem _lDropItem;
+	liDropItem _liDropItem;
 	GImage* _MouseOver;
 	RECT _MouseRC;
 
@@ -41,7 +46,9 @@ public:
 	void release(void);
 	void update(void);
 	void render(void);
+
 	void Collision(void);
+	void renderDropItem();
 
 	FarmScene() {}
 	~FarmScene() {}
