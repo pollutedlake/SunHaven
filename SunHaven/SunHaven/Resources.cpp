@@ -141,9 +141,27 @@ HRESULT Resources::init(void)
 		92, 14,
 		true, RGB(255, 0, 255));	// 프로그래스 바 배경 가로
 
+	IMAGEMANAGER->addImage("GuardMine", "Resources/Images/Boss/GuardMine.bmp",
+		47, 44,
+		true, RGB(255, 0, 255));	// 프로그래스 바 배경 가로
+
 	//IMAGEMANAGER->addImage("DynusJumpPlatform", "Resources/Images/Boss/DynusJumpPlatform.bmp",
 	//	38 * 2, 54 * 2,
 	//	true, RGB(255, 0, 255));	// 다이너스 점프 플랫폼
+
+	// Sound
+
+	// ====================DizzyScene====================
+	// Image
+
+	IMAGEMANAGER->addImage("DizzyLayer", "Resources/Images/Layer/DizzyLayer.bmp",
+		1464 * 2, 1008 * 2,
+		true, RGB(255, 0, 255));	// 레이어
+
+	IMAGEMANAGER->addImage("DizzyHpBarBorder", "Resources/Images/UI/DizzyHpBarBorder.bmp",
+		442, 54,
+		true, RGB(255, 0, 255));	// 다이너스 HpBar
+
 
 	// Sound
 

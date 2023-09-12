@@ -43,8 +43,8 @@ public:
 	void fire(float x, float y, float angle, float speed);
 	void draw(void);
 	void move(void);
-
 	bool spawningTime(void);
+
 	void removeBullet(int arrNum);
 
 	vector<tagBullet> getBullet(void) { return _vBullet; }
@@ -85,7 +85,7 @@ public:
 	void update(void);
 	void render(void);
 
-	void fire(float x, float y, float speed, int index);
+	void fire(float x, float y, float speed);
 	void draw(void);
 	void move(void);
 

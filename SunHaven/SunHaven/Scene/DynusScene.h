@@ -9,6 +9,10 @@
 class DynusScene : public GameNode
 {
 private:
+	GImage* _loopImg;
+	RECT _rcStar[4];
+	float _offsetX, _offsetY;
+
 	Dynus* _dynus;
 	Shadeclaw* _shadeclaw;
 	Player* _player;

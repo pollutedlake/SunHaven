@@ -147,6 +147,8 @@ public:
 
 	RECT getRect(void) { return _playerRC; }
 
+	RECT getSwordSlashRC() { return _swordSlashRC; }
+
 	Player() {}
 	~Player() {}
 };

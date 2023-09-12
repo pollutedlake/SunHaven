@@ -39,7 +39,7 @@ void Beam::render(void)
 	draw();
 }
 
-void Beam::fire(float x, float y, float speed, int index)
+void Beam::fire(float x, float y, float speed)
 {
 	if (_bulletMax <= _vBullet.size()) return;
 
@@ -66,7 +66,6 @@ void Beam::fire(float x, float y, float speed, int index)
 	bullet.img->init("Resources/Images/Boss/DynusBeam.bmp",
 		144, 42,
 		true, RGB(255, 0, 255));*/
-	_index = index;
 	bullet.speed = speed;
 	bullet.x = bullet.fireX = x;
 	bullet.y = bullet.fireY = y;
@@ -112,7 +111,12 @@ void Beam::draw(void)
 			_viBullet->pImg->getFrameX(), _viBullet->pImg->getFrameY(),
 			InterpolationModeNearestNeighbor, 0);*/
 
-		if (_index == 2 || _index == 0)
+
+		_viBullet->pImg->GPRender(getMemDC(), _viBullet->rc.left, _viBullet->rc.top, 1, 1,
+			_sourX, 0, _viBullet->pImg->getWidth() - _sourX, _viBullet->pImg->getHeight(),
+			InterpolationModeNearestNeighbor, 0);
+
+		/*if (_index == 2 || _index == 0)
 		{
 			_viBullet->pImg->GPRender(getMemDC(), _viBullet->rc.left, _viBullet->rc.top, 1, 1,
 				_sourX, 0, _viBullet->pImg->getWidth() - _sourX, _viBullet->pImg->getHeight(),
@@ -124,7 +128,7 @@ void Beam::draw(void)
 			_viBullet->pImg->GPRender(getMemDC(), _viBullet->rc.left, _viBullet->rc.top, 1, 1,
 				_sourX, 0, _viBullet->pImg->getWidth() - _sourX, _viBullet->pImg->getHeight(),
 				InterpolationModeNearestNeighbor, 0);
-		}
+		}*/
 		
 		
 			/*_viBullet->pImg2->GPRender(getMemDC(), _viBullet->rc2.left, _viBullet->rc2.top, 1, 1,
@@ -185,11 +189,31 @@ void Beam::move(void)
 {
 	for (_viBullet = _vBullet.begin(); _viBullet != _vBullet.end();)
 	{
-		if (_index == 2 || _index == 0)
+		if (_viBullet->speed > 0)
 		{
 			if ((_viBullet->rc.right - _viBullet->rc.left) < 1280)
 			{
 				_viBullet->rc.right += _viBullet->speed;
+			}
+
+			else
+			{
+				_viBullet->rc.left += _viBullet->speed;
+				_viBullet->rc.right += _viBullet->speed;
+
+				//_viBullet->rc.right = _viBullet->rc.left + 1280;
+
+				//_viBullet->x += _viBullet->speed;
+			}
+
+			_sourX = _viBullet->pImg->getWidth() - (_viBullet->rc.right - _viBullet->rc.left);
+		}
+
+		if (_viBullet->speed < 0)
+		{
+			if ((_viBullet->rc.right - _viBullet->rc.left) < 1280)
+			{
+				_viBullet->rc.left += _viBullet->speed;
 			}
 
 			else
@@ -205,28 +229,6 @@ void Beam::move(void)
 
 			_sourX = _viBullet->pImg->getWidth() - (_viBullet->rc.right - _viBullet->rc.left);
 		}
-
-		else
-		{
-			if ((_viBullet->rc.right - _viBullet->rc.left) < 1280)
-			{
-				_viBullet->rc.left += _viBullet->speed;
-			}
-
-			else
-			{
-
-				_viBullet->rc.left += _viBullet->speed;
-				_viBullet->rc.right += _viBullet->speed;
-
-				//_viBullet->rc.right = _viBullet->rc.left + 1280;
-
-				//_viBullet->x += _viBullet->speed;
-			}
-
-			_sourX = _viBullet->pImg->getWidth() - (_viBullet->rc.right - _viBullet->rc.left);
-		}
-
 		//else
 		//{
 		//	if ((_viBullet->rc3.right - _viBullet->rc3.left) < 1280)

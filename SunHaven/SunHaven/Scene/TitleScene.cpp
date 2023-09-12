@@ -31,7 +31,6 @@ void TitleScene::update(void)
     _bgAlpha += 5.0f;
     if (_bgAlpha >= 255) _bgAlpha = 255;
 
-    // _yOffset 값에 따라 이미지를 위아래로 움직이도록 설정
     static float yOffsetDirection = 1.0f;
     _yOffset += 0.2f * yOffsetDirection;
 

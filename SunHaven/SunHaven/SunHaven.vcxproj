@@ -161,6 +161,8 @@
     <ClCompile Include="Class\Skill\FishingSkill.cpp" />
     <ClCompile Include="Class\Skill\MiningSkill.cpp" />
     <ClCompile Include="Class\NPC\Lynn.cpp" />
+    <ClCompile Include="Class\Boss\Dizzy.cpp" />
+    <ClCompile Include="Scene\DizzyScene.cpp" />
     <ClCompile Include="Scene\IntroScene.cpp" />
     <ClCompile Include="Class\Data\EnemyData.cpp" />
     <ClCompile Include="Scene\Collision.cpp" />
@@ -225,6 +227,8 @@
     <ClInclude Include="Class\CraftingTable.h" />
     <ClInclude Include="Class\Data\JsonSaveLoader.h" />
     <ClInclude Include="Class\Data\EnemyData.h" />
+    <ClInclude Include="Class\Boss\Dizzy.h" />
+    <ClInclude Include="Scene\DizzyScene.h" />
     <ClInclude Include="inc\FMOD\fmod.hpp" />
     <ClInclude Include="Class\Object\Grass.h" />
     <ClInclude Include="Class\Data\ItemData.h" />
