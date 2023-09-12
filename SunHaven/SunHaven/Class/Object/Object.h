@@ -53,7 +53,7 @@ public:
 	virtual void setHP(int damage);
 	int getCurHP() {return _curHp;}
 
-	void dropItem();
+	queue<string> dropItem();
 
 	Object() {}
 	~Object() {}

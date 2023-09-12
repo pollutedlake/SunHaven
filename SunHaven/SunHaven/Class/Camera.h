@@ -22,6 +22,8 @@ public:
 
 	POINT worldToCamera(POINT point);
 	POINT cameraToWorld(POINT point);
+	float cameraToWorldX(float x);
+	float cameraToWorldY(float y);
 	float worldToCameraX(float x);
 	float worldToCameraY(float y);
 

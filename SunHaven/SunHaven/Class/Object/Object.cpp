@@ -44,9 +44,9 @@ void Object::setHP(int damage)
 	_curHp -= damage;
 }
 
-void Object::dropItem()
+queue<string> Object::dropItem()
 {
-	
+	return _dropItemList;
 }
 
 void Object::renderToPoint(POINT point)

@@ -101,6 +101,16 @@ POINT Camera::cameraToWorld(POINT point)
 	return PointMake(point.x + (_position.x - WINSIZE_X / 2), point.y + (_position.y - WINSIZE_Y / 2));
 }
 
+float Camera::cameraToWorldX(float x)
+{
+	return x + (x - WINSIZE_X / 2);
+}
+
+float Camera::cameraToWorldY(float y)
+{
+	return y + (y - WINSIZE_Y / 2);
+}
+
 float Camera::worldToCameraX(float x)
 {
 	return WINSIZE_X / 2 - (_position.x - x);
