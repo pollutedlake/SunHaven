@@ -51,7 +51,7 @@ private:
 	queue<int> _nextActionTiming;
 
 	RECT _dialogRC;
-	Dialog _arrDialogs[60];
+	Dialog _arrDialogs[67];
 	int _dialogIdx;
 	GImage* _speaker;
 	float _typingTime;

@@ -126,12 +126,12 @@ HRESULT IntroScene::init(void)
 	_nextActionTiming.push(29);
 	_nextActionTiming.push(32);
 	_nextActionTiming.push(33);
-	_nextActionTiming.push(37);
+	_nextActionTiming.push(38);
 	FILE* fp;
 	fopen_s(&fp, "IntroText.txt", "r");
 	if (fp != nullptr)
 	{
-		for (int i = 0; i < 59; i++)
+		for (int i = 0; i < 67; i++)
 		{
 			char name[256];
 			fscanf_s(fp, "%[^\t]\t", name, _countof(name));
@@ -139,7 +139,10 @@ HRESULT IntroScene::init(void)
 			_arrDialogs[i]._charName = name;
 			fscanf_s(fp, "%d ", &_arrDialogs[i]._expression);
 			fscanf_s(fp, "%d ", &_arrDialogs[i]._answerN);
-			fscanf_s(fp, "%d\n", &_arrDialogs[i]._nextDialog);
+			if(_arrDialogs[i]._answerN == 0)
+			{
+				fscanf_s(fp, "%d\n", &_arrDialogs[i]._nextDialog);
+			}
 			char dialog[256];
 			fscanf_s(fp, "%[^\n]\n", dialog, _countof(dialog));
 			dialog[strlen(dialog)] = '\0';
@@ -186,7 +189,7 @@ void IntroScene::update(void)
 {
 	if(_cutIdx == 0)
 	{
-		_time += TIMEMANAGER->getElapsedTime();
+		//_time += TIMEMANAGER->getElapsedTime();
 		_lynn->update();
 		_cameraPos.x = _lynn->getX();
 		_cameraPos.y = _lynn->getY();
@@ -346,19 +349,19 @@ void IntroScene::update(void)
 				if (_dialogState == HIDE)
 				{
 					_dialogState = OPEN;
-					if (_dialogIdx == 54)
+					if (_dialogIdx == 61)
 					{
 						_trainWindow = IMAGEMANAGER->findImage("TrainWindow2");
 						_dark = true;
 						_darkAlpha = 128;
 					}
-					if (_dialogIdx == 56)
+					if (_dialogIdx == 63)
 					{
 						_trainWindow = IMAGEMANAGER->findImage("TrainWindow1");
 						_dark = false;
 						_darkAlpha = 0;
 					}
-					if (_dialogIdx == 59)
+					if (_dialogIdx == 66)
 					{
 						_dark = true;
 						_darkAlpha++;
@@ -397,7 +400,7 @@ void IntroScene::update(void)
 	updateDialog();
 	if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
 	{
-		if (_dialogState == SHOW)
+		if (_dialogState == SHOW && PtInRect(&_dialogRC, _ptMouse))
 		{
 			bool next = false;
 			if (_arrDialogs[_dialogIdx]._letterN < strlen(_arrDialogs[_dialogIdx]._dialog.c_str()))
@@ -412,20 +415,20 @@ void IntroScene::update(void)
 					{
 						if (PtInRect(&RectMake(314, 570 + 30 * i, _dialogWindow->getWidth() * _dialogSize - 344, 30), _ptMouse))
 						{
-							_dialogIdx += i + 1;
+							_dialogIdx += _arrDialogs[_dialogIdx]._answer[i].second;
 							next = true;
 						}
 					}
 				}
 				else
 				{				
-					_dialogIdx++;
+					_dialogIdx += _arrDialogs[_dialogIdx]._nextDialog;
 					next = true;
 				}
 				cout << _dialogIdx << endl;
 				if(next)
 				{
-					if (_dialogIdx == 15 || _dialogIdx == 28 || _dialogIdx == 32 || _dialogIdx == 34 || _dialogIdx == 54 || _dialogIdx == 56 || _dialogIdx == 59)
+					if (_dialogIdx == 15 || _dialogIdx == 28 || _dialogIdx == 32 || _dialogIdx == 34 || _dialogIdx == 61 || _dialogIdx == 63 || _dialogIdx == 66 || _dialogIdx == 38)
 					{
 						if (_dialogState == SHOW)
 						{
@@ -443,7 +446,7 @@ void IntroScene::update(void)
 						_dialogIdx = 23;
 						_changeCutTime = WINSIZE_X;
 					}
-					if (_dialogIdx == 60)
+					if (_dialogIdx == 67)
 					{
 						SCENEMANAGER->changeScene("Farm");
 					}
@@ -581,12 +584,12 @@ void IntroScene::dialog(Dialog dialog)
 				IMAGEMANAGER->alphaRender("SelectAnswerBG", getMemDC(), rc.left - 6, answerRC[i].top, rc.right - rc.left + 6, answerRC[i].bottom - answerRC[i].top, 
 					0, 0, IMAGEMANAGER->findImage("SelectAnswerBG")->getWidth(), IMAGEMANAGER->findImage("SelectAnswerBG")->getHeight(), 200);
 				char str[256];
-				wsprintf(str, "> %s", dialog._answer[i].c_str());
+				wsprintf(str, "> %s", dialog._answer[i].first.c_str());
 				FONTMANAGER->textOut(getMemDC(), answerRC[i].left, answerRC[i].top + 5, "배달의민족 을지로체", 20, 100, str, strlen(str), RGB(171, 174, 46));
 			}
 			else
 			{
-				FONTMANAGER->textOut(getMemDC(), answerRC[i].left, answerRC[i].top + 5, "배달의민족 을지로체", 20, 100, const_cast<char*>(dialog._answer[i].c_str()), dialog._answer[i].length(), RGB(123, 148, 162));
+				FONTMANAGER->textOut(getMemDC(), answerRC[i].left, answerRC[i].top + 5, "배달의민족 을지로체", 20, 100, const_cast<char*>(dialog._answer[i].first.c_str()), dialog._answer[i].first.length(), RGB(123, 148, 162));
 			}
 		}
 	}
