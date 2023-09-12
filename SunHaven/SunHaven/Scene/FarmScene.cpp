@@ -11,6 +11,7 @@ HRESULT FarmScene::init(void)
 	_player = new Player;
 	_player->init(2400, 1400, "충돌");
 
+	
 
 	_camera = new Camera;
 	_camera->init();
@@ -26,6 +27,13 @@ HRESULT FarmScene::init(void)
 
 	_player->setPlayerPosition(PointMake(2496, 1500));
 
+	_MouseOver = IMAGEMANAGER->addImage("오브젝트 선택",
+		"Resources/Images/Player/ObjectMouseOver.bmp",
+		36, 36, true, RGB(255, 0, 255));
+
+	_MouseRC = RectMakeCenter(_camera->cameraToWorld(_ptMouse).x,
+		_camera->cameraToWorld(_ptMouse).y,
+		_MouseOver->getWidth(), _MouseOver->getHeight());
 
 	_ui = new UI;
 	_ui->init("Farm");
@@ -67,11 +75,16 @@ void FarmScene::update(void)
 			_vRenderList.push(make_pair(_om->getObjectList()[i], _om->getObjectList()[i]->getRC().bottom));
 		}
 	}
-	Collision();
 
-	_player->UseTool(_om);
 
-	
+	_player->ObjectCollision(_om);
+
+	if(KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
+		_player->UseTool(_om, _ptMouse);
+	_player->UseToolAnim(KEYMANAGER->isStayKeyDown(VK_LBUTTON));
+
+	_player->UseFishingLod(_camera->cameraToWorld(_ptMouse));
+
 	if (KEYMANAGER->isOnceKeyDown(VK_F1))
 	{
 		SCENEMANAGER->changeScene("Shop");
@@ -80,6 +93,7 @@ void FarmScene::update(void)
 
 void FarmScene::render(void)
 {
+	_camera->setPosition(_player->getPlayerPosition());
 	_bg->render(getMemDC(), 0, 0, _camera->getPosition().x - WINSIZE_X / 2,
 		_camera->getPosition().y - WINSIZE_Y / 2, WINSIZE_X, WINSIZE_Y);
 	// 정렬된 순서로 렌더
@@ -89,11 +103,15 @@ void FarmScene::render(void)
 		_vRenderList.pop();
 	}
 
+
 	
+	_player->MouseOver(_om, _ptMouse);
+
 
 	_om->render();
 
-	if (KEYMANAGER->isToggleKey('W'))
+
+	if (KEYMANAGER->isToggleKey('Q'))
 	{
 		IMAGEMANAGER->render("충돌", getMemDC(), _camera->worldToCameraX(0),
 			_camera->worldToCameraY(0));
@@ -110,9 +128,9 @@ void FarmScene::Collision(void)
 		if (IntersectRect(&temp,
 			&RectMakeCenter(_player->getPlayerPosition().x,
 				_player->getPlayerPosition().y,48,52),
-			&_om->getObjectList()[i]->getCollisionRC()))
+			&_om->getObjectList()[i]->getRC()))
 		{
-			
+			cout << "충돌" << endl;
 		}
 	}
 }
