@@ -3,6 +3,12 @@
 
 class Tree : public Object
 {
+private:
+	float _hitTime;
+	RECT _beforeHitRC;
+	RECT _hitRC;
+	bool _hit;
+
 public:
 	HRESULT init(void);
 	virtual HRESULT init(LivingObjectType type, POINT tilePos = { NULL, NULL });
