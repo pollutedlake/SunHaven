@@ -7,6 +7,7 @@
 enum class EDizzyState
 {
 	SLEEP,
+	WAKE,
 	IDLE,
 	SPIN,
 	GROGGY,
@@ -23,8 +24,16 @@ private:
 	GImage* _wakeImg;
 	GImage* _idleImg;
 	GImage* _spinImg;
-	GImage* _groggyImg;
 	GImage* _rangeImg;
+
+	GImage* _curImg;
+
+	Animation* _wakeAni;
+	Animation* _idleAni;
+	Animation* _spinAni;
+	Animation* _rangeAni;
+
+	Animation* _curAni;
 
 	float _x, _y;
 
@@ -36,16 +45,11 @@ private:
 
 	bool _isWake;
 
-	bool _isLeft;
-
 	float _worldTimeCount;
-
-	int _currentFrameX;
-	int _currentFrameY;
 
 	Player* _player;
 
-	Bullet* _bullet;
+	//Bullet* _bullet;
 
 public:
 	HRESULT init(void);

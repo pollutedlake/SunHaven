@@ -19,9 +19,7 @@ bool Dynus::hpMinusTemp(void)
 
 HRESULT Dynus::init(void)
 {
-	//_state = EDynusState::BREATHE;
 	_phase = EDynusPhase::FIRST;
-	//_spell = EDynusSpell::SPREAD_X;
 
 	_hp = 10000.0f;
 	_maxHp = 10000.0f;
@@ -52,8 +50,6 @@ HRESULT Dynus::init(void)
 	_hpTurnCount = TIMEMANAGER->getWorldTime();
 
 	_timeCount = 100;
-
-	//_dynusImg = IMAGEMANAGER->findImage("DynusBreathe");
 
 	_breatheImg = IMAGEMANAGER->addFrameImage("DynusBreathe", "Resources/Images/Boss/DynusBreathe.bmp",
 		2536, 594, 4, 2, true, RGB(255, 0, 255));
@@ -198,6 +194,9 @@ void Dynus::release(void)
 
 	_spellAni->release();
 	SAFE_DELETE(_spellAni);
+
+	_curAni->release();
+	SAFE_DELETE(_curAni);
 
 	_bullet->release();
 	SAFE_DELETE(_bullet);
@@ -739,8 +738,6 @@ void Dynus::update(void)
 			_pa1StartPosIdx = 6;
 		}
 	}*/
-
-	cout << _curAni->getNowPlayIdx() << endl;
 
 	if (_curAni->getNowPlayIdx() == 69)
 	{

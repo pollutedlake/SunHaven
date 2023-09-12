@@ -18,11 +18,6 @@ HRESULT DynusScene::init(void)
 		960, 400);
 	_offsetX = _offsetY = 0.0f;
 
-	//_player->setEnemyMangerMemoryAddress(_dynus);
-
-	/*_shadeclaw = new Shadeclaw;
-	_shadeclaw->setPlayerMemoryAddress(_player);*/
-
 	_em = new EnemyManager;
 	_dynus->setEnemyManagerMemoryAddress(_em);
 	_em->setPlayerMemoryAddress(_player);
