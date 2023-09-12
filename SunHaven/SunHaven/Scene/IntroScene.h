@@ -30,16 +30,18 @@ private:
 	GImage* _changeCutImg;
 	GImage* _trainPassengers[7];
 	GImage* _catSleep;
+	GImage* _trainWindow;
 
 	GImage* _lynnMomHouse;
 	GImage* _train1;
+	GImage* _train2;
 
 	Lynn* _lynn;
 
 	GImage* _cursorImg;
 
 	float _time;
-	float _lynnMomTime;
+	float _changeCutTime;
 	int _count;
 	int _count2;
 	float _curTime;
@@ -55,6 +57,9 @@ private:
 	float _dialogSize;
 
 	bool _changeCut;
+	bool _dark;
+
+	int _darkAlpha;
 
 	int _cutIdx;
 
@@ -65,10 +70,10 @@ public:
 	void render(void);
 
 	void renderDialog();
-	void dialog(string charName, string printString, int length, int expression);
+	void dialog(Dialog dialog);
 	void updateDialog();
 
-	bool unName();
+	bool checkNextActionTiming();
 
 	IntroScene() {}
 	~IntroScene() {}

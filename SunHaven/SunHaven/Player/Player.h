@@ -51,6 +51,7 @@ private:
 	GImage* _playerImage;
 	Animation* _playerMoveAnim;
 	RECT _playerRC;
+	RECT _playertoCameraRC;
 
 	RECT _miniRC[4];
 
@@ -154,7 +155,7 @@ public:
 		_cy = position.y;
 
 
-		_playerRC = RectMakeCenter(_cx, _cy,
+		_playertoCameraRC = RectMakeCenter(_cx, _cy,
 			_playerMoveAnim->getFrameWidth(),
 			_playerMoveAnim->getFrameHeight());
 

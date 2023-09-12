@@ -5,6 +5,7 @@ HRESULT IntroScene::init(void)
 {
 	_lynnMomHouse = IMAGEMANAGER->findImage("LynnMomHouse");
 	_train1 = IMAGEMANAGER->findImage("Train1");
+	_train2 = IMAGEMANAGER->findImage("Train2");
 	_lynnMom = IMAGEMANAGER->findImage("LynnMom1");
 	_catSleep = IMAGEMANAGER->findImage("CatSleep");
 	for (int i = 0; i < 7; i++)
@@ -14,78 +15,99 @@ HRESULT IntroScene::init(void)
 		_trainPassengers[i] = IMAGEMANAGER->findImage(text);
 	}
 	_dialogWindow = IMAGEMANAGER->findImage("DialogWindow");
+	_trainWindow = IMAGEMANAGER->findImage("TrainWindow1");
 	_introCut[0] = IMAGEMANAGER->addImage("IntroCut1", WINSIZE_X, WINSIZE_Y);
 	_introCut[1] = IMAGEMANAGER->addImage("IntroCut2", WINSIZE_X, WINSIZE_Y);
+	_introCut[2] = IMAGEMANAGER->addImage("IntroCut3", WINSIZE_X, WINSIZE_Y);
 	_cutIdx = 0;
 	_changeCutImg = IMAGEMANAGER->addImage("TransformScene", WINSIZE_X, WINSIZE_Y, true, RGB(255, 0, 255));
 	_cameraPos = { WINSIZE_X / 3, WINSIZE_Y / 3};
 	
 	_lynn = new Lynn;
 	Action* action;
-		_lynn->init(440, 90);
-		_lynn->pushMovePoint(make_pair(440, 200));
-		_lynn->pushMovePoint(make_pair(400, 200));
-		_lynn->pushMovePoint(make_pair(400, 350));
-		_lynn->pushMovePoint(make_pair(480, 350));
-		action = new Action(IDLE, UP, false, 2.0f);
-		_lynn->pushAction(action);
-		action = new Action(WALK, DOWN, false);
-		_lynn->pushAction(action);
-		action = new Action(WALK, LEFT, false);
-		_lynn->pushAction(action);
-		action = new Action(WALK, DOWN, false);
-		_lynn->pushAction(action);
-		action = new Action(IDLE, RIGHT, true);
-		_lynn->pushAction(action);
-		action = new Action(SADIDLE, DOWN, true);
-		_lynn->pushAction(action);
-		action = new Action(IDLE, RIGHT, true);
-		_lynn->pushAction(action);
-		action = new Action(WALK, RIGHT, false);
-		_lynn->pushAction(action);
-		action = new Action(IDLE, RIGHT, true);
-		_lynn->pushAction(action);
-		action = new Action(IDLE, DOWN, true);
-		_lynn->pushAction(action);
-		action = new Action(SADIDLE, DOWN, true);
-		_lynn->pushAction(action);
-		action = new Action(SADIDLE, RIGHT, true);
-		_lynn->pushAction(action);
-		action = new Action(IDLE, RIGHT, true);
-		_lynn->pushAction(action);
+	_lynn->init(440, 90);
+	_lynn->pushMovePoint(make_pair(440, 200));
+	_lynn->pushMovePoint(make_pair(400, 200));
+	_lynn->pushMovePoint(make_pair(400, 350));
+	_lynn->pushMovePoint(make_pair(480, 350));
+	action = new Action(IDLE, UP, false, 2.0f);
+	_lynn->pushAction(action);
+	action = new Action(WALK, DOWN, false);
+	_lynn->pushAction(action);
+	action = new Action(WALK, LEFT, false);
+	_lynn->pushAction(action);
+	action = new Action(WALK, DOWN, false);
+	_lynn->pushAction(action);
+	action = new Action(IDLE, RIGHT, true);
+	_lynn->pushAction(action);
+	action = new Action(SADIDLE, DOWN, true);
+	_lynn->pushAction(action);
+	action = new Action(IDLE, RIGHT, true);
+	_lynn->pushAction(action);
+	action = new Action(WALK, RIGHT, false);
+	_lynn->pushAction(action);
+	action = new Action(IDLE, RIGHT, true);
+	_lynn->pushAction(action);
+	action = new Action(IDLE, DOWN, true);
+	_lynn->pushAction(action);
+	action = new Action(SADIDLE, DOWN, true);
+	_lynn->pushAction(action);
+	action = new Action(SADIDLE, RIGHT, true);
+	_lynn->pushAction(action);
+	action = new Action(IDLE, RIGHT, true);
+	_lynn->pushAction(action);
 
-		_lynn->pushMovePoint(make_pair(380, 240));
-		_lynn->pushMovePoint(make_pair(530, 240));
-		_lynn->pushMovePoint(make_pair(530, 290));
-		_lynn->pushMovePoint(make_pair(660, 290));
-		action = new Action(IDLE, RIGHT, true);
-		_lynn->pushAction(action);
-		action = new Action(WALK, RIGHT, false);
-		_lynn->pushAction(action);
-		action = new Action(IDLE, UP, true);
-		_lynn->pushAction(action);
-		action = new Action(SADIDLE, RIGHT, false, 1.0f);
-		_lynn->pushAction(action);
-		action = new Action(SADIDLE, DOWN, true);
-		_lynn->pushAction(action);
-		action = new Action(SADWALK, RIGHT, false);
-		_lynn->pushAction(action);
-		action = new Action(IDLE, UP, true);
-		_lynn->pushAction(action);
-		action = new Action(SADIDLE, RIGHT, false, 0.5f);
-		_lynn->pushAction(action);
-		action = new Action(IDLE, UP, false, 0.5f);
-		_lynn->pushAction(action);
-		action = new Action(SADIDLE, DOWN, true);
-		_lynn->pushAction(action);
-		action = new Action(SADIDLE, DOWN, false, 2.0f);
-		_lynn->pushAction(action);
-		action = new Action(SADWALK, DOWN, false);
-		_lynn->pushAction(action);
-		action = new Action(SADWALK, RIGHT, false);
-		_lynn->pushAction(action);
-		action = new Action(SADIDLE, RIGHT, true);
-		_lynn->pushAction(action);
+	_lynn->pushMovePoint(make_pair(380, 240));
+	_lynn->pushMovePoint(make_pair(530, 240));
+	_lynn->pushMovePoint(make_pair(530, 290));
+	_lynn->pushMovePoint(make_pair(660, 290));
+	action = new Action(IDLE, RIGHT, true);
+	_lynn->pushAction(action);
+	action = new Action(WALK, RIGHT, false);
+	_lynn->pushAction(action);
+	action = new Action(IDLE, UP, true);
+	_lynn->pushAction(action);
+	action = new Action(SADIDLE, RIGHT, false, 1.0f);
+	_lynn->pushAction(action);
+	action = new Action(SADIDLE, DOWN, true);
+	_lynn->pushAction(action);
+	action = new Action(SADWALK, RIGHT, false);
+	_lynn->pushAction(action);
+	action = new Action(IDLE, UP, true);
+	_lynn->pushAction(action);
+	action = new Action(SADIDLE, RIGHT, false, 0.5f);
+	_lynn->pushAction(action);
+	action = new Action(IDLE, UP, false, 0.5f);
+	_lynn->pushAction(action);
+	action = new Action(SADIDLE, DOWN, true);
+	_lynn->pushAction(action);
+	action = new Action(SADIDLE, DOWN, false, 2.0f);
+	_lynn->pushAction(action);
+	action = new Action(SADWALK, DOWN, false);
+	_lynn->pushAction(action);
+	action = new Action(SADWALK, RIGHT, false);
+	_lynn->pushAction(action);
+	action = new Action(SADIDLE, RIGHT, true);
+	_lynn->pushAction(action);
+
+	_lynn->pushMovePoint(make_pair(260, 290));
+	_lynn->pushMovePoint(make_pair(260, 240));
+	_lynn->pushMovePoint(make_pair(230, 240));
+	_lynn->pushMovePoint(make_pair(230, 160));
+	action = new Action(WALK, RIGHT, false);
+	_lynn->pushAction(action);
+	action = new Action(WALK, UP, false);
+	_lynn->pushAction(action);
+	action = new Action(IDLE, UP, true);
+	_lynn->pushAction(action);
+	action = new Action(WALK, LEFT, false);
+	_lynn->pushAction(action);
+	action = new Action(WALK, UP, false);
+	_lynn->pushAction(action);
+	action = new Action(TRAINSIT, RIGHT, false);
+	_lynn->pushAction(action);
+	action = new Action(TRAINSITIDLE, RIGHT, true);
+	_lynn->pushAction(action);
 
 	_nextActionTiming.push(2);
 	_nextActionTiming.push(4);
@@ -99,6 +121,7 @@ HRESULT IntroScene::init(void)
 	_nextActionTiming.push(29);
 	_nextActionTiming.push(32);
 	_nextActionTiming.push(33);
+	_nextActionTiming.push(37);
 	FILE* fp;
 	fopen_s(&fp, "IntroText.txt", "r");
 	if (fp != nullptr)
@@ -128,8 +151,8 @@ HRESULT IntroScene::init(void)
 	}
 
 	_time = 0.0f;
+	_changeCutTime = 0.0f;
 	_dialogRC = RectMakeCenter(WINSIZE_X / 2, WINSIZE_Y, 0, 0);
-	_lynnMomTime = 0.0f;
 	_count = 0;
 	_count2 = 0;
 
@@ -138,6 +161,8 @@ HRESULT IntroScene::init(void)
 
 	_cursorImg = IMAGEMANAGER->findImage("Cursor");
 	_changeCut = false;
+	_dark = false;
+	_darkAlpha = 0;
 	_dialogState = HIDE;
 	return S_OK;
 }
@@ -152,13 +177,13 @@ void IntroScene::update(void)
 {
 	if(_cutIdx == 0)
 	{
-		_lynnMomTime += TIMEMANAGER->getElapsedTime();
+		_time += TIMEMANAGER->getElapsedTime();
 		_lynn->update();
 		_cameraPos.x = _lynn->getX();
 		_cameraPos.y = _lynn->getY();
-		if (_lynnMomTime > 0.1f)
+		if (_time > 0.1f)
 		{
-			_lynnMomTime = 0.0f;
+			_time = 0.0f;
 			_count++;
 			if (_count2 < 3)
 			{
@@ -179,10 +204,10 @@ void IntroScene::update(void)
 		}
 		if (_changeCut)
 		{
-			_time -= TIMEMANAGER->getElapsedTime() * 1000.0f;
-			if (_time < 0)
+			_changeCutTime -= TIMEMANAGER->getElapsedTime() * 1000.0f;
+			if (_changeCutTime < 0)
 			{
-				_time = 0.0f;
+				_changeCutTime = 0.0f;
 				_lynn->setPos(220, 240);
 				_lynn->popAction();
 				_dialogIdx++;
@@ -206,8 +231,8 @@ void IntroScene::update(void)
 		}
 		if (_dialogState == HIDE && _dialogIdx == 15)
 		{
-			_time += TIMEMANAGER->getElapsedTime();
-			if (_time > 1.0f)
+			_changeCutTime += TIMEMANAGER->getElapsedTime();
+			if (_changeCutTime > 1.0f)
 			{
 				_dialogState = OPEN;
 			}
@@ -217,24 +242,33 @@ void IntroScene::update(void)
 	{
 		if(_changeCut)
 		{
-			_time += TIMEMANAGER->getElapsedTime() * 1000.0f;
-			if (_time > WINSIZE_X)
+			if (_lynn->getActionIdx() == 27)
 			{
-				_changeCut = false;
-				_time = 0;
+				_changeCutTime -= TIMEMANAGER->getElapsedTime() * 1000.0f;
+				if (_changeCutTime < 0)
+				{
+					_time = 0.0f;
+					_changeCutTime = 0.0f;
+					_lynn->setPos(100, 290);
+					_lynn->popAction();
+					_cutIdx++;
+				}
 			}
-			if (_dialogState == HIDE)
+			else
 			{
-				_dialogState = OPEN;
+				_changeCutTime += TIMEMANAGER->getElapsedTime() * 1000.0f;
+				if (_changeCutTime > WINSIZE_X)
+				{
+					_changeCut = false;
+				}
+				if (_dialogState == HIDE)
+				{
+					_dialogState = OPEN;
+				}
 			}
 		}
 		else
 		{
-			if (_time + 0.2f < TIMEMANAGER->getWorldTime())
-			{
-				_count++;
-				_time = TIMEMANAGER->getWorldTime();
-			}
 			if (_lynn->getActionIdx() == 15)
 			{
 				_dialogState = HIDE;
@@ -272,6 +306,76 @@ void IntroScene::update(void)
 					_dialogState = HIDE;
 				}
 			}
+			else if (_lynn->getActionIdx() == 27)
+			{
+				_changeCut = true;
+				_changeCut = WINSIZE_X;
+			}
+		}
+		if (_time + 0.1f < TIMEMANAGER->getWorldTime())
+		{
+			_count++;
+			_time = TIMEMANAGER->getWorldTime();
+		}
+		cout << _lynn->getActionIdx() << endl;
+		_lynn->update();
+	}
+	else if (_cutIdx == 2)
+	{
+		if(_changeCut)
+		{
+			_changeCutTime += TIMEMANAGER->getElapsedTime() * 1000.0f;
+			if (_changeCutTime > WINSIZE_X)
+			{
+				_changeCut = false;
+			}
+		}
+		else
+		{
+			if(_lynn->getActionIdx() == 28 || _lynn->getActionIdx() == 30 || _lynn->getActionIdx() == 34)
+			{
+				if (_dialogState == HIDE)
+				{
+					_dialogState = OPEN;
+					if (_dialogIdx == 53)
+					{
+						_trainWindow = IMAGEMANAGER->findImage("TrainWindow2");
+						_dark = true;
+						_darkAlpha = 200;
+					}
+					if (_dialogIdx == 55)
+					{
+						_trainWindow = IMAGEMANAGER->findImage("TrainWindow1");
+						_dark = false;
+						_darkAlpha = 0;
+					}
+					if (_dialogIdx == 58)
+					{
+						_dark = true;
+						_darkAlpha++;
+						if (_darkAlpha > 255)
+						{
+							_darkAlpha = 255;
+						}
+						else
+						{
+							_dialogState = HIDE;
+						}
+					}
+				}
+			}
+			else if (_lynn->getActionIdx() == 31)
+			{
+				if (_dialogState == SHOW)
+				{
+					_dialogState = CLOSE;
+				}
+			}
+		}
+		if (_time + 0.1f < TIMEMANAGER->getWorldTime())
+		{
+			_count++;
+			_time = TIMEMANAGER->getWorldTime();
 		}
 		_lynn->update();
 	}
@@ -288,14 +392,14 @@ void IntroScene::update(void)
 			{
 				_dialogIdx++;
 				cout << _dialogIdx << endl;
-				if (_dialogIdx == 15 || _dialogIdx == 28 || _dialogIdx == 32)
+				if (_dialogIdx == 15 || _dialogIdx == 28 || _dialogIdx == 32 || _dialogIdx == 34 || _dialogIdx == 53 || _dialogIdx == 55 || _dialogIdx == 58)
 				{
 					if (_dialogState == SHOW)
 					{
 						_dialogState = CLOSE;
 					}
 				}
-				if (unName())
+				if (checkNextActionTiming())
 				{
 					_lynn->popAction();
 				}
@@ -304,7 +408,11 @@ void IntroScene::update(void)
 					_changeCut = true;
 					_dialogState = CLOSE;
 					_dialogIdx = 23;
-					_time = WINSIZE_X;
+					_changeCutTime = WINSIZE_X;
+				}
+				if (_dialogIdx == 59)
+				{
+					SCENEMANAGER->changeScene("Farm");
 				}
 			}
 		}
@@ -329,6 +437,10 @@ void IntroScene::render(void)
 	else if (_cutIdx == 1)
 	{
 		PatBlt(getMemDC(), 0, 0, WINSIZE_X, WINSIZE_Y, BLACKNESS);
+		for(int i = 0; i < 7; i++)
+		{
+			_trainWindow->frameRender(_introCut[1]->getMemDC(), 45 + 84 * i, 61, (_count % 51) % 10, (_count % 51) / 10);
+		}
 		_train1->render(_introCut[1]->getMemDC());
 		_trainPassengers[0]->frameRender(_introCut[1]->getMemDC(), 190, 140, _count % 6, 0);
 		_trainPassengers[1]->frameRender(_introCut[1]->getMemDC(), 323, 140, _count % (_trainPassengers[1]->getMaxFrameX() + 1), 0);
@@ -345,17 +457,32 @@ void IntroScene::render(void)
 		}
 		_introCut[1]->render(getMemDC(), WINSIZE_X / 2 - _train1->getWidth() * 0.65f, 0, _train1->getWidth() * 1.3f, _train1->getHeight() * 1.3f, 0, 0, _train1->getWidth(), _train1->getHeight());
 	}
+	else if (_cutIdx == 2)
+	{
+		PatBlt(getMemDC(), 0, 0, WINSIZE_X, WINSIZE_Y, BLACKNESS);
+		for (int i = 0; i < 8; i++)
+		{
+			_trainWindow->frameRender(_introCut[2]->getMemDC(), 5 + 84 * i, 61, (_count % 51) % 10, (_count % 51) / 10);
+		}
+		_train2->render(_introCut[2]->getMemDC());
+		_lynn->render(_introCut[2]->getMemDC());
+		_introCut[2]->render(getMemDC(), WINSIZE_X / 2 - _train2->getWidth() * 0.65f, 0, _train2->getWidth() * 1.3f, _train2->getHeight() * 1.3f, 0, 0, _train2->getWidth(), _train2->getHeight());
+		if(_dark)
+		{
+			IMAGEMANAGER->alphaRender("Black", getMemDC(), _darkAlpha);
+		}
+	}
+	renderDialog();
 	if (_changeCut)
 	{
 		PatBlt(_changeCutImg->getMemDC(), 0, 0, WINSIZE_X, WINSIZE_Y, BLACKNESS);
 		HBRUSH magenta = CreateSolidBrush(RGB(255, 0, 255));
 		HBRUSH oldBrush = (HBRUSH)SelectObject(_changeCutImg->getMemDC(), magenta);
-		EllipseMakeCenter(_changeCutImg->getMemDC(), WINSIZE_X / 2, WINSIZE_Y / 2, _time, _time);
+		EllipseMakeCenter(_changeCutImg->getMemDC(), WINSIZE_X / 2, WINSIZE_Y / 2, _changeCutTime, _changeCutTime);
 		SelectObject(_changeCutImg->getMemDC(), oldBrush);
 		DeleteObject(magenta);
 		_changeCutImg->render(getMemDC());
 	}
-	renderDialog();
 	_cursorImg->render(getMemDC(), _ptMouse.x, _ptMouse.y);
 }
 
@@ -366,28 +493,51 @@ void IntroScene::renderDialog()
 		0, 0, _dialogWindow->getWidth(), _dialogWindow->getHeight(), 240);
 	if(_dialogState == SHOW)
 	{
-		dialog(_arrDialogs[_dialogIdx]._charName, _arrDialogs[_dialogIdx]._dialog, _arrDialogs[_dialogIdx]._letterN, _arrDialogs[_dialogIdx]._expression);
+		dialog(_arrDialogs[_dialogIdx]);
 	}
 
 }
 
-void IntroScene::dialog(string charName, string printString, int length, int expression)
+void IntroScene::dialog(Dialog dialog)
 {
 	char _text[256];
-	wsprintf(_text, "Dialog%s", charName.c_str());
-	RECT rc = RectMake(320, 480, _dialogRC.right - 350, 480);
+	wsprintf(_text, "Dialog%s", dialog._charName.c_str());
+	RECT rc = RectMake(320, 480, _dialogRC.right - 350, 240);
 	_speaker = IMAGEMANAGER->findImage(_text);
 	if(_speaker != nullptr)
 	{
 		_speaker->frameRender(getMemDC(), _dialogRC.right - _speaker->getFrameWidth() * 0.2f, WINSIZE_Y - _speaker->getFrameHeight() * 2, 
-			_speaker->getFrameWidth() * 2, _speaker->getFrameHeight() * 2, expression, 0);
+			_speaker->getFrameWidth() * 2, _speaker->getFrameHeight() * 2, dialog._expression, 0);
 	}
 	_dialogWindow->alphaRender(getMemDC(), _dialogRC.left, _dialogRC.top, _dialogWindow->getWidth() * 2.2f, _dialogWindow->getHeight() * 2.2f,
 		0, 0, _dialogWindow->getWidth(), _dialogWindow->getHeight(), 240);
 	SetTextAlign(getMemDC(), TA_CENTER);
-	FONTMANAGER->textOut(getMemDC(), 514, 440, "배달의민족 을지로체", 15, 100, const_cast<char*>(charName.c_str()), charName.length(), RGB(0, 0, 0));
+	FONTMANAGER->textOut(getMemDC(), 514, 440, "배달의민족 을지로체", 15, 100, const_cast<char*>(dialog._charName.c_str()), dialog._charName.length(), RGB(0, 0, 0));
 	SetTextAlign(getMemDC(), TA_LEFT);
-	FONTMANAGER->drawText(getMemDC(), "배달의민족 을지로체", 20, 100, const_cast<char*>(printString.c_str()), length, RGB(255, 255, 255), &rc);
+	FONTMANAGER->drawText(getMemDC(), "배달의민족 을지로체", 20, 100, const_cast<char*>(dialog._dialog.c_str()), dialog._letterN, RGB(255, 255, 255), &rc);
+	RECT answerRC[4];
+	for(int i = 0; i < 4; i++)
+	{
+		answerRC[i] = RectMake(330, 570 + 30 * i, _dialogRC.right - 340, 30);
+	}
+	if(dialog._letterN == dialog._dialog.length())
+	{
+		for (int i = 0; i < dialog._answerN; i++)
+		{
+			if(PtInRect(&answerRC[i], _ptMouse))
+			{
+				IMAGEMANAGER->alphaRender("SelectAnswerBG", getMemDC(), rc.left - 6, answerRC[i].top, rc.right - rc.left + 6, answerRC[i].bottom - answerRC[i].top, 
+					0, 0, IMAGEMANAGER->findImage("SelectAnswerBG")->getWidth(), IMAGEMANAGER->findImage("SelectAnswerBG")->getHeight(), 200);
+				char str[256];
+				wsprintf(str, "> %s", dialog._answer[i].c_str());
+				FONTMANAGER->textOut(getMemDC(), answerRC[i].left, answerRC[i].top + 5, "배달의민족 을지로체", 20, 100, str, strlen(str), RGB(171, 174, 46));
+			}
+			else
+			{
+				FONTMANAGER->textOut(getMemDC(), answerRC[i].left, answerRC[i].top + 5, "배달의민족 을지로체", 20, 100, const_cast<char*>(dialog._answer[i].c_str()), dialog._answer[i].length(), RGB(123, 148, 162));
+			}
+		}
+	}
 }
 
 void IntroScene::updateDialog()
@@ -425,7 +575,7 @@ void IntroScene::updateDialog()
 	}
 }
 
-bool IntroScene::unName()
+bool IntroScene::checkNextActionTiming()
 {
 	if (_dialogIdx == _nextActionTiming.front())
 	{
