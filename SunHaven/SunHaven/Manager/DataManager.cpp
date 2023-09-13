@@ -29,6 +29,11 @@ HRESULT DataManager::init(void)
 		_vWeapon.push_back(itemData.getWeapon()->front());
 		itemData.getWeapon()->pop();
 	}
+	while (!itemData.getAccessory()->empty())
+	{
+		_vAcc.push_back(itemData.getAccessory()->front());
+		itemData.getAccessory()->pop();
+	}
 	return S_OK;
 }
 
@@ -63,6 +68,12 @@ void DataManager::release(void)
 		SAFE_DELETE(*it);
 		(*it) = nullptr;
 		it = _vWeapon.erase(it);
+	}
+	for (auto it = _vArmor.begin(); it != _vArmor.end();)
+	{
+		SAFE_DELETE(*it);
+		(*it) = nullptr;
+		it = _vArmor.erase(it);
 	}
 }
 

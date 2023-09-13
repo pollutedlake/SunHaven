@@ -155,7 +155,7 @@ HRESULT Resources::init(void)
 
 	// ====================ShopScene====================
 	
-	// itemImage
+	// itemImage(½½·Ôx)
 	IMAGEMANAGER->addImage("³ì½¼ °î±ªÀÌ", "Resources/Images/Item/icon_rusty_pickaxe2.bmp", 32, 32, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("¾Æ´Ù¸¸Æ® °î±ªÀÌ", "Resources/Images/Item/icon_adamant_pickaxe2.bmp", 32, 32, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("³ì½¼ ±ªÀÌ", "Resources/Images/Item/icon_rusty_hoe2.bmp", 32, 32, true, RGB(255, 0, 255));
@@ -185,6 +185,8 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addImage("ÀÏ¹Ý ¹°°í±â", "Resources/Images/Item/icon_basic_fish2.bmp", 32, 32, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("¾Æ´Ù¸¸Æ® ±¤¼®", "Resources/Images/Item/icon_adamant_ore2.bmp", 32, 32, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("¾Æ´Ù¸¸Æ® ¹Ù", "Resources/Images/Item/icon_adamant_bar2.bmp", 32, 32, true, RGB(255, 0, 255));
+
+	
 	
 	 
 	
@@ -224,6 +226,9 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addImage("sort_button", "Resources/Images/Inventory/sort_button.bmp", 26, 25, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("drop_button", "Resources/Images/Inventory/drop_button.bmp", 26, 25, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("x_button", "Resources/Images/Inventory/x_button.bmp", 27, 28, true, RGB(255, 0, 255));
+
+	IMAGEMANAGER->addImage("item_bg_common", "Resources/Images/Inventory/item_bg_common.bmp", 32, 32, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("item_bg_rare", "Resources/Images/Inventory/item_bg_rare.bmp", 32, 32, true, RGB(255, 0, 255));
 
 	//CraftingImage
 	//IMAGEMANAGER->addImage("cooking_bg1" , "Resources/Images/CraftingTable/cooking_bg1.bmp",)

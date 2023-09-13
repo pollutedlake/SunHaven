@@ -1,6 +1,5 @@
 #pragma once
 #include "../FrameWork/GameNode/GameNode.h"
-#include "../Class/Data/ItemData.h"
 
 struct inventoryList
 {
@@ -48,7 +47,7 @@ private:
 	vector<equipmentSlot> _vEquipmentSlot;
 	vector<equipmentSlot>::iterator _viEquipmentSlot;
 
-	vector<tagTool*> _vTool;
+	/*vector<tagTool*> _vTool;
 	vector<tagTool*>::iterator _viTool;
 
 	vector<tagWeapon*> _vWeapon;
@@ -64,11 +63,11 @@ private:
 	vector<tagArmor*>::iterator _viArmor;
 
 	vector<tagIngredient*> _vIngredient;
-	vector<tagIngredient*>::iterator _viIngredient;
+	vector<tagIngredient*>::iterator _viIngredient;*/
 
 	
 
-	ItemData* _ID;
+	
 	
 
 
@@ -77,8 +76,8 @@ public:
 	void release(void);
 	void update(void);
 	void render(void);
-	void getItem();
-	void get_Item(string index);
+	//void getItem();
+	void getItem(string index);
 	void itemMove();
 	void invenMold();
 	void invenSlot();
@@ -86,11 +85,11 @@ public:
 	void moveItemRender();
 	void popupItem();
 
-	vector<tagWeapon*> getWeapon() { return _vWeapon; }
-	
-	vector<tagAccessory*> getAccessory() { return _vAccessory; }
-	
-	vector<tagConsumable*> getConsumable() { return _vConsumable; }
+	//vector<tagWeapon*> getWeapon() { return _vWeapon; }
+	//
+	//vector<tagAccessory*> getAccessory() { return _vAccessory; }
+	//
+	//vector<tagConsumable*> getConsumable() { return _vConsumable; }
 	
 
 	Inventory(){}

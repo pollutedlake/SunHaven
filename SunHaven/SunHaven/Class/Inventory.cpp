@@ -5,11 +5,11 @@
 
 HRESULT Inventory::init(void)
 {
-	_ID = new ItemData;
-	_ID->init();
+	/*_ID = new ItemData;
+	_ID->init();*/
 
 	_seeInven = false;
-
+	
 	_invenBG = RectMake(WINSIZE_X / 4, WINSIZE_Y / 4, WINSIZE_X / 2, WINSIZE_Y / 2);
 	_playerBG = RectMake(_invenBG.left + 30, _invenBG.top + 50, WINSIZE_X / 6, WINSIZE_Y / 2 - 80);
 	_playerName = RectMake(_playerBG.left, _playerBG.top - 20, 202, 20);
@@ -18,7 +18,7 @@ HRESULT Inventory::init(void)
 	_dropButton = RectMake(_itemListBG.right - 75, _itemListBG.bottom - 40, 26, 25);
 	_trashButton = RectMake(_itemListBG.right - 35, _itemListBG.bottom - 40, 26, 25);
 	_xButton = RectMake(_invenBG.right - 27, _invenBG.top - 5, 27, 28);
-	//_sortButton _trashButton _dropButton
+
 	for (int i = 0; i < 5; i++)
 	{
 		_playerStat[i] = RectMake(_playerBG.left + 5, (_playerBG.top + 82) + 17 * i, 10, 10);
@@ -110,63 +110,22 @@ HRESULT Inventory::init(void)
 	
 	_selectedItem = -1;
 
-	//tagTool* temp3;
-
-	for (int i = 0; i < 9; i++)
-	{
-		_vTool.push_back(_ID->getTool()->front());
-		_ID->getTool()->pop();
-	}
-
-	for (int i = 0; i < 6; i++)
-	{
-		if (i < 4)
-		{
-			_vWeapon.push_back(_ID->getWeapon()->front());
-			_ID->getWeapon()->pop();
-
-			_vArmor.push_back(_ID->getArmor()->front());
-			_ID->getArmor()->pop();
-		}
-
-		if (i == 4)
-		{
-			_vAccessory.push_back(_ID->getAccessory()->front());
-			_ID->getAccessory()->pop();
-
-			_vAccessory.push_back(_ID->getAccessory()->front());
-			_ID->getAccessory()->pop();
-
-		}
-
-		if (i == 5)
-		{
-			_vConsumable.push_back(_ID->getConsumable()->front());
-			_ID->getConsumable()->pop();
-
-		}
-	}
-
-	for (int i = 0; i < 8; i++)
-	{
-		_vIngredient.push_back(_ID->getIngredient()->front());
-		_ID->getIngredient()->pop();
-	}
-
-	
 
 	return S_OK;
 }
 
 void Inventory::release(void)
 {
-	SAFE_DELETE(_ID);
+	
 }
 
 void Inventory::update(void)
 {
+	if (KEYMANAGER->isOnceKeyDown('O'))
+	{
+		getItem("2-0");
+	}
 	
-	getItem();
 	
 	itemMove();
 
@@ -176,7 +135,6 @@ void Inventory::update(void)
 
 	}
 	
-
 }
 
 void Inventory::render(void)
@@ -203,64 +161,7 @@ void Inventory::render(void)
 	
 }
 
-void Inventory::getItem()
-{
-	if (KEYMANAGER->isOnceKeyDown('O'))
-	{
-		// getitem(string name, string arrIndex)?
-		// 네임과 인덱스 받아오고
-		/*  string a;
-		a = "5-0";
-		cout << a[1] << endl;*/
-		_getItem = "1-1";
-
-		for (int i = 0; i < _vInvenList.size(); i++)
-		{
-
-			if (!_vInvenList[i]._draw)
-			{
-				_vInvenList[i]._category = _getItem;
-
-				_vInvenList[i]._draw = true;
-
-				_lastItemTime = GetTickCount64();
-
-				return;
-			}
-
-		}
-
-	}
-
-	if (KEYMANAGER->isOnceKeyDown('P'))
-	{
-		// getitem(string name, string arrIndex)?
-		// 네임과 인덱스 받아오고
-		/*  string a;
-		a = "5-0";
-		cout << a[1] << endl;*/
-		_getItem = "2-1";
-
-		for (int i = 0; i < _vInvenList.size(); i++)
-		{
-
-			if (!_vInvenList[i]._draw)
-			{
-				_vInvenList[i]._category = _getItem;
-
-				_vInvenList[i]._draw = true;
-
-				_lastItemTime = GetTickCount64();
-
-				return;
-			}
-
-		}
-
-	}
-}
-
-void Inventory::get_Item(string index)
+void Inventory::getItem(string index)
 {
 	for (int i = 0; i < _vInvenList.size(); i++)
 	{
@@ -283,38 +184,69 @@ void Inventory::itemMove()
 {
 	if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
 	{
-
+		//인벤칸
 		// 해당하는 인덱스를 찾음
-		int index = -1;
+		int indexInven = -1;
+		int indexEqui = -1;
 		string temp = "";
 		for (int i = 0; i < _vInvenList.size(); i++)
 		{
 			if (PtInRect(&_vInvenList[i]._rc, _ptMouse))
 			{
-				index = i;
+				indexInven = i;
 				break;
 			}
 		}
 
+		//장비칸
+		for (int j = 0; j < _vEquipmentSlot.size() - 1; j++)
+		{
+			if (PtInRect(&_vEquipmentSlot[j]._rc, _ptMouse))
+			{
+				indexEqui = j;
+				break;
+			}
+		}
+
+
 		// 인덱스가 유효하고 아이템이 있으면 _selectedItem에 저장
-		if (index != -1 && _vInvenList[index]._draw)
+		if (indexInven != -1 && _vInvenList[indexInven]._draw)
 		{
 			if (_selectedItem != -1)
 			{
 
-				temp = _vInvenList[index]._category;
-				_vInvenList[index]._category = _vInvenList[_selectedItem]._category;
+				temp = _vInvenList[indexInven]._category;
+				_vInvenList[indexInven]._category = _vInvenList[_selectedItem]._category;
 				_vInvenList[_selectedItem]._category = temp;
 
 			}
 			else
 			{
-				_selectedItem = index;
-				_vInvenList[index]._draw = false;
+				_selectedItem = indexInven;
+				_vInvenList[indexInven]._draw = false;
 			}
 
+		}
+
+		
+		if (indexEqui != -1 && _vEquipmentSlot[indexEqui]._draw)
+		{
+			if (_selectedItem != -1)
+			{
+
+				temp = _vEquipmentSlot[indexEqui]._category;
+				_vEquipmentSlot[indexEqui]._category = _vEquipmentSlot[_selectedItem]._category;
+				_vEquipmentSlot[_selectedItem]._category = temp;
+
+			}
+			else
+			{
+				_selectedItem = indexEqui;
+				_vEquipmentSlot[indexEqui]._draw = false;
+			}
 
 		}
+
 
 		//완전삭제로 수정예정
 		if (PtInRect(&_trashButton, _ptMouse)&& _selectedItem != -1)
@@ -323,8 +255,7 @@ void Inventory::itemMove()
 			_selectedItem = -1;
 		}
 
-
-		//바닥에버리기로 수정예정
+		//판매로 수정예정
 		if (PtInRect(&_dropButton, _ptMouse) && _selectedItem != -1)
 		{
 			_vInvenList[_selectedItem]._draw = false;
@@ -337,12 +268,14 @@ void Inventory::itemMove()
 	{
 		
 		// 빈칸에 해당하는 인덱스를 찾음
-		int index = -1;
+		int indexInven = -1;
+		int indexEqui = -1;
+		//인벤칸
 		for (int i = 0; i < _vInvenList.size(); i++)
 		{
 			if (PtInRect(&_vInvenList[i]._rc, _ptMouse) && !_vInvenList[i]._draw)
 			{
-				index = i;
+				indexInven = i;
 				break;
 			}
 
@@ -350,11 +283,33 @@ void Inventory::itemMove()
 
 		// 인덱스가 유효하고 _selectedItem 값이 유효하면 아이템을 놓음
 
-		if (index != -1 && _selectedItem != -1)
+		if (indexInven != -1 && _selectedItem != -1)
 		{
-			_vInvenList[index]._category = _vInvenList[_selectedItem]._category;
-			_vInvenList[index]._draw = true;
-			//_vInvenList[_selectedItem]._draw = false;
+			_vInvenList[indexInven]._category = _vInvenList[_selectedItem]._category;
+			_vInvenList[indexInven]._draw = true;
+
+			_selectedItem = -1;
+
+		}
+
+		//장비칸
+		for (int i = 0; i < _vEquipmentSlot.size() - 1; i++)
+		{
+			if (PtInRect(&_vEquipmentSlot[i]._rc, _ptMouse) && !_vEquipmentSlot[i]._draw)
+			{
+				indexEqui = i;
+				break;
+			}
+
+		}
+
+		// 인덱스가 유효하고 _selectedItem 값이 유효하면 아이템을 놓음
+
+		if (indexEqui != -1 && _selectedItem != -1)
+		{
+			_vEquipmentSlot[indexEqui]._category = _vEquipmentSlot[_selectedItem]._category;
+			_vEquipmentSlot[indexEqui]._draw = true;
+
 			_selectedItem = -1;
 
 		}
@@ -413,38 +368,79 @@ void Inventory::invenSlot()
 				{
 				case '0':
 					_index = (int)_vInvenList[i * 8 + j]._category[2] - 48;
-					IMAGEMANAGER->render(_vTool[_index]->name.c_str(), getMemDC(), _vInvenList[i * 8 + j]._rc.left, _vInvenList[i * 8 + j]._rc.top);
+					if (DATAMANAGER->getToolInfo(_index)->grade == "커먼")
+					{
+						IMAGEMANAGER->render("item_bg_common", getMemDC(), _vInvenList[i * 8 + j]._rc.left, _vInvenList[i * 8 + j]._rc.top);
+					}
+					else
+					{
+						IMAGEMANAGER->render("item_bg_rare", getMemDC(), _vInvenList[i * 8 + j]._rc.left, _vInvenList[i * 8 + j]._rc.top);
+					}
+					IMAGEMANAGER->render(DATAMANAGER->getToolInfo(_index)->name.c_str(), getMemDC(), _vInvenList[i * 8 + j]._rc.left, _vInvenList[i * 8 + j]._rc.top);
 					break;
 
 				case '1':
 					_index = (int)_vInvenList[i * 8 + j]._category[2] - 48;
-					IMAGEMANAGER->render(_vWeapon[_index]->name.c_str(), getMemDC(), _vInvenList[i * 8 + j]._rc.left, _vInvenList[i * 8 + j]._rc.top);
+					if (DATAMANAGER->getWeaponInfo(_index)->grade == "커먼")
+					{
+						IMAGEMANAGER->render("item_bg_common", getMemDC(), _vInvenList[i * 8 + j]._rc.left, _vInvenList[i * 8 + j]._rc.top);
+					}
+					else
+					{
+						IMAGEMANAGER->render("item_bg_rare", getMemDC(), _vInvenList[i * 8 + j]._rc.left, _vInvenList[i * 8 + j]._rc.top);
+					}
+					IMAGEMANAGER->render(DATAMANAGER->getWeaponInfo(_index)->name.c_str(), getMemDC(), _vInvenList[i * 8 + j]._rc.left, _vInvenList[i * 8 + j]._rc.top);
 					break;
 
 				case '2':
 					_index = (int)_vInvenList[i * 8 + j]._category[2] - 48;
-					IMAGEMANAGER->render(_vArmor[_index]->name.c_str(), getMemDC(), _vInvenList[i * 8 + j]._rc.left, _vInvenList[i * 8 + j]._rc.top);
+					if (DATAMANAGER->getArmorInfo(_index)->grade == "커먼")
+					{
+						IMAGEMANAGER->render("item_bg_common", getMemDC(), _vInvenList[i * 8 + j]._rc.left, _vInvenList[i * 8 + j]._rc.top);
+					}
+					else
+					{
+						IMAGEMANAGER->render("item_bg_rare", getMemDC(), _vInvenList[i * 8 + j]._rc.left, _vInvenList[i * 8 + j]._rc.top);
+					}
+					IMAGEMANAGER->render(DATAMANAGER->getArmorInfo(_index)->name.c_str(), getMemDC(), _vInvenList[i * 8 + j]._rc.left, _vInvenList[i * 8 + j]._rc.top);
 					break;
 
 				case '3':
 					_index = (int)_vInvenList[i * 8 + j]._category[2] - 48;
-					IMAGEMANAGER->render(_vAccessory[_index]->name.c_str(), getMemDC(), _vInvenList[i * 8 + j]._rc.left, _vInvenList[i * 8 + j]._rc.top);
+					if (DATAMANAGER->getAccessoryInfo(_index)->grade == "커먼")
+					{
+						IMAGEMANAGER->render("item_bg_common", getMemDC(), _vInvenList[i * 8 + j]._rc.left, _vInvenList[i * 8 + j]._rc.top);
+					}
+					else
+					{
+						IMAGEMANAGER->render("item_bg_rare", getMemDC(), _vInvenList[i * 8 + j]._rc.left, _vInvenList[i * 8 + j]._rc.top);
+					}
+					IMAGEMANAGER->render(DATAMANAGER->getAccessoryInfo(_index)->name.c_str(), getMemDC(), _vInvenList[i * 8 + j]._rc.left, _vInvenList[i * 8 + j]._rc.top);
 					break;
 
 				case '4':
 					_index = (int)_vInvenList[i * 8 + j]._category[2] - 48;
-					IMAGEMANAGER->render(_vIngredient[_index]->name.c_str(), getMemDC(), _vInvenList[i * 8 + j]._rc.left, _vInvenList[i * 8 + j]._rc.top);
+					if (DATAMANAGER->getIngredientInfo(_index)->name[0] == '아')
+					{
+						IMAGEMANAGER->render("item_bg_rare", getMemDC(), _vInvenList[i * 8 + j]._rc.left, _vInvenList[i * 8 + j]._rc.top);		
+					}
+					else
+					{
+						IMAGEMANAGER->render("item_bg_common", getMemDC(), _vInvenList[i * 8 + j]._rc.left, _vInvenList[i * 8 + j]._rc.top);
+					}
+					IMAGEMANAGER->render(DATAMANAGER->getIngredientInfo(_index)->name.c_str(), getMemDC(), _vInvenList[i * 8 + j]._rc.left, _vInvenList[i * 8 + j]._rc.top);
 					break;
 
 				case '5':
 					_index = (int)_vInvenList[i * 8 + j]._category[2] - 48;
-					IMAGEMANAGER->render(_vConsumable[_index]->name.c_str(), getMemDC(), _vInvenList[i * 8 + j]._rc.left, _vInvenList[i * 8 + j]._rc.top);
+					
+					IMAGEMANAGER->render("item_bg_common", getMemDC(), _vInvenList[i * 8 + j]._rc.left, _vInvenList[i * 8 + j]._rc.top);
+					
+					IMAGEMANAGER->render(DATAMANAGER->getConsumableInfo(_index)->name.c_str(), getMemDC(), _vInvenList[i * 8 + j]._rc.left, _vInvenList[i * 8 + j]._rc.top);
 					break;
 
 				}
-				
-				
-				
+	
 			}
 			else
 			{
@@ -464,25 +460,7 @@ void Inventory::equipment_Slot()
 		{
 			if (_vEquipmentSlot[i * 5 + j]._draw)
 			{
-				//switch (_vEquipmentSlot[i * 5 + j]._category)
-				//{
-				//case 1:
-				//	//IMAGEMANAGER->render("ironBoots", getMemDC(), _vInvenList[i * (8) + j]._rc.left, _vInvenList[i * (8) + j]._rc.top);
-				//	//_vTool[i * 8 + j]->filePath;
-				//	break;
-				//case 2:
-				//	IMAGEMANAGER->render("ironChestPlate", getMemDC(), _vInvenList[i * (8) + j]._rc.left, _vInvenList[i * (8) + j]._rc.top);
-
-				//	break;
-				//case 3:
-				//	IMAGEMANAGER->render("ironGloves", getMemDC(), _vInvenList[i * (8) + j]._rc.left, _vInvenList[i * (8) + j]._rc.top);
-
-				//	break;
-				//case 4:
-				//	IMAGEMANAGER->render("ironSword", getMemDC(), _vInvenList[i * (8) + j]._rc.left, _vInvenList[i * (8) + j]._rc.top);
-
-				//	break;
-				//}
+				// 인덱스가 5 부터 헬멧 / 상의 / 하의/ 장갑 
 			}
 			else
 			{
@@ -542,32 +520,73 @@ void Inventory::moveItemRender()
 		{
 		case '0':
 			_index = (int)_vInvenList[_selectedItem]._category[2] - 48;
-			IMAGEMANAGER->render(_vTool[_index]->name.c_str(), getMemDC(), _ptMouse.x - 16, _ptMouse.y -16);
+			if (DATAMANAGER->getToolInfo(_index)->grade == "커먼")
+			{
+				IMAGEMANAGER->render("item_bg_common", getMemDC(), _ptMouse.x - 16, _ptMouse.y - 16);
+			}
+			else
+			{
+				IMAGEMANAGER->render("item_bg_rare", getMemDC(), _ptMouse.x - 16, _ptMouse.y - 16);
+			}
+			IMAGEMANAGER->render(DATAMANAGER->getToolInfo(_index)->name.c_str(), getMemDC(), _ptMouse.x - 16, _ptMouse.y -16);
 			break;
 
 		case '1':
 			_index = (int)_vInvenList[_selectedItem]._category[2] - 48;
-			IMAGEMANAGER->render(_vWeapon[_index]->name.c_str(), getMemDC(), _ptMouse.x - 16, _ptMouse.y - 16);
+			if (DATAMANAGER->getWeaponInfo(_index)->grade == "커먼")
+			{
+				IMAGEMANAGER->render("item_bg_common", getMemDC(), _ptMouse.x - 16, _ptMouse.y - 16);
+			}
+			else
+			{
+				IMAGEMANAGER->render("item_bg_rare", getMemDC(), _ptMouse.x - 16, _ptMouse.y - 16);
+			}
+			IMAGEMANAGER->render(DATAMANAGER->getWeaponInfo(_index)->name.c_str(), getMemDC(), _ptMouse.x - 16, _ptMouse.y - 16);
 			break;
 
 		case '2':
 			_index = (int)_vInvenList[_selectedItem]._category[2] - 48;
-			IMAGEMANAGER->render(_vArmor[_index]->name.c_str(), getMemDC(), _ptMouse.x - 16, _ptMouse.y - 16);
+			if (DATAMANAGER->getArmorInfo(_index)->grade == "커먼")
+			{
+				IMAGEMANAGER->render("item_bg_common", getMemDC(), _ptMouse.x - 16, _ptMouse.y - 16);
+			}
+			else
+			{
+				IMAGEMANAGER->render("item_bg_rare", getMemDC(), _ptMouse.x - 16, _ptMouse.y - 16);
+			}
+			IMAGEMANAGER->render(DATAMANAGER->getArmorInfo(_index)->name.c_str(), getMemDC(), _ptMouse.x - 16, _ptMouse.y - 16);
 			break;
 
 		case '3':
 			_index = (int)_vInvenList[_selectedItem]._category[2] - 48;
-			IMAGEMANAGER->render(_vAccessory[_index]->name.c_str(), getMemDC(), _ptMouse.x - 16, _ptMouse.y - 16);
+			if (DATAMANAGER->getAccessoryInfo(_index)->grade == "커먼")
+			{
+				IMAGEMANAGER->render("item_bg_common", getMemDC(), _ptMouse.x - 16, _ptMouse.y - 16);
+			}
+			else
+			{
+				IMAGEMANAGER->render("item_bg_rare", getMemDC(), _ptMouse.x - 16, _ptMouse.y - 16);
+			}
+			IMAGEMANAGER->render(DATAMANAGER->getAccessoryInfo(_index)->name.c_str(), getMemDC(), _ptMouse.x - 16, _ptMouse.y - 16);
 			break;
 
 		case '4':
 			_index = (int)_vInvenList[_selectedItem]._category[2] - 48;
-			IMAGEMANAGER->render(_vIngredient[_index]->name.c_str(), getMemDC(), _ptMouse.x - 16, _ptMouse.y - 16);
+			if (DATAMANAGER->getIngredientInfo(_index)->name[0] == '아')
+			{
+				IMAGEMANAGER->render("item_bg_rare", getMemDC(), _ptMouse.x - 16, _ptMouse.y - 16);
+			}
+			else
+			{
+				IMAGEMANAGER->render("item_bg_common", getMemDC(), _ptMouse.x - 16, _ptMouse.y - 16);
+			}
+			IMAGEMANAGER->render(DATAMANAGER->getIngredientInfo(_index)->name.c_str(), getMemDC(), _ptMouse.x - 16, _ptMouse.y - 16);
 			break;
 
 		case '5':
 			_index = (int)_vInvenList[_selectedItem]._category[2] - 48;
-			IMAGEMANAGER->render(_vConsumable[_index]->name.c_str(), getMemDC(), _ptMouse.x - 16, _ptMouse.y - 16);
+			IMAGEMANAGER->render("item_bg_common", getMemDC(), _ptMouse.x - 16, _ptMouse.y - 16);
+			IMAGEMANAGER->render(DATAMANAGER->getConsumableInfo(_index)->name.c_str(), getMemDC(), _ptMouse.x - 16, _ptMouse.y - 16);
 			break;
 
 		}

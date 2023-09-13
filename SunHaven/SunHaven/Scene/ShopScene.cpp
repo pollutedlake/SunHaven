@@ -5,9 +5,15 @@
 
 HRESULT ShopScene::init(void)
 {
-	IMAGEMANAGER->addImage("충돌", "Shop_Bg_Collision.bmp", WINSIZE_X, WINSIZE_Y);
+	IMAGEMANAGER->addImage("Shop_Bg_Collision", "Shop_Bg_Collision.bmp", WINSIZE_X, WINSIZE_Y);
 	_player = new Player;
-	_player->init(700,500, "충돌");
+	_player->init(700,500, "Shop_Bg_Collision");
+
+	_camera = new Camera;
+	_camera->init();
+	_camera->setPosition(_player->getPlayerPosition());
+	_camera->setLimitRight(1280 - WINSIZE_X / 2);
+	_camera->setLimitBottom(720 - WINSIZE_Y / 2);
 	
 	_solonRc = RectMake(600, 320, 100, 100);
 	_shopBg = RectMake(WINSIZE_X / 2 - 261, WINSIZE_Y / 2 - 327, 522, 654);
@@ -24,10 +30,11 @@ HRESULT ShopScene::init(void)
 			if (i < 2)
 			{
 				temp._rc = RectMake(_shopBg.left + 25 + 241 * j, _shopBg.top + 60 + (10 + 103 * i), 231, 93);
-				temp._name = _player->getInven()->getWeapon()[i * 2 + j]->name;
-				temp._buyGold = _player->getInven()->getWeapon()[i * 2 + j]->gold;
-				temp._sellGold = _player->getInven()->getWeapon()[i * 2 + j]->sellGold;
-				 
+				temp._name = DATAMANAGER->getWeaponInfo(i * 2 + j)->name;
+				temp._buyGold = DATAMANAGER->getWeaponInfo(i * 2 + j)->gold;
+				temp._sellGold = DATAMANAGER->getWeaponInfo(i * 2 + j)->sellGold;
+				temp._grade = DATAMANAGER->getWeaponInfo(i * 2 + j)->grade;
+				temp._index = DATAMANAGER->getWeaponInfo(i * 2 + j)->index;
 				for (int k = 0; k < 3; k++)
 				{
 					if (k == 0)
@@ -54,10 +61,11 @@ HRESULT ShopScene::init(void)
 				if (j < 1)
 				{
 					temp._rc = RectMake(_shopBg.left + 25 + 241 * j, _shopBg.top + 60 + (10 + 103 * i), 231, 93);
-					temp._name = _player->getInven()->getAccessory().front()->name;
-					temp._buyGold = _player->getInven()->getAccessory().front()->gold;
-					temp._sellGold = _player->getInven()->getAccessory().front()->sellGold;
-					
+					temp._name = DATAMANAGER->getAccessoryInfo(j)->name;
+					temp._buyGold = DATAMANAGER->getAccessoryInfo(j)->gold;
+					temp._sellGold = DATAMANAGER->getAccessoryInfo(j)->sellGold;
+					temp._grade = DATAMANAGER->getAccessoryInfo(j)->grade;
+					temp._index = DATAMANAGER->getAccessoryInfo(j)->index;
 					for (int k = 0; k < 3; k++)
 					{
 						if (k == 0)
@@ -82,10 +90,11 @@ HRESULT ShopScene::init(void)
 				if(j==1)
 				{
 					temp._rc = RectMake(_shopBg.left + 25 + 241 * j, _shopBg.top + 60 + (10 + 103 * i), 231, 93);
-					temp._name = _player->getInven()->getConsumable().front()->name;
-					temp._buyGold = _player->getInven()->getConsumable().front()->gold;
-					temp._sellGold = _player->getInven()->getConsumable().front()->sellGold;
-					
+					temp._name = DATAMANAGER->getConsumableInfo(0)->name;
+					temp._buyGold = DATAMANAGER->getConsumableInfo(0)->gold;
+					temp._sellGold = DATAMANAGER->getConsumableInfo(0)->sellGold;
+					temp._grade = "커먼";
+					temp._index = DATAMANAGER->getConsumableInfo(0)->index;
 					for (int k = 0; k < 3; k++)
 					{
 						if (k == 0)
@@ -119,24 +128,55 @@ void ShopScene::release(void)
 {
 	_player->release();
     SAFE_DELETE(_player);
+
+	_camera->release();
+	SAFE_DELETE(_camera);
 	
 }
 
 void ShopScene::update(void)
 {
 	_player->update();
+	_camera->setPosition(_player->getPlayerPosition());
+	_camera->update();
+	_player->worldToCamera(_camera->worldToCamera
+	(_player->getPlayerPosition()));
 
-	for (int i = 0; i < _vShopList.size(); i++)
+	if (KEYMANAGER->isToggleKey('E'))
 	{
-		for (int j = 0; j < 3; j++)
+		for (int i = 0; i < _vShopList.size(); i++)
 		{
-			if (PtInRect(&(_vShopList[i]._buttonRc[j]), _ptMouse) && KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
+			for (int j = 0; j < 3; j++)
 			{
-				// 0 이면 한개 1이면5개 2면 20개로 인벤에 getitem
+				if (PtInRect(&(_vShopList[i]._buttonRc[j]), _ptMouse) && KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
+				{
+					switch (j)
+					{
+					case 0:
+						_player->getInven()->getItem(_vShopList[i]._index);
+						break;
+
+					case 1:
+						for (int k = 0; k < 5; k++)
+						{
+							_player->getInven()->getItem(_vShopList[i]._index);
+						}
+
+						break;
+
+					case 2:
+						for (int l = 0; l < 20; l++)
+						{
+							_player->getInven()->getItem(_vShopList[i]._index);
+						}
+						break;
+					}
+				}
 			}
+
 		}
-		
 	}
+	
 
 
 	
@@ -181,6 +221,14 @@ void ShopScene::shopSlot()
 	{
 		IMAGEMANAGER->render("store_item_bg", getMemDC(), _vShopList[i]._rc.left, _vShopList[i]._rc.top);
 
+		if (_vShopList[i]._grade == "커먼")
+		{
+			IMAGEMANAGER->render("item_bg_common", getMemDC(), _vShopList[i]._rc.left + 20, _vShopList[i]._rc.top + 40);
+		}
+		else
+		{
+			IMAGEMANAGER->render("item_bg_rare", getMemDC(), _vShopList[i]._rc.left + 20, _vShopList[i]._rc.top + 40);
+		}
 		IMAGEMANAGER->render(_vShopList[i]._name.c_str(), getMemDC(), _vShopList[i]._rc.left + 20, _vShopList[i]._rc.top + 40);
 
 		IMAGEMANAGER->render("UI_icon_coin", getMemDC(), _vShopList[i]._rc.right - 15, _vShopList[i]._rc.top + 5);
