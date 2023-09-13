@@ -134,6 +134,23 @@ void Inventory::update(void)
 		_seeInven = true;
 
 	}
+
+	/*if (KEYMANAGER->isOnceKeyDown(VK_RBUTTON))
+	{
+		for (int i = 0; i < _vEquipmentSlot.size(); i++)
+		{
+
+			if (!_vEquipmentSlot[i]._draw)
+			{
+				_vEquipmentSlot[i]._category = index;
+
+				_vEquipmentSlot[i]._draw = true;
+
+				return;
+			}
+
+		}
+	}*/
 	
 }
 
@@ -293,11 +310,11 @@ void Inventory::itemMove()
 		}
 
 		//ÀåºñÄ­
-		for (int i = 0; i < _vEquipmentSlot.size() - 1; i++)
+		for (int j = 0; j < _vEquipmentSlot.size() - 1; j++)
 		{
-			if (PtInRect(&_vEquipmentSlot[i]._rc, _ptMouse) && !_vEquipmentSlot[i]._draw)
+			if (PtInRect(&_vEquipmentSlot[j]._rc, _ptMouse) && !_vEquipmentSlot[j]._draw)
 			{
-				indexEqui = i;
+				indexEqui = j;
 				break;
 			}
 
