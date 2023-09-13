@@ -97,7 +97,6 @@
     <ClCompile Include="Scene\IntroScene.cpp" />
     <ClCompile Include="Class\NPC\Lynn.cpp" />
     <ClCompile Include="Class\Data\EnemyData.cpp" />
->>>>>>> JSJ
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Class\UI\Buttons.h" />

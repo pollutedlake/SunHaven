@@ -18,6 +18,8 @@ HRESULT ShopScene::init(void)
 	_solonRc = RectMake(600, 320, 100, 100);
 	_shopBg = RectMake(WINSIZE_X / 2 - 261, WINSIZE_Y / 2 - 327, 522, 654);
 
+	_inven = new Inventory;
+	_inven->init();
 
 	shopList temp;
 
@@ -153,13 +155,13 @@ void ShopScene::update(void)
 					switch (j)
 					{
 					case 0:
-						_player->getInven()->getItem(_vShopList[i]._index);
+						_inven->getItem(_vShopList[i]._index);
 						break;
 
 					case 1:
 						for (int k = 0; k < 5; k++)
 						{
-							_player->getInven()->getItem(_vShopList[i]._index);
+							_inven->getItem(_vShopList[i]._index);
 						}
 
 						break;
@@ -167,7 +169,7 @@ void ShopScene::update(void)
 					case 2:
 						for (int l = 0; l < 20; l++)
 						{
-							_player->getInven()->getItem(_vShopList[i]._index);
+							_inven->getItem(_vShopList[i]._index);
 						}
 						break;
 					}

@@ -3,7 +3,7 @@
 #include "../FrameWork/GameNode/GameNode.h"
 #include "../Player/Player.h"
 #include "../Class/Camera.h"
-
+#include "../Class/Inventory.h"
 
 
 struct shopList
@@ -32,6 +32,8 @@ private:
 
 	vector<shopList> _vShopList;
 	vector<shopList>::iterator _viShopList;
+
+	Inventory* _inven;
 
 
 public:

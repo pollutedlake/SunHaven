@@ -1,6 +1,6 @@
 #include "Stdafx.h"
 #include "Inventory.h"
-#include <string>
+//#include <string>
 
 
 HRESULT Inventory::init(void)
@@ -127,7 +127,6 @@ void Inventory::update(void)
 	}
 	
 	
-	itemMove();
 
 	if (KEYMANAGER->isOnceKeyDown('I') && !_seeInven)
 	{
@@ -166,12 +165,11 @@ void Inventory::render(void)
 		equipment_Slot();
 
 		moveItemRender();
-
-		if ((PtInRect(&_xButton, _ptMouse) && KEYMANAGER->isOnceKeyDown(VK_LBUTTON)) || KEYMANAGER->isOnceKeyDown('I'))
+		
+		if(KEYMANAGER->isOnceKeyDown('I'))
 		{
 			_seeInven = false;
 		}
-
 	}
 	
 	popupItem();
@@ -199,7 +197,8 @@ void Inventory::getItem(string index)
 
 void Inventory::itemMove()
 {
-	if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
+	
+	if (_seeInven)
 	{
 		//인벤칸
 		// 해당하는 인덱스를 찾음
@@ -215,15 +214,15 @@ void Inventory::itemMove()
 			}
 		}
 
-		//장비칸
-		for (int j = 0; j < _vEquipmentSlot.size() - 1; j++)
-		{
-			if (PtInRect(&_vEquipmentSlot[j]._rc, _ptMouse))
-			{
-				indexEqui = j;
-				break;
-			}
-		}
+		////장비칸
+		//for (int j = 0; j < _vEquipmentSlot.size() - 1; j++)
+		//{
+		//	if (PtInRect(&_vEquipmentSlot[j]._rc, _ptMouse))
+		//	{
+		//		indexEqui = j;
+		//		break;
+		//	}
+		//}
 
 
 		// 인덱스가 유효하고 아이템이 있으면 _selectedItem에 저장
@@ -246,7 +245,7 @@ void Inventory::itemMove()
 		}
 
 		
-		if (indexEqui != -1 && _vEquipmentSlot[indexEqui]._draw)
+		/*if (indexEqui != -1 && _vEquipmentSlot[indexEqui]._draw)
 		{
 			if (_selectedItem != -1)
 			{
@@ -262,7 +261,7 @@ void Inventory::itemMove()
 				_vEquipmentSlot[indexEqui]._draw = false;
 			}
 
-		}
+		}*/
 
 
 		//완전삭제로 수정예정
@@ -280,58 +279,8 @@ void Inventory::itemMove()
 		}
 
 	}
-
-	if (KEYMANAGER->isOnceKeyUp(VK_LBUTTON))
-	{
-		
-		// 빈칸에 해당하는 인덱스를 찾음
-		int indexInven = -1;
-		int indexEqui = -1;
-		//인벤칸
-		for (int i = 0; i < _vInvenList.size(); i++)
-		{
-			if (PtInRect(&_vInvenList[i]._rc, _ptMouse) && !_vInvenList[i]._draw)
-			{
-				indexInven = i;
-				break;
-			}
-
-		}
-
-		// 인덱스가 유효하고 _selectedItem 값이 유효하면 아이템을 놓음
-
-		if (indexInven != -1 && _selectedItem != -1)
-		{
-			_vInvenList[indexInven]._category = _vInvenList[_selectedItem]._category;
-			_vInvenList[indexInven]._draw = true;
-
-			_selectedItem = -1;
-
-		}
-
-		//장비칸
-		for (int j = 0; j < _vEquipmentSlot.size() - 1; j++)
-		{
-			if (PtInRect(&_vEquipmentSlot[j]._rc, _ptMouse) && !_vEquipmentSlot[j]._draw)
-			{
-				indexEqui = j;
-				break;
-			}
-
-		}
-
-		// 인덱스가 유효하고 _selectedItem 값이 유효하면 아이템을 놓음
-
-		if (indexEqui != -1 && _selectedItem != -1)
-		{
-			_vEquipmentSlot[indexEqui]._category = _vEquipmentSlot[_selectedItem]._category;
-			_vEquipmentSlot[indexEqui]._draw = true;
-
-			_selectedItem = -1;
-
-		}
-
-	}
+	
+	
 }
 
 void Inventory::invenMold()
@@ -631,6 +580,69 @@ void Inventory::popupItem()
 			FONTMANAGER->textOut(getMemDC(), 10, WINSIZE_Y - 35, "한컴 말랑말랑 Bold", 35, 600, "철 검을 얻었습니다.", strlen("철 검을 얻었습니다."), RGB(0, 0, 0));
 			break;
 		}*/
+	}
+}
+
+void Inventory::putItem()
+{
+	if (_seeInven)
+	{
+
+		// 빈칸에 해당하는 인덱스를 찾음
+		int indexInven = -1;
+		int indexEqui = -1;
+		//인벤칸
+		for (int i = 0; i < _vInvenList.size(); i++)
+		{
+			if (PtInRect(&_vInvenList[i]._rc, _ptMouse) && !_vInvenList[i]._draw)
+			{
+				indexInven = i;
+				break;
+			}
+
+		}
+
+		// 인덱스가 유효하고 _selectedItem 값이 유효하면 아이템을 놓음
+
+		if (indexInven != -1 && _selectedItem != -1)
+		{
+			_vInvenList[indexInven]._category = _vInvenList[_selectedItem]._category;
+			_vInvenList[indexInven]._draw = true;
+
+			_selectedItem = -1;
+
+		}
+
+		//장비칸
+		for (int j = 0; j < _vEquipmentSlot.size() - 1; j++)
+		{
+			if (PtInRect(&_vEquipmentSlot[j]._rc, _ptMouse) && !_vEquipmentSlot[j]._draw)
+			{
+				indexEqui = j;
+				break;
+			}
+
+		}
+
+		// 인덱스가 유효하고 _selectedItem 값이 유효하면 아이템을 놓음
+
+		if (indexEqui != -1 && _selectedItem != -1)
+		{
+			_vEquipmentSlot[indexEqui]._category = _vEquipmentSlot[_selectedItem]._category;
+			_vEquipmentSlot[indexEqui]._draw = true;
+
+			_selectedItem = -1;
+
+		}
+
+	}
+}
+
+void Inventory::invenXButton()
+{
+	if ((PtInRect(&_xButton, _ptMouse) || KEYMANAGER->isOnceKeyDown('I')))
+	{
+		_seeInven = false;
 	}
 }
 

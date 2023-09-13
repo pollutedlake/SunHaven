@@ -84,6 +84,8 @@ public:
 	void equipment_Slot();
 	void moveItemRender();
 	void popupItem();
+	void putItem();
+	void invenXButton();
 
 	//vector<tagWeapon*> getWeapon() { return _vWeapon; }
 	//

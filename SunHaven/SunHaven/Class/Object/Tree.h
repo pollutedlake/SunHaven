@@ -7,7 +7,12 @@ private:
 	float _hitTime;
 	RECT _beforeHitRC;
 	RECT _hitRC;
+	RECT _cutTreeRC;
 	bool _hit;
+	GPImage* _cutTreeImg;
+	float _cutTreeAngle;
+	bool _fell;
+	bool _fellLeft;
 
 public:
 	HRESULT init(void);
@@ -16,7 +21,7 @@ public:
 	void render(void);
 	void release(void);
 
-	void setHP(int damage);
+	void setHP(int damage, float playerX = NULL);
 
 	Tree() {}
 	~Tree() {}
