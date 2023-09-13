@@ -16,6 +16,9 @@ class UI : public GameNode
 	GImage* _barnAnimalsIcon;
 	GImage* _skillTreeIcon;
 	GImage* _questBookIcon;
+
+	string _shortcutItem[10];
+	RECT _shortcutItemRC[10];
 	char* _text[256];
 
 public:

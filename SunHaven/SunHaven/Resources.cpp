@@ -156,35 +156,35 @@ HRESULT Resources::init(void)
 	// ====================ShopScene====================
 	
 	// itemImage
-	IMAGEMANAGER->addImage("³ì½¼ °î±ªÀÌ", "Resources/Images/Item/icon_rusty_pickaxe.bmp", 32, 32, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("¾Æ´Ù¸¸Æ® °î±ªÀÌ", "Resources/Images/Item/icon_adamant_pickaxe.bmp", 32, 32, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("³ì½¼ ±ªÀÌ", "Resources/Images/Item/icon_rusty_hoe.bmp", 32, 32, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("¾Æ´Ù¸¸Æ® ±ªÀÌ", "Resources/Images/Item/icon_adamant_hoe.bmp", 32, 32, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("³ì½¼ µµ³¢", "Resources/Images/Item/icon_rusty_axe.bmp", 32, 32, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("¾Æ´Ù¸¸Æ® µµ³¢", "Resources/Images/Item/icon_adamant_axe.bmp", 32, 32, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("³ì½¼ ¹°»Ñ¸®°³", "Resources/Images/Item/icon_rusty_wateringCan.bmp", 32, 32, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("¾Æ´Ù¸¸Æ® ¹°»Ñ¸®°³", "Resources/Images/Item/icon_adamant_wateringCan.bmp", 32, 32, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("±âº» ³¬½Ë´ë", "Resources/Images/Item/icon_basic_fishingRod.bmp", 32, 32, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("ÄíÅ°", "Resources/Images/Item/icon_cookies.bmp", 32, 32, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("¾Æ´Ù¸¸Æ® ¹ÝÁö", "Resources/Images/Item/icon_adamant_accessory.bmp", 32, 32, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("¾Æ´Ù¸¸Æ® °Ë", "Resources/Images/Item/icon_adamant_sword.bmp", 32, 32, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("°Ë", "Resources/Images/Item/icon_basic_sword.bmp", 32, 32, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("¾Æ´Ù¸¸Æ® ¼è³ú", "Resources/Images/Item/icon_adamant_crossbow.bmp", 32, 32, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("¼è³ú", "Resources/Images/Item/icon_basic_crossbow.bmp", 32, 32, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("¾Æ´Ù¸¸Æ® Çï¸ä", "Resources/Images/Item/icon_adamant_helmet.bmp", 32, 32, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("¾Æ´Ù¸¸Æ® °©¿Ê (»óÀÇ)", "Resources/Images/Item/icon_adamant_chestPlate.bmp", 32, 32, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("¾Æ´Ù¸¸Æ® °©¿Ê (ÇÏÀÇ)", "Resources/Images/Item/icon_adamant_legs.bmp", 32, 32, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("¾Æ´Ù¸¸Æ® Àå°©", "Resources/Images/Item/icon_adamant_gloves.bmp", 32, 32, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("¾Æ´Ù¸¸Æ® ¼è³ú", "Resources/Images/Item/icon_adamant_crossbow.bmp", 32, 32, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("¿¬¾Ö ÁõÇ¥", "Resources/Images/Item/icon_Romance_Keepsake.bmp", 32, 32, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("Åë³ª¹«", "Resources/Images/Item/icon_log.bmp", 32, 32, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("µ¹", "Resources/Images/Item/icon_stone.bmp", 32, 32, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("³ª¹« ÆÇÀÚ", "Resources/Images/Item/icon_woodplank.bmp", 32, 32, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("¹Ð", "Resources/Images/Item/icon_wheat.bmp", 32, 32, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("¹Ð ¾¾¾Ñ", "Resources/Images/Item/icon_wheatSeed.bmp", 32, 32, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("ÀÏ¹Ý ¹°°í±â", "Resources/Images/Item/icon_basic_fish.bmp", 32, 32, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("¾Æ´Ù¸¸Æ® ±¤¼®", "Resources/Images/Item/icon_adamant_ore.bmp", 32, 32, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("¾Æ´Ù¸¸Æ® ¹Ù", "Resources/Images/Item/icon_adamant_bar.bmp", 32, 32, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("³ì½¼ °î±ªÀÌ", "Resources/Images/Item/icon_rusty_pickaxe2.bmp", 32, 32, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("¾Æ´Ù¸¸Æ® °î±ªÀÌ", "Resources/Images/Item/icon_adamant_pickaxe2.bmp", 32, 32, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("³ì½¼ ±ªÀÌ", "Resources/Images/Item/icon_rusty_hoe2.bmp", 32, 32, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("¾Æ´Ù¸¸Æ® ±ªÀÌ", "Resources/Images/Item/icon_adamant_hoe2.bmp", 32, 32, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("³ì½¼ µµ³¢", "Resources/Images/Item/icon_rusty_axe2.bmp", 32, 32, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("¾Æ´Ù¸¸Æ® µµ³¢", "Resources/Images/Item/icon_adamant_axe2.bmp", 32, 32, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("³ì½¼ ¹°»Ñ¸®°³", "Resources/Images/Item/icon_rusty_wateringCan2.bmp", 32, 32, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("¾Æ´Ù¸¸Æ® ¹°»Ñ¸®°³", "Resources/Images/Item/icon_adamant_wateringCan2.bmp", 32, 32, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("±âº» ³¬½Ë´ë", "Resources/Images/Item/icon_basic_fishingRod2.bmp", 32, 32, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("ÄíÅ°", "Resources/Images/Item/icon_cookies2.bmp", 32, 32, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("¾Æ´Ù¸¸Æ® ¹ÝÁö", "Resources/Images/Item/icon_adamant_accessory2.bmp", 32, 32, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("¾Æ´Ù¸¸Æ® °Ë", "Resources/Images/Item/icon_adamant_sword2.bmp", 32, 32, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("°Ë", "Resources/Images/Item/icon_basic_sword2.bmp", 32, 32, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("¾Æ´Ù¸¸Æ® ¼è³ú", "Resources/Images/Item/icon_adamant_crossbow2.bmp", 32, 32, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("¼è³ú", "Resources/Images/Item/icon_basic_crossbow2.bmp", 32, 32, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("¾Æ´Ù¸¸Æ® Çï¸ä", "Resources/Images/Item/icon_adamant_helmet2.bmp", 32, 32, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("¾Æ´Ù¸¸Æ® °©¿Ê (»óÀÇ)", "Resources/Images/Item/icon_adamant_chestPlate2.bmp", 32, 32, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("¾Æ´Ù¸¸Æ® °©¿Ê (ÇÏÀÇ)", "Resources/Images/Item/icon_adamant_legs2.bmp", 32, 32, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("¾Æ´Ù¸¸Æ® Àå°©", "Resources/Images/Item/icon_adamant_gloves2.bmp", 32, 32, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("¾Æ´Ù¸¸Æ® ¼è³ú", "Resources/Images/Item/icon_adamant_crossbow2.bmp", 32, 32, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("¿¬¾Ö ÁõÇ¥", "Resources/Images/Item/icon_Romance_Keepsake2.bmp", 32, 32, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Åë³ª¹«", "Resources/Images/Item/icon_log2.bmp", 32, 32, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("µ¹", "Resources/Images/Item/icon_stone2.bmp", 32, 32, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("³ª¹« ÆÇÀÚ", "Resources/Images/Item/icon_woodplank2.bmp", 32, 32, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("¹Ð", "Resources/Images/Item/icon_wheat2.bmp", 32, 32, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("¹Ð ¾¾¾Ñ", "Resources/Images/Item/icon_wheatSeed2.bmp", 32, 32, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("ÀÏ¹Ý ¹°°í±â", "Resources/Images/Item/icon_basic_fish2.bmp", 32, 32, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("¾Æ´Ù¸¸Æ® ±¤¼®", "Resources/Images/Item/icon_adamant_ore2.bmp", 32, 32, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("¾Æ´Ù¸¸Æ® ¹Ù", "Resources/Images/Item/icon_adamant_bar2.bmp", 32, 32, true, RGB(255, 0, 255));
 	
 	 
 	

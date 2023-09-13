@@ -9,9 +9,6 @@ HRESULT Player::init(float x, float y, string collisionMapKey)
 
 	_collisionMap = IMAGEMANAGER->findImage(collisionMapKey);
 
-
-
-
 	_skill = new SkillManager;
 	_skill->init();
 
@@ -239,9 +236,8 @@ void Player::update(void)
 	}
 
 	COLORREF stairCol =
-		GetPixel(IMAGEMANAGER->findImage("Ãæµ¹")->getMemDC(),
+		GetPixel(_collisionMap->getMemDC(),
 			_x, _y);
-	
 
 	if (!_toolAnim->isPlay())
 	{
@@ -404,6 +400,7 @@ void Player::update(void)
 			if (collisionT == RGB(255, 0, 255))
 			{
 				_isCollisionTop = true;
+				cout << "test" << endl;
 			}
 			else
 			{
@@ -465,8 +462,6 @@ void Player::update(void)
 	{
 		_firebeamRC = RectMakeCenter(_x, _y, 50, 50);
 	}
-
-	cout << _toolAnim->getNowPlayIdx() << endl;
 
 
 	_skill->update();

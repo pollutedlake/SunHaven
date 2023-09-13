@@ -74,6 +74,7 @@ ID2D1HwndRenderTarget* _ID2DRanderTarget = nullptr;*/
 #include "../../Manager/SceneManager.h"
 #include "../../Class/Data/INIData.h"
 #include "../../Class/Data/JsonSaveLoader.h"
+#include "../../Manager/DataManager.h"
 #include "../Utility/Utils.h"
 
 using namespace MY_UTIL;
@@ -87,6 +88,7 @@ using namespace MY_UTIL;
 #define TIMEMANAGER TimeManager::getSingleton()
 #define SCENEMANAGER SceneManager::getSingleton()
 #define INIDATAMANAGER INIData::getSingleton()
+#define DATAMANAGER DataManager::getSingleton()
 #define JSONDATAMANAGER JsonSaveLoader::getSingleton()
 
 // # 매크로 # (윈도우창 초기화)

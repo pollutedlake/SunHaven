@@ -54,15 +54,22 @@ void ObjectManager::release(void)
 	}
 }
 
-void ObjectManager::update(void)
+queue<pair<string, POINT>> ObjectManager::updateObjects(void)
 {
+	queue<pair<string, POINT>> dropItems;
 	for (_viObject = _vObject.begin(); _viObject != _vObject.end();)
 	{
 		(*_viObject)->updateCameraPos(_camera->worldToCameraX((*_viObject)->getTilePos().x * 36 + 18), _camera->worldToCameraY((*_viObject)->getTilePos().y * 36 + 18));
 		(*_viObject)->update();
 		if ((*_viObject)->getCurHP() <= 0)
 		{
-			(*_viObject)->dropItem();
+			queue<string> dropItem = (*_viObject)->dropItem();
+			while (!dropItem.empty())
+			{
+				dropItems.push(make_pair(dropItem.front(), PointMake((*_viObject)->getTilePos().x * 36 + RND->getFromIntTo(0, 36) - 18, 
+					(*_viObject)->getTilePos().y * 36 + RND->getFromIntTo(0, 36) - 18)));
+				dropItem.pop();
+			}
 			(*_viObject)->release();
 			delete(*_viObject);
 			_viObject = _vObject.erase(_viObject);
@@ -72,6 +79,7 @@ void ObjectManager::update(void)
 			++_viObject;
 		}
 	}
+	return dropItems;
 }
 
 void ObjectManager::render(void)
