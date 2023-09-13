@@ -3,9 +3,9 @@
 
 HRESULT TownScene::init(void)
 {
-    _enemyData = new EnemyData;
-
-    enemyPopUp();
+	IMAGEMANAGER->addImage("435435",
+		"Resources/Images/Player/fishing_greatzone.bmp",
+		10, 20, true, RGB(255, 0, 255));
 
     return S_OK;
 }
@@ -17,34 +17,9 @@ void TownScene::update(void)
 
 void TownScene::render(void)
 {
+	IMAGEMANAGER->render("435435", getMemDC(), WINSIZE_X / 2, WINSIZE_Y / 2, RND->getInt(50), 50, 0, 0, 10, 20);
 }
 
 void TownScene::release(void)
 {
-    SAFE_DELETE(_enemyData);
-}
-
-void TownScene::skillPopUp(void)
-{
-
-}
-
-void TownScene::enemyPopUp(void)
-{
-    char str[256];
-
-    queue<tagEnemy*>* temp = _enemyData->getEnemy();
-    tagEnemy* node = temp->front();
-
-    sprintf_s(str, "%s", node->name.c_str());
-    TextOut(getMemDC(), 200, 100, str, strlen(str));
-
-    sprintf_s(str, "%d", node->level);
-    TextOut(getMemDC(), 200, 120, str, strlen(str));
-
-    sprintf_s(str, "%d", node->hp);
-    TextOut(getMemDC(), 200, 140, str, strlen(str));
-
-    sprintf_s(str, "%d", node->minDmg);
-    TextOut(getMemDC(), 200, 160, str, strlen(str));
 }

@@ -86,6 +86,7 @@ private:
 
 	GImage* _fishingLod;
 	Animation* _fishingLodAnim;
+	RECT _fishingLodRC;
 
 
 
@@ -100,17 +101,33 @@ private:
 
 
 
+
+	GImage* _fishingBorder;
+	RECT _fishingBorderRC;
+
+	GImage* _fishingCursor;
+	RECT _fishingCursorRC;
+
+	GImage* _fishingGreatZone;
+	RECT _fishingGreatZoneRC;
+
+	GImage* _fishingPerfectZone;
+	RECT _fishingPerfectZoneRC;
+
+
 	GImage* _collisionMap;
 
 	float _x, _y;
 	float _cx, _cy;
 	float _moveSpeed;
+	float _fishingRange = 0.0f;
 
 	bool _isCollisionLeft;
 	bool _isCollisionRight;
 	bool _isCollisionTop;
 	bool _isCollisionBottom;
 
+	bool _isFishing;
 
 	int axeSwingAnimArr[4] = { 15,16,17,18 };
 	int pickaxeSwingAnimArr[4] = { 12,13,14,15 };
@@ -119,6 +136,7 @@ private:
 
 	bool _isLoop;
 
+	int cursormovespeed = 5;
 
 	float _jump;
 	bool _isJump;
@@ -139,6 +157,7 @@ public:
 	}
 
 	void UseFishingLod(POINT point);
+	void Fishing();
 	void UseSword();
 	void UseCrossBow();
 
@@ -187,6 +206,10 @@ public:
 			_scytheSwingRC = RectMakeCenter(_cx-12, _cy,
 				_scytheSwingAnim->getFrameWidth(),
 				_scytheSwingAnim->getFrameHeight());
+
+			_fishingLodRC = RectMakeCenter(_cx, _cy,
+				_fishingLodAnim->getFrameWidth(),
+				_fishingLodAnim->getFrameHeight());
 		}
 		else if (KEYMANAGER->isStayKeyDown('D'))
 		{
@@ -210,6 +233,10 @@ public:
 			_scytheSwingRC = RectMakeCenter(_cx + 12, _cy,
 				_scytheSwingAnim->getFrameWidth(),
 				_scytheSwingAnim->getFrameHeight());
+
+			_fishingLodRC = RectMakeCenter(_cx, _cy,
+				_fishingLodAnim->getFrameWidth(),
+				_fishingLodAnim->getFrameHeight());
 		}
 		else if (KEYMANAGER->isStayKeyDown('W'))
 		{
@@ -233,6 +260,10 @@ public:
 			_scytheSwingRC = RectMakeCenter(_cx, _cy,
 				_scytheSwingAnim->getFrameWidth(),
 				_scytheSwingAnim->getFrameHeight());
+
+			_fishingLodRC = RectMakeCenter(_cx, _cy,
+				_fishingLodAnim->getFrameWidth(),
+				_fishingLodAnim->getFrameHeight());
 		}
 		else if (KEYMANAGER->isStayKeyDown('S'))
 		{
@@ -256,6 +287,10 @@ public:
 			_scytheSwingRC = RectMakeCenter(_cx, _cy+12,
 				_scytheSwingAnim->getFrameWidth(),
 				_scytheSwingAnim->getFrameHeight());
+
+			_fishingLodRC = RectMakeCenter(_cx, _cy,
+				_fishingLodAnim->getFrameWidth(),
+				_fishingLodAnim->getFrameHeight());
 		}
 
 		_firebeamRC = RectMake(position.x, position.y - 24,
@@ -288,6 +323,7 @@ public:
 
 	RECT getPlayertoCameraRect(void) { return _playertoCameraRC; }
 
+	eTools getToolType() { return _eTools; }
 
 	Player() {}
 	~Player() {}

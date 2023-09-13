@@ -150,6 +150,8 @@ HRESULT Resources::init(void)
 
 	// ====================FarmScene====================
 	// Image
+	IMAGEMANAGER->addImage("경작지", "Resources/Images/Object/Farm_dirt.bmp", 36, 36, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("젖은 경작지", "Resources/Images/Object/Farm_wetdirt.bmp", 36, 36, true, RGB(255, 0, 255));
 
 	// Sound
 

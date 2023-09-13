@@ -12,7 +12,6 @@ HRESULT Player::init(float x, float y, string collisionMapKey)
 	_skill = new SkillManager;
 	_skill->init();
 
-
 	_eTools = eTools::SICKLE;
 
 
@@ -175,9 +174,62 @@ HRESULT Player::init(float x, float y, string collisionMapKey)
 
 	//=============================================//
 
+	_fishingLod = IMAGEMANAGER->addImage("낚시하기",
+		"Resources/Images/Player/fishing_rod.bmp",
+		1680, 60, true, RGB(255, 0, 255));
+
+	_fishingLodAnim = new Animation;
+	_fishingLodAnim->init(_fishingLod->getWidth(),
+		_fishingLod->getHeight(),
+		60, 60);
+
+	_fishingLodAnim->setFPS(10);
+	_fishingLodAnim->setPlayFrame(7, 13, false, false);
+
+	_fishingLodRC = RectMakeCenter(_x, _y,
+		_fishingLodAnim->getFrameWidth(),
+		_fishingLodAnim->getFrameHeight());
+
+
+	//=============================================//
+
+	_fishingBorder = IMAGEMANAGER->addImage("퍼펙트존테두리",
+		"Resources/Images/Player/fishing_border.bmp",
+		176, 48, true, RGB(255, 0, 255));
+	_fishingCursor = IMAGEMANAGER->addImage("퍼펙트존커서",
+		"Resources/Images/Player/fishing_cursor.bmp",
+		27, 42, true, RGB(255, 0, 255));
+	_fishingGreatZone = IMAGEMANAGER->addImage("그레이트존",
+		"Resources/Images/Player/fishing_greatzone.bmp",
+		10, 20, true, RGB(255, 0, 255));
+	_fishingPerfectZone = IMAGEMANAGER->addImage("퍼펙트존",
+		"Resources/Images/Player/fishing_perfectzone.bmp",
+		10, 20, true, RGB(255, 0, 255));
+
+
+	_fishingBorderRC = RectMakeCenter(CENTER_X, CENTER_Y + 50,
+		_fishingBorder->getWidth(),
+		_fishingBorder->getHeight());
+
+	_fishingCursorRC = RectMakeCenter(CENTER_X, CENTER_Y + 50,
+		_fishingCursor->getWidth(),
+		_fishingCursor->getHeight());
+
+	_fishingGreatZoneRC = RectMakeCenter(CENTER_X, CENTER_Y + 50,
+		_fishingGreatZone->getWidth(),
+		_fishingGreatZone->getHeight());
+
+	_fishingPerfectZoneRC = RectMakeCenter(CENTER_X, CENTER_Y + 50,
+		_fishingPerfectZone->getWidth(),
+		_fishingPerfectZone->getHeight());
+
+	//=============================================//
+
 
 	_jump = 5.5f;
 	_isJump = false;
+	_isFishing = false;
+
 
 	_playerState.playerName=INIDATAMANAGER->loadDataString("tempINIFile", "commonState", "playerName");
 	_playerState.HP = INIDATAMANAGER->loadDataInteger("tempINIFile", "commonState", "HP");
@@ -237,7 +289,7 @@ void Player::update(void)
 		GetPixel(_collisionMap->getMemDC(),
 			_x, _y);
 
-	if (!_toolAnim->isPlay())
+	if (!_toolAnim->isPlay() || !_isFishing)
 	{
 		if (KEYMANAGER->isStayKeyDown('A'))
 		{
@@ -346,7 +398,7 @@ void Player::update(void)
 		}
 	}
 
-	
+
 	_axeSwingAnim->setPlayFrame(axeSwingAnimArr, 4, _isLoop);
 	_pickaxeSwingAnim->setPlayFrame(pickaxeSwingAnimArr, 4, _isLoop);
 	_hoeSwingAnim->setPlayFrame(hoeSwingAnimArr, 4, _isLoop);
@@ -373,7 +425,7 @@ void Player::update(void)
 
 		_jump -= 0.2f;
 	}
-	
+
 
 	if (KEYMANAGER->isOnceKeyDown('X'))
 	{
@@ -381,7 +433,7 @@ void Player::update(void)
 	}
 
 
-	
+
 
 
 	if (_collisionMap != nullptr)
@@ -435,6 +487,10 @@ void Player::update(void)
 	{
 		_eTools = eTools::PICKAXE;
 	}
+	if (KEYMANAGER->isOnceKeyDown('5'))
+	{
+		_eTools = eTools::FISHINGLOD;
+	}
 
 
 
@@ -448,6 +504,10 @@ void Player::update(void)
 		_firebeamRC = RectMakeCenter(_x, _y, 50, 50);
 	}
 
+	if (_isFishing)
+	{
+		Fishing();
+	}
 
 	_skill->update();
 
@@ -460,6 +520,7 @@ void Player::update(void)
 	if (_isCollisionTop) _y += _moveSpeed;
 	if (_isCollisionBottom) _y -= _moveSpeed;
 
+
 	_playerMoveAnim->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);
 	_fireballAnim->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);
 	_swordAnim->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);
@@ -467,6 +528,9 @@ void Player::update(void)
 	_pickaxeSwingAnim->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);
 	_hoeSwingAnim->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);
 	_scytheSwingAnim->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);
+	_fishingLodAnim->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);
+
+	//cout << _fishingLodAnim->getNowPlayIdx() << endl;
 }
 
 void Player::render(void)
@@ -490,6 +554,12 @@ void Player::render(void)
 			_swordAnim);
 	}
 
+	if (_isFishing)
+	{
+		_fishingLod->aniRender(getMemDC(), _fishingLodRC.left, _fishingLodRC.top,
+			_fishingLodAnim);
+	}
+
 	if (_toolAnim->isPlay())
 	{
 		_toolImage->aniRender(getMemDC(), _toolAnimRC.left, _toolAnimRC.top,
@@ -497,8 +567,21 @@ void Player::render(void)
 	}
 
 	
-
-
+	if (_isFishing)
+	{
+		_fishingBorder->render(getMemDC(), _fishingBorderRC.left,
+			_fishingBorderRC.top);
+		_fishingGreatZone->render(getMemDC(), _fishingGreatZoneRC.left,
+			_fishingGreatZoneRC.top,
+			_fishingGreatZoneRC.right - _fishingGreatZoneRC.left, 20,
+			0, 0, 10, 20);
+		_fishingPerfectZone->render(getMemDC(), _fishingPerfectZoneRC.left,
+			_fishingPerfectZoneRC.top,
+			(_fishingPerfectZoneRC.right - _fishingPerfectZoneRC.left), 20,
+			0, 0, 10, 20);
+		_fishingCursor->render(getMemDC(), _fishingCursorRC.left,
+			_fishingCursorRC.top);
+	}
 
 	if(KEYMANAGER->isToggleKey('K'))
 		_skill->render();
@@ -552,6 +635,9 @@ void Player::UseTool(ObjectManager* object, POINT point)
 		_toolImage = _pickaxeSwing;
 		_toolAnim = _pickaxeSwingAnim;
 		_toolAnimRC = _pickaxeSwingRC;
+		break;
+
+	default:
 		break;
 	}
 
@@ -654,15 +740,108 @@ void Player::UseTool(ObjectManager* object, POINT point)
 
 void Player::UseFishingLod(POINT point)
 {
+	float updown = point.y - _y;
+	float leftright = point.x - _x;
+
 	if (KEYMANAGER->isStayKeyDown(VK_RBUTTON))
 	{
-		cout << "기를 모으고..." << endl;
-
-		if (GetPixel(_collisionMap->getMemDC(), point.x, point.y)
-			== RGB(255, 0, 0))
+		if (updown < 0 && abs(updown) > leftright)
 		{
-			cout << "던진다" << endl;
+			_playerMoveAnim->setPlayFrame(10, 14, false, true);
+			_fishingLodAnim->setPlayFrame(0, 6, false, false);
 		}
+		else if (updown > 0 && abs(leftright) < updown)
+		{
+			_playerMoveAnim->setPlayFrame(0, 4, false, true);
+			_fishingLodAnim->setPlayFrame(14, 20, false, false);
+		}
+		else if (leftright < 0)
+		{
+			_playerMoveAnim->setPlayFrame(5, 9, false, true);
+			_fishingLodAnim->setPlayFrame(21, 27, false, false);
+		}
+		else
+		{
+			_playerMoveAnim->setPlayFrame(15, 19, false, true);
+			_fishingLodAnim->setPlayFrame(7, 13, false, false);
+		}
+
+		_fishingRange += 5.0f;
+		if (_fishingRange > 200.0f) _fishingRange = 200.0f;
+	}
+
+	if (KEYMANAGER->isOnceKeyUp(VK_RBUTTON))
+	{
+		if (GetPixel(_collisionMap->getMemDC(), point.x, point.y)
+			== RGB(255, 0, 0)
+			&& getDistance(_x, _y, point.x, point.y) < _fishingRange)
+		{
+			_fishingGreatZoneRC =
+				RectMakeCenter(RND->getFromIntTo(_fishingBorderRC.left + 50, _fishingBorderRC.right - 50),
+					CENTER_Y + 50,
+					RND->getFromIntTo(30, 40),
+					_fishingGreatZone->getHeight());
+			_fishingPerfectZoneRC =
+				RectMakeCenter(RND->getFromIntTo(_fishingGreatZoneRC.left + 10, _fishingGreatZoneRC.right - 10),
+					CENTER_Y + 50,
+					RND->getFromIntTo(5, 20),
+					_fishingPerfectZone->getHeight());
+
+			_isFishing = true;
+			_fishingLodAnim->AniStart();
+		}
+		else
+		{
+			_isFishing = false;
+		}
+
+		_fishingRange = 0.0f;
+	}
+	if (_fishingLodAnim->getNowPlayIdx() == 4)
+	{
+		_fishingLodAnim->AniPause();
+	}
+
+}
+
+void Player::Fishing()
+{
+	if (_fishingCursorRC.right >= _fishingBorderRC.right)
+	{
+		cursormovespeed = -cursormovespeed;
+	}
+	if (_fishingCursorRC.left <= _fishingBorderRC.left)
+	{
+		cursormovespeed = -cursormovespeed;
+	}
+
+	_fishingCursorRC.left += cursormovespeed;
+	_fishingCursorRC.right += cursormovespeed;
+
+	POINT cursorCenter = PointMake(_fishingCursorRC.left + (_fishingCursorRC.right - _fishingCursorRC.left) / 2,
+		_fishingCursorRC.top + (_fishingCursorRC.bottom - _fishingCursorRC.top) / 2);
+
+	if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
+	{
+		cursormovespeed = 0;
+		
+		if (PtInRect(&_fishingGreatZoneRC, cursorCenter))
+		{
+			cout << "그레이트존" << endl;
+
+			if (PtInRect(&_fishingPerfectZoneRC, cursorCenter))
+			{
+				cout << "퍼펙트존" << endl;
+			}
+		}
+		else
+		{
+			cout << "빗나감" << endl;
+		}
+
+		_fishingLodAnim->AniResume();
+		cursormovespeed = 5;
+		_isFishing = false;
 	}
 }
 
@@ -678,15 +857,44 @@ void Player::UseCrossBow()
 
 void Player::ObjectCollision(ObjectManager* object)
 {
+
 	for (int i = 0; i < object->getObjectList().size(); i++)
 	{
 		RECT temp;
 
+		float updown = object->getObjectList()[i]->getTilePos().y - _cy;
+		float leftright = object->getObjectList()[i]->getTilePos().x - _cx;
+
+
 		if (IntersectRect(&temp,
-			&_playerRC,
-			&object->getObjectList()[i]->getRC()))
+			&_playertoCameraRC,
+			&object->getObjectList()[i]->getCollisionRC()))
 		{
-			//_x -= _moveSpeed;
+			cout << "오브젝트 충돌" << endl;
+
+			cout << updown << ", " << leftright << endl;
+
+			if (object->getObjectList()[i]->getType() > 1)
+			{
+				if (_playertoCameraRC.left <= object->getObjectList()[i]->getCollisionRC().right)
+				{
+					_x += _moveSpeed;
+				}
+				else if (_playertoCameraRC.right >= object->getObjectList()[i]->getCollisionRC().left)
+				{
+					_x -= _moveSpeed;
+				}
+				else if (_playertoCameraRC.top <= object->getObjectList()[i]->getCollisionRC().bottom)
+				{
+					_y += _moveSpeed;
+				}
+				else if (_playertoCameraRC.bottom >= object->getObjectList()[i]->getCollisionRC().top)
+				{
+					_y -= _moveSpeed;
+				}
+
+				
+			}
 		}
 	}
 }

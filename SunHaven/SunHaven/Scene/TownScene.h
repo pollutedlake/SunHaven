@@ -14,9 +14,6 @@ public:
 	void render(void);
 	void release(void);
 
-	void skillPopUp(void);
-	void enemyPopUp(void);
-
 	TownScene() {}
 	~TownScene() {}
 };
