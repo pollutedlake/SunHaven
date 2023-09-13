@@ -139,10 +139,23 @@ void ShopScene::release(void)
 void ShopScene::update(void)
 {
 	_player->update();
+	_inven->update();
 	_camera->setPosition(_player->getPlayerPosition());
 	_camera->update();
 	_player->worldToCamera(_camera->worldToCamera
 	(_player->getPlayerPosition()));
+
+	//if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
+	//{
+	//	//_player->UseTool(_om, _ptMouse);
+	//	_inven->itemMove();
+	//	_inven->invenXButton();
+	//}
+	//if (KEYMANAGER->isOnceKeyUp(VK_LBUTTON))
+	//{
+	//	_inven->putItem();
+	//}
+
 
 	if (KEYMANAGER->isToggleKey('E'))
 	{
@@ -192,7 +205,7 @@ void ShopScene::render(void)
 {
 	IMAGEMANAGER->render("Shop_Bg", getMemDC());
 	_player->render();
-	
+	_inven->render();
 	RECT temp;
 
 	if (IntersectRect(&temp, &_player->getPlayerRC(), &_solonRc))

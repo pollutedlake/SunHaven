@@ -602,6 +602,17 @@ void Inventory::putItem()
 
 		}
 
+		//장비칸
+		for (int j = 0; j < _vEquipmentSlot.size() - 1; j++)
+		{
+			if (PtInRect(&_vEquipmentSlot[j]._rc, _ptMouse) && !_vEquipmentSlot[j]._draw)
+			{
+				indexEqui = j;
+				break;
+			}
+
+		}
+
 		// 인덱스가 유효하고 _selectedItem 값이 유효하면 아이템을 놓음
 
 		if (indexInven != -1 && _selectedItem != -1)
@@ -613,16 +624,6 @@ void Inventory::putItem()
 
 		}
 
-		//장비칸
-		for (int j = 0; j < _vEquipmentSlot.size() - 1; j++)
-		{
-			if (PtInRect(&_vEquipmentSlot[j]._rc, _ptMouse) && !_vEquipmentSlot[j]._draw)
-			{
-				indexEqui = j;
-				break;
-			}
-
-		}
 
 		// 인덱스가 유효하고 _selectedItem 값이 유효하면 아이템을 놓음
 
