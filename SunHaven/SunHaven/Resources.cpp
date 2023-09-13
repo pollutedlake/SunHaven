@@ -63,6 +63,14 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addImage("Object4", "Resources/Images/Object/Tree2.bmp", 82, 108, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("Object5", "Resources/Images/Object/Stone1.bmp", 24, 24, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("Object6", "Resources/Images/Object/Stone2.bmp", 24, 24, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addGPFrameImage("Tree1Cut", "Resources/Images/Object/Tree1Cut.png",
+		0, 0,
+		1, 1,
+		false, NULL, RotateNoneFlipNone);
+	IMAGEMANAGER->addGPFrameImage("Tree2Cut", "Resources/Images/Object/Tree2Cut.png",
+		0, 0,
+		1, 1,
+		false, NULL, RotateNoneFlipNone);
 	IMAGEMANAGER->addImage("Stump", "Resources/Images/Object/Stump.bmp", 24, 24, true, RGB(255, 0, 255));
 	// Sound
 
@@ -181,7 +189,7 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addImage("돌", "Resources/Images/Item/icon_stone2.bmp", 32, 32, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("나무 판자", "Resources/Images/Item/icon_woodplank2.bmp", 32, 32, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("밀", "Resources/Images/Item/icon_wheat2.bmp", 32, 32, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("밀 씨앗", "Resources/Images/Item/icon_wheatSeed2.bmp", 32, 32, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("밀 씨앗", "Resources/Images/Item/icon_wheat_seed_bag2.bmp", 32, 32, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("일반 물고기", "Resources/Images/Item/icon_basic_fish2.bmp", 32, 32, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("아다만트 광석", "Resources/Images/Item/icon_adamant_ore2.bmp", 32, 32, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("아다만트 바", "Resources/Images/Item/icon_adamant_bar2.bmp", 32, 32, true, RGB(255, 0, 255));

@@ -39,7 +39,7 @@ void Object::updateCameraPos(float cx, float cy)
 	_rc = RectMake(_cx + (_offsetX - _image->getWidth() / 2) * 1.5f, _cy + (_offsetY - _image->getHeight() / 2) * 1.5f, _image->getWidth() * 1.5, _image->getHeight() * 1.5);
 }
 
-void Object::setHP(int damage)
+void Object::setHP(int damage, float playerX)
 {
 	_curHp -= damage;
 }

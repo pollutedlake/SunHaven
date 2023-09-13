@@ -1,6 +1,6 @@
 #include "Stdafx.h"
 #include "Inventory.h"
-#include <string>
+//#include <string>
 
 
 HRESULT Inventory::init(void)
@@ -127,7 +127,6 @@ void Inventory::update(void)
 	}
 	
 	
-	itemMove();
 
 	if (KEYMANAGER->isOnceKeyDown('I') && !_seeInven)
 	{
@@ -182,7 +181,8 @@ void Inventory::getItem(string index)
 
 void Inventory::itemMove()
 {
-	if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
+	
+	if (_seeInven)
 	{
 		//인벤칸
 		// 해당하는 인덱스를 찾음
@@ -263,7 +263,7 @@ void Inventory::itemMove()
 		}
 
 	}
-
+	
 	if (KEYMANAGER->isOnceKeyUp(VK_LBUTTON))
 	{
 		

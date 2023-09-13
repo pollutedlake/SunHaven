@@ -11,10 +11,6 @@ HRESULT FarmScene::init(void)
 	_player = new Player;
 	_player->init(2400, 1400, "Ãæµ¹");
 
-
-	_inven = new Inventory;
-	_inven->init();
-
 	_camera = new Camera;
 	_camera->init();
 	_camera->setPosition(_player->getPlayerPosition());
@@ -25,7 +21,8 @@ HRESULT FarmScene::init(void)
 	_om->init();
 	_om->setCameraAddress(_camera);
 
-
+	_inven = new Inventory;
+	_inven->init();
 
 	_player->setPlayerPosition(PointMake(2496, 1500));
 
@@ -44,7 +41,7 @@ HRESULT FarmScene::init(void)
 
 void FarmScene::release(void)
 {
-	_inven->release();
+	//_inven->release();
 
 	_player->release();
 	SAFE_DELETE(_player);
@@ -55,7 +52,7 @@ void FarmScene::release(void)
 void FarmScene::update(void)
 {
 	_player->update();
-	//_inven->update();
+	_inven->update();
 	_camera->setPosition(_player->getPlayerPosition());
 	_player->worldToCamera(_camera->worldToCamera
 	(_player->getPlayerPosition()));
@@ -90,7 +87,14 @@ void FarmScene::update(void)
 	_player->ObjectCollision(_om);
 
 	if(KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
+	{
 		_player->UseTool(_om, _ptMouse);
+		_inven->itemMove();
+	}
+	if (KEYMANAGER->isOnceKeyUp(VK_LBUTTON))
+	{
+
+	}
 	_player->UseToolAnim(KEYMANAGER->isStayKeyDown(VK_LBUTTON));
 
 	_player->UseFishingLod(_camera->cameraToWorld(_ptMouse));
@@ -225,14 +229,17 @@ void FarmScene::getDropItem()
 
 			if (PtInRect(&_player->getPlayerRC(), _liDropItem->second))
 			{
-				_inven->getItem("0-0");
-				cout << "¾ÆÀÌÅÛ È¹µæ" << endl;
+				_inven->getItem(_liDropItem->first);
 				_liDropItem = _lDropItem.erase(_liDropItem);
 			}
 			else
 			{
 				++_liDropItem;
 			}
+		}
+		else
+		{
+			++_liDropItem;
 		}
 	}
 }

@@ -1,9 +1,11 @@
 #include "Stdafx.h"
 #include "DataManager.h"
+#include "../Class/Inventory.h"
 
 HRESULT DataManager::init(void)
 {
 	itemData.init();
+
 	while (!itemData.getTool()->empty())
 	{
 		_vTool.push_back(itemData.getTool()->front());

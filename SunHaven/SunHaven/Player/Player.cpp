@@ -12,9 +12,6 @@ HRESULT Player::init(float x, float y, string collisionMapKey)
 	_skill = new SkillManager;
 	_skill->init();
 
-	_inven = new Inventory;
-	_inven->init();
-
 	_eTools = eTools::SICKLE;
 
 
@@ -209,7 +206,7 @@ HRESULT Player::init(float x, float y, string collisionMapKey)
 
 void Player::release(void)
 {
-	_inven->release();
+	//_inven->release();
 
 	_skill->release();
 	SAFE_DELETE(_skill);
@@ -229,7 +226,7 @@ void Player::release(void)
 
 void Player::update(void)
 {
-	_inven->update();
+	//_inven->update();
 
 	if (KEYMANAGER->isOnceKeyDown('W') ||
 		KEYMANAGER->isOnceKeyDown('S') ||
@@ -502,7 +499,7 @@ void Player::render(void)
 			_toolAnim);
 	}
 
-	_inven->render();
+	//_inven->render();
 
 
 
@@ -639,7 +636,7 @@ void Player::UseTool(ObjectManager* object, POINT point)
 				&& getDistance(_cx, _cy, point.x, point.y) < OBJECT_RANGE)
 			{
 				// SD : 唱公 海绰 家府
-				object->getObjectList()[i]->setHP(10);
+				object->getObjectList()[i]->setHP(10, _x);
 			}
 		}
 
