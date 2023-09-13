@@ -12,6 +12,8 @@ HRESULT Player::init(float x, float y, string collisionMapKey)
 	_skill = new SkillManager;
 	_skill->init();
 
+	_inven = new Inventory;
+	_inven->init();
 
 	_eTools = eTools::SICKLE;
 
@@ -207,6 +209,8 @@ HRESULT Player::init(float x, float y, string collisionMapKey)
 
 void Player::release(void)
 {
+	_inven->release();
+
 	_skill->release();
 	SAFE_DELETE(_skill);
 
@@ -225,6 +229,8 @@ void Player::release(void)
 
 void Player::update(void)
 {
+	_inven->update();
+
 	if (KEYMANAGER->isOnceKeyDown('W') ||
 		KEYMANAGER->isOnceKeyDown('S') ||
 		KEYMANAGER->isOnceKeyDown('A') ||
@@ -496,7 +502,7 @@ void Player::render(void)
 			_toolAnim);
 	}
 
-	
+	_inven->render();
 
 
 

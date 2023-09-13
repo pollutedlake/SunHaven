@@ -12,7 +12,7 @@ HRESULT TownScene::init(void)
 
 void TownScene::update(void)
 {
-
+  
 }
 
 void TownScene::render(void)

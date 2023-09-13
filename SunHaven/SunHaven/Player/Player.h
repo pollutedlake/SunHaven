@@ -1,6 +1,7 @@
 #pragma once
 #include "../FrameWork/GameNode/GameNode.h"
 #include "../FrameWork/Animation/Animation.h"
+#include "../Class/Inventory.h"
 #include "../Class/Skill/SkillManager.h"
 
 #define OBJECT_RANGE 50.0f
@@ -98,7 +99,7 @@ private:
 	RECT _firebeamRC;
 	int offsetX = 0;
 
-
+	Inventory* _inven;
 
 	GImage* _collisionMap;
 
@@ -288,6 +289,7 @@ public:
 
 	RECT getPlayertoCameraRect(void) { return _playertoCameraRC; }
 
+	Inventory* getInven() { return _inven; }
 
 	Player() {}
 	~Player() {}

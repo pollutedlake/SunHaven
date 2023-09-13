@@ -225,7 +225,7 @@ void FarmScene::getDropItem()
 
 			if (PtInRect(&_player->getPlayerRC(), _liDropItem->second))
 			{
-				_inven->getItem();
+				_inven->getItem("0-0");
 				cout << "¾ÆÀÌÅÛ È¹µæ" << endl;
 				_liDropItem = _lDropItem.erase(_liDropItem);
 			}

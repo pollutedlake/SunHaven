@@ -29,7 +29,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Class\UI\Buttons.cpp" />
-    <ClCompile Include="Class\Item\Item.cpp" />
     <ClCompile Include="Class\Boss\Dynus.cpp" />
     <ClCompile Include="Class\Bullets\Bullets.cpp" />
     <ClCompile Include="Class\Data\ItemData.cpp" />
@@ -92,6 +91,13 @@
     <ClCompile Include="WinMain.cpp" />
     <ClCompile Include="Class\Skill\SkillManager.cpp" />
     <ClCompile Include="Manager\DataManager.cpp" />
+    <ClCompile Include="Scene\IntroScene.cpp" />
+    <ClCompile Include="Class\NPC\Lynn.cpp" />
+    <ClCompile Include="Class\Data\EnemyData.cpp" />
+    <ClCompile Include="Scene\IntroScene.cpp" />
+    <ClCompile Include="Class\NPC\Lynn.cpp" />
+    <ClCompile Include="Class\Data\EnemyData.cpp" />
+>>>>>>> JSJ
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Class\UI\Buttons.h" />
@@ -108,7 +114,6 @@
     <ClInclude Include="inc\FMOD\fmod.hpp" />
     <ClInclude Include="Class\Object\Grass.h" />
     <ClInclude Include="Class\Data\ItemData.h" />
-    <ClInclude Include="Class\Item\Item.h" />
     <ClInclude Include="Class\Skill\CombatSkill.h" />
     <ClInclude Include="Class\Skill\ExplorationSkill.h" />
     <ClInclude Include="Class\Skill\FarmingSkill.h" />
@@ -162,6 +167,11 @@
     <ClInclude Include="Class\UI\UI.h" />
     <ClInclude Include="Class\Skill\SkillManager.h" />
     <ClInclude Include="Manager\DataManager.h" />
+    <ClInclude Include="Scene\IntroScene.h" />
+    <ClInclude Include="Class\NPC\Lynn.h" />
+
+    <ClInclude Include="Class\UI.h" />
+    <ClInclude Include="Class\Data\EnemyData.h" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="lib\FMOD\fmodex_vc.lib" />
@@ -170,6 +180,7 @@
     <Image Include="FarmMap.bmp" />
     <Image Include="FarmMapCollision.bmp" />
     <Image Include="DynusMapCollision.bmp" />
+    <Image Include="Shop_Bg_Collision.bmp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Debug\SunHaven.pch" />
