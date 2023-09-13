@@ -67,7 +67,7 @@ void Rock::render(void)
 	_image->render(getMemDC(), _rc.left, _rc.top, _rc.right - _rc.left, _rc.bottom - _rc.top, 0, 0, _image->getWidth(), _image->getHeight());
 }
 
-void Rock::setHP(int damage)
+void Rock::setHP(int damage, float playerX)
 {
 	_curHp -= damage;
 	_hitTime = TIMEMANAGER->getWorldTime();

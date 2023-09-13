@@ -649,7 +649,7 @@ void Player::UseTool(ObjectManager* object, POINT point)
 				&& getDistance(_cx, _cy, point.x, point.y) < OBJECT_RANGE)
 			{
 				// SD : 唱公 海绰 家府
-				object->getObjectList()[i]->setHP(10);
+				object->getObjectList()[i]->setHP(10, _x);
 			}
 		}
 

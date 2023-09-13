@@ -21,12 +21,14 @@ HRESULT Tree::init(LivingObjectType type, POINT tilePos)
 		_offsetY = -48;
 		_maxHp = 100;
 		_dropItemList.push("4-0");
+		_cutTreeImg = IMAGEMANAGER->findGPImage("Tree1Cut");
 		break;
 	case TREE2:
 		_offsetX = 3;
 		_offsetY = -42;
 		_maxHp = 120;
 		_dropItemList.push("4-2");
+		_cutTreeImg = IMAGEMANAGER->findGPImage("Tree2Cut");
 		break;
 	}
 	_curHp = _maxHp;
@@ -37,6 +39,8 @@ HRESULT Tree::init(LivingObjectType type, POINT tilePos)
 	_beforeHitRC = {NULL, NULL, NULL, NULL};
 	_hitRC = {NULL, NULL, NULL, NULL};
 	_hit = false;
+	_cutTreeAngle = 0.0f;
+	_fell = false;
 	return S_OK;
 }
 
@@ -60,6 +64,21 @@ void Tree::update(void)
 		_hitRC.right = _rc.right + width * 0.05f;
 		_rc = _hitRC;
 	}
+	if (_fell)
+	{
+		if (_fellLeft)
+		{
+			_cutTreeAngle -= 2;
+		}
+		else
+		{
+			_cutTreeAngle += 2;
+		}
+		if (abs(_cutTreeAngle) > 100)
+		{
+			_fell = false;
+		}
+	}
 }
 
 void Tree::render(void)
@@ -72,6 +91,19 @@ void Tree::render(void)
 	{
 		_image->render(getMemDC(), _rc.left, _rc.top, _rc.right - _rc.left, _rc.bottom - _rc.top, 0, 0, _image->getWidth(), _image->getHeight());
 	}
+	if (_fell)
+	{
+		if (_fellLeft)
+		{
+			_cutTreeImg->GPRotateRender(getMemDC(), (_rc.right + _rc.left) / 2.0f - _cutTreeImg->getWidth() / 2.0f - 3, _rc.top - _cutTreeImg->getHeight() + 10,
+				_rc.left + 5, _rc.top + 10, 1.0f, 1.0f, 0, 0, _cutTreeImg->getWidth(), _cutTreeImg->getHeight(), InterpolationModeNearestNeighbor, _cutTreeAngle);
+		}
+		else
+		{
+			_cutTreeImg->GPRotateRender(getMemDC(), (_rc.right + _rc.left) / 2.0f - _cutTreeImg->getWidth() / 2.0f - 3, _rc.top - _cutTreeImg->getHeight() + 10, 
+				_rc.right - 5, _rc.top + 10, 1.0f, 1.0f, 0, 0, _cutTreeImg->getWidth(), _cutTreeImg->getHeight(), InterpolationModeNearestNeighbor, _cutTreeAngle);
+		}
+	}
 }
 
 void Tree::release(void)
@@ -79,13 +111,22 @@ void Tree::release(void)
 	
 }
 
-void Tree::setHP(int damage)
+void Tree::setHP(int damage, float playerX)
 {
 	_curHp -= damage;
 	_hitTime = TIMEMANAGER->getWorldTime();
 	_hit = true;
 	if (_curHp <= 0 && _hpBarOffsetX == 1)
 	{
+		_fell = true;
+		if (playerX - (_tilePos.x * 36 + 18) > 0)
+		{
+			_fellLeft = true;
+		}
+		else
+		{
+			_fellLeft = false;
+		}
 		_maxHp /= 2;
 		_curHp = _maxHp;
 		_image = IMAGEMANAGER->findImage("Stump");

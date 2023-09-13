@@ -50,7 +50,7 @@ public:
 	RECT getCollisionRC() {return _collisionRC;}
 	RECT getRC() {return _rc;}
 
-	virtual void setHP(int damage);
+	virtual void setHP(int damage, float playerX = NULL);
 	int getCurHP() {return _curHp;}
 
 	queue<string> dropItem();

@@ -3,48 +3,26 @@
 
 HRESULT TownScene::init(void)
 {
-    _enemyData = new EnemyData;
-
-    enemyPopUp();
-
+    _test = IMAGEMANAGER->findGPImage("Tree1Cut");
+    _angle = 0.0f;
     return S_OK;
 }
 
 void TownScene::update(void)
 {
-
+    _angle += 0.1f;
 }
 
 void TownScene::render(void)
 {
+    _test->GPRender(getMemDC(), WINSIZE_X / 2, WINSIZE_Y / 2, 1.0f, 1.0f, 0, 0, _test->getWidth(), _test->getHeight(), InterpolationModeNearestNeighbor, _angle);
 }
 
 void TownScene::release(void)
 {
-    SAFE_DELETE(_enemyData);
 }
 
 void TownScene::skillPopUp(void)
 {
 
-}
-
-void TownScene::enemyPopUp(void)
-{
-    char str[256];
-
-    queue<tagEnemy*>* temp = _enemyData->getEnemy();
-    tagEnemy* node = temp->front();
-
-    sprintf_s(str, "%s", node->name.c_str());
-    TextOut(getMemDC(), 200, 100, str, strlen(str));
-
-    sprintf_s(str, "%d", node->level);
-    TextOut(getMemDC(), 200, 120, str, strlen(str));
-
-    sprintf_s(str, "%d", node->hp);
-    TextOut(getMemDC(), 200, 140, str, strlen(str));
-
-    sprintf_s(str, "%d", node->minDmg);
-    TextOut(getMemDC(), 200, 160, str, strlen(str));
 }

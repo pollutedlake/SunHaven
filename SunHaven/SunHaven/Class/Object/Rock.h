@@ -16,7 +16,7 @@ public:
 	void update(void);
 	void render(void);
 
-	void setHP(int damage);
+	void setHP(int damage, float playerX = NULL);
 	Rock() {}
 	~Rock() {}
 };

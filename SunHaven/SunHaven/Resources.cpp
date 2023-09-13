@@ -63,6 +63,14 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addImage("Object4", "Resources/Images/Object/Tree2.bmp", 82, 108, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("Object5", "Resources/Images/Object/Stone1.bmp", 24, 24, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("Object6", "Resources/Images/Object/Stone2.bmp", 24, 24, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addGPFrameImage("Tree1Cut", "Resources/Images/Object/Tree1Cut.png",
+		0, 0,
+		1, 1,
+		false, NULL, RotateNoneFlipNone);
+	IMAGEMANAGER->addGPFrameImage("Tree2Cut", "Resources/Images/Object/Tree2Cut.png",
+		0, 0,
+		1, 1,
+		false, NULL, RotateNoneFlipNone);
 	IMAGEMANAGER->addImage("Stump", "Resources/Images/Object/Stump.bmp", 24, 24, true, RGB(255, 0, 255));
 	// Sound
 

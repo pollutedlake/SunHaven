@@ -1,12 +1,11 @@
 #pragma once
 #include "../FrameWork/GameNode/GameNode.h"
-#include "../Class/Data/PlayerData.h"
-#include "../Class/Data/EnemyData.h"
 
 class TownScene : public GameNode
 {
 private:
-	EnemyData* _enemyData;
+	GPImage* _test;
+	float _angle;
 
 public:
 	HRESULT init(void);
