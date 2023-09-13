@@ -11,7 +11,9 @@ HRESULT FarmScene::init(void)
 	_player = new Player;
 	_player->init(2400, 1400, "Ãæµ¹");
 
-	
+
+	_inven = new Inventory;
+	_inven->init();
 
 	_camera = new Camera;
 	_camera->init();
@@ -42,6 +44,8 @@ HRESULT FarmScene::init(void)
 
 void FarmScene::release(void)
 {
+	_inven->release();
+
 	_player->release();
 	SAFE_DELETE(_player);
 	_om->release();
@@ -51,6 +55,7 @@ void FarmScene::release(void)
 void FarmScene::update(void)
 {
 	_player->update();
+	//_inven->update();
 	_camera->setPosition(_player->getPlayerPosition());
 	_player->worldToCamera(_camera->worldToCamera
 	(_player->getPlayerPosition()));
@@ -89,6 +94,7 @@ void FarmScene::update(void)
 	_player->UseToolAnim(KEYMANAGER->isStayKeyDown(VK_LBUTTON));
 
 	_player->UseFishingLod(_camera->cameraToWorld(_ptMouse));
+	getDropItem();
 
 	if (KEYMANAGER->isOnceKeyDown(VK_F1))
 	{
@@ -118,6 +124,8 @@ void FarmScene::render(void)
 		IMAGEMANAGER->render("Ãæµ¹", getMemDC(), _camera->worldToCameraX(0),
 			_camera->worldToCameraY(0));
 	}
+	
+	_inven->render();
 	_ui->render();
 }
 
@@ -163,7 +171,7 @@ void FarmScene::renderDropItem()
 			toolInfo = DATAMANAGER->getToolInfo(atoi(itemIndex.c_str()));
 			IMAGEMANAGER->addImage(toolInfo->name, toolInfo->filePath.c_str(), 32, 32, true, RGB(255, 0, 255))->render(getMemDC(), 
 				_camera->worldToCameraX(_liDropItem->second.x), _camera->worldToCameraY(_liDropItem->second.y));
-		break;
+			break;
 		case '1':
 			waeponInfo = DATAMANAGER->getWeaponInfo(atoi(itemIndex.c_str()));
 			IMAGEMANAGER->addImage(waeponInfo->name, waeponInfo->filePath.c_str(), 32, 32, true, RGB(255, 0, 255))->render(getMemDC(), 
@@ -188,7 +196,43 @@ void FarmScene::renderDropItem()
 			consumableInfo = DATAMANAGER->getConsumableInfo(atoi(itemIndex.c_str()));
 			IMAGEMANAGER->addImage(consumableInfo->name, consumableInfo->filePath.c_str(), 32, 32, true, RGB(255, 0, 255))->render(getMemDC(), 
 				_camera->worldToCameraX(_liDropItem->second.x), _camera->worldToCameraY(_liDropItem->second.y));
-		break;
+			break;
+		}
+	}
+}
+
+void FarmScene::getDropItem()
+{
+	for (_liDropItem = _lDropItem.begin(); _liDropItem != _lDropItem.end();)
+	{
+		if (getDistance(_liDropItem->second.x,
+			_liDropItem->second.y,
+			_player->getPlayerPosition().x,
+			_player->getPlayerPosition().y) < 120)
+		{
+			_liDropItem->second.x +=
+				cosf(getAngle(_liDropItem->second.x,
+					_liDropItem->second.y,
+					_player->getPlayerPosition().x,
+					_player->getPlayerPosition().y)) * 2.2f;
+
+			_liDropItem->second.y +=
+				-sinf(getAngle(_liDropItem->second.x,
+					_liDropItem->second.y,
+					_player->getPlayerPosition().x,
+					_player->getPlayerPosition().y)) * 2.2f;
+
+
+			if (PtInRect(&_player->getPlayerRC(), _liDropItem->second))
+			{
+				_inven->getItem("0-0");
+				cout << "¾ÆÀÌÅÛ È¹µæ" << endl;
+				_liDropItem = _lDropItem.erase(_liDropItem);
+			}
+			else
+			{
+				++_liDropItem;
+			}
 		}
 	}
 }

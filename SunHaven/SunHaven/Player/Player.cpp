@@ -36,6 +36,10 @@ HRESULT Player::init(float x, float y, string collisionMapKey)
 		_playerMoveAnim->getFrameWidth(),
 		_playerMoveAnim->getFrameHeight());
 
+
+
+
+
 	_isCollisionLeft = _isCollisionRight =
 		_isCollisionTop =_isCollisionBottom = false;
 	_moveSpeed = 3.0f;
@@ -393,27 +397,15 @@ void Player::update(void)
 			COLORREF collisionT =
 				GetPixel(_collisionMap->getMemDC(),
 					i, _playerRC.top);
+
 			COLORREF collisionB =
 				GetPixel(_collisionMap->getMemDC(),
 					i, _playerRC.bottom);
 
-			if (collisionT == RGB(255, 0, 255))
-			{
-				_isCollisionTop = true;
-				cout << "test" << endl;
-			}
-			else
-			{
-				_isCollisionTop = false;
-			}
-			if (collisionB == RGB(255, 0, 255))
-			{
-				_isCollisionBottom = true;
-			}
-			else
-			{
-				_isCollisionBottom = false;
-			}
+			_isCollisionTop =
+				collisionT == RGB(255, 0, 255) ? true : false;
+			_isCollisionBottom =
+				collisionB == RGB(255, 0, 255) ? true : false;
 		}
 
 		for (int i = _playerRC.top + 4; i <= _playerRC.bottom - 4; i++)
@@ -425,7 +417,6 @@ void Player::update(void)
 			COLORREF collisionR =
 				GetPixel(_collisionMap->getMemDC(),
 					_playerRC.right, i);
-
 
 			_isCollisionLeft =
 				collisionL == RGB(255, 0, 255) ? true : false;
@@ -512,7 +503,6 @@ void Player::render(void)
 	}
 
 	_inven->render();
-	
 
 
 
