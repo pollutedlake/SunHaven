@@ -1,7 +1,6 @@
 #pragma once
 #include "../FrameWork/GameNode/GameNode.h"
 #include "../FrameWork/Animation/Animation.h"
-#include "../Class/Inventory.h"
 #include "../Class/Skill/SkillManager.h"
 
 #define OBJECT_RANGE 50.0f
@@ -84,6 +83,12 @@ private:
 	Animation* _scytheSwingAnim;
 	RECT _scytheSwingRC;
 
+
+	GImage* _fishingLod;
+	Animation* _fishingLodAnim;
+
+
+
 	GImage* _toolImage;
 	Animation* _toolAnim;
 	RECT _toolAnimRC;
@@ -93,8 +98,6 @@ private:
 	RECT _firebeamRC;
 	int offsetX = 0;
 
-
-	Inventory* _inven;
 
 
 	GImage* _collisionMap;
@@ -158,7 +161,6 @@ public:
 		_playertoCameraRC = RectMakeCenter(_cx, _cy,
 			_playerMoveAnim->getFrameWidth(),
 			_playerMoveAnim->getFrameHeight());
-
 
 		
 		if (KEYMANAGER->isStayKeyDown('A'))
@@ -285,6 +287,7 @@ public:
 	RECT getPlayerRC() { return _playerRC; }
 
 	RECT getPlayertoCameraRect(void) { return _playertoCameraRC; }
+
 
 	Player() {}
 	~Player() {}

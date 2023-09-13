@@ -5,6 +5,7 @@
 #include "../Class/Camera.h"
 #include "../Class/Object/ObjectManager.h"
 #include "../Class/UI/ProgressBar.h"
+#include "../Class/Inventory.h"
 
 struct cmp {
 	bool operator()(pair<GameNode*, int> a, pair<GameNode*, int> b)
@@ -41,6 +42,8 @@ private:
 	GImage* _MouseOver;
 	RECT _MouseRC;
 
+	Inventory* _inven;
+
 public:
 	HRESULT init(void);
 	void release(void);
@@ -49,6 +52,9 @@ public:
 
 	void Collision(void);
 	void renderDropItem();
+	void getDropItem();
+
+
 
 	FarmScene() {}
 	~FarmScene() {}
