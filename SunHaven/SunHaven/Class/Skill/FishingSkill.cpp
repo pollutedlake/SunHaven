@@ -62,7 +62,6 @@ void FishingSkill::update()
 		{
 			if (KEYMANAGER->isOnceKeyDown(VK_MBUTTON))
 			{
-				cout << i << endl;
 				_borderImg[i].skillLV--;
 
 				if (_borderImg[i].skillLV < 0)
@@ -71,7 +70,6 @@ void FishingSkill::update()
 
 			if (KEYMANAGER->isOnceKeyDown(VK_RBUTTON))
 			{
-				cout << i << endl;
 				_borderImg[i].skillLV++;
 
 				if (_borderImg[i].skillLV > _borderImg[i].maxSkillLV)

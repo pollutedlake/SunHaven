@@ -153,9 +153,42 @@ HRESULT Resources::init(void)
 		92, 14,
 		true, RGB(255, 0, 255));	// 프로그래스 바 배경 가로
 
+	IMAGEMANAGER->addImage("GuardMine", "Resources/Images/Boss/GuardMine.bmp",
+		47, 44,
+		true, RGB(255, 0, 255));	// 프로그래스 바 배경 가로
+
 	//IMAGEMANAGER->addImage("DynusJumpPlatform", "Resources/Images/Boss/DynusJumpPlatform.bmp",
 	//	38 * 2, 54 * 2,
 	//	true, RGB(255, 0, 255));	// 다이너스 점프 플랫폼
+
+	// Sound
+
+	// ====================DizzyScene====================
+	// Image
+
+	IMAGEMANAGER->addImage("DizzyLayer", "Resources/Images/Layer/DizzyLayer.bmp",
+		1464 * 1.5, 1008 * 1.5,
+		true, RGB(255, 0, 255));	// 레이어
+
+	IMAGEMANAGER->addImage("DizzyHpBarBorder", "Resources/Images/UI/DizzyHpBarBorder.bmp",
+		442, 54,
+		true, RGB(255, 0, 255));	// 디지 HpBar
+
+	IMAGEMANAGER->addFrameImage("DizzyMeteor", "Resources/Images/Boss/Dizzy/DizzyMeteor.bmp",
+		360, 62,
+		6, 1,
+		true, RGB(255, 0, 255));	// 디지 메테오
+
+	IMAGEMANAGER->addImage("Gem0", "Resources/Images/Boss/Dizzy/Dizzy_Gems_0.bmp",
+		27, 26, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Gem1", "Resources/Images/Boss/Dizzy/Dizzy_Gems_1.bmp",
+		22, 26, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Gem2", "Resources/Images/Boss/Dizzy/Dizzy_Gems_2.bmp",
+		28, 28, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Gem3", "Resources/Images/Boss/Dizzy/Dizzy_Gems_3.bmp",
+		20, 28, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Gem4", "Resources/Images/Boss/Dizzy/Dizzy_Gems_4.bmp",
+		28, 30, true, RGB(255, 0, 255));
 
 	// Sound
 

@@ -19,9 +19,7 @@ bool Dynus::hpMinusTemp(void)
 
 HRESULT Dynus::init(void)
 {
-	//_state = EDynusState::BREATHE;
 	_phase = EDynusPhase::FIRST;
-	//_spell = EDynusSpell::SPREAD_X;
 
 	_hp = 10000.0f;
 	_maxHp = 10000.0f;
@@ -45,15 +43,13 @@ HRESULT Dynus::init(void)
 	_beamCount = 0.0f;
 	_beamFireCount = 0.0f;
 	_beamTurnCount = TIMEMANAGER->getWorldTime();
-	_spawnAtferTime = 5.0f;
+	_spawnAtferTime = 0.0f;
 	_spawnWorldTime = TIMEMANAGER->getWorldTime();
 
 	_hpTime = 1.0f;
 	_hpTurnCount = TIMEMANAGER->getWorldTime();
 
 	_timeCount = 100;
-
-	//_dynusImg = IMAGEMANAGER->findImage("DynusBreathe");
 
 	_breatheImg = IMAGEMANAGER->addFrameImage("DynusBreathe", "Resources/Images/Boss/DynusBreathe.bmp",
 		2536, 594, 4, 2, true, RGB(255, 0, 255));
@@ -77,7 +73,6 @@ HRESULT Dynus::init(void)
 
 	_bullet = new Bullet;
 	_bullet->init("DynusOrb", 100, 1500.0f);
-
 
 	_spawnBulletTime = 1.0f;
 	_spawnBulletWorldTime = TIMEMANAGER->getWorldTime();
@@ -118,18 +113,26 @@ HRESULT Dynus::init(void)
 
 	_platformMove = 0.0f;
 
-	for (int i = 0; i < PLATFORM_NUM; i++)
+	_isPlatformUp = false;
+
+	for (int i = 0; i < 7; i++)
 	{
-		_isPlatformUp[i] = false;
+		_rcPlatform[i] = { NULL, NULL, NULL, NULL };
 	}
 
-	_rcPlatform[0] = RectMakeCenter(CENTER_X, CENTER_Y + _platformMove + 100, 76, 76);
+	_rcGuardMine1 = { NULL, NULL, NULL, NULL };
+	_rcGuardMine2 = { NULL, NULL, NULL, NULL };
+
+	_isGM1Remove = false;
+	_isGM2Remove = false;
+
+	/*_rcPlatform[0] = RectMakeCenter(CENTER_X, CENTER_Y + _platformMove + 100, 76, 76);
 	_rcPlatform[1] = RectMakeCenter(CENTER_X - 140, CENTER_Y + _platformMove + 150, 76, 76);
 	_rcPlatform[2] = RectMakeCenter(CENTER_X - 260, CENTER_Y + _platformMove + 90, 76, 76);
 	_rcPlatform[3] = RectMakeCenter(CENTER_X - 400, CENTER_Y + _platformMove + 140, 76, 76);
 	_rcPlatform[4] = RectMakeCenter(CENTER_X + 140, CENTER_Y + _platformMove + 160, 76, 76);
 	_rcPlatform[5] = RectMakeCenter(CENTER_X + 280, CENTER_Y + _platformMove + 130, 76, 76);
-	_rcPlatform[6] = RectMakeCenter(CENTER_X + 400, CENTER_Y + _platformMove + 80, 76, 76);
+	_rcPlatform[6] = RectMakeCenter(CENTER_X + 400, CENTER_Y + _platformMove + 80, 76, 76);*/
 
 	/*_rcPlatform[0] = RectMakeCenter(CENTER_X, CENTER_Y + 50, 76, 76);
 	_rcPlatform[1] = RectMakeCenter(CENTER_X - 140, CENTER_Y + 100, 76, 76);
@@ -151,6 +154,10 @@ HRESULT Dynus::init(void)
 
 	_k = 0.0f;
 
+	_bgAlpha = 255.0f;
+
+	_afterSpawnCount = 0;
+	_aftetKCount = 0;
 	//_em->spawnShadeclaw();
 
 	return S_OK;
@@ -188,6 +195,9 @@ void Dynus::release(void)
 	_spellAni->release();
 	SAFE_DELETE(_spellAni);
 
+	_curAni->release();
+	SAFE_DELETE(_curAni);
+
 	_bullet->release();
 	SAFE_DELETE(_bullet);
 
@@ -203,29 +213,26 @@ void Dynus::release(void)
 
 void Dynus::update(void)
 {
-	if (_hp <= 7000)
+	if (_hp <= 7000 && _hp > 4000)
 	{
-		
 		_phase = EDynusPhase::SECOND;
-		_spell = EDynusSpell::SPAWN;
-
-		_bulletCount = 0;
-		_pa1StartPosIdx = 6;
 	}
 
-	else if (_hp <= 4000)
+	else if (_hp <= 4000 && _hp > 3000)
 	{
 		_phase = EDynusPhase::STAR;
-		_spell = EDynusSpell::STAR;
 	}
 
-	else if (_hp <= 3000)
+	else if (_hp <= 3000 && _hp > 0)
 	{
 		_phase = EDynusPhase::THIRD;
+		_thirdP = EThirdPhase::RANDOM_PATTERN;
 	}
 
 	_hpBar->update();
 	_hpBar->setGauge(_hp, _maxHp);
+
+
 
 	switch (_state)
 	{
@@ -254,9 +261,9 @@ void Dynus::update(void)
 		switch (_phase)
 		{
 		case EDynusPhase::FIRST:
-			switch (_spell)
+			switch (_firstP)
 			{
-			case EDynusSpell::SPREAD_X:
+			case EFirstPhase::SPREAD_X:
 
 				//_em->spawnShadeclaw();
 				//beamFire();
@@ -273,57 +280,67 @@ void Dynus::update(void)
 
 				if (_pa1StartPosIdx < 0)
 				{
-					_spell = EDynusSpell::SPREAD_ELLIPSE;
+					_firstP = EFirstPhase::SPREAD_ELLIPSE;
 					_curAni->AniStop();
 					_curImg = _spellImg;
 					_curAni = _spellAni;
 					_curAni->setPlayFrame(0, 69, false, false);
 					_curAni->AniStart();
+					_pa1StartPosIdx = 6;
+
 					_pa2StartPosIdx = 3;
+					_bulletCount = 0;
+
 				}
 
 				break;
 
-			case EDynusSpell::SPREAD_ELLIPSE:
+			case EFirstPhase::SPREAD_ELLIPSE:
 				spreadEllipse();
 
 				if (_pa2StartPosIdx < 0)
 				{
-					_spell = EDynusSpell::BEAM1;
+					_firstP = EFirstPhase::BEAM1;
 					_curAni->AniStop();
 					_curImg = _spellImg;
 					_curAni = _spellAni;
 					_curAni->setPlayFrame(0, 69, false, false);
 					_curAni->AniStart();
+					_pa1StartPosIdx = 6;
 
 					_pa3StartPosIdx = 2;
+					_bulletCount = 0;
+
 				}
 
 				break;
 
-			case EDynusSpell::BEAM1:
+			case EFirstPhase::BEAM1:
 				beamFire();
 
 				if (_pa3StartPosIdx < 0)
 				{
-					_spell = EDynusSpell::BEAM2;
+					_firstP = EFirstPhase::BEAM2;
 					/*_curAni->AniStop();
 					_curImg = _spellImg;
 					_curAni = _spellAni;
 					_curAni->setPlayFrame(0, 69, false, false);
 					_curAni->AniStart();*/
+					_pa1StartPosIdx = 6;
 
 					_pa3StartPosIdx = 2;
+					_bulletCount = 0;
+
 				}
 
 				break;
 
-			case EDynusSpell::BEAM2:
+			case EFirstPhase::BEAM2:
 				beamFire();
 
 				if (_pa3StartPosIdx < 0)
 				{
-					_spell = EDynusSpell::SPREAD_X;
+					_firstP = EFirstPhase::SPREAD_X;
 					_curAni->AniStop();
 					_curImg = _spellImg;
 					_curAni = _spellAni;
@@ -331,6 +348,8 @@ void Dynus::update(void)
 					_curAni->AniStart();
 
 					_pa1StartPosIdx = 6;
+					_bulletCount = 0;
+
 				}
 
 				break;
@@ -339,55 +358,51 @@ void Dynus::update(void)
 			break;
 
 		case EDynusPhase::SECOND:
-			switch (_spell)
+			switch (_secondP)
 			{
-			case EDynusSpell::SPAWN:
-				//spawnEnemy();
+			case ESecondPhase::SPAWN:
 				if (!_isSpawnEnemy)
 				{
 					_em->spawnShadeclaw();
 
-					
 					_isSpawnEnemy = true;
-					
 				}
 
-				if (_isSpawnEnemy)
+				else
 				{
-					if (spawnAfterTime())
+					_afterSpawnCount++;
+
+					if (_afterSpawnCount > 400)
 					{
-						_spell = EDynusSpell::SPREAD_X2;
+						_pa1StartPosIdx = 6;
+						_bulletCount = 0;
+						_secondP = ESecondPhase::SPREAD_X;
 						_curAni->AniStop();
 						_curImg = _spellImg;
 						_curAni = _spellAni;
 						_curAni->setPlayFrame(0, 69, false, false);
 						_curAni->AniStart();
-
-						_pa1StartPosIdx = 6;
+						
+						_afterSpawnCount = 0;
 					}
 				}
-
-
+				
 				break;
 
-			case EDynusSpell::SPREAD_X2:
+			case ESecondPhase::SPREAD_X:
+				bulletFire();
+				_isSpawnEnemy = false;
 
-					cout << "spread x" << endl;
-					bulletFire();
-					_isSpawnEnemy = false;
-					if (_pa1StartPosIdx < 0)
-					{
-						_isSpawn = false;
-						_spell = EDynusSpell::SPAWN;
-						_curAni->AniStop();
-						_curImg = _spellImg;
-						_curAni = _spellAni;
-						_curAni->setPlayFrame(0, 69, false, false);
-						_curAni->AniStart();
-					}
-
-				
-				
+				if (_pa1StartPosIdx < 0)
+				{
+					_isSpawn = false;
+					_secondP = ESecondPhase::SPAWN;
+					_curAni->AniStop();
+					_curImg = _spellImg;
+					_curAni = _spellAni;
+					_curAni->setPlayFrame(0, 69, false, false);
+					_curAni->AniStart();
+				}
 
 				break;
 			}
@@ -396,11 +411,20 @@ void Dynus::update(void)
 			
 		case EDynusPhase::STAR:
 
-			switch (_spell)
+			switch (_starP)
 			{
-			case EDynusSpell::STAR:
+			case EStarPhase::STAR:
 
-			cout << "star" << endl;
+
+			if (!_isGM1Remove)
+			{
+				_rcGuardMine1 = RectMakeCenter(CENTER_X - 530, CENTER_Y + 60, 47, 44);
+			}
+
+			if (!_isGM2Remove)
+			{
+				_rcGuardMine2 = RectMakeCenter(CENTER_X + 530, CENTER_Y, 47, 44);
+			}
 
 			if (_platformMove > -290)
 			{
@@ -411,138 +435,122 @@ void Dynus::update(void)
 					_rcPlatform[0] = RectMakeCenter(CENTER_X, CENTER_Y + _platformMove + 100, 76, 76);
 				}
 
-				if (_platformMove >= -90)
+				if (_platformMove >= -90 && _platformMove <= -40)
 				{
-					_rcPlatform[1] = RectMakeCenter(CENTER_X - 140, _platformMove > -40 ? CENTER_Y + 150 : CENTER_Y + _platformMove + 190, 76, 76);
+					_rcPlatform[1] = RectMakeCenter(CENTER_X - 140, CENTER_Y + _platformMove + 190, 76, 76);
 				}
 
-				if (_platformMove >= -130)
+				if (_platformMove >= -130 && _platformMove <= -80)
 				{
-					_rcPlatform[2] = RectMakeCenter(CENTER_X - 260, _platformMove > -80 ? CENTER_Y + 90 : CENTER_Y + _platformMove + 170, 76, 76);
-
+					_rcPlatform[2] = RectMakeCenter(CENTER_X - 260, CENTER_Y + _platformMove + 170, 76, 76);
 				}
 
-				if (_platformMove >= -170)
+				if (_platformMove >= -170 && _platformMove <= -120)
 				{
-					_rcPlatform[3] = RectMakeCenter(CENTER_X - 400, _platformMove > -120 ? CENTER_Y + 140 : CENTER_Y + _platformMove + 260, 76, 76);
+					_rcPlatform[3] = RectMakeCenter(CENTER_X - 400, CENTER_Y + _platformMove + 260, 76, 76);
 				}
 
-				if (_platformMove >= -210)
+				if (_platformMove >= -210 && _platformMove <= -160)
 				{
-					_rcPlatform[4] = RectMakeCenter(CENTER_X + 140, _platformMove > -160 ? CENTER_Y + 160 : CENTER_Y + _platformMove + 320, 76, 76);
+					_rcPlatform[4] = RectMakeCenter(CENTER_X + 140, CENTER_Y + _platformMove + 320, 76, 76);
 				}
 
-				if (_platformMove >= -250)
+				if (_platformMove >= -250 && _platformMove <= -200)
 				{
-					_rcPlatform[5] = RectMakeCenter(CENTER_X + 280, _platformMove > -200 ? CENTER_Y + 130 : CENTER_Y + _platformMove + 330, 76, 76);
+					_rcPlatform[5] = RectMakeCenter(CENTER_X + 280, CENTER_Y + _platformMove + 330, 76, 76);
 				}
 
-				if (_platformMove >= -290)
+				if (_platformMove >= -290 && _platformMove <= -240)
 				{
-					_rcPlatform[6] = RectMakeCenter(CENTER_X + 400, _platformMove > -240 ? CENTER_Y + 80 : CENTER_Y + _platformMove + 320, 76, 76);
+					_rcPlatform[6] = RectMakeCenter(CENTER_X + 400, CENTER_Y + _platformMove + 320, 76, 76);
+
+					_isPlatformUp = true;
+				}
+
+				if (_isPlatformUp)
+				{
+					_bgAlpha -= 9.0f;
+					_isGM1Remove = true;
+					_isGM2Remove = true;
+					_bulletCount = 0;
+					_pa1StartPosIdx = 6;
+					_pa2StartPosIdx = 3;
+					_pa3StartPosIdx = 2;
+					if (_bgAlpha <= 0)
+					{
+						_bgAlpha = 0.0f;
+
+						bulletFire();
+
+						if (_isGM1Remove && _isGM2Remove)
+						{
+							_phase = EDynusPhase::THIRD;
+						}
+					}
 				}
 			}
 
 				break;
 			}
-
-			bulletFire();
 
 			break;
 
 		case EDynusPhase::THIRD:
 			
-
-			switch (_rndPattern)
+			switch (_thirdP)
 			{
-			case 0:
-				bulletFire();
-
-				if (_pa1StartPosIdx < 0)
+			case EThirdPhase::RANDOM_PATTERN:
+				/*if (_platformMove < -50)
 				{
-					_curAni->AniStop();
-					_curImg = _spellImg;
-					_curAni = _spellAni;
-					_curAni->setPlayFrame(0, 69, false, false);
-					_curAni->AniStart();
+					_platformMove += 1.7f;
 
-					_pa1StartPosIdx = 6;
-					_pa2StartPosIdx = 3;
-					_pa3StartPosIdx = 2;
-
-					if (_rndPattern == 0)
+					if (_platformMove >= -290 && _platformMove <= -240)
 					{
-						_rndPattern = RND->getFromIntTo(1, 3);
+						_rcPlatform[0] = RectMakeCenter(CENTER_X, CENTER_Y + _platformMove + 100, 76, 76);
 					}
-				}
 
-				break;
-
-			case 1:
-				spreadEllipse();
-
-				if (_pa2StartPosIdx < 0)
-				{
-					_curAni->AniStop();
-					_curImg = _spellImg;
-					_curAni = _spellAni;
-					_curAni->setPlayFrame(0, 69, false, false);
-					_curAni->AniStart();
-
-					_pa1StartPosIdx = 6;
-					_pa2StartPosIdx = 3;
-					_pa3StartPosIdx = 2;
-
-					_rndPattern = RND->getFromIntTo(0, 3);
-					
-					if (_rndPattern == 1)
+					if (_platformMove >= -250 && _platformMove <= -200)
 					{
-						_rndPattern = RND->getFromIntTo(2, 3);
+						_rcPlatform[1] = RectMakeCenter(CENTER_X - 140, CENTER_Y + _platformMove + 190, 76, 76);
 					}
-				}
 
-				break;
-
-			case 2:
-				beamFire();
-				cout << "beamFire" << endl;
-
-				if (_pa3StartPosIdx < 0)
-				{
-					_curAni->AniStop();
-					_curImg = _spellImg;
-					_curAni = _spellAni;
-					_curAni->setPlayFrame(0, 69, false, false);
-					_curAni->AniStart();
-
-					_pa1StartPosIdx = 6;
-					_pa2StartPosIdx = 3;
-					_pa3StartPosIdx = 2;
-
-					_rndPattern = RND->getFromIntTo(0, 3);
-
-					if (_rndPattern == 2)
+					if (_platformMove >= -210 && _platformMove <= -160)
 					{
-						_rndPattern = RND->getFromIntTo(0, 1);
+						_rcPlatform[2] = RectMakeCenter(CENTER_X - 260, CENTER_Y + _platformMove + 170, 76, 76);
 					}
-				}
 
-				break;
-
-			case 3:
-				cout << "spawnShadeclaw" << endl;
-				if (!_isSpawnEnemy)
-				{
-					_em->spawnShadeclaw();
-
-					_isSpawnEnemy = true;
-				}
-
-				if (_isSpawnEnemy)
-				{
-					if (spawnAfterTime())
+					if (_platformMove >= -170 && _platformMove <= -120)
 					{
-						_spell = EDynusSpell::SPREAD_X2;
+						_rcPlatform[3] = RectMakeCenter(CENTER_X - 400, CENTER_Y + _platformMove + 260, 76, 76);
+					}
+
+					if (_platformMove >= -130 && _platformMove <= -80)
+					{
+						_rcPlatform[4] = RectMakeCenter(CENTER_X + 140, CENTER_Y + _platformMove + 320, 76, 76);
+					}
+
+					if (_platformMove >= -90 && _platformMove <= -40)
+					{
+						_rcPlatform[5] = RectMakeCenter(CENTER_X + 280, CENTER_Y + _platformMove + 330, 76, 76);
+					}
+
+					if (_platformMove >= -50 && _platformMove <= 0)
+					{
+						_rcPlatform[6] = RectMakeCenter(CENTER_X + 400, CENTER_Y + _platformMove + 320, 76, 76);
+
+						_isPlatformUp = false;
+					}
+				}*/
+
+				//if (!_isPlatformUp)
+				//{
+				switch (_rndPattern)
+				{
+				case 0:
+					bulletFire();
+
+					if (_pa1StartPosIdx < 0)
+					{
 						_curAni->AniStop();
 						_curImg = _spellImg;
 						_curAni = _spellAni;
@@ -552,13 +560,109 @@ void Dynus::update(void)
 						_pa1StartPosIdx = 6;
 						_pa2StartPosIdx = 3;
 						_pa3StartPosIdx = 2;
+						_isSpawnEnemy = false;
+						if (_rndPattern == 0)
+						{
+							_rndPattern = RND->getFromIntTo(1, 3);
+						}
 					}
+
+					break;
+
+				case 1:
+					spreadEllipse();
+
+					if (_pa2StartPosIdx < 0)
+					{
+						_curAni->AniStop();
+						_curImg = _spellImg;
+						_curAni = _spellAni;
+						_curAni->setPlayFrame(0, 69, false, false);
+						_curAni->AniStart();
+						_bulletCount = 0;
+						_pa1StartPosIdx = 6;
+						_pa2StartPosIdx = 3;
+						_pa3StartPosIdx = 2;
+						_isSpawnEnemy = false;
+						_rndPattern = RND->getFromIntTo(0, 3);
+					
+						if (_rndPattern == 1)
+						{
+							_rndPattern = RND->getFromIntTo(2, 3);
+						}
+					}
+
+					break;
+
+				case 2:
+					beamFire();
+
+					if (_pa3StartPosIdx < 0)
+					{
+						_curAni->AniStop();
+						_curImg = _spellImg;
+						_curAni = _spellAni;
+						_curAni->setPlayFrame(0, 69, false, false);
+						_curAni->AniStart();
+						_bulletCount = 0;
+						_pa1StartPosIdx = 6;
+						_pa2StartPosIdx = 3;
+						_pa3StartPosIdx = 2;
+						_isSpawnEnemy = false;
+
+						_rndPattern = RND->getFromIntTo(0, 3);
+
+						if (_rndPattern == 2)
+						{
+							_rndPattern = RND->getFromIntTo(0, 1);
+						}
+					}
+
+					break;
+
+				case 3:
+					if (!_isSpawnEnemy)
+					{
+						_em->spawnShadeclaw();
+
+						_isSpawnEnemy = true;
+					}
+
+					else
+					{
+						_afterSpawnCount++;
+
+						if (_afterSpawnCount > 400)
+						{
+							_curAni->AniStop();
+							_curImg = _spellImg;
+							_curAni = _spellAni;
+							_curAni->setPlayFrame(0, 69, false, false);
+							_curAni->AniStart();
+							_bulletCount = 0;
+							_pa1StartPosIdx = 6;
+							_pa2StartPosIdx = 3;
+							_pa3StartPosIdx = 2;
+
+							_rndPattern = RND->getFromIntTo(0, 3);
+
+							if (_rndPattern == 3)
+							{
+								_rndPattern = RND->getFromIntTo(0, 2);
+							}
+
+							_afterSpawnCount = 0;
+
+						}
+					}
+
+					break;
 				}
 
 				break;
-			}
 
-			break;
+				//}
+			}
 		}
 
 		break;
@@ -612,42 +716,20 @@ void Dynus::update(void)
 		_hp -= 1000;
 	}
 
-	if (KEYMANAGER->isOnceKeyDown('B'))
-	{
-		_phase = EDynusPhase::SECOND;
-		_spell = EDynusSpell::SPAWN;
-	}
-
-	if (KEYMANAGER->isOnceKeyDown('N'))
-	{
-		_phase = EDynusPhase::STAR;
-		_spell = EDynusSpell::STAR;
-	}
-
-	if (KEYMANAGER->isOnceKeyDown('M'))
-	{
-		_phase = EDynusPhase::THIRD;
-	}
-
 	_curAni->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);
-
-	/*_breatheAni->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);
-	_spellAni->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);*/
 
 	_bullet->update();
 	_beam->update();
 	collision();
 
-	if (_state == EDynusState::SPELL && _phase == EDynusPhase::SECOND && _spell == EDynusSpell::SPAWN)
+	/*if (_state == EDynusState::SPELL && _phase == EDynusPhase::SECOND && _secondP == ESecondPhase::SPAWN)
 	{
 		if (_isSpawnEnemy && spawnAfterTime())
 		{
-			_spell = EDynusSpell::SPREAD_X2;
+			_spell = EDynusSpell::SPREAD_X;
 			_pa1StartPosIdx = 6;
 		}
-	}
-
-	cout << _curAni->getNowPlayIdx() << endl;
+	}*/
 
 	if (_curAni->getNowPlayIdx() == 69)
 	{
@@ -673,7 +755,7 @@ void Dynus::render(void)
 	sprintf_s(bossHpRate, "%d %s %d", static_cast<int>(_hp), "/", static_cast<int>(_maxHp));
 
 	FONTMANAGER->textOut(getMemDC(), CENTER_X - 10, CENTER_Y + 230, "배달의민족 을지로체",
-		20, 500, "Dynus", strlen("Dynus"), RGB(255, 255, 255));
+		20, 500, "다이너스", strlen("다이너스"), RGB(255, 255, 255));
 	FONTMANAGER->textOut(getMemDC(), CENTER_X - 30, CENTER_Y + 250, "배달의민족 을지로체",
 		15, 400, bossHpRate, strlen(bossHpRate), RGB(255, 255, 255));
 
@@ -689,18 +771,15 @@ void Dynus::draw(void)
 {
 	IMAGEMANAGER->render("DynusWing", getMemDC(), _x + 210, _y + 10);
 
-	//if (_spell == EDynusSpell::SPREAD_X)
-	//{
-		_curImg->aniRender(getMemDC(), _x, _y, _curAni);
-	//}
-
+	_curImg->aniRender(getMemDC(), _x, _y, _curAni);
+	
 	for (int i = 0; i < PA1_STARTPOS_NUM_1; i++)
 	{
 		for (int j = 0; j < PA1_STARTPOS_NUM_2; j++)
 		{
 			if (i == _pa1StartPosIdx)
 			{
-				if (_state == EDynusState::SPELL && (_spell == EDynusSpell::SPREAD_X || _spell == EDynusSpell::SPREAD_X2))
+				if (_state == EDynusState::SPELL && (_firstP == EFirstPhase::SPREAD_X || _starP == EStarPhase::SPREAD_X || _rndPattern == 0))
 				{
 					if (_k < 1.5f)
 					{
@@ -713,6 +792,25 @@ void Dynus::draw(void)
 						IMAGEMANAGER->findImage("DynusBulletPortal")->getHeight() * _k,
 						0, 0,
 						22, 26);
+
+					_aftetKCount++;
+
+					if (_aftetKCount > 10)
+					{
+						if (_k > 0.0f)
+						{
+							_k -= 0.01f;
+						}
+
+						IMAGEMANAGER->render("DynusBulletPortal", getMemDC(),
+							_rcPa1Start[i][j].left + 7, _rcPa1Start[i][j].top + 7,
+							IMAGEMANAGER->findImage("DynusBulletPortal")->getWidth() * _k,
+							IMAGEMANAGER->findImage("DynusBulletPortal")->getHeight() * _k,
+							0, 0,
+							22, 26);
+
+						_aftetKCount = 0;
+					}
 				}
 			}
 		}
@@ -724,7 +822,7 @@ void Dynus::draw(void)
 		{
 			if ((i - 1) == _pa2StartPosIdx)
 			{
-				if (_state == EDynusState::SPELL && _spell == EDynusSpell::SPREAD_ELLIPSE)
+				if (_state == EDynusState::SPELL && (_firstP == EFirstPhase::SPREAD_ELLIPSE || _rndPattern == 1))
 				{
 					if (_k < 1.5f)
 					{
@@ -781,6 +879,7 @@ void Dynus::draw(void)
 			DrawRectMake(getMemDC(), _rcPa3Start[i]);
 		}
 
+		DrawRectMake(getMemDC(), _player->getPlayerRC());
 
 		SelectObject(getMemDC(), oldBrush);
 		DeleteObject(myBrush);
@@ -789,91 +888,35 @@ void Dynus::draw(void)
 
 void Dynus::drawPlatform(void)
 {
-	//for (int i = 0; i < PLATFORM_NUM; i++)
-	//{
-	//	//DrawRectMake(getMemDC(), _rcPlatform[i]);
-	//	 
-	//	if (_phase == EDynusPhase::STAR)
-	//	{
-	//		if (_spell == EDynusSpell::STAR)
-	//		{
-	//			IMAGEMANAGER->render("DynusJumpPlatform", getMemDC(), _rcPlatform[i].left, _rcPlatform[i].top);
-	//		}
-	//	}
-	//}
-
 	if (_phase == EDynusPhase::STAR)
 	{
-		if (_spell == EDynusSpell::STAR)
+		if (_starP == EStarPhase::STAR)
 		{
-			switch (_spell)
+			switch (_starP)
 			{
-			case EDynusSpell::STAR:
+			case EStarPhase::STAR:
 
-				cout << "star" << endl;
 
-				if (_platformMove > -290)
+				drawGuardMine();
+
+				for (int i = 0; i < 7; i++)
 				{
-					_platformMove -= 1.7f;
-
-					
-					for (int i = 0; i < PLATFORM_NUM; i++)
+					if (_rcPlatform[i].left == NULL)
 					{
-						IMAGEMANAGER->render("DynusJumpPlatform", getMemDC(), _rcPlatform[i].left, _rcPlatform[i].top);
-					}
-					
-
-					if (_platformMove >= -50)
-					{
-						_rcPlatform[0] = RectMakeCenter(CENTER_X, CENTER_Y + _platformMove + 100, 76, 76);
-						_isPlatformUp[0] = true;
+						continue;
 					}
 
-					if (_platformMove >= -90)
-					{
-						_rcPlatform[1] = RectMakeCenter(CENTER_X - 140, _platformMove > -40 ? CENTER_Y + 150 : CENTER_Y + _platformMove + 190, 76, 76);
-						_isPlatformUp[1] = true;
-
-					}
-
-					if (_platformMove >= -130)
-					{
-						_rcPlatform[2] = RectMakeCenter(CENTER_X - 260, _platformMove > -80 ? CENTER_Y + 90 : CENTER_Y + _platformMove + 170, 76, 76);
-						_isPlatformUp[2] = true;
-
-					}
-
-					if (_platformMove >= -170)
-					{
-						_rcPlatform[3] = RectMakeCenter(CENTER_X - 400, _platformMove > -120 ? CENTER_Y + 140 : CENTER_Y + _platformMove + 260, 76, 76);
-						_isPlatformUp[3] = true;
-
-					}
-
-					if (_platformMove >= -210)
-					{
-						_rcPlatform[4] = RectMakeCenter(CENTER_X + 140, _platformMove > -160 ? CENTER_Y + 160 : CENTER_Y + _platformMove + 320, 76, 76);
-						_isPlatformUp[4] = true;
-
-					}
-
-					if (_platformMove >= -250)
-					{
-						_rcPlatform[5] = RectMakeCenter(CENTER_X + 280, _platformMove > -200 ? CENTER_Y + 130 : CENTER_Y + _platformMove + 330, 76, 76);
-						_isPlatformUp[5] = true;
-
-					}
-
-					if (_platformMove >= -290)
-					{
-						_rcPlatform[6] = RectMakeCenter(CENTER_X + 400, _platformMove > -240 ? CENTER_Y + 80 : CENTER_Y + _platformMove + 320, 76, 76);
-						_isPlatformUp[6] = true;
-
-					}
+					IMAGEMANAGER->render("DynusJumpPlatform", getMemDC(), _rcPlatform[i].left, _rcPlatform[i].top);
 				}
 			}
 		}
 	}
+}
+
+void Dynus::drawGuardMine(void)
+{
+	IMAGEMANAGER->render("GuardMine", getMemDC(), _rcGuardMine1.left, _rcGuardMine1.top);
+	IMAGEMANAGER->render("GuardMine", getMemDC(), _rcGuardMine2.left, _rcGuardMine2.top);
 }
 
 void Dynus::bulletFire()
@@ -882,15 +925,11 @@ void Dynus::bulletFire()
 	{
 		for (int j = 0; j < PA1_STARTPOS_NUM_2; j++)
 		{
-			
-				float xOffset = j * 15.0f;
-
-				_bullet->fire((_rcPa1Start[_pa1StartPosIdx][j].left + _rcPa1Start[_pa1StartPosIdx][j].right) / 2,
+			_bullet->fire((_rcPa1Start[_pa1StartPosIdx][j].left + _rcPa1Start[_pa1StartPosIdx][j].right) / 2,
+				(_rcPa1Start[_pa1StartPosIdx][j].bottom + _rcPa1Start[_pa1StartPosIdx][j].top) / 2,
+				getAngle((_rcPa1Start[_pa1StartPosIdx][j].left + _rcPa1Start[_pa1StartPosIdx][j].right) / 2,
 					(_rcPa1Start[_pa1StartPosIdx][j].bottom + _rcPa1Start[_pa1StartPosIdx][j].top) / 2,
-					getAngle((_rcPa1Start[_pa1StartPosIdx][j].left + _rcPa1Start[_pa1StartPosIdx][j].right) / 2,
-						(_rcPa1Start[_pa1StartPosIdx][j].bottom + _rcPa1Start[_pa1StartPosIdx][j].top) / 2,
-						_player->getPlayerPosition().x, _player->getPlayerPosition().y) + xOffset * 0.01f, 4.0f);
-			
+					_player->getPlayerPosition().x, _player->getPlayerPosition().y) + j * 15.0f * 0.01f, 4.0f);
 		}
 		
 		_bulletCount++;
@@ -948,7 +987,7 @@ void Dynus::beamFire(void)
 	if (turnCountFire3() && _pa3StartPosIdx > -1)
 	{
 		_beam->fire((_rcPa3Start[_pa3StartPosIdx].left + _rcPa3Start[_pa3StartPosIdx].right) / 2,
-			(_rcPa3Start[_pa3StartPosIdx].bottom + _rcPa3Start[_pa3StartPosIdx].top) / 2, speed, _pa3StartPosIdx);
+			(_rcPa3Start[_pa3StartPosIdx].bottom + _rcPa3Start[_pa3StartPosIdx].top) / 2, speed);
 
 		_pa3StartPosIdx--;
 	}
@@ -1012,6 +1051,7 @@ bool Dynus::turnCountFire1(void)
 	if (_bulletTurnCount1 + _turnCount1 <= TIMEMANAGER->getWorldTime())
 	{
 		_turnCount1 = TIMEMANAGER->getWorldTime();
+
 		_bulletTurnCount1 = 1.5f;
 
 		return true;
@@ -1038,7 +1078,7 @@ bool Dynus::turnCountFire3(void)
 	if (_bulletTurnCount3 + _turnCount3 <= TIMEMANAGER->getWorldTime())
 	{
 		_turnCount3 = TIMEMANAGER->getWorldTime();
-		_bulletTurnCount3 = 1.5f;
+		_bulletTurnCount3 = 0.5f;
 
 		return true;
 	}

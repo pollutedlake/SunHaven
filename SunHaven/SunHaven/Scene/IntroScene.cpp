@@ -329,7 +329,6 @@ void IntroScene::update(void)
 			_count++;
 			_time = TIMEMANAGER->getWorldTime();
 		}*/
-		//cout << _lynn->getActionIdx() << endl;
 		_lynn->update();
 	}
 	else if (_cutIdx == 2)

@@ -20,6 +20,9 @@ private:
 
 	Player* _player;
 
+	float _patrolX;
+	float _patrolY;
+
 public:
 	HRESULT init(POINT position);
 	void release(void);

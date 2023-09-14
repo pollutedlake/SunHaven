@@ -162,6 +162,8 @@
     <ClCompile Include="Class\NPC\Lynn.cpp" />
     <ClCompile Include="Player\Fishing.cpp" />
     <ClCompile Include="Manager\DataManager.cpp" />
+    <ClCompile Include="Class\Boss\Dizzy.cpp" />
+    <ClCompile Include="Scene\DizzyScene.cpp" />
     <ClCompile Include="Scene\MineScene.cpp" />
     <ClCompile Include="Scene\IntroScene.cpp" />
     <ClCompile Include="Class\Data\EnemyData.cpp" />
@@ -230,6 +232,8 @@
     <ClInclude Include="Class\Data\EnemyData.h" />
     <ClInclude Include="Player\Fishing.h" />
     <ClInclude Include="Manager\DataManager.h" />
+    <ClInclude Include="Class\Boss\Dizzy.h" />
+    <ClInclude Include="Scene\DizzyScene.h" />
     <ClInclude Include="inc\FMOD\fmod.hpp" />
     <ClInclude Include="Class\Object\Grass.h" />
     <ClInclude Include="Class\Data\ItemData.h" />
