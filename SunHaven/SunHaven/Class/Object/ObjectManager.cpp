@@ -1,6 +1,5 @@
 #include "Stdafx.h"
 #include "ObjectManager.h"
-#include "../Camera.h"
 
 HRESULT ObjectManager::init(string sceneName)
 {
@@ -61,19 +60,17 @@ queue<pair<string, POINT>> ObjectManager::updateObjects(void)
 	queue<pair<string, POINT>> dropItems;
 	for (_viObject = _vObject.begin(); _viObject != _vObject.end();)
 	{
-		(*_viObject)->updateCameraPos(_camera->worldToCameraX((*_viObject)->getTilePos().x * 36 + 18), _camera->worldToCameraY((*_viObject)->getTilePos().y * 36 + 18));
+		(*_viObject)->updateCameraPos(CAMERA->worldToCameraX((*_viObject)->getTilePos().x * 36 + 18), CAMERA->worldToCameraY((*_viObject)->getTilePos().y * 36 + 18));
 		(*_viObject)->update();
 		if ((*_viObject)->getCurHP() <= 0)
 		{
 			queue<string> dropItem = (*_viObject)->dropItem();
-			cout << "Drop!" << endl;
 			while (!dropItem.empty())
 			{
 				dropItems.push(make_pair(dropItem.front(), PointMake((*_viObject)->getTilePos().x * 36 + RND->getFromIntTo(0, 36) - 18, 
 					(*_viObject)->getTilePos().y * 36 + RND->getFromIntTo(0, 36) - 18)));
 				dropItem.pop();
 			}
-			cout << "DropEnd!" << endl;
 			(*_viObject)->release();
 			delete(*_viObject);
 			_viObject = _vObject.erase(_viObject);

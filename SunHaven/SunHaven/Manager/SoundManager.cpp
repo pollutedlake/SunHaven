@@ -62,16 +62,17 @@ void SoundManager::update(void)
 
 void SoundManager::addSound(string keyName, string soundName, bool background, bool loop)
 {
+	FMOD_RESULT fResult;
 	if (loop)
 	{
 		if (background)
 		{
-			_system->createStream(soundName.c_str(), FMOD_LOOP_NORMAL, 0, &_sound[_mTotalSounds.size()]);
+			fResult = _system->createStream(soundName.c_str(), FMOD_LOOP_NORMAL, 0, &_sound[_mTotalSounds.size()]);
 		}
 		
 		else
 		{
-			_system->createSound(soundName.c_str(), FMOD_LOOP_NORMAL, 0, &_sound[_mTotalSounds.size()]);
+			fResult = _system->createSound(soundName.c_str(), FMOD_LOOP_NORMAL, 0, &_sound[_mTotalSounds.size()]);
 
 			
 		}
@@ -80,9 +81,12 @@ void SoundManager::addSound(string keyName, string soundName, bool background, b
 	else
 	{
 		
-		_system->createSound(soundName.c_str(), FMOD_DEFAULT, 0, &_sound[_mTotalSounds.size()]);
+		fResult = _system->createSound(soundName.c_str(), FMOD_DEFAULT, 0, &_sound[_mTotalSounds.size()]);
 	}
-
+	if (fResult != FMOD_OK)
+	{
+		cout << keyName << endl;
+	}
 	_mTotalSounds.insert(make_pair(keyName, &_sound[_mTotalSounds.size()]));
 
 }
@@ -97,7 +101,11 @@ void SoundManager::play(string keyName, float volume)
 	{
 		if (keyName == iter->first)
 		{
-			_system->playSound(FMOD_CHANNEL_FREE, *iter->second, false, &_channel[count]);
+			FMOD_RESULT fResult = _system->playSound(FMOD_CHANNEL_FREE, *iter->second, false, &_channel[count]);
+			if (fResult != FMOD_OK)
+			{
+				cout << keyName << endl;
+			}
 			_channel[count]->setVolume(volume);
 			break;
 		}

@@ -89,8 +89,16 @@
     <ClCompile Include="Player\Skill\Skill.cpp" />
     <ClCompile Include="Class\Object\Tree.cpp" />
     <ClCompile Include="WinMain.cpp" />
+<<<<<<< HEAD
+    <ClCompile Include="Scene\DizzyScene.cpp" />
+    <ClCompile Include="Class\Boss\Dizzy.cpp" />
+=======
     <ClCompile Include="Class\Skill\SkillManager.cpp" />
+<<<<<<< HEAD
+>>>>>>> main
+=======
     <ClCompile Include="Manager\DataManager.cpp" />
+<<<<<<< HEAD
     <ClCompile Include="Scene\IntroScene.cpp" />
     <ClCompile Include="Class\NPC\Lynn.cpp" />
     <ClCompile Include="Class\Data\EnemyData.cpp" />
@@ -98,6 +106,10 @@
     <ClCompile Include="Class\NPC\Lynn.cpp" />
     <ClCompile Include="Class\Data\EnemyData.cpp" />
     <ClCompile Include="Scene\MineScene.cpp" />
+    <ClCompile Include="Player\Fishing.cpp" />
+=======
+>>>>>>> main
+>>>>>>> JSJ
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Class\UI\Buttons.h" />
@@ -165,12 +177,24 @@
     <ClInclude Include="Player\Skill\Skill.h" />
     <ClInclude Include="Class\Object\Tree.h" />
     <ClInclude Include="Class\UI\UI.h" />
+<<<<<<< HEAD
+    <ClInclude Include="Scene\DizzyScene.h" />
+    <ClInclude Include="Class\Boss\Dizzy.h" />
+=======
     <ClInclude Include="Class\Skill\SkillManager.h" />
+<<<<<<< HEAD
+>>>>>>> main
+=======
     <ClInclude Include="Manager\DataManager.h" />
+<<<<<<< HEAD
     <ClInclude Include="Scene\IntroScene.h" />
     <ClInclude Include="Class\NPC\Lynn.h" />
     <ClInclude Include="Class\Data\EnemyData.h" />
     <ClInclude Include="Scene\MineScene.h" />
+    <ClInclude Include="Player\Fishing.h" />
+=======
+>>>>>>> main
+>>>>>>> JSJ
   </ItemGroup>
   <ItemGroup>
     <Library Include="lib\FMOD\fmodex_vc.lib" />
@@ -182,6 +206,10 @@
     <Image Include="Shop_Bg_Collision.bmp" />
     <Image Include="MineMap.bmp" />
     <Image Include="MineMapCollision.bmp" />
+<<<<<<< HEAD
+=======
+    <Image Include="Mines.bmp" />
+>>>>>>> main
   </ItemGroup>
   <ItemGroup>
     <None Include="Debug\SunHaven.pch" />
@@ -209,8 +237,14 @@
     <Text Include="Debug\SunHaven.log" />
     <Text Include="FarmMap.txt" />
     <Text Include="FarmMapObject.txt" />
+<<<<<<< HEAD
     <Text Include="MineMap.txt" />
     <Text Include="MineMapObject.txt" />
     <Text Include="IntroText.txt" />
+=======
+    <Text Include="IntroText.txt" />
+    <Text Include="MineMap.txt" />
+    <Text Include="MineMapObject.txt" />
+>>>>>>> main
   </ItemGroup>
 </Project>

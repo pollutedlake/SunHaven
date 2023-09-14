@@ -17,8 +17,8 @@ HRESULT TitleScene::init(void)
     _isDone.set(0, true);
 
     SOUNDMANAGER->play("Main_Menu_Final", 0.5f);
-    _sound = 0;
-    
+    //_sound = 0;
+    _exPtMouse = _ptMouse;
     return S_OK;
 }
 
@@ -31,7 +31,6 @@ void TitleScene::update(void)
     _bgAlpha += 5.0f;
     if (_bgAlpha >= 255) _bgAlpha = 255;
 
-    // _yOffset 값에 따라 이미지를 위아래로 움직이도록 설정
     static float yOffsetDirection = 1.0f;
     _yOffset += 0.2f * yOffsetDirection;
 
@@ -99,9 +98,8 @@ void TitleScene::update(void)
     }
 
    
-    buttonSound();
+    //buttonSound();
     
-    cout << _sound << endl;
 
     SOUNDMANAGER->update();
 }
@@ -135,12 +133,18 @@ void TitleScene::render(void)
     {
         if (PtInRect(&_rc[i], _ptMouse))
         {
+            SOUNDMANAGER->play("E_titleButton", 1.0f);
             IMAGEMANAGER->GPFrameRender("TitleButton", getMemDC(),
                 50, 408 + i * 59, 2.2, 2,
                 IMAGEMANAGER->findGPImage("TitleButton")->getFrameX(), IMAGEMANAGER->findGPImage("TitleButton")->getFrameY(),
                 InterpolationModeNearestNeighbor, 0);
+            if (!PtInRect(&_rc[i], _exPtMouse))
+            {
+                SOUNDMANAGER->play("E_titleButton", 1.0f);
+            }
         }
     }
+    _exPtMouse = _ptMouse;
 
     if (_isDone.test(0))
     {

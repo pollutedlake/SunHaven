@@ -17,6 +17,8 @@ private:
 
 	int _sound;
 
+	POINT _exPtMouse;
+
 public:
 	HRESULT init(void);
 	void release(void);

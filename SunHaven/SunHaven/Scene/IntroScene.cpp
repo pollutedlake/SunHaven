@@ -176,6 +176,7 @@ HRESULT IntroScene::init(void)
 	_darkAlpha = 0;
 	_dialogState = HIDE;
 	_answerN = 0;
+	// SD : 인트로 린 집 배경음
 	return S_OK;
 }
 
@@ -189,31 +190,25 @@ void IntroScene::update(void)
 {
 	if(_cutIdx == 0)
 	{
-		//_time += TIMEMANAGER->getElapsedTime();
 		_lynn->update();
 		_cameraPos.x = _lynn->getX();
 		_cameraPos.y = _lynn->getY();
-		/*if (_time > 0.1f)
+		if (_count2 < 3)
 		{
-			_time = 0.0f;
-			_count++;*/
-			if (_count2 < 3)
+			if(_count > 8)
 			{
-				if(_count > 8)
-				{
-					_count = 0;
-					_count2++;
-				}
+				_count = 0;
+				_count2++;
 			}
-			else
+		}
+		else
+		{
+			if (_count > _lynnMom->getMaxFrameX())
 			{
-				if (_count > _lynnMom->getMaxFrameX())
-				{
-					_count = 0;
-					_count2 = 0;
-				}
+				_count = 0;
+				_count2 = 0;
 			}
-		//}
+		}
 		if (_changeCut)
 		{
 			_changeCutTime -= TIMEMANAGER->getElapsedTime() * 1000.0f;
@@ -224,6 +219,8 @@ void IntroScene::update(void)
 				_lynn->popAction();
 				_dialogIdx++;
 				_cutIdx++;
+				// SD : 인트로 린 집 배경음 꺼줘
+				// SD : 인트로 기차 배경음
 			}
 		}
 		if (_lynn->getActionIdx() == 5)
@@ -324,12 +321,6 @@ void IntroScene::update(void)
 				_changeCut = WINSIZE_X;
 			}
 		}
-		/*if (_time + 0.1f < TIMEMANAGER->getWorldTime())
-		{
-			_count++;
-			_time = TIMEMANAGER->getWorldTime();
-		}*/
-		//cout << _lynn->getActionIdx() << endl;
 		_lynn->update();
 	}
 	else if (_cutIdx == 2)
@@ -384,11 +375,6 @@ void IntroScene::update(void)
 				}
 			}
 		}
-		/*if (_time + 0.1f < TIMEMANAGER->getWorldTime())
-		{
-			_count++;
-			_time = TIMEMANAGER->getWorldTime();
-		}*/
 		_lynn->update();
 	}
 	if (_time + 0.1f < TIMEMANAGER->getWorldTime())
@@ -442,6 +428,7 @@ void IntroScene::update(void)
 					if (_dialogIdx > 23 && _cutIdx == 0)
 					{
 						_changeCut = true;
+						// SD : 씬 전환 소리
 						_dialogState = CLOSE;
 						_dialogIdx = 23;
 						_changeCutTime = WINSIZE_X;
@@ -568,6 +555,10 @@ void IntroScene::dialog(Dialog dialog)
 	}
 	if(dialog._letterN == dialog._dialog.length())
 	{
+		if (SOUNDMANAGER->isPlaySound("E_TextScroll3"))
+		{
+			SOUNDMANAGER->stop("E_TextScroll3");
+		}
 		if (_typingTime + 0.1f < TIMEMANAGER->getWorldTime())
 		{
 			_typingTime = TIMEMANAGER->getWorldTime();
@@ -614,6 +605,10 @@ void IntroScene::updateDialog()
 			{
 				_typingTime = TIMEMANAGER->getWorldTime();
 					_arrDialogs[_dialogIdx]._letterN++;
+				if(!SOUNDMANAGER->isPlaySound("E_TextScroll3"))
+				{
+					SOUNDMANAGER->play("E_TextScroll3", 1.0f);
+				}
 			}
 		}
 	break;
