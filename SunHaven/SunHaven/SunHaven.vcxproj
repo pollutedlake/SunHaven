@@ -317,6 +317,9 @@
     <Text Include="Debug\SunHaven.log" />
     <Text Include="FarmMap.txt" />
     <Text Include="FarmMapObject.txt" />
+    <Text Include="IntroText.txt" />
+    <Text Include="MineMap.txt" />
+    <Text Include="MineMapObject.txt" />
   </ItemGroup>
   <ItemGroup>
     <Object Include="Debug\Animation.obj" />
@@ -351,6 +354,8 @@
     <Image Include="DynusMapCollision.bmp" />
     <Image Include="FarmMap.bmp" />
     <Image Include="FarmMapCollision.bmp" />
+    <Image Include="MineMap.bmp" />
+    <Image Include="MineMapCollision.bmp" />
     <Image Include="Shop_Bg_Collision.bmp" />
   </ItemGroup>
   <ItemGroup>
