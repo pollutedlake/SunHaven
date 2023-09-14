@@ -300,6 +300,23 @@ HRESULT Resources::init(void)
 	// ====================
 	// Image
 	IMAGEMANAGER->addImage("ClockUI", "Resources/Images/UI/Clock.bmp", 69, 65, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("GrayBar", "Resources/Images/UI/GrayBar.bmp", 61, 7, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("GrayBarLT", "Resources/Images/UI/GrayBarLT.bmp", 2, 2, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("GrayBarLB", "Resources/Images/UI/GrayBarLB.bmp", 2, 2, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("GrayBarRT", "Resources/Images/UI/GrayBarRT.bmp", 2, 2, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("GrayBarRB", "Resources/Images/UI/GrayBarRB.bmp", 2, 2, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("RedBar", "Resources/Images/UI/RedBar.bmp", 61, 7, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("RedBarLT", "Resources/Images/UI/RedBarLT.bmp", 2, 2, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("RedBarLB", "Resources/Images/UI/RedBarLB.bmp", 2, 2, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("RedBarRT", "Resources/Images/UI/RedBarRT.bmp", 2, 2, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("RedBarRB", "Resources/Images/UI/RedBarRB.bmp", 2, 2, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("BlueBar", "Resources/Images/UI/BlueBar.bmp", 61, 7, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("BlueBarLT", "Resources/Images/UI/BlueBarLT.bmp", 2, 2, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("BlueBarLB", "Resources/Images/UI/BlueBarLB.bmp", 2, 2, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("BlueBarRT", "Resources/Images/UI/BlueBarRT.bmp", 2, 2, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("BlueBarRB", "Resources/Images/UI/BlueBarRB.bmp", 2, 2, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("HpIcon", "Resources/Images/UI/HpIcon.bmp", 10, 9, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("ManaIcon", "Resources/Images/UI/ManaIcon.bmp", 16, 16, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addGPFrameImage("DateBar", "Resources/Images/UI/DateBar.png",
 		0, 0,
 		1, 1,

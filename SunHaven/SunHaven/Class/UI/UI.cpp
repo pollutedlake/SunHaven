@@ -9,43 +9,22 @@ HRESULT UI::init(void)
 HRESULT UI::init(string sceneName)
 {
 	_sceneName = sceneName;
-	if (sceneName == "Farm")
+	_clock = IMAGEMANAGER->findImage("ClockUI");
+	_cursor = IMAGEMANAGER->findImage("Cursor");
+	_dateBar = IMAGEMANAGER->findGPImage("DateBar");
+	_timeBar = IMAGEMANAGER->findGPImage("TimeBar");
+	_upperRightBar = IMAGEMANAGER->findGPImage("UpperRightBar");
+	_goldIcon = IMAGEMANAGER->findImage("GoldIcon");
+	_ticketIcon = IMAGEMANAGER->findImage("TicketIcon");
+	_orbIcon = IMAGEMANAGER->findImage("OrbIcon");
+	_fishingNetIcon = IMAGEMANAGER->findImage("FishingNetIcon");
+	_barnAnimalsIcon = IMAGEMANAGER->findImage("BarnAnimalsIcon");
+	_skillTreeIcon = IMAGEMANAGER->findImage("SkillTreeIcon");
+	_questBookIcon = IMAGEMANAGER->findImage("QuestBookIcon");
+	_grayBar = IMAGEMANAGER->findImage("GrayBar");
+	for (int i = 0; i < 10; i++)
 	{
-		_clock = IMAGEMANAGER->findImage("ClockUI");
-		_cursor = IMAGEMANAGER->findImage("Cursor");
-		_dateBar = IMAGEMANAGER->findGPImage("DateBar");
-		_timeBar = IMAGEMANAGER->findGPImage("TimeBar");
-		_upperRightBar = IMAGEMANAGER->findGPImage("UpperRightBar");
-		_goldIcon = IMAGEMANAGER->findImage("GoldIcon");
-		_ticketIcon = IMAGEMANAGER->findImage("TicketIcon");
-		_orbIcon = IMAGEMANAGER->findImage("OrbIcon");
-		_fishingNetIcon = IMAGEMANAGER->findImage("FishingNetIcon");
-		_barnAnimalsIcon = IMAGEMANAGER->findImage("BarnAnimalsIcon");
-		_skillTreeIcon = IMAGEMANAGER->findImage("SkillTreeIcon");
-		_questBookIcon = IMAGEMANAGER->findImage("QuestBookIcon");
-		for (int i = 0; i < 10; i++)
-		{
-			_shortcutItemRC[i] = RectMake(WINSIZE_X / 2 - 176 + 36 * i, WINSIZE_Y - 80, 32, 32);
-		}
-	}
-	else if (sceneName == "Mine")
-	{
-		_clock = IMAGEMANAGER->findImage("ClockUI");
-		_cursor = IMAGEMANAGER->findImage("Cursor");
-		_dateBar = IMAGEMANAGER->findGPImage("DateBar");
-		_timeBar = IMAGEMANAGER->findGPImage("TimeBar");
-		_upperRightBar = IMAGEMANAGER->findGPImage("UpperRightBar");
-		_goldIcon = IMAGEMANAGER->findImage("GoldIcon");
-		_ticketIcon = IMAGEMANAGER->findImage("TicketIcon");
-		_orbIcon = IMAGEMANAGER->findImage("OrbIcon");
-		_fishingNetIcon = IMAGEMANAGER->findImage("FishingNetIcon");
-		_barnAnimalsIcon = IMAGEMANAGER->findImage("BarnAnimalsIcon");
-		_skillTreeIcon = IMAGEMANAGER->findImage("SkillTreeIcon");
-		_questBookIcon = IMAGEMANAGER->findImage("QuestBookIcon");
-		for (int i = 0; i < 10; i++)
-		{
-			_shortcutItemRC[i] = RectMake(WINSIZE_X / 2 - 176 + 36 * i, WINSIZE_Y - 80, 32, 32);
-		}
+		_shortcutItemRC[i] = RectMake(WINSIZE_X / 2 - 176 + 36 * i, WINSIZE_Y - 80, 32, 32);
 	}
 	return S_OK;
 }
@@ -68,18 +47,24 @@ void UI::update(void)
 
 void UI::render(void)
 {
-	if (_sceneName == "Farm")
-	{
-		showBasicUI();
-		for (int i = 0; i < 10; i++)
-		{
-			//IMAGEMANAGER->findImage("")
-		}
-	}
-	else if (_sceneName == "Mine")
-	{
-		showBasicUI();
-	}
+	showBasicUI();
+}
+
+void UI::renderBar(int x, int y, int width, int height, int alpha, string color)
+{
+	char key[256];
+	wsprintf(key, "%sBar", color.c_str());
+	IMAGEMANAGER->findImage(key)->alphaRender(getMemDC(), x, y + 2, width, height - 4, 0, 0, IMAGEMANAGER->findImage(key)->getWidth(), IMAGEMANAGER->findImage(key)->getHeight(), alpha);
+	IMAGEMANAGER->findImage(key)->alphaRender(getMemDC(), x + 2, y, width - 4, 2, 0, 0, IMAGEMANAGER->findImage(key)->getWidth(), IMAGEMANAGER->findImage(key)->getHeight(), alpha);
+	IMAGEMANAGER->findImage(key)->alphaRender(getMemDC(), x + 2, y + height - 2, width - 4, 2, 0, 0, IMAGEMANAGER->findImage(key)->getWidth(), IMAGEMANAGER->findImage(key)->getHeight(), alpha);
+	wsprintf(key, "%sBarLT", color.c_str());
+	IMAGEMANAGER->findImage(key)->alphaRender(getMemDC(), x, y, alpha);
+	wsprintf(key, "%sBarRT", color.c_str());
+	IMAGEMANAGER->findImage(key)->alphaRender(getMemDC(), x + width - 2, y, alpha);
+	wsprintf(key, "%sBarLB", color.c_str());
+	IMAGEMANAGER->findImage(key)->alphaRender(getMemDC(), x, y + height - 2, alpha);
+	wsprintf(key, "%sBarRB", color.c_str());
+	IMAGEMANAGER->findImage(key)->alphaRender(getMemDC(), x + width - 2, y + height - 2, alpha);
 }
 
 void UI::showBasicUI()
@@ -110,6 +95,22 @@ void UI::showBasicUI()
 	_questBookIcon->render(getMemDC(), WINSIZE_X - _questBookIcon->getWidth() * 1.5 - 5, 95, _questBookIcon->getWidth() * 1.5, _questBookIcon->getHeight() * 1.5,
 		0, 0, _questBookIcon->getWidth(), _questBookIcon->getHeight());
 	FONTMANAGER->textOut(getMemDC(), WINSIZE_X - 40, 100, "배달의민족 을지로체", 14, 100, "퀘스트 [L]", strlen("퀘스트 [L]"), RGB(255, 255, 255));
+	SetTextAlign(getMemDC(), TA_LEFT);
+	renderBar(WINSIZE_X / 2 - 300, WINSIZE_Y - 45, 560, 40, 100, "Gray");
+	renderBar(WINSIZE_X / 2 - 290, WINSIZE_Y - 40, 100, 30, 255, "Gray");
+	SetTextAlign(getMemDC(), TA_CENTER);
+	FONTMANAGER->textOut(getMemDC(), WINSIZE_X / 2 - 240, WINSIZE_Y - 35, "배달의민족 을지로체", 20, 100, "레벨 160", strlen("레벨 160"), RGB(255, 255, 255));
+	renderBar(WINSIZE_X / 2 - 170, WINSIZE_Y - 40, 200, 30, 255, "Gray");
+	IMAGEMANAGER->render("HpIcon", getMemDC(), WINSIZE_X / 2 - 165, WINSIZE_Y - 35, 20, 20, 
+		0, 0, IMAGEMANAGER->findImage("HpIcon")->getWidth(), IMAGEMANAGER->findImage("HpIcon")->getHeight());
+	renderBar(WINSIZE_X / 2 + 50, WINSIZE_Y - 40, 200, 30, 255, "Gray");
+	IMAGEMANAGER->render("ManaIcon", getMemDC(), WINSIZE_X / 2 + 50, WINSIZE_Y - 40, 30, 30,
+		0, 0, IMAGEMANAGER->findImage("ManaIcon")->getWidth(), IMAGEMANAGER->findImage("ManaIcon")->getHeight());
+	renderBar(WINSIZE_X / 2 + 80, WINSIZE_Y - 35, 165, 20, 255, "Blue");
+	renderBar(WINSIZE_X / 2 - 140, WINSIZE_Y - 35, 165, 20, 255, "Red");
+	FONTMANAGER->textOut(getMemDC(), WINSIZE_X / 2 + 162, WINSIZE_Y - 35, "배달의민족 을지로체", 20, 100, "30/30", strlen("30/30"), RGB(255, 255, 255));
+	FONTMANAGER->textOut(getMemDC(), WINSIZE_X / 2 - 58, WINSIZE_Y - 35, "배달의민족 을지로체", 20, 100, "30/30", strlen("30/30"), RGB(255, 255, 255));
+
 	SetTextAlign(getMemDC(), TA_LEFT);
 }
 
