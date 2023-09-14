@@ -53,8 +53,8 @@ void ItemData::toolSetUp(tagTool* qTool)
 			qTool->attackSpeed = intType[3];
 			qTool->requireLv = intType[4];
 			qTool->time = intType[5];
-			qTool->gold = intType[6];
-			qTool->sellGold = intType[7];
+			//qTool->gold = intType[6];
+			qTool->sellGold = intType[6];
 
 			free(intType);
 			_tool.push(qTool);
@@ -297,4 +297,10 @@ void ItemData::consumableSetUp(tagConsumable* qConsumable)
 			_consumable.push(qConsumable);
 		}
 	}
+}
+
+void ItemData::getItem(string addItemName, string addItemArrIndex)
+{
+	
+	
 }

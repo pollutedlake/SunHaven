@@ -3,10 +3,6 @@
 
 HRESULT TownScene::init(void)
 {
-	IMAGEMANAGER->addImage("435435",
-		"Resources/Images/Player/fishing_greatzone.bmp",
-		10, 20, true, RGB(255, 0, 255));
-
     return S_OK;
 }
 

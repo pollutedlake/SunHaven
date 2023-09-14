@@ -17,6 +17,7 @@ struct tagBullet
 	float angle;
 	float speed;
 	bool fire;
+	bool isLeft;
 };
 
 class Bullet : public GameNode
@@ -97,3 +98,40 @@ public:
 
 
 
+// 파이어볼
+class Fireball : public GameNode
+{
+private:
+	vector<tagBullet> _vBullet;
+	vector<tagBullet>::iterator _viBullet;
+
+	typedef vector<tagBullet>::iterator iterBullet;	// 협업 시 재 정의
+	//tagBullet bullet;
+	float _range;
+	float _bulletMax;
+
+	bool _isLeft;
+
+	int _currentFrameX;
+	int _currentFrameY;
+
+	float _worldTimeCount;
+
+	int _index;
+
+public:
+	HRESULT init(int bulletMax, float range);
+	void release(void);
+	void update(float x, float y);
+	void render(void);
+
+	void fire(float x, float y, bool isLeft);
+	void draw(void);
+	void move(float x, float y);
+	void RemoveBullet(int arrNum);
+
+	vector<tagBullet> getBullet(void) { return _vBullet; }
+
+	Fireball() {}
+	~Fireball() {}
+};

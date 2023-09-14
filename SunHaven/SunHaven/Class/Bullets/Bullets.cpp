@@ -262,6 +262,7 @@ void Beam::move(void)
 	}
 }
 
+
 HRESULT Bullet::init(const char* imageName, int bulletMax, float range)
 {
 	_imageName = imageName;
@@ -384,5 +385,136 @@ bool Bullet::spawningTime(void)
 
 void Bullet::removeBullet(int arrNum)
 {
+	_vBullet.erase(_vBullet.begin() + arrNum);
+}
+
+
+//===================================================//
+
+
+HRESULT Fireball::init(int bulletMax, float range)
+{
+	_range = range;
+	_bulletMax = bulletMax;
+	
+
+
+	return S_OK;
+}
+
+void Fireball::release(void)
+{
+	for (_viBullet = _vBullet.begin();
+		_viBullet != _vBullet.end();
+		++_viBullet)
+	{
+		SAFE_DELETE(_viBullet->img);
+	}
+
+	_vBullet.clear();
+}
+
+void Fireball::update(float x, float y)
+{
+	move(x, y);
+}
+
+void Fireball::render(void)
+{
+	draw();
+}
+
+void Fireball::fire(float x, float y, bool isLeft)
+{
+	if (_bulletMax <= _vBullet.size()) return;
+
+	tagBullet bullet;
+	ZeroMemory(&bullet, sizeof(tagBullet));
+	bullet.img = new GImage;
+
+	bullet.img->init("Resources/Images/Player/Fireball.bmp",
+		288, 40, 6, 2, true, RGB(255, 0, 255));
+	bullet.speed = 10.0f;
+	bullet.x = bullet.fireX = x;
+	bullet.y = bullet.fireY = y;
+	bullet.img->setFrameX(0);
+
+	bullet.isLeft = _isLeft = isLeft;
+
+	if (bullet.isLeft) bullet.img->setFrameY(1);
+	else bullet.img->setFrameY(0);
+	bullet.rc = RectMakeCenter(bullet.x, bullet.y,
+		bullet.img->getFrameWidth(), bullet.img->getFrameHeight());
+
+	_vBullet.push_back(bullet);
+}
+
+void Fireball::draw(void)
+{
+	for (_viBullet = _vBullet.begin(); _viBullet != _vBullet.end(); ++_viBullet)
+	{
+		_viBullet->img->frameRender(getMemDC(), _viBullet->rc.left,
+			_viBullet->rc.top, _viBullet->img->getFrameX(),
+			_viBullet->img->getFrameY());
+		_viBullet->count++;
+
+
+		if (_viBullet->count % 4 == 0)
+		{
+			if (_viBullet->isLeft)
+			{
+				_viBullet->img->setFrameX(_viBullet->img->getFrameX() - 1);
+
+				if (_viBullet->img->getFrameX() <= 0)
+				{
+					_viBullet->img->setFrameX(_viBullet->img->getMaxFrameX());
+				}
+
+				_viBullet->count = 0;
+			}
+			else
+			{
+				_viBullet->img->setFrameX(_viBullet->img->getFrameX() + 1);
+
+				if (_viBullet->img->getFrameX() >= _viBullet->img->getMaxFrameX())
+				{
+					_viBullet->img->setFrameX(0);
+				}
+
+				_viBullet->count = 0;
+			}
+			
+		}
+	}
+}
+
+void Fireball::move(float x, float y)
+{
+	for (_viBullet = _vBullet.begin(); _viBullet != _vBullet.end();)
+	{
+		if (_viBullet->isLeft) _viBullet->x -= _viBullet->speed;
+		else _viBullet->x += _viBullet->speed;
+
+		_viBullet->rc =
+			RectMakeCenter(WINSIZE_X / 2 - (x - _viBullet->x),
+				WINSIZE_Y / 2 - (y - _viBullet->y),
+				_viBullet->img->getFrameWidth(), _viBullet->img->getFrameHeight());
+
+		if (_range < getDistance(_viBullet->fireX, _viBullet->fireY,
+			_viBullet->x, _viBullet->y))
+		{
+			SAFE_DELETE(_viBullet->img);
+			_viBullet = _vBullet.erase(_viBullet);
+		}
+		else
+		{
+			++_viBullet;
+		}
+	}
+}
+
+void Fireball::RemoveBullet(int arrNum)
+{
+	SAFE_DELETE(_vBullet[arrNum].img);
 	_vBullet.erase(_vBullet.begin() + arrNum);
 }

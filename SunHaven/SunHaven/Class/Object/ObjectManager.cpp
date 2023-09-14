@@ -64,12 +64,14 @@ queue<pair<string, POINT>> ObjectManager::updateObjects(void)
 		if ((*_viObject)->getCurHP() <= 0)
 		{
 			queue<string> dropItem = (*_viObject)->dropItem();
+			cout << "Drop!" << endl;
 			while (!dropItem.empty())
 			{
 				dropItems.push(make_pair(dropItem.front(), PointMake((*_viObject)->getTilePos().x * 36 + RND->getFromIntTo(0, 36) - 18, 
 					(*_viObject)->getTilePos().y * 36 + RND->getFromIntTo(0, 36) - 18)));
 				dropItem.pop();
 			}
+			cout << "DropEnd!" << endl;
 			(*_viObject)->release();
 			delete(*_viObject);
 			_viObject = _vObject.erase(_viObject);
