@@ -8,6 +8,8 @@ Enemy::Enemy(void) : _rc(RectMake(0, 0, 0, 0)),
 					_x(0.0f),
 					_y(0.0f),
 					_worldTimeCount(0.0f),
+					_waitTime(0.0f),
+					_waitCount(0.0f),
 					_timeCount(0.0f),
 					_fireCount(0.0f),
 					_bulletFireCount(0.0f),
@@ -50,7 +52,6 @@ void Enemy::release(void)
 
 void Enemy::update(void)
 {
-	//cout << "1111111" << endl;
 
 	//move();
 	//collisionCheck();
@@ -64,7 +65,6 @@ void Enemy::render(void)
 
 void Enemy::move(void)
 {
-	//cout << "1111111" << endl;
 }
 
 void Enemy::targetOn(void)

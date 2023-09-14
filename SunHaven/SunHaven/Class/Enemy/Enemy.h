@@ -35,6 +35,7 @@ protected:
 	float _timeCount;
 	float _worldTimeCount;
 	float _waitTime;
+	float _waitCount;
 
 	float _fireCount;
 	float _bulletFireCount;

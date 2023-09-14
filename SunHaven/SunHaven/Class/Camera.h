@@ -1,7 +1,7 @@
 #pragma once
-#include "../FrameWork/GameNode/GameNode.h"
+#include "../FrameWork/SingletonBase/SingletonBase.h"
 
-class Camera : public GameNode
+class Camera : public SingletonBase<Camera>
 {
 private:
 	POINT _position;
@@ -20,6 +20,7 @@ public:
 	void setLimitRight(int limitRight) { _limitRC.right = limitRight; }
 	void setLimitBottom(int limitBottom) { _limitRC.bottom = limitBottom; }
 
+	RECT worldToCameraRect(RECT rc);
 	POINT worldToCamera(POINT point);
 	POINT cameraToWorld(POINT point);
 	float cameraToWorldX(float x);

@@ -10,13 +10,22 @@
 HRESULT MapToolScene::init(void)
 {
 	_layer = 0;
+	_curMap = 0;
 	_curTiles = 0;
 	_tileMapSize = 100;
-	for(int i = 0; i < 7; i++)
+	_mapName[0] = "Farm";
+	_mapName[1] = "Mine";
+	_mapName[2] = "Town";
+	_mapName[3] = "Dynus";
+
+	for(int k = 0; k < 4; k++)
 	{
-		for (int j = 0; j < _tileMapSize; j++)
+		for(int i = 0; i < 7; i++)
 		{
-			ZeroMemory(&_tileMap, sizeof(_tileMap[i][j]) * _tileMapSize);
+			for (int j = 0; j < _tileMapSize; j++)
+			{
+				ZeroMemory(&_tileMap[k][i][j], sizeof(_tileMap[0][0][0][0]) * _tileMapSize);
+			}
 		}
 	}
 	for(int i = 0; i < 10; i++)
@@ -95,6 +104,21 @@ HRESULT MapToolScene::init(void)
 			f[i] = bind(&MapToolScene::changeLayer, this, i);
 	}
 	radioButton->init(7, x, y, width, height, "Button1", f, str, RGB(255, 255, 255), 30, -15);
+	_vRadioButton.push_back(radioButton);
+
+	// 맵 선택 버튼
+	radioButton = new RadioButton;
+	float x2[] = { 150.0f, 350.0f, 550.0f, 750.0f};
+	float y2[] = {25.0f, 25.0f, 25.0f, 25.0f};
+	int width2[] = {200, 200, 200, 200};
+	int height2[] = {50, 50, 50, 50};
+	char* str2[] = {"FARM", "MINE", "TOWN", "DYNUS"};
+	function<void(int)> f2[7];
+	for (int i = 0; i < 4; i++)
+	{
+		f2[i] = bind(&MapToolScene::changeMap, this, i);
+	}
+	radioButton->init(4, x2, y2, width2, height2, "Button1", f2, str2, RGB(255, 255, 255), 30, -15);
 	_vRadioButton.push_back(radioButton);
 
 	// Layer보이는 버튼
@@ -224,7 +248,7 @@ void MapToolScene::update(void)
 				{
 					for (int j = 0; j < (_selectRC.right - _selectRC.left) / TILEWIDTH; j++)
 					{
-						_tileMap[_layer][_selectRC.top / TILEHEIGHT + i][_selectRC.left / TILEWIDTH + j] = _tiles[_curTiles][(_cursorRC.top - 50) / TILEHEIGHT][(_cursorRC.left - 900) / TILEWIDTH];
+						_tileMap[_curMap][_layer][_selectRC.top / TILEHEIGHT + i][_selectRC.left / TILEWIDTH + j] = _tiles[_curTiles][(_cursorRC.top - 50) / TILEHEIGHT][(_cursorRC.left - 900) / TILEWIDTH];
 					}
 				}
 			}
@@ -236,7 +260,7 @@ void MapToolScene::update(void)
 		{	
 			for (int i = 0; i < _selectTilesRow; i++)
 			{
-				CopyMemory(&_tileMap[_layer][(_ptMouse.y - 50 + _cameraPos.y - MapToolHeight / 2) / TILEHEIGHT + i][(_ptMouse.x - 50 + _cameraPos.x - MapToolWidth / 2) / TILEWIDTH],
+				CopyMemory(&_tileMap[_curMap][_layer][(_ptMouse.y - 50 + _cameraPos.y - MapToolHeight / 2) / TILEHEIGHT + i][(_ptMouse.x - 50 + _cameraPos.x - MapToolWidth / 2) / TILEWIDTH],
 					&_selectTiles[i][0], sizeof(Tile) * _selectTilesCol);
 				for (int j = 0; j < _selectTilesCol; j++)
 				{
@@ -246,7 +270,7 @@ void MapToolScene::update(void)
 					}
 					Object* object = new Object(*_selectTiles[i][j]._object);
 					object->setTilePos(PointMake((_ptMouse.x - 50 + _cameraPos.x - MapToolWidth / 2) / TILEWIDTH + j, (_ptMouse.y - 50 + _cameraPos.y - MapToolHeight / 2) / TILEHEIGHT + i));
-					_tileMap[6][(_ptMouse.y - 50 + _cameraPos.y - MapToolHeight / 2) / TILEHEIGHT + i][(_ptMouse.x - 50 + _cameraPos.x - MapToolWidth / 2) / TILEWIDTH + j]._object = object;
+					_tileMap[_curMap][6][(_ptMouse.y - 50 + _cameraPos.y - MapToolHeight / 2) / TILEHEIGHT + i][(_ptMouse.x - 50 + _cameraPos.x - MapToolWidth / 2) / TILEWIDTH + j]._object = object;
 				}
 			}
 		}
@@ -358,6 +382,10 @@ void MapToolScene::update(void)
 	{
 		copyTiles();
 	}
+	if (KEYMANAGER->isOnceKeyDown(VK_F1))
+	{
+		SCENEMANAGER->changeScene("Title");
+	}
 }
 
 void MapToolScene::render(void)
@@ -388,14 +416,10 @@ void MapToolScene::render(void)
 				{
 					continue;
 				}
-				if (_tileMap[k][i][j]._image != nullptr)
+				if (_tileMap[_curMap][k][i][j]._image != nullptr)
 				{
-					_tileMap[k][i][j]._image->render(_tileMapBuffer->getMemDC(), j * TILEWIDTH, i * TILEHEIGHT);
+					_tileMap[_curMap][k][i][j]._image->render(_tileMapBuffer->getMemDC(), j * TILEWIDTH, i * TILEHEIGHT);
 				}
-				/*else if (_tileMap[6][i][j]._object != nullptr)
-				{
-					_tileMap[6][i][j]._object->render(_tileMapBuffer->getMemDC());
-				}*/
 			}
 		}
 	}
@@ -413,31 +437,13 @@ void MapToolScene::render(void)
 				{
 					continue;
 				}
-				if (_tileMap[6][i][j]._object != nullptr)
+				if (_tileMap[_curMap][6][i][j]._object != nullptr)
 				{
-					_tileMap[6][i][j]._object->render(_tileMapBuffer->getMemDC());
+					_tileMap[_curMap][6][i][j]._object->render(_tileMapBuffer->getMemDC());
 				}
 			}
 		}
 	}
-	/*
-	char text[64];
-	wsprintf(text, "FarmLayer%d", _layer + 1);
-	switch (_layer)
-	{
-		case 1:
-			IMAGEMANAGER->findImage(text)->alphaRender(getMemDC(), 50 - (_cameraPos.x - MapToolWidth / 2), 50 - (_cameraPos.y - MapToolHeight / 2), 128);
-		break;
-		case 2:
-			IMAGEMANAGER->findImage(text)->alphaRender(getMemDC(), 50 - (_cameraPos.x - MapToolWidth / 2), 50 - (_cameraPos.y - MapToolHeight / 2), 128);
-			break;
-		case 3:
-			IMAGEMANAGER->findImage(text)->alphaRender(getMemDC(), 50 - (_cameraPos.x - MapToolWidth / 2), 50 - (_cameraPos.y - MapToolHeight / 2), 128);
-			break;
-		case 4:
-			IMAGEMANAGER->findImage(text)->alphaRender(getMemDC(), 50 - (_cameraPos.x - MapToolWidth / 2), 50 - (_cameraPos.y - MapToolHeight / 2), 128);
-			break;
-	}*/
 
 	// 선택할 수 있는 타일들
 	for (int i = 0; i < 10; i++)
@@ -489,13 +495,47 @@ void MapToolScene::render(void)
 				{
 					continue;
 				}
-				if (_tileMap[5][i][j]._image != nullptr)
+				if (_tileMap[_curMap][5][i][j]._image != nullptr)
 				{
-					_tileMap[5][i][j]._image->render(_collisionBuffer->getMemDC(), j * TILEWIDTH, i * TILEHEIGHT);
+					_tileMap[_curMap][5][i][j]._image->render(_collisionBuffer->getMemDC(), j * TILEWIDTH, i * TILEHEIGHT);
 				}
 			}
 		}
 		_collisionBuffer->alphaRender(getMemDC(), 50, 50, MapToolWidth, MapToolHeight, _cameraPos.x - MapToolWidth / 2, _cameraPos.y - MapToolHeight / 2, MapToolWidth, MapToolHeight, 128);
+	}
+
+	char text[64];
+	if (_curMap == 0)
+	{
+		wsprintf(text, "FarmLayer%d", _layer + 1);
+		switch (_layer)
+		{
+		case 1:
+			IMAGEMANAGER->findImage(text)->alphaRender(getMemDC(), 50 - (_cameraPos.x - MapToolWidth / 2), 50 - (_cameraPos.y - MapToolHeight / 2), 160);
+			break;
+		case 2:
+			IMAGEMANAGER->findImage(text)->alphaRender(getMemDC(), 50 - (_cameraPos.x - MapToolWidth / 2), 50 - (_cameraPos.y - MapToolHeight / 2), 160);
+			break;
+		case 3:
+			IMAGEMANAGER->findImage(text)->alphaRender(getMemDC(), 50 - (_cameraPos.x - MapToolWidth / 2), 50 - (_cameraPos.y - MapToolHeight / 2), 160);
+			break;
+		case 4:
+			IMAGEMANAGER->findImage(text)->alphaRender(getMemDC(), 50 - (_cameraPos.x - MapToolWidth / 2), 50 - (_cameraPos.y - MapToolHeight / 2), 160);
+			break;
+		}
+	}
+	else if (_curMap == 1)
+	{
+		wsprintf(text, "MineLayer%d", _layer + 1);
+		switch (_layer)
+		{
+		case 2:
+			IMAGEMANAGER->findImage(text)->alphaRender(getMemDC(), 50 - (_cameraPos.x - MapToolWidth / 2), 50 - (_cameraPos.y - MapToolHeight / 2), 160);
+			break;
+		case 4:
+			IMAGEMANAGER->findImage(text)->alphaRender(getMemDC(), 50 - (_cameraPos.x - MapToolWidth / 2), 50 - (_cameraPos.y - MapToolHeight / 2), 160);
+			break;
+		}
 	}
 
 	// 버튼 렌더
@@ -541,15 +581,16 @@ void MapToolScene::render(void)
 
 	// 마우스 커서
 	IMAGEMANAGER->findImage("Cursor")->render(getMemDC(), _ptMouse.x, _ptMouse.y);
-	if (KEYMANAGER->isOnceKeyDown(VK_F1))
-	{
-		SCENEMANAGER->changeScene("Title");
-	}
 }
 
 void MapToolScene::changeLayer(int layerN)
 {
 	_layer = layerN;
+}
+
+void MapToolScene::changeMap(int map)
+{
+	_curMap = map;
 }
 
 void MapToolScene::prevTiles(void)
@@ -569,7 +610,7 @@ void MapToolScene::erase(void)
 	{
 		for (int i = 0; i < _selectTilesRow; i++)
 		{
-			ZeroMemory(&_tileMap[_layer][_selectRC.top / TILEHEIGHT + i][_selectRC.left / TILEWIDTH], sizeof(Tile) * _selectTilesCol);
+			ZeroMemory(&_tileMap[_curMap][_layer][_selectRC.top / TILEHEIGHT + i][_selectRC.left / TILEWIDTH], sizeof(Tile) * _selectTilesCol);
 		}
 	}
 }
@@ -634,7 +675,7 @@ void MapToolScene::copyTiles(void)
 		for (int i = 0; i < _selectTilesRow; i++)
 		{
 			CopyMemory(&_selectTiles[i][0], 
-				&_tileMap[_layer][_selectRC.top / TILEHEIGHT + i][_selectRC.left / TILEWIDTH], sizeof(Tile) * _selectTilesCol);
+				&_tileMap[_curMap][_layer][_selectRC.top / TILEHEIGHT + i][_selectRC.left / TILEWIDTH], sizeof(Tile) * _selectTilesCol);
 		}
 	}
 }
@@ -642,7 +683,9 @@ void MapToolScene::copyTiles(void)
 void MapToolScene::saveMaps()
 {
 	FILE* _fp;
-	fopen_s(&_fp, "FarmMap.txt", "w");
+	char fileName[256];
+	wsprintf(fileName, "%sMap.txt", _mapName[_curMap]);
+	fopen_s(&_fp, fileName, "w");
 	if (_fp != NULL)
 	{
 		for(int i = 0; i < 6; i++)
@@ -651,7 +694,7 @@ void MapToolScene::saveMaps()
 			{
 				for (int k = 0; k < 100; k++)
 				{
-					fprintf(_fp, "%d ", _tileMap[i][j][k]._tile);
+					fprintf(_fp, "%d ", _tileMap[_curMap][i][j][k]._tile);
 				}
 				fprintf(_fp, "\n");
 			}
@@ -660,20 +703,21 @@ void MapToolScene::saveMaps()
 	}
 	std::fclose(_fp);
 
-	fopen_s(&_fp, "FarmMapObject.txt", "w");
+	wsprintf(fileName, "%sMapObject.txt", _mapName[_curMap]);
+	fopen_s(&_fp, fileName, "w");
 	if (_fp != NULL)
 	{
 		for (int j = 0; j < 100; j++)
 		{
 			for (int k = 0; k < 100; k++)
 			{
-				if (_tileMap[6][j][k]._object == nullptr)
+				if (_tileMap[_curMap][6][j][k]._object == nullptr)
 				{
 					fprintf(_fp, "%d ", -1);
 				}
 				else
 				{
-					fprintf(_fp, "%d ", (int)(_tileMap[6][j][k]._object->getType()));
+					fprintf(_fp, "%d ", (int)(_tileMap[_curMap][6][j][k]._object->getType()));
 				}
 			}
 			fprintf(_fp, "\n");
@@ -681,6 +725,7 @@ void MapToolScene::saveMaps()
 		fprintf(_fp, "\n");
 	}
 	std::fclose(_fp);
+	
 
 	PatBlt(_tileMapBuffer->getMemDC(), 0, 0, TILEWIDTH * _tileMapSize, TILEWIDTH * _tileMapSize, WHITENESS);
 	for (int i = 0; i < 5; i++)
@@ -689,11 +734,11 @@ void MapToolScene::saveMaps()
 		{
 			for (int k = 0; k < _tileMapSize; k++)
 			{
-				if (_tileMap[i][j][k]._image == nullptr)
+				if (_tileMap[_curMap][i][j][k]._image == nullptr)
 				{
 					continue;
 				}
-				_tileMap[i][j][k]._image->render(_tileMapBuffer->getMemDC(), TILEWIDTH * k, TILEHEIGHT * j);
+				_tileMap[_curMap][i][j][k]._image->render(_tileMapBuffer->getMemDC(), TILEWIDTH * k, TILEHEIGHT * j);
 			}
 		}
 	}
@@ -713,7 +758,8 @@ void MapToolScene::saveMaps()
 	LPBYTE lpBits = new BYTE[bi.biSizeImage];
 	GetDIBits(_tileMapBuffer->getMemDC(), _tileMapBuffer->getImageInfo()->hBit, 0, bitmap.bmHeight, lpBits, (LPBITMAPINFO)&bi, DIB_RGB_COLORS);
 
-	HANDLE hFile = CreateFile("FarmMap.bmp", GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
+	wsprintf(fileName, "%sMap.bmp", _mapName[_curMap]);
+	HANDLE hFile = CreateFile(fileName, GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
 	if (hFile == INVALID_HANDLE_VALUE)
 	{
 		delete[] lpBits;
@@ -738,16 +784,17 @@ void MapToolScene::saveMaps()
 	{
 		for (int k = 0; k < _tileMapSize; k++)
 		{
-			if (_tileMap[5][j][k]._image == nullptr)
+			if (_tileMap[_curMap][5][j][k]._image == nullptr)
 			{
 				continue;
 			}
-			_tileMap[5][j][k]._image->render(_tileMapBuffer->getMemDC(), TILEWIDTH * k, TILEHEIGHT * j);
+			_tileMap[_curMap][5][j][k]._image->render(_tileMapBuffer->getMemDC(), TILEWIDTH * k, TILEHEIGHT * j);
 		}
 	}
 	GetDIBits(_tileMapBuffer->getMemDC(), _tileMapBuffer->getImageInfo()->hBit, 0, bitmap.bmHeight, NULL, (LPBITMAPINFO)&bi, DIB_RGB_COLORS);
 	GetDIBits(_tileMapBuffer->getMemDC(), _tileMapBuffer->getImageInfo()->hBit, 0, bitmap.bmHeight, lpBits, (LPBITMAPINFO)&bi, DIB_RGB_COLORS);
-	hFile = CreateFile("FarmMapCollision.bmp", GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
+	wsprintf(fileName, "%sMapCollision.bmp", _mapName[_curMap]);
+	hFile = CreateFile(fileName, GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
 	if (hFile == INVALID_HANDLE_VALUE)
 	{
 		delete[] lpBits;
@@ -764,7 +811,9 @@ void MapToolScene::saveMaps()
 void MapToolScene::loadLayers()
 {
 	FILE* _fp;
-	fopen_s(&_fp, "FarmMap.txt", "r");
+	char fileName[256];
+	wsprintf(fileName, "%sMap.txt", _mapName[_curMap]);
+	fopen_s(&_fp, fileName, "r");
 	if (_fp != NULL)
 	{
 		for(int i = 0; i < 6; i++)
@@ -776,7 +825,7 @@ void MapToolScene::loadLayers()
 					int tile;
 					fscanf_s(_fp, "%d ", &tile);
 					tile--;
-					_tileMap[i][j][k] = _tiles[tile / 1000 - 1][(tile % 100) / 10][tile % 10];
+					_tileMap[_curMap][i][j][k] = _tiles[tile / 1000 - 1][(tile % 100) / 10][tile % 10];
 				}
 				fscanf_s(_fp, "\n");
 			}
@@ -785,7 +834,8 @@ void MapToolScene::loadLayers()
 	}
 	std::fclose(_fp);
 
-	fopen_s(&_fp, "FarmMapObject.txt", "r");
+	wsprintf(fileName, "%sMapObject.txt", _mapName[_curMap]);
+	fopen_s(&_fp, fileName, "r");
 	if (_fp != NULL)
 	{
 		for (int j = 0; j < 100; j++)
@@ -816,7 +866,7 @@ void MapToolScene::loadLayers()
 					return;
 				}
 				object->init((LivingObjectType)tile, PointMake(k, j));
-				_tileMap[6][j][k]._object = object;
+				_tileMap[_curMap][6][j][k]._object = object;
 			}
 			fscanf_s(_fp, "\n");
 		}

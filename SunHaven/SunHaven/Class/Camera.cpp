@@ -91,6 +91,12 @@ void Camera::setPosition(POINT position)
 	}
 }
 
+RECT Camera::worldToCameraRect(RECT rc)
+{
+	RECT cRC = RectMake(worldToCameraX(rc.left), worldToCameraY(rc.top), rc.right - rc.left, rc.bottom - rc.top);
+	return cRC;
+}
+
 POINT Camera::worldToCamera(POINT point)
 {
 	return PointMake(WINSIZE_X / 2 - (_position.x - point.x), WINSIZE_Y / 2 - (_position.y - point.y));

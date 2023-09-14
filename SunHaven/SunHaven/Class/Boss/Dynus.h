@@ -37,34 +37,43 @@ enum class EDynusPhase
 	THIRD
 };
 
-enum class EDynusSpell
+enum class EFirstPhase
 {
 	SPREAD_X,
-	SPREAD_X2,
 	SPREAD_ELLIPSE,
 	BEAM1,
 	BEAM2,
+};
+
+enum class ESecondPhase
+{
 	SPAWN,
-	STAR
+	SPREAD_X
+};
+
+enum class EStarPhase
+{
+	STAR,
+	SPREAD_X
+};
+
+enum class EThirdPhase
+{
+	RANDOM_PATTERN
 };
 
 class Dynus : public GameNode
 {
-//private:
-//	typedef vector<Enemy*> vEnemy;
-//	typedef vector<Enemy*>::iterator viEnemy;
-//
-//private:
-//	vEnemy _vEnemy;
-//	viEnemy _viEnemy;
-
 private:
 	Player* _player;
 	EnemyManager* _em;
 
 	EDynusState _state;
 	EDynusPhase _phase;
-	EDynusSpell _spell;
+	EFirstPhase _firstP;
+	ESecondPhase _secondP;
+	EStarPhase _starP;
+	EThirdPhase _thirdP;
 
 	GImage* _curImg;
 	GImage* _breatheImg;
@@ -86,7 +95,11 @@ private:
 	RECT _rcPa3Start[PA3_STARTPOS_NUM];
 	RECT _rcPlatform[PLATFORM_NUM];
 	float _platformMove;
-	bool _isPlatformUp[PLATFORM_NUM];
+	bool _isPlatformUp;
+	RECT _rcGuardMine1;
+	RECT _rcGuardMine2;
+	bool _isGM1Remove;
+	bool _isGM2Remove;
 
 	//RECT _rcHpBar;
 	float _hp;
@@ -132,6 +145,11 @@ private:
 
 	float _k;
 
+	float _bgAlpha;
+
+	int _afterSpawnCount;
+	int _aftetKCount;
+
 public:
 	bool hpMinusTemp(void);
 
@@ -142,14 +160,14 @@ public:
 	void update(void);
 	void render(void);
 
-	virtual void move(void);
+	void move(void);
 	void draw(void);
 	void drawPlatform(void);
+	void drawGuardMine(void);
 
 	void bulletFire(void);
 	void spreadEllipse(void);
 	void beamFire(void);
-	//void spawnEnemy(void);
 	bool spawningTime(void);
 
 
@@ -163,8 +181,15 @@ public:
 	void collision(void);
 
 	RECT getRcDynus(void) { return _rcDynus; }
-	//vector<Enemy*> getEnemys(void) { return _vEnemy; }
 	Bullet* getBullet(void) { return _bullet; }
+
+	RECT getRcGuardMine1(void) { return _rcGuardMine1; }
+	RECT getRcGuardMine2(void) { return _rcGuardMine2; }
+
+	void setIsGM1Remove(bool isGM1Remove) { _isGM1Remove = isGM1Remove; }
+	void setIsGM2Remove(bool isGM2Remove) { _isGM2Remove = isGM2Remove; }
+
+	float getBgAlpha(void) { return _bgAlpha; }
 
 	void setPlayerMemoryAddress(Player* player) { _player = player; }
 	void setEnemyManagerMemoryAddress(EnemyManager* em) { _em = em; }

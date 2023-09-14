@@ -200,7 +200,7 @@ void ShopScene::update(void)
 	
 	if (KEYMANAGER->isOnceKeyDown(VK_F1))
 	{
-		SCENEMANAGER->changeScene("Dynus");
+		SCENEMANAGER->changeScene("Mine");
 	}
 }
 
