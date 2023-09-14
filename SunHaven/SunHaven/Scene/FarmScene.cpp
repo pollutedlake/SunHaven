@@ -104,7 +104,6 @@ void FarmScene::update(void)
 		_inven, "4-5");
 
 
-
 	getDropItem();
 
 	if (KEYMANAGER->isOnceKeyDown(VK_F1))

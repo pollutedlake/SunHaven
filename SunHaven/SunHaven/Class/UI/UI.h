@@ -28,6 +28,7 @@ public:
 	void update(void);
 	void render(void);
 
+	void showBasicUI();
 	void updateUIWindow();
 	void showUIWindow();
 

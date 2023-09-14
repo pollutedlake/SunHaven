@@ -360,9 +360,6 @@
     <Image Include="DynusMapCollision.bmp" />
     <Image Include="FarmMap.bmp" />
     <Image Include="FarmMapCollision.bmp" />
-    <Image Include="MineMap.bmp" />
-    <Image Include="MineMapCollision.bmp" />
-    <Image Include="Mines.bmp" />
     <Image Include="Shop_Bg_Collision.bmp" />
   </ItemGroup>
   <ItemGroup>

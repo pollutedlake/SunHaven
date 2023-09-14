@@ -504,7 +504,7 @@ void MapToolScene::render(void)
 		_collisionBuffer->alphaRender(getMemDC(), 50, 50, MapToolWidth, MapToolHeight, _cameraPos.x - MapToolWidth / 2, _cameraPos.y - MapToolHeight / 2, MapToolWidth, MapToolHeight, 128);
 	}
 
-	char text[64];
+	/*char text[64];
 	if (_curMap == 0)
 	{
 		wsprintf(text, "FarmLayer%d", _layer + 1);
@@ -536,7 +536,7 @@ void MapToolScene::render(void)
 			IMAGEMANAGER->findImage(text)->alphaRender(getMemDC(), 50 - (_cameraPos.x - MapToolWidth / 2), 50 - (_cameraPos.y - MapToolHeight / 2), 160);
 			break;
 		}
-	}
+	}*/
 
 	// ¹öÆ° ·»´õ
 	for (_viNormalButton = _vNormalButton.begin(); _viNormalButton != _vNormalButton.end(); ++_viNormalButton)
@@ -684,7 +684,7 @@ void MapToolScene::saveMaps()
 {
 	FILE* _fp;
 	char fileName[256];
-	wsprintf(fileName, "%sMap.txt", _mapName[_curMap]);
+	wsprintf(fileName, "%sMap.txt\0", _mapName[_curMap]);
 	fopen_s(&_fp, fileName, "w");
 	if (_fp != NULL)
 	{
