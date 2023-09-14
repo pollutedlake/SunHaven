@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "Bullets.h"
-//#include "Rocket.h"
 
 HRESULT Beam::init(int bulletMax, float range)
 {
@@ -437,12 +436,54 @@ void Fireball::fire(float x, float y, bool isLeft)
 	bullet.speed = 10.0f;
 	bullet.x = bullet.fireX = x;
 	bullet.y = bullet.fireY = y;
-	bullet.img->setFrameX(0);
+	bullet.isUpDown = false;
+	bullet.isLeft = isLeft;
 
-	bullet.isLeft = _isLeft = isLeft;
+	_isUpDown = false;
 
-	if (bullet.isLeft) bullet.img->setFrameY(1);
-	else bullet.img->setFrameY(0);
+	if (bullet.isLeft)
+	{
+		bullet.img->setFrameX(bullet.img->getMaxFrameX());
+		bullet.img->setFrameY(1);
+	}
+	else 
+	{
+		bullet.img->setFrameX(0);
+		bullet.img->setFrameY(0);
+	}
+	bullet.rc = RectMakeCenter(bullet.x, bullet.y,
+		bullet.img->getFrameWidth(), bullet.img->getFrameHeight());
+
+	_vBullet.push_back(bullet);
+}
+
+void Fireball::fireUpDown(float x, float y, bool isUp)
+{
+	if (_bulletMax <= _vBullet.size()) return;
+
+	tagBullet bullet;
+	ZeroMemory(&bullet, sizeof(tagBullet));
+	bullet.img = new GImage;
+
+	bullet.img->init("Resources/Images/Player/FireballUpDown.bmp",
+		40, 288, 2, 6, true, RGB(255, 0, 255));
+	bullet.speed = 10.0f;
+	bullet.x = bullet.fireX = x;
+	bullet.y = bullet.fireY = y;
+	bullet.isUp = isUp;
+
+	bullet.isUpDown = true;
+
+	if (bullet.isUp)
+	{
+		bullet.img->setFrameX(0);
+		bullet.img->setFrameY(0);
+	}
+	else
+	{
+		bullet.img->setFrameX(1);
+		bullet.img->setFrameY(bullet.img->getMaxFrameY());
+	}
 	bullet.rc = RectMakeCenter(bullet.x, bullet.y,
 		bullet.img->getFrameWidth(), bullet.img->getFrameHeight());
 
@@ -461,28 +502,57 @@ void Fireball::draw(void)
 
 		if (_viBullet->count % 4 == 0)
 		{
-			if (_viBullet->isLeft)
+			if (_viBullet->isUpDown)
 			{
-				_viBullet->img->setFrameX(_viBullet->img->getFrameX() - 1);
-
-				if (_viBullet->img->getFrameX() <= 0)
+				if (_viBullet->isUp)
 				{
-					_viBullet->img->setFrameX(_viBullet->img->getMaxFrameX());
-				}
+					_viBullet->img->setFrameY(_viBullet->img->getFrameY() + 1);
 
-				_viBullet->count = 0;
+					if (_viBullet->img->getFrameY() >= _viBullet->img->getMaxFrameY())
+					{
+						_viBullet->img->setFrameY(0);
+					}
+
+					_viBullet->count = 0;
+				}
+				else
+				{
+					_viBullet->img->setFrameY(_viBullet->img->getFrameY() - 1);
+
+					if (_viBullet->img->getFrameY() <= 0)
+					{
+						_viBullet->img->setFrameY(_viBullet->img->getMaxFrameY());
+					}
+
+					_viBullet->count = 0;
+				}
 			}
 			else
 			{
-				_viBullet->img->setFrameX(_viBullet->img->getFrameX() + 1);
-
-				if (_viBullet->img->getFrameX() >= _viBullet->img->getMaxFrameX())
+				if (_viBullet->isLeft)
 				{
-					_viBullet->img->setFrameX(0);
-				}
+					_viBullet->img->setFrameX(_viBullet->img->getFrameX() - 1);
 
-				_viBullet->count = 0;
+					if (_viBullet->img->getFrameX() <= 0)
+					{
+						_viBullet->img->setFrameX(_viBullet->img->getMaxFrameX());
+					}
+
+					_viBullet->count = 0;
+				}
+				else
+				{
+					_viBullet->img->setFrameX(_viBullet->img->getFrameX() + 1);
+
+					if (_viBullet->img->getFrameX() >= _viBullet->img->getMaxFrameX())
+					{
+						_viBullet->img->setFrameX(0);
+					}
+
+					_viBullet->count = 0;
+				}
 			}
+			
 			
 		}
 	}
@@ -492,8 +562,16 @@ void Fireball::move(float x, float y)
 {
 	for (_viBullet = _vBullet.begin(); _viBullet != _vBullet.end();)
 	{
-		if (_viBullet->isLeft) _viBullet->x -= _viBullet->speed;
-		else _viBullet->x += _viBullet->speed;
+		if (_viBullet->isUpDown)
+		{
+			if (_viBullet->isUp) _viBullet->y -= _viBullet->speed;
+			else _viBullet->y += _viBullet->speed;
+		}
+		else
+		{
+			if (_viBullet->isLeft) _viBullet->x -= _viBullet->speed;
+			else _viBullet->x += _viBullet->speed;
+		}
 
 		_viBullet->rc =
 			RectMakeCenter(WINSIZE_X / 2 - (x - _viBullet->x),

@@ -50,6 +50,7 @@ private:
 	Fireball* _fireBall;
 	eTools _eTools;
 
+
 private:
 	GImage* _playerImage;
 	Animation* _playerMoveAnim;
@@ -135,6 +136,8 @@ private:
 	bool _isCollisionBottom;
 
 	bool _isLeft;
+	bool _isUpDown;
+	bool _isUp;
 
 	bool _isFishing;
 	bool _isSuccessFishing;
@@ -171,6 +174,9 @@ public:
 	void getFishItem(bool successFishing, Inventory* inven, string index);
 	void UseSword();
 	void UseCrossBow();
+
+	void RecureHP();
+	void RecureMP();
 
 	void ObjectCollision(ObjectManager* object);
 

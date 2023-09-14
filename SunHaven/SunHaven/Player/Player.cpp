@@ -246,6 +246,8 @@ HRESULT Player::init(float x, float y, string collisionMapKey)
 	_jump = 5.5f;
 	_isJump = false;
 	_isLeft = false;
+	_isUp = false;
+	_isUpDown = false;
 	_isFishing = false;
 	_isSuccessFishing = false;
 
@@ -318,6 +320,7 @@ void Player::update(void)
 		if (KEYMANAGER->isStayKeyDown('A'))
 		{
 			_isLeft = true;
+			_isUpDown = false;
 			_x -= _moveSpeed;/*
 			_swordSlash = IMAGEMANAGER->findImage("Ä®ÈÖµÎ¸£±â");
 			_swordAnim = _swordSlashAnim;
@@ -336,7 +339,7 @@ void Player::update(void)
 			{
 				_x -= 220;
 
-				_swordSlashAnim->AniStart();
+				_swordSwingAnim->AniStart();
 			}
 
 			if (stairCol == RGB(2, 62, 156))
@@ -348,6 +351,7 @@ void Player::update(void)
 		else if (KEYMANAGER->isStayKeyDown('D'))
 		{
 			_isLeft = false;
+			_isUpDown = false;
 			_x += _moveSpeed;/*
 			_swordSlash = IMAGEMANAGER->findImage("Ä®ÈÖµÎ¸£±â");
 			_swordAnim = _swordSlashAnim;
@@ -367,7 +371,7 @@ void Player::update(void)
 			if (KEYMANAGER->isOnceKeyDown('Z'))
 			{
 				_x += 220;
-				_swordSlashAnim->AniStart();
+				_swordSwingAnim->AniStart();
 			}
 
 			if (stairCol == RGB(2, 62, 156))
@@ -378,6 +382,8 @@ void Player::update(void)
 		}
 		else if (KEYMANAGER->isStayKeyDown('W'))
 		{
+			_isUpDown = true;
+			_isUp = true;
 			_y -= _moveSpeed;/*
 			_swordSlash = IMAGEMANAGER->findImage("Ä® À§¾Æ·¡ ÈÖµÎ¸£±â");
 			_swordSlashUpDownAnim->setPlayFrame(0, 4, false, false);
@@ -401,6 +407,8 @@ void Player::update(void)
 		}
 		else if (KEYMANAGER->isStayKeyDown('S'))
 		{
+			_isUpDown = true;
+			_isUp = false;
 			_y += _moveSpeed;/*
 			_swordSlash = IMAGEMANAGER->findImage("Ä® À§¾Æ·¡ ÈÖµÎ¸£±â");
 			int arr[5] = { 9,8,7,6,5 };
@@ -525,12 +533,24 @@ void Player::update(void)
 	}
 
 
-	if (KEYMANAGER->isOnceKeyDown('Y'))
+	if (KEYMANAGER->isOnceKeyDown('Y') && _playerState.MP >= 3)
 	{
-		_fireBall->fire(_x, _y, _isLeft);
+		if (_isUpDown)
+		{
+			_fireBall->fireUpDown(_x, _y, _isUp);
+		}
+		else
+		{
+			_fireBall->fire(_x, _y, _isLeft);
+		}
+
+		_playerState.MP -= 3;
 	}
 	_fireBall->update(WINSIZE_X / 2 + _x - _cx, WINSIZE_Y / 2 + _y - _cy);
-
+	
+	
+	
+	cout << "MP: " << _playerState.MP << endl;
 
 
 	if (KEYMANAGER->isStayKeyDown('U'))
@@ -904,6 +924,16 @@ void Player::UseSword()
 void Player::UseCrossBow()
 {
 
+}
+
+void Player::RecureHP()
+{
+	
+}
+
+void Player::RecureMP()
+{
+	
 }
 
 void Player::ObjectCollision(ObjectManager* object)
