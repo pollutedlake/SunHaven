@@ -120,6 +120,9 @@ void GPImage::GPFrameRender(HDC hdc, int destX, int destY, float wRatio, float h
 	_gdiRender = new Gdiplus::Graphics(hdc);
 
 	_gdiRender->SetInterpolationMode(imode);
+	Gdiplus::Matrix mat;
+	mat.RotateAt(angle, Gdiplus::PointF(float(destX), float(destY)));
+	_gdiRender->SetTransform(&mat);
 	_gdiRender->DrawImage
 	(
 		_gdiImg,
@@ -166,6 +169,39 @@ void GPImage::GPRender(HDC hdc, int destX, int destY, float wRatio, float hRatio
 	_gdiRender = new Gdiplus::Graphics(hdc);
 
 	_gdiRender->SetInterpolationMode(imode);
+	Gdiplus::Matrix mat;
+	mat.RotateAt(angle, Gdiplus::PointF(float(destX), float(destY)));
+	_gdiRender->SetTransform(&mat);
+	_gdiRender->DrawImage
+	(
+		_gdiImg,
+		Gdiplus::Rect
+		(
+			destX, destY,
+			sourWith * wRatio,
+			sourHeight * hRatio
+		),
+		sourX, sourY,
+		sourWith, sourHeight,
+		Gdiplus::UnitPixel, &imageAttr);
+
+	SAFE_DELETE(_gdiRender);
+}
+
+void GPImage::GPRotateRender(HDC hdc, int destX, int destY, int rotateCenterX, int rotateCenterY, float wRatio, float hRatio, int sourX, int sourY, int sourWith, int sourHeight, Gdiplus::InterpolationMode _imode, int angle)
+{
+	Gdiplus::InterpolationMode imode = InterpolationModeNearestNeighbor;
+
+	Gdiplus::ImageAttributes imageAttr;
+
+
+
+	_gdiRender = new Gdiplus::Graphics(hdc);
+
+	_gdiRender->SetInterpolationMode(imode);
+	Gdiplus::Matrix mat;
+	mat.RotateAt(angle, Gdiplus::PointF(float(rotateCenterX), float(rotateCenterY)));
+	_gdiRender->SetTransform(&mat);
 	_gdiRender->DrawImage
 	(
 		_gdiImg,

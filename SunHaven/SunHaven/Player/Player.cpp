@@ -1,6 +1,7 @@
 #include "Stdafx.h"
 #include "Player.h"
 #include "../Class/Object/ObjectManager.h"
+#include "../Class/Inventory.h"
 
 HRESULT Player::init(float x, float y, string collisionMapKey)
 {
@@ -12,11 +13,10 @@ HRESULT Player::init(float x, float y, string collisionMapKey)
 	_skill = new SkillManager;
 	_skill->init();
 
-	_inven = new Inventory;
-	_inven->init();
-
 	_eTools = eTools::SICKLE;
 
+	_fireBall = new Fireball;
+	_fireBall->init(50, 500);
 
 	_playerImage = IMAGEMANAGER->addImage("ÀÓ½ÃÇÃ·¹ÀÌ¾î",
 		"Resources/Images/Player/kittywalk.bmp",
@@ -35,6 +35,10 @@ HRESULT Player::init(float x, float y, string collisionMapKey)
 	_playertoCameraRC = RectMakeCenter(_cx, _cy,
 		_playerMoveAnim->getFrameWidth(),
 		_playerMoveAnim->getFrameHeight());
+
+
+
+
 
 	_isCollisionLeft = _isCollisionRight =
 		_isCollisionTop =_isCollisionBottom = false;
@@ -66,32 +70,46 @@ HRESULT Player::init(float x, float y, string collisionMapKey)
 
 
 
-	IMAGEMANAGER->addImage("Ä® À§¾Æ·¡ ÈÖµÎ¸£±â",
+	/*IMAGEMANAGER->addImage("Ä® À§¾Æ·¡ ÈÖµÎ¸£±â",
 		"Resources/Images/Player/IronSwordSlashUpDown.bmp",
-		330, 90, true, RGB(255, 0, 255));
+		330, 90, true, RGB(255, 0, 255));*/
 
 	_swordSlash = IMAGEMANAGER->addImage("Ä®ÈÖµÎ¸£±â",
-		"Resources/Images/Player/IronSwordSlash.bmp",
-		230, 132, true, RGB(255, 0, 255));
+		"Resources/Images/Player/iron_sword_slash.bmp",
+		4032, 168, true, RGB(255, 0, 255));
 
-	_swordSlashAnim = new Animation;
-	_swordSlashAnim->init(_swordSlash->getWidth(),
+	_swordSwingAnim = new Animation;
+	_swordSwingAnim->init(_swordSlash->getWidth(),
 		_swordSlash->getHeight(),
-		46, 66);
+		168, 168);
 
-	_swordSlashUpDownAnim = new Animation;
-	_swordSlashUpDownAnim->init(_swordSlash->getWidth(),
-		_swordSlash->getHeight(),
-		66, 45);
+	_swordSwingRC = RectMakeCenter(_x, _y,
+		_swordSwingAnim->getFrameWidth(),
+		_swordSwingAnim->getFrameHeight());
 
-	_swordAnim = _swordSlashAnim;
+	_swordSwingAnim->setFPS(10);
+	_swordSwingAnim->setPlayFrame(0, 5, false, false);
 
-	_swordAnim->setFPS(10);
-	_swordAnim->setPlayFrame(0, 4, false, false);
+	//_swordSlashAnim = new Animation;
+	//_swordSlashAnim->init(_swordSlash->getWidth(),
+	//	_swordSlash->getHeight(),
+	//	46, 66);
 
-	_swordSlashRC = RectMakeCenter(_x, _y,
-		_swordAnim->getFrameWidth(),
-		_swordAnim->getFrameHeight());
+	//_swordSlashUpDownAnim = new Animation;
+	//_swordSlashUpDownAnim->init(_swordSlash->getWidth(),
+	//	_swordSlash->getHeight(),
+	//	66, 45);
+
+	//_swordAnim = _swordSlashAnim;
+
+	//_swordAnim->setFPS(10);
+	//_swordAnim->setPlayFrame(0, 4, false, false);
+
+	//_swordSlashRC = RectMakeCenter(_x, _y,
+	//	_swordAnim->getFrameWidth(),
+	//	_swordAnim->getFrameHeight());
+
+	
 
 
 
@@ -173,9 +191,63 @@ HRESULT Player::init(float x, float y, string collisionMapKey)
 
 	//=============================================//
 
+	_fishingLod = IMAGEMANAGER->addImage("³¬½ÃÇÏ±â",
+		"Resources/Images/Player/fishing_rod.bmp",
+		1680, 60, true, RGB(255, 0, 255));
+
+	_fishingLodAnim = new Animation;
+	_fishingLodAnim->init(_fishingLod->getWidth(),
+		_fishingLod->getHeight(),
+		60, 60);
+
+	_fishingLodAnim->setFPS(10);
+	_fishingLodAnim->setPlayFrame(7, 13, false, false);
+
+	_fishingLodRC = RectMakeCenter(_x, _y,
+		_fishingLodAnim->getFrameWidth(),
+		_fishingLodAnim->getFrameHeight());
+
+
+	//=============================================//
+
+	_fishingBorder = IMAGEMANAGER->addImage("ÆÛÆåÆ®Á¸Å×µÎ¸®",
+		"Resources/Images/Player/fishing_border.bmp",
+		176, 48, true, RGB(255, 0, 255));
+	_fishingCursor = IMAGEMANAGER->addImage("ÆÛÆåÆ®Á¸Ä¿¼­",
+		"Resources/Images/Player/fishing_cursor.bmp",
+		27, 42, true, RGB(255, 0, 255));
+	_fishingGreatZone = IMAGEMANAGER->addImage("±×·¹ÀÌÆ®Á¸",
+		"Resources/Images/Player/fishing_greatzone.bmp",
+		10, 20, true, RGB(255, 0, 255));
+	_fishingPerfectZone = IMAGEMANAGER->addImage("ÆÛÆåÆ®Á¸",
+		"Resources/Images/Player/fishing_perfectzone.bmp",
+		10, 20, true, RGB(255, 0, 255));
+
+
+	_fishingBorderRC = RectMakeCenter(CENTER_X, CENTER_Y + 50,
+		_fishingBorder->getWidth(),
+		_fishingBorder->getHeight());
+
+	_fishingCursorRC = RectMakeCenter(CENTER_X, CENTER_Y + 50,
+		_fishingCursor->getWidth(),
+		_fishingCursor->getHeight());
+
+	_fishingGreatZoneRC = RectMakeCenter(CENTER_X, CENTER_Y + 50,
+		_fishingGreatZone->getWidth(),
+		_fishingGreatZone->getHeight());
+
+	_fishingPerfectZoneRC = RectMakeCenter(CENTER_X, CENTER_Y + 50,
+		_fishingPerfectZone->getWidth(),
+		_fishingPerfectZone->getHeight());
+
+	//=============================================//
+
 
 	_jump = 5.5f;
 	_isJump = false;
+	_isLeft = false;
+	_isFishing = false;
+	_isSuccessFishing = false;
 
 	_playerState.playerName=INIDATAMANAGER->loadDataString("tempINIFile", "commonState", "playerName");
 	_playerState.HP = INIDATAMANAGER->loadDataInteger("tempINIFile", "commonState", "HP");
@@ -205,7 +277,9 @@ HRESULT Player::init(float x, float y, string collisionMapKey)
 
 void Player::release(void)
 {
-	_inven->release();
+	//_inven->release();
+	_fireBall->release();
+	SAFE_DELETE(_fireBall);
 
 	_skill->release();
 	SAFE_DELETE(_skill);
@@ -239,14 +313,16 @@ void Player::update(void)
 		GetPixel(_collisionMap->getMemDC(),
 			_x, _y);
 
-	if (!_toolAnim->isPlay())
+	if (!_toolAnim->isPlay() || !_isFishing)
 	{
 		if (KEYMANAGER->isStayKeyDown('A'))
 		{
-			_x -= _moveSpeed;
+			_isLeft = true;
+			_x -= _moveSpeed;/*
 			_swordSlash = IMAGEMANAGER->findImage("Ä®ÈÖµÎ¸£±â");
 			_swordAnim = _swordSlashAnim;
-			_swordAnim->setPlayFrame(0, 4, false, false);
+			_swordAnim->setPlayFrame(0, 4, false, false);*/
+			_swordSwingAnim->setPlayFrame(18, 23, false, false);
 
 			for (int i = 0; i < 4; i++)
 			{
@@ -271,10 +347,12 @@ void Player::update(void)
 		}
 		else if (KEYMANAGER->isStayKeyDown('D'))
 		{
-			_x += _moveSpeed;
+			_isLeft = false;
+			_x += _moveSpeed;/*
 			_swordSlash = IMAGEMANAGER->findImage("Ä®ÈÖµÎ¸£±â");
 			_swordAnim = _swordSlashAnim;
 			int arr[5] = { 9,8,7,6,5 };
+			_swordAnim->setPlayFrame(arr, 5, false);*/
 
 			for (int i = 0; i < 4; i++)
 			{
@@ -284,7 +362,7 @@ void Player::update(void)
 				scytheSwingAnimArr[i] = i + 5;
 			}
 
-			_swordAnim->setPlayFrame(arr, 5, false);
+			_swordSwingAnim->setPlayFrame(6, 11, false, false);
 
 			if (KEYMANAGER->isOnceKeyDown('Z'))
 			{
@@ -300,9 +378,12 @@ void Player::update(void)
 		}
 		else if (KEYMANAGER->isStayKeyDown('W'))
 		{
-			_y -= _moveSpeed;
+			_y -= _moveSpeed;/*
 			_swordSlash = IMAGEMANAGER->findImage("Ä® À§¾Æ·¡ ÈÖµÎ¸£±â");
 			_swordSlashUpDownAnim->setPlayFrame(0, 4, false, false);
+			_swordAnim = _swordSlashUpDownAnim;*/
+
+			_swordSwingAnim->setPlayFrame(12, 17, false, false);
 
 			for (int i = 0; i < 4; i++)
 			{
@@ -311,7 +392,6 @@ void Player::update(void)
 				hoeSwingAnimArr[i] = i + 8;
 				scytheSwingAnimArr[i] = i + 10;
 			}
-			_swordAnim = _swordSlashUpDownAnim;
 
 			if (KEYMANAGER->isOnceKeyDown('Z'))
 			{
@@ -321,10 +401,12 @@ void Player::update(void)
 		}
 		else if (KEYMANAGER->isStayKeyDown('S'))
 		{
-			_y += _moveSpeed;
+			_y += _moveSpeed;/*
 			_swordSlash = IMAGEMANAGER->findImage("Ä® À§¾Æ·¡ ÈÖµÎ¸£±â");
 			int arr[5] = { 9,8,7,6,5 };
 			_swordSlashUpDownAnim->setPlayFrame(arr, 5, false);
+			_swordAnim = _swordSlashUpDownAnim;*/
+			_swordSwingAnim->setPlayFrame(0, 5, false, false);
 
 			for (int i = 0; i < 4; i++)
 			{
@@ -334,7 +416,6 @@ void Player::update(void)
 				scytheSwingAnimArr[i] = i;
 			}
 
-			_swordAnim = _swordSlashUpDownAnim;
 
 			if (KEYMANAGER->isOnceKeyDown('Z'))
 			{
@@ -348,7 +429,7 @@ void Player::update(void)
 		}
 	}
 
-	
+
 	_axeSwingAnim->setPlayFrame(axeSwingAnimArr, 4, _isLoop);
 	_pickaxeSwingAnim->setPlayFrame(pickaxeSwingAnimArr, 4, _isLoop);
 	_hoeSwingAnim->setPlayFrame(hoeSwingAnimArr, 4, _isLoop);
@@ -375,15 +456,16 @@ void Player::update(void)
 
 		_jump -= 0.2f;
 	}
-	
+
 
 	if (KEYMANAGER->isOnceKeyDown('X'))
 	{
-		_swordAnim->AniStart();
+		//_swordAnim->AniStart();
+		_swordSwingAnim->AniStart();
 	}
 
 
-	
+
 
 
 	if (_collisionMap != nullptr)
@@ -393,27 +475,15 @@ void Player::update(void)
 			COLORREF collisionT =
 				GetPixel(_collisionMap->getMemDC(),
 					i, _playerRC.top);
+
 			COLORREF collisionB =
 				GetPixel(_collisionMap->getMemDC(),
 					i, _playerRC.bottom);
 
-			if (collisionT == RGB(255, 0, 255))
-			{
-				_isCollisionTop = true;
-				cout << "test" << endl;
-			}
-			else
-			{
-				_isCollisionTop = false;
-			}
-			if (collisionB == RGB(255, 0, 255))
-			{
-				_isCollisionBottom = true;
-			}
-			else
-			{
-				_isCollisionBottom = false;
-			}
+			_isCollisionTop =
+				collisionT == RGB(255, 0, 255) ? true : false;
+			_isCollisionBottom =
+				collisionB == RGB(255, 0, 255) ? true : false;
 		}
 
 		for (int i = _playerRC.top + 4; i <= _playerRC.bottom - 4; i++)
@@ -425,7 +495,6 @@ void Player::update(void)
 			COLORREF collisionR =
 				GetPixel(_collisionMap->getMemDC(),
 					_playerRC.right, i);
-
 
 			_isCollisionLeft =
 				collisionL == RGB(255, 0, 255) ? true : false;
@@ -450,6 +519,17 @@ void Player::update(void)
 	{
 		_eTools = eTools::PICKAXE;
 	}
+	if (KEYMANAGER->isOnceKeyDown('5'))
+	{
+		_eTools = eTools::FISHINGLOD;
+	}
+
+
+	if (KEYMANAGER->isOnceKeyDown('Y'))
+	{
+		_fireBall->fire(_x, _y, _isLeft);
+	}
+	_fireBall->update(WINSIZE_X / 2 + _x - _cx, WINSIZE_Y / 2 + _y - _cy);
 
 
 
@@ -463,8 +543,10 @@ void Player::update(void)
 		_firebeamRC = RectMakeCenter(_x, _y, 50, 50);
 	}
 
-	cout << _toolAnim->getNowPlayIdx() << endl;
-
+	if (_isFishing)
+	{
+		Fishing();
+	}
 
 	_skill->update();
 
@@ -477,20 +559,25 @@ void Player::update(void)
 	if (_isCollisionTop) _y += _moveSpeed;
 	if (_isCollisionBottom) _y -= _moveSpeed;
 
+
 	_playerMoveAnim->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);
 	_fireballAnim->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);
-	_swordAnim->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);
+	//_swordAnim->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);
+	_swordSwingAnim->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);
 	_axeSwingAnim->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);
 	_pickaxeSwingAnim->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);
 	_hoeSwingAnim->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);
 	_scytheSwingAnim->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);
+	_fishingLodAnim->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);
+
+	//cout << _fishingLodAnim->getNowPlayIdx() << endl;
 }
 
 void Player::render(void)
 {
-	_fireball->aniRender(getMemDC(), _fireballRC.left, _fireballRC.top,
-		_fireballAnim);
 
+
+	_fireBall->render();
 
 	if (KEYMANAGER->isStayKeyDown('U'))
 	{
@@ -501,10 +588,16 @@ void Player::render(void)
 	_playerImage->aniRender(getMemDC(),
 		_playertoCameraRC.left, _playertoCameraRC.top, _playerMoveAnim);
 
-	if(_swordAnim->isPlay())
+	if(_swordSwingAnim->isPlay())
 	{
-		_swordSlash->aniRender(getMemDC(), _swordSlashRC.left, _swordSlashRC.top,
-			_swordAnim);
+		_swordSlash->aniRender(getMemDC(), _swordSwingRC.left, _swordSwingRC.top,
+			_swordSwingAnim);
+	}
+
+	if (_isFishing)
+	{
+		_fishingLod->aniRender(getMemDC(), _fishingLodRC.left, _fishingLodRC.top,
+			_fishingLodAnim);
 	}
 
 	if (_toolAnim->isPlay())
@@ -513,10 +606,22 @@ void Player::render(void)
 			_toolAnim);
 	}
 
-	_inven->render();
 	
-
-
+	if (_isFishing)
+	{
+		_fishingBorder->render(getMemDC(), _fishingBorderRC.left,
+			_fishingBorderRC.top);
+		_fishingGreatZone->render(getMemDC(), _fishingGreatZoneRC.left,
+			_fishingGreatZoneRC.top,
+			_fishingGreatZoneRC.right - _fishingGreatZoneRC.left, 20,
+			0, 0, 10, 20);
+		_fishingPerfectZone->render(getMemDC(), _fishingPerfectZoneRC.left,
+			_fishingPerfectZoneRC.top,
+			(_fishingPerfectZoneRC.right - _fishingPerfectZoneRC.left), 20,
+			0, 0, 10, 20);
+		_fishingCursor->render(getMemDC(), _fishingCursorRC.left,
+			_fishingCursorRC.top);
+	}
 
 	if(KEYMANAGER->isToggleKey('K'))
 		_skill->render();
@@ -570,6 +675,9 @@ void Player::UseTool(ObjectManager* object, POINT point)
 		_toolImage = _pickaxeSwing;
 		_toolAnim = _pickaxeSwingAnim;
 		_toolAnimRC = _pickaxeSwingRC;
+		break;
+
+	default:
 		break;
 	}
 
@@ -651,7 +759,7 @@ void Player::UseTool(ObjectManager* object, POINT point)
 				&& getDistance(_cx, _cy, point.x, point.y) < OBJECT_RANGE)
 			{
 				// SD : ³ª¹« º£´Â ¼Ò¸®
-				object->getObjectList()[i]->setHP(10);
+				object->getObjectList()[i]->setHP(10, _x);
 			}
 		}
 
@@ -672,16 +780,118 @@ void Player::UseTool(ObjectManager* object, POINT point)
 
 void Player::UseFishingLod(POINT point)
 {
+	float updown = point.y - _y;
+	float leftright = point.x - _x;
+
 	if (KEYMANAGER->isStayKeyDown(VK_RBUTTON))
 	{
-		cout << "±â¸¦ ¸ðÀ¸°í..." << endl;
-
-		if (GetPixel(_collisionMap->getMemDC(), point.x, point.y)
-			== RGB(255, 0, 0))
+		if (updown < 0 && abs(updown) > leftright)
 		{
-			cout << "´øÁø´Ù" << endl;
+			_playerMoveAnim->setPlayFrame(10, 14, false, true);
+			_fishingLodAnim->setPlayFrame(0, 6, false, false);
 		}
+		else if (updown > 0 && abs(leftright) < updown)
+		{
+			_playerMoveAnim->setPlayFrame(0, 4, false, true);
+			_fishingLodAnim->setPlayFrame(14, 20, false, false);
+		}
+		else if (leftright < 0)
+		{
+			_playerMoveAnim->setPlayFrame(5, 9, false, true);
+			_fishingLodAnim->setPlayFrame(21, 27, false, false);
+		}
+		else
+		{
+			_playerMoveAnim->setPlayFrame(15, 19, false, true);
+			_fishingLodAnim->setPlayFrame(7, 13, false, false);
+		}
+
+		_fishingRange += 5.0f;
+		if (_fishingRange > 200.0f) _fishingRange = 200.0f;
 	}
+
+	if (KEYMANAGER->isOnceKeyUp(VK_RBUTTON))
+	{
+		if (GetPixel(_collisionMap->getMemDC(), point.x, point.y)
+			== RGB(255, 0, 0)
+			&& getDistance(_x, _y, point.x, point.y) < _fishingRange)
+		{
+			_fishingGreatZoneRC =
+				RectMakeCenter(RND->getFromIntTo(_fishingBorderRC.left + 50, _fishingBorderRC.right - 50),
+					CENTER_Y + 50,
+					RND->getFromIntTo(30, 40),
+					_fishingGreatZone->getHeight());
+			_fishingPerfectZoneRC =
+				RectMakeCenter(RND->getFromIntTo(_fishingGreatZoneRC.left + 10, _fishingGreatZoneRC.right - 10),
+					CENTER_Y + 50,
+					RND->getFromIntTo(5, 20),
+					_fishingPerfectZone->getHeight());
+
+			_isFishing = true;
+			_fishingLodAnim->AniStart();
+		}
+		else
+		{
+			_isFishing = false;
+		}
+
+		_fishingRange = 0.0f;
+	}
+	if (_fishingLodAnim->getNowPlayIdx() == 4)
+	{
+		_fishingLodAnim->AniPause();
+	}
+
+}
+
+void Player::Fishing()
+{
+	if (_fishingCursorRC.right >= _fishingBorderRC.right)
+	{
+		cursormovespeed = -cursormovespeed;
+	}
+	if (_fishingCursorRC.left <= _fishingBorderRC.left)
+	{
+		cursormovespeed = -cursormovespeed;
+	}
+
+	_fishingCursorRC.left += cursormovespeed;
+	_fishingCursorRC.right += cursormovespeed;
+
+	POINT cursorCenter = PointMake(_fishingCursorRC.left + (_fishingCursorRC.right - _fishingCursorRC.left) / 2,
+		_fishingCursorRC.top + (_fishingCursorRC.bottom - _fishingCursorRC.top) / 2);
+
+	if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
+	{
+		cursormovespeed = 0;
+		
+		if (PtInRect(&_fishingGreatZoneRC, cursorCenter))
+		{
+
+			if (PtInRect(&_fishingPerfectZoneRC, cursorCenter))
+			{
+				_isSuccessFishing = true;
+			}
+		}
+		else
+		{
+			cout << "ºø³ª°¨" << endl;
+		}
+
+		_fishingLodAnim->AniResume();
+		cursormovespeed = 3;
+		_isFishing = false;
+	}
+}
+
+void Player::getFishItem(bool successFishing, Inventory* inven, string index)
+{
+	if (successFishing)
+	{
+		inven->getItem(index);
+	}
+
+	_isSuccessFishing = false;
 }
 
 void Player::UseSword()
@@ -700,11 +910,39 @@ void Player::ObjectCollision(ObjectManager* object)
 	{
 		RECT temp;
 
+		float updown = object->getObjectList()[i]->getTilePos().y - _cy;
+		float leftright = object->getObjectList()[i]->getTilePos().x - _cx;
+
+
 		if (IntersectRect(&temp,
-			&_playerRC,
-			&object->getObjectList()[i]->getRC()))
+			&_playertoCameraRC,
+			&object->getObjectList()[i]->getCollisionRC()))
 		{
-			//_x -= _moveSpeed;
+			cout << "¿ÀºêÁ§Æ® Ãæµ¹" << endl;
+
+			cout << updown << ", " << leftright << endl;
+
+			if (object->getObjectList()[i]->getType() > 1)
+			{
+				if (_playertoCameraRC.left <= object->getObjectList()[i]->getCollisionRC().right)
+				{
+					_x += _moveSpeed;
+				}
+				else if (_playertoCameraRC.right >= object->getObjectList()[i]->getCollisionRC().left)
+				{
+					_x -= _moveSpeed;
+				}
+				else if (_playertoCameraRC.top <= object->getObjectList()[i]->getCollisionRC().bottom)
+				{
+					_y += _moveSpeed;
+				}
+				else if (_playertoCameraRC.bottom >= object->getObjectList()[i]->getCollisionRC().top)
+				{
+					_y -= _moveSpeed;
+				}
+
+				
+			}
 		}
 	}
 }

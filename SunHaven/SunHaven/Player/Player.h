@@ -1,12 +1,14 @@
 #pragma once
 #include "../FrameWork/GameNode/GameNode.h"
 #include "../FrameWork/Animation/Animation.h"
-#include "../Class/Inventory.h"
+//#include "../Class/Inventory.h"
 #include "../Class/Skill/SkillManager.h"
+#include "../Class/Bullets/Bullets.h"
 
 #define OBJECT_RANGE 50.0f
 
 class ObjectManager;
+class Inventory;
 
 enum class eTools
 {
@@ -45,6 +47,7 @@ private:
 	int a;
 
 	SkillManager* _skill;
+	Fireball* _fireBall;
 	eTools _eTools;
 
 private:
@@ -64,9 +67,11 @@ private:
 
 	GImage* _swordSlash;
 	Animation* _swordAnim;
+	Animation* _swordSwingAnim;
 	Animation* _swordSlashAnim;
 	Animation* _swordSlashUpDownAnim;
 	RECT _swordSlashRC;
+	RECT _swordSwingRC;
 
 	GImage* _axeSwing;
 	Animation* _axeSwingAnim;
@@ -84,6 +89,13 @@ private:
 	Animation* _scytheSwingAnim;
 	RECT _scytheSwingRC;
 
+
+	GImage* _fishingLod;
+	Animation* _fishingLodAnim;
+	RECT _fishingLodRC;
+
+
+
 	GImage* _toolImage;
 	Animation* _toolAnim;
 	RECT _toolAnimRC;
@@ -93,8 +105,21 @@ private:
 	RECT _firebeamRC;
 	int offsetX = 0;
 
+	//Inventory* _inven;
 
-	Inventory* _inven;
+
+
+	GImage* _fishingBorder;
+	RECT _fishingBorderRC;
+
+	GImage* _fishingCursor;
+	RECT _fishingCursorRC;
+
+	GImage* _fishingGreatZone;
+	RECT _fishingGreatZoneRC;
+
+	GImage* _fishingPerfectZone;
+	RECT _fishingPerfectZoneRC;
 
 
 	GImage* _collisionMap;
@@ -102,12 +127,17 @@ private:
 	float _x, _y;
 	float _cx, _cy;
 	float _moveSpeed;
+	float _fishingRange = 0.0f;
 
 	bool _isCollisionLeft;
 	bool _isCollisionRight;
 	bool _isCollisionTop;
 	bool _isCollisionBottom;
 
+	bool _isLeft;
+
+	bool _isFishing;
+	bool _isSuccessFishing;
 
 	int axeSwingAnimArr[4] = { 15,16,17,18 };
 	int pickaxeSwingAnimArr[4] = { 12,13,14,15 };
@@ -116,6 +146,7 @@ private:
 
 	bool _isLoop;
 
+	int cursormovespeed = 3;
 
 	float _jump;
 	bool _isJump;
@@ -136,6 +167,8 @@ public:
 	}
 
 	void UseFishingLod(POINT point);
+	void Fishing();
+	void getFishItem(bool successFishing, Inventory* inven, string index);
 	void UseSword();
 	void UseCrossBow();
 
@@ -158,12 +191,18 @@ public:
 		_playertoCameraRC = RectMakeCenter(_cx, _cy,
 			_playerMoveAnim->getFrameWidth(),
 			_playerMoveAnim->getFrameHeight());
+
+
 		
 		if (KEYMANAGER->isStayKeyDown('A'))
 		{
-			_swordSlashRC = RectMakeCenter(_cx - 28, _cy,
+			/*_swordSlashRC = RectMakeCenter(_cx - 28, _cy,
 				_swordSlashAnim->getFrameWidth(),
-				_swordSlashAnim->getFrameHeight());
+				_swordSlashAnim->getFrameHeight());*/
+
+			_swordSwingRC = RectMakeCenter(_cx, _cy,
+				_swordSwingAnim->getFrameWidth(),
+				_swordSwingAnim->getFrameHeight());
 
 			_firebeamRC = RectMake(_cx, _cy - 24,
 				_cx - (_firebeamRC.right - _firebeamRC.left), 50);
@@ -183,12 +222,19 @@ public:
 			_scytheSwingRC = RectMakeCenter(_cx-12, _cy,
 				_scytheSwingAnim->getFrameWidth(),
 				_scytheSwingAnim->getFrameHeight());
+
+			_fishingLodRC = RectMakeCenter(_cx, _cy,
+				_fishingLodAnim->getFrameWidth(),
+				_fishingLodAnim->getFrameHeight());
 		}
 		else if (KEYMANAGER->isStayKeyDown('D'))
 		{
-			_swordSlashRC = RectMakeCenter(_cx + 28, _cy,
+			/*_swordSlashRC = RectMakeCenter(_cx + 28, _cy,
 				_swordAnim->getFrameWidth(),
-				_swordAnim->getFrameHeight());
+				_swordAnim->getFrameHeight());*/
+			_swordSwingRC = RectMakeCenter(_cx, _cy,
+				_swordSwingAnim->getFrameWidth(),
+				_swordSwingAnim->getFrameHeight());
 
 
 			_axeSwingRC = RectMakeCenter(_cx, _cy,
@@ -206,12 +252,19 @@ public:
 			_scytheSwingRC = RectMakeCenter(_cx + 12, _cy,
 				_scytheSwingAnim->getFrameWidth(),
 				_scytheSwingAnim->getFrameHeight());
+
+			_fishingLodRC = RectMakeCenter(_cx, _cy,
+				_fishingLodAnim->getFrameWidth(),
+				_fishingLodAnim->getFrameHeight());
 		}
 		else if (KEYMANAGER->isStayKeyDown('W'))
 		{
-			_swordSlashRC = RectMakeCenter(_cx, _cy-28,
+			/*_swordSlashRC = RectMakeCenter(_cx, _cy-28,
 				_swordAnim->getFrameWidth(),
-				_swordAnim->getFrameHeight());
+				_swordAnim->getFrameHeight());*/
+			_swordSwingRC = RectMakeCenter(_cx, _cy,
+				_swordSwingAnim->getFrameWidth(),
+				_swordSwingAnim->getFrameHeight());
 
 
 			_axeSwingRC = RectMakeCenter(_cx, _cy,
@@ -229,12 +282,19 @@ public:
 			_scytheSwingRC = RectMakeCenter(_cx, _cy,
 				_scytheSwingAnim->getFrameWidth(),
 				_scytheSwingAnim->getFrameHeight());
+
+			_fishingLodRC = RectMakeCenter(_cx, _cy,
+				_fishingLodAnim->getFrameWidth(),
+				_fishingLodAnim->getFrameHeight());
 		}
 		else if (KEYMANAGER->isStayKeyDown('S'))
 		{
-			_swordSlashRC = RectMakeCenter(_cx, _cy+28,
+			/*_swordSlashRC = RectMakeCenter(_cx, _cy+28,
 				_swordAnim->getFrameWidth(),
-				_swordAnim->getFrameHeight());
+				_swordAnim->getFrameHeight());*/
+			_swordSwingRC = RectMakeCenter(_cx, _cy,
+				_swordSwingAnim->getFrameWidth(),
+				_swordSwingAnim->getFrameHeight());
 
 
 			_axeSwingRC = RectMakeCenter(_cx, _cy,
@@ -252,6 +312,17 @@ public:
 			_scytheSwingRC = RectMakeCenter(_cx, _cy+12,
 				_scytheSwingAnim->getFrameWidth(),
 				_scytheSwingAnim->getFrameHeight());
+
+			_fishingLodRC = RectMakeCenter(_cx, _cy,
+				_fishingLodAnim->getFrameWidth(),
+				_fishingLodAnim->getFrameHeight());
+		}
+
+		for (int i = 0; i < _fireBall->getBullet().size(); i++)
+		{
+			_fireBall->getBullet()[i].rc= RectMakeCenter(_cx, _cy,
+				_fireBall->getBullet()[i].img->getFrameWidth(),
+				_fireBall->getBullet()[i].img->getFrameHeight());
 		}
 
 		_firebeamRC = RectMake(position.x, position.y - 24,
@@ -275,14 +346,12 @@ public:
 		_isCollisionTop = top;
 		_isCollisionBottom = bottom;
 
-		cout << _isCollisionLeft <<
-			_isCollisionRight <<
-			_isCollisionTop << _isCollisionBottom << endl;
 	}
 
 	RECT getPlayerRC() { return _playerRC; }
-
 	RECT getPlayertoCameraRect(void) { return _playertoCameraRC; }
+	eTools getToolType() { return _eTools; }
+	bool getIsSuccessFishing() { return _isSuccessFishing; }
 
 	RECT getSwordSlashRC() { return _swordSlashRC; }
 

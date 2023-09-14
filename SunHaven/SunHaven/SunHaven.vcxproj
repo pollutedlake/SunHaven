@@ -147,7 +147,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Class\UI\Buttons.cpp" />
-    <ClCompile Include="Class\Item\Item.cpp" />
     <ClCompile Include="Class\Boss\Dynus.cpp" />
     <ClCompile Include="Class\Bullets\Bullets.cpp" />
     <ClCompile Include="Class\Data\ItemData.cpp" />
@@ -161,9 +160,11 @@
     <ClCompile Include="Class\Skill\FishingSkill.cpp" />
     <ClCompile Include="Class\Skill\MiningSkill.cpp" />
     <ClCompile Include="Class\NPC\Lynn.cpp" />
+    <ClCompile Include="Player\Fishing.cpp" />
     <ClCompile Include="Manager\DataManager.cpp" />
     <ClCompile Include="Class\Boss\Dizzy.cpp" />
     <ClCompile Include="Scene\DizzyScene.cpp" />
+    <ClCompile Include="Scene\MineScene.cpp" />
     <ClCompile Include="Scene\IntroScene.cpp" />
     <ClCompile Include="Class\Data\EnemyData.cpp" />
     <ClCompile Include="Scene\Collision.cpp" />
@@ -229,18 +230,19 @@
     <ClInclude Include="Class\CraftingTable.h" />
     <ClInclude Include="Class\Data\JsonSaveLoader.h" />
     <ClInclude Include="Class\Data\EnemyData.h" />
+    <ClInclude Include="Player\Fishing.h" />
     <ClInclude Include="Manager\DataManager.h" />
     <ClInclude Include="Class\Boss\Dizzy.h" />
     <ClInclude Include="Scene\DizzyScene.h" />
     <ClInclude Include="inc\FMOD\fmod.hpp" />
     <ClInclude Include="Class\Object\Grass.h" />
     <ClInclude Include="Class\Data\ItemData.h" />
-    <ClInclude Include="Class\Item\Item.h" />
     <ClInclude Include="Class\Skill\CombatSkill.h" />
     <ClInclude Include="Class\Skill\ExplorationSkill.h" />
     <ClInclude Include="Class\Skill\FarmingSkill.h" />
     <ClInclude Include="Class\Skill\FishingSkill.h" />
     <ClInclude Include="Class\NPC\Lynn.h" />
+    <ClInclude Include="Scene\MineScene.h" />
     <ClInclude Include="Scene\IntroScene.h" />
     <ClInclude Include="Json\json.h" />
     <ClInclude Include="Class\Data\INIData.h" />
@@ -321,6 +323,9 @@
     <Text Include="Debug\SunHaven.log" />
     <Text Include="FarmMap.txt" />
     <Text Include="FarmMapObject.txt" />
+    <Text Include="IntroText.txt" />
+    <Text Include="MineMap.txt" />
+    <Text Include="MineMapObject.txt" />
   </ItemGroup>
   <ItemGroup>
     <Object Include="Debug\Animation.obj" />
@@ -355,6 +360,10 @@
     <Image Include="DynusMapCollision.bmp" />
     <Image Include="FarmMap.bmp" />
     <Image Include="FarmMapCollision.bmp" />
+    <Image Include="MineMap.bmp" />
+    <Image Include="MineMapCollision.bmp" />
+    <Image Include="Mines.bmp" />
+    <Image Include="Shop_Bg_Collision.bmp" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="lib\FMOD\fmodex_vc.lib" />

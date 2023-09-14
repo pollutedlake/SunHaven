@@ -9,6 +9,7 @@
 #include "../Scene/DizzyScene.h"
 #include "../Scene/ShopScene.h"
 #include "../Scene/IntroScene.h"
+#include "../Scene/MineScene.h"
 
 HRESULT SceneManager::init(void)
 {
@@ -20,6 +21,7 @@ HRESULT SceneManager::init(void)
     SCENEMANAGER->addScene("Dynus", new DynusScene);
     SCENEMANAGER->addScene("Dizzy", new DizzyScene);
     SCENEMANAGER->addScene("Intro", new IntroScene);
+    SCENEMANAGER->addScene("Mine", new MineScene);
     _currentScene = nullptr;
     return S_OK;
 }

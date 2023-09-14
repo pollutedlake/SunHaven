@@ -42,7 +42,7 @@ HRESULT Dizzy::init(void)
 	_x = CENTER_X + 200;
 	_y = CENTER_Y + 200;
 
-	_rcDizzy = RectMakeCenter(_x, _y, _curImg->getFrameWidth(), _curImg->getFrameHeight());
+	_rcDizzy = RectMake(_x, _y, _curImg->getFrameWidth(), _curImg->getFrameHeight());
 	_rcSpinAtk = RectMakeCenter(_x, _y, _curImg->getFrameWidth(), _curImg->getFrameHeight());
 
 	_collisionMap = IMAGEMANAGER->findImage("DizzyMapCollision");
@@ -152,7 +152,7 @@ void Dizzy::update(void)
 	_meteor->update();
 	_gem->update();
 
-	_rcDizzy = RectMakeCenter(_x, _y, _curImg->getFrameWidth(), _curImg->getFrameHeight());
+	_rcDizzy = RectMake(_x, _y, _curImg->getFrameWidth(), _curImg->getFrameHeight());
 	_curAni->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);
 
 	if (_x < _player->getPlayerPosition().x)
@@ -167,12 +167,10 @@ void Dizzy::update(void)
 
 	if (KEYMANAGER->isOnceKeyDown('B'))
 	{
-		cout << "isWake" << endl;
 
 		_isWake = true;
 	}
 
-	cout << "ÇöÀç State: " << (int)_state << endl;
 
 	switch (_state)
 	{
@@ -442,9 +440,9 @@ void Dizzy::render(void)
 
 void Dizzy::draw(void)
 {
-	//DrawRectMake(getMemDC(), _rcDizzy);
+	DrawRectMake(getMemDC(), CAMERA->worldToCameraRect(_rcDizzy));
 
-	_curImg->aniRender(getMemDC(), _x, _y, _curAni);
+	_curImg->aniRender(getMemDC(), CAMERA->worldToCameraX(_x), CAMERA->worldToCameraY(_y), _curAni);
 }
 
 void Dizzy::animation(void)

@@ -52,7 +52,6 @@ void Enemy::release(void)
 
 void Enemy::update(void)
 {
-	//cout << "1111111" << endl;
 
 	//move();
 	//collisionCheck();
@@ -66,7 +65,6 @@ void Enemy::render(void)
 
 void Enemy::move(void)
 {
-	//cout << "1111111" << endl;
 }
 
 void Enemy::targetOn(void)

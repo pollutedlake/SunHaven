@@ -11,19 +11,15 @@ HRESULT FarmScene::init(void)
 	_player = new Player;
 	_player->init(2400, 1400, "충돌");
 
-	
-
-	_camera = new Camera;
-	_camera->init();
-	_camera->setPosition(_player->getPlayerPosition());
-	_camera->setLimitRight(3276 - WINSIZE_X / 2);
-	_camera->setLimitBottom(3600 - WINSIZE_Y / 2);
+	CAMERA->setPosition(_player->getPlayerPosition());
+	CAMERA->setLimitRight(3276 - WINSIZE_X / 2);
+	CAMERA->setLimitBottom(3600 - WINSIZE_Y / 2);
 
 	_om = new ObjectManager;
-	_om->init();
-	_om->setCameraAddress(_camera);
+	_om->init("Farm");
 
-
+	_inven = new Inventory;
+	_inven->init();
 
 	_player->setPlayerPosition(PointMake(2496, 1500));
 
@@ -31,8 +27,8 @@ HRESULT FarmScene::init(void)
 		"Resources/Images/Player/ObjectMouseOver.bmp",
 		36, 36, true, RGB(255, 0, 255));
 
-	_MouseRC = RectMakeCenter(_camera->cameraToWorld(_ptMouse).x,
-		_camera->cameraToWorld(_ptMouse).y,
+	_MouseRC = RectMakeCenter(CAMERA->cameraToWorld(_ptMouse).x,
+		CAMERA->cameraToWorld(_ptMouse).y,
 		_MouseOver->getWidth(), _MouseOver->getHeight());
 
 	_ui = new UI;
@@ -42,6 +38,8 @@ HRESULT FarmScene::init(void)
 
 void FarmScene::release(void)
 {
+	_inven->release();
+	SAFE_DELETE(_inven);
 	_player->release();
 	SAFE_DELETE(_player);
 	_om->release();
@@ -51,8 +49,9 @@ void FarmScene::release(void)
 void FarmScene::update(void)
 {
 	_player->update();
-	_camera->setPosition(_player->getPlayerPosition());
-	_player->worldToCamera(_camera->worldToCamera
+	_inven->update();
+	CAMERA->setPosition(_player->getPlayerPosition());
+	_player->worldToCamera(CAMERA->worldToCamera
 	(_player->getPlayerPosition()));
 	queue<pair<string, POINT>> dropItems = _om->updateObjects();
 	while (!dropItems.empty())
@@ -85,10 +84,28 @@ void FarmScene::update(void)
 	_player->ObjectCollision(_om);
 
 	if(KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
+	{
 		_player->UseTool(_om, _ptMouse);
-	_player->UseToolAnim(KEYMANAGER->isStayKeyDown(VK_LBUTTON));
+		_inven->itemMove();
+		_inven->invenXButton();
+	}
+	if (KEYMANAGER->isOnceKeyUp(VK_LBUTTON))
+	{
+		_inven->putItem();
+	}
 
-	_player->UseFishingLod(_camera->cameraToWorld(_ptMouse));
+	_player->UseToolAnim(KEYMANAGER->isStayKeyDown(VK_LBUTTON));
+	
+	_player->UseFishingLod(CAMERA->cameraToWorld(_ptMouse));
+
+	_player->Fishing();
+
+	_player->getFishItem(_player->getIsSuccessFishing(),
+		_inven, "4-5");
+
+
+
+	getDropItem();
 
 	if (KEYMANAGER->isOnceKeyDown(VK_F1))
 	{
@@ -98,8 +115,8 @@ void FarmScene::update(void)
 
 void FarmScene::render(void)
 {
-	_bg->render(getMemDC(), 0, 0, _camera->getPosition().x - WINSIZE_X / 2,
-		_camera->getPosition().y - WINSIZE_Y / 2, WINSIZE_X, WINSIZE_Y);
+	_bg->render(getMemDC(), 0, 0, CAMERA->getPosition().x - WINSIZE_X / 2,
+		CAMERA->getPosition().y - WINSIZE_Y / 2, WINSIZE_X, WINSIZE_Y);
 	// 정렬된 순서로 렌더
 	while (!_vRenderList.empty())
 	{
@@ -115,9 +132,11 @@ void FarmScene::render(void)
 
 	if (KEYMANAGER->isToggleKey('Q'))
 	{
-		IMAGEMANAGER->render("충돌", getMemDC(), _camera->worldToCameraX(0),
-			_camera->worldToCameraY(0));
+		IMAGEMANAGER->render("충돌", getMemDC(), CAMERA->worldToCameraX(0),
+			CAMERA->worldToCameraY(0));
 	}
+	
+	_inven->render();
 	_ui->render();
 }
 
@@ -132,7 +151,6 @@ void FarmScene::Collision(void)
 				_player->getPlayerPosition().y,48,52),
 			&_om->getObjectList()[i]->getRC()))
 		{
-			cout << "충돌" << endl;
 		}
 	}
 
@@ -149,11 +167,11 @@ void FarmScene::renderDropItem()
 		tagAccessory* accessoryInfo = nullptr;
 		tagIngredient* ingredientInfo = nullptr;
 		tagConsumable* consumableInfo = nullptr;
-		if (_camera->worldToCameraX(_liDropItem->second.x) + 32 < 0 || _camera->worldToCameraX(_liDropItem->second.x) > WINSIZE_X)
+		if (CAMERA->worldToCameraX(_liDropItem->second.x) + 32 < 0 || CAMERA->worldToCameraX(_liDropItem->second.x) > WINSIZE_X)
 		{
 			continue;
 		}
-		if (_camera->worldToCameraY(_liDropItem->second.y) + 32 < 0 || _camera->worldToCameraY(_liDropItem->second.y) > WINSIZE_Y)
+		if (CAMERA->worldToCameraY(_liDropItem->second.y) + 32 < 0 || CAMERA->worldToCameraY(_liDropItem->second.y) > WINSIZE_Y)
 		{
 			continue;
 		}
@@ -162,33 +180,72 @@ void FarmScene::renderDropItem()
 		case '0':
 			toolInfo = DATAMANAGER->getToolInfo(atoi(itemIndex.c_str()));
 			IMAGEMANAGER->addImage(toolInfo->name, toolInfo->filePath.c_str(), 32, 32, true, RGB(255, 0, 255))->render(getMemDC(), 
-				_camera->worldToCameraX(_liDropItem->second.x), _camera->worldToCameraY(_liDropItem->second.y));
-		break;
+				CAMERA->worldToCameraX(_liDropItem->second.x), CAMERA->worldToCameraY(_liDropItem->second.y));
+			break;
 		case '1':
 			waeponInfo = DATAMANAGER->getWeaponInfo(atoi(itemIndex.c_str()));
 			IMAGEMANAGER->addImage(waeponInfo->name, waeponInfo->filePath.c_str(), 32, 32, true, RGB(255, 0, 255))->render(getMemDC(), 
-				_camera->worldToCameraX(_liDropItem->second.x), _camera->worldToCameraY(_liDropItem->second.y));
+				CAMERA->worldToCameraX(_liDropItem->second.x), CAMERA->worldToCameraY(_liDropItem->second.y));
 			break;
 		case '2':
 			armorInfo = DATAMANAGER->getArmorInfo(atoi(itemIndex.c_str()));
 			IMAGEMANAGER->addImage(armorInfo->name, armorInfo->filePath.c_str(), 32, 32, true, RGB(255, 0, 255))->render(getMemDC(), 
-				_camera->worldToCameraX(_liDropItem->second.x), _camera->worldToCameraY(_liDropItem->second.y));
+				CAMERA->worldToCameraX(_liDropItem->second.x), CAMERA->worldToCameraY(_liDropItem->second.y));
 			break;
 		case '3':
 			accessoryInfo = DATAMANAGER->getAccessoryInfo(atoi(itemIndex.c_str()));
 			IMAGEMANAGER->addImage(accessoryInfo->name, accessoryInfo->filePath.c_str(), 32, 32, true, RGB(255, 0, 255))->render(getMemDC(), 
-				_camera->worldToCameraX(_liDropItem->second.x), _camera->worldToCameraY(_liDropItem->second.y));
+				CAMERA->worldToCameraX(_liDropItem->second.x), CAMERA->worldToCameraY(_liDropItem->second.y));
 			break;
 		case '4':
 			ingredientInfo = DATAMANAGER->getIngredientInfo(atoi(itemIndex.c_str()));
 			IMAGEMANAGER->addImage(ingredientInfo->name, ingredientInfo->filePath.c_str(), 32, 32, true, RGB(255, 0, 255))->render(getMemDC(), 
-				_camera->worldToCameraX(_liDropItem->second.x), _camera->worldToCameraY(_liDropItem->second.y));
+				CAMERA->worldToCameraX(_liDropItem->second.x), CAMERA->worldToCameraY(_liDropItem->second.y));
 			break;
 		case '5':
 			consumableInfo = DATAMANAGER->getConsumableInfo(atoi(itemIndex.c_str()));
 			IMAGEMANAGER->addImage(consumableInfo->name, consumableInfo->filePath.c_str(), 32, 32, true, RGB(255, 0, 255))->render(getMemDC(), 
-				_camera->worldToCameraX(_liDropItem->second.x), _camera->worldToCameraY(_liDropItem->second.y));
-		break;
+				CAMERA->worldToCameraX(_liDropItem->second.x), CAMERA->worldToCameraY(_liDropItem->second.y));
+			break;
+		}
+	}
+}
+
+void FarmScene::getDropItem()
+{
+	for (_liDropItem = _lDropItem.begin(); _liDropItem != _lDropItem.end();)
+	{
+		if (getDistance(_liDropItem->second.x,
+			_liDropItem->second.y,
+			_player->getPlayerPosition().x,
+			_player->getPlayerPosition().y) < 120)
+		{
+			_liDropItem->second.x +=
+				cosf(getAngle(_liDropItem->second.x,
+					_liDropItem->second.y,
+					_player->getPlayerPosition().x,
+					_player->getPlayerPosition().y)) * 2.2f;
+
+			_liDropItem->second.y +=
+				-sinf(getAngle(_liDropItem->second.x,
+					_liDropItem->second.y,
+					_player->getPlayerPosition().x,
+					_player->getPlayerPosition().y)) * 2.2f;
+
+
+			if (PtInRect(&_player->getPlayerRC(), _liDropItem->second))
+			{
+				_inven->getItem(_liDropItem->first);
+				_liDropItem = _lDropItem.erase(_liDropItem);
+			}
+			else
+			{
+				++_liDropItem;
+			}
+		}
+		else
+		{
+			++_liDropItem;
 		}
 	}
 }

@@ -233,7 +233,6 @@ void Dynus::update(void)
 	_hpBar->setGauge(_hp, _maxHp);
 
 
-	cout << "현재 페이즈: " << (int)_phase << endl;
 
 	switch (_state)
 	{
@@ -416,7 +415,6 @@ void Dynus::update(void)
 			{
 			case EStarPhase::STAR:
 
-			cout << "star" << endl;
 
 			if (!_isGM1Remove)
 			{
@@ -483,11 +481,9 @@ void Dynus::update(void)
 						_bgAlpha = 0.0f;
 
 						bulletFire();
-						cout << "3페이즈 시작" << endl;
 
 						if (_isGM1Remove && _isGM2Remove)
 						{
-							cout << "3페이즈 시작" << endl;
 							_phase = EDynusPhase::THIRD;
 						}
 					}
@@ -552,7 +548,6 @@ void Dynus::update(void)
 				{
 				case 0:
 					bulletFire();
-					cout << "bulletFire" << endl;
 
 					if (_pa1StartPosIdx < 0)
 					{
@@ -576,7 +571,6 @@ void Dynus::update(void)
 
 				case 1:
 					spreadEllipse();
-					cout << "spreadEllipse" << endl;
 
 					if (_pa2StartPosIdx < 0)
 					{
@@ -602,7 +596,6 @@ void Dynus::update(void)
 
 				case 2:
 					beamFire();
-					cout << "beamFire" << endl;
 
 					if (_pa3StartPosIdx < 0)
 					{
@@ -628,7 +621,6 @@ void Dynus::update(void)
 					break;
 
 				case 3:
-					cout << "spawnShadeclaw" << endl;
 					if (!_isSpawnEnemy)
 					{
 						_em->spawnShadeclaw();
@@ -904,7 +896,6 @@ void Dynus::drawPlatform(void)
 			{
 			case EStarPhase::STAR:
 
-				cout << "star" << endl;
 
 				drawGuardMine();
 

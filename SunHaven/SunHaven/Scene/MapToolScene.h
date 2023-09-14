@@ -1,7 +1,6 @@
 // ¹Ú»óÇö
 #pragma once
 #include "../FrameWork/GameNode/GameNode.h"
-//#include "../Class/Object/Object.h"
 
 #define MapToolWidth	800
 #define MapToolHeight	600
@@ -37,7 +36,7 @@ class MapToolScene : public GameNode
 {
 private:
 	GImage* _tileMapBuffer;
-	Tile _tileMap[7][100][100];
+	Tile _tileMap[4][7][100][100];
 	int _tileMapSize;
 
 	GImage* _tilesBuffer;
@@ -58,6 +57,7 @@ private:
 	char _tileSizeChar[20];
 	bool _input;
 	int _layer;
+	int _curMap;
 	int _curTiles;
 
 	RECT _cursorRC;
@@ -70,6 +70,7 @@ private:
 	int _selectTilesCol;
 
 	bool _showLayer[7];
+	char* _mapName[4];
 
 public:
 	HRESULT init(void);
@@ -78,6 +79,7 @@ public:
 	void render(void);
 
 	void changeLayer(int layer);
+	void changeMap(int map);
 
 	void prevTiles(void);
 	void nextTiles(void);

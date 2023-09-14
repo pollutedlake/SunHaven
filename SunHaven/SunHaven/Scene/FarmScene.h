@@ -2,9 +2,9 @@
 #pragma once
 #include "../FrameWork/GameNode/GameNode.h"
 #include "../Player/Player.h"
-#include "../Class/Camera.h"
 #include "../Class/Object/ObjectManager.h"
 #include "../Class/UI/ProgressBar.h"
+#include "../Class/Inventory.h"
 
 struct cmp {
 	bool operator()(pair<GameNode*, int> a, pair<GameNode*, int> b)
@@ -31,7 +31,6 @@ private:
 private:
 	Player* _player;
 	GImage* _bg;
-	Camera* _camera;
 	ObjectManager* _om;
 	UI* _ui;
 	priority_queue<pair<GameNode*, int>, vector<pair<GameNode*, int>>, cmp> _vRenderList;
@@ -41,6 +40,8 @@ private:
 	GImage* _MouseOver;
 	RECT _MouseRC;
 
+	Inventory* _inven;
+
 public:
 	HRESULT init(void);
 	void release(void);
@@ -49,6 +50,9 @@ public:
 
 	void Collision(void);
 	void renderDropItem();
+	void getDropItem();
+
+
 
 	FarmScene() {}
 	~FarmScene() {}

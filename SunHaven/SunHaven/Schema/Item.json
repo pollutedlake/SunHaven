@@ -17,7 +17,7 @@
       {
         "_strType": [
           "0-0",
-          "Resources/Images/Item/icon_rusty_pickaxe.bmp",
+          "Resources/Images/Item/icon_rusty_pickaxe2.bmp",
           "녹슨 곡괭이",
           "채광",
           "커먼",
@@ -39,7 +39,7 @@
       {
         "_strType": [
           "0-1",
-          "Resources/Images/Item/icon_adamant_pickaxe.bmp",
+          "Resources/Images/Item/icon_adamant_pickaxe2.bmp",
           "아다만트 곡괭이",
           "채광",
           "레어",
@@ -61,7 +61,7 @@
       {
         "_strType": [
           "0-2",
-          "Resources/Images/Item/icon_rusty_hoe.bmp",
+          "Resources/Images/Item/icon_rusty_hoe2.bmp",
           "녹슨 괭이",
           "농사",
           "커먼",
@@ -83,7 +83,7 @@
       {
         "_strType": [
           "0-3",
-          "Resources/Images/Item/icon_adamant_hoe.bmp",
+          "Resources/Images/Item/icon_adamant_hoe2.bmp",
           "아다만트 괭이",
           "농사",
           "레어",
@@ -105,7 +105,7 @@
       {
         "_strType": [
           "0-4",
-          "Resources/Images/Item/icon_rusty_axe.bmp",
+          "Resources/Images/Item/icon_rusty_axe2.bmp",
           "녹슨 도끼",
           "탐험",
           "커먼",
@@ -127,7 +127,7 @@
       {
         "_strType": [
           "0-5",
-          "Resources/Images/Item/icon_adamant_axe.bmp",
+          "Resources/Images/Item/icon_adamant_axe2.bmp",
           "아다만트 도끼",
           "탐험",
           "레어",
@@ -149,7 +149,7 @@
       {
         "_strType": [
           "0-6",
-          "Resources/Images/Item/icon_rusty_wateringCan.bmp",
+          "Resources/Images/Item/icon_rusty_wateringCan2.bmp",
           "녹슨 물뿌리개",
           "농사",
           "커먼",
@@ -171,7 +171,7 @@
       {
         "_strType": [
           "0-7",
-          "Resources/Images/Item/icon_adamant_wateringCan.bmp",
+          "Resources/Images/Item/icon_adamant_wateringCan2.bmp",
           "아다만트 물뿌리개",
           "농사",
           "레어",
@@ -193,7 +193,7 @@
       {
         "_strType": [
           "0-8",
-          "Resources/Images/Item/icon_basic_fishingRod.bmp",
+          "Resources/Images/Item/icon_basic_fishingRod2.bmp",
           "기본 낚싯대",
           "낚시",
           "커먼",
@@ -217,7 +217,7 @@
       {
         "_strType": [
           "1-0",
-          "Resources/Images/Item/icon_basic_crossbow.bmp",
+          "Resources/Images/Item/icon_basic_crossbow2.bmp",
           "쇠뇌", // name
           "무기", // type
           "커먼",
@@ -231,6 +231,7 @@
           7, // maxDamage
           22, // attackSpeed
           0, // requireLv
+          8,
           1000, // gold
           100 // sellGold
         ]
@@ -239,7 +240,7 @@
       {
         "_strType": [
           "1-1",
-          "Resources/Images/Item/icon_adamant_crossbow.bmp",
+          "Resources/Images/Item/icon_adamant_crossbow2.bmp",
           "아다만트 쇠뇌", // name
           "무기", // type
           "레어",
@@ -253,6 +254,7 @@
           24, // maxDamage
           13, // attackSpeed
           20, // requireLv
+          8,
           20000, // gold
           1000 // sellGold
         ]
@@ -261,7 +263,7 @@
       {
         "_strType": [
           "1-2",
-          "Resources/Images/Item/icon_basic_sword.bmp",
+          "Resources/Images/Item/icon_basic_sword2.bmp",
           "검", // name
           "무기", // type
           "커먼",
@@ -275,6 +277,7 @@
           8, // maxDamage
           11, // attackSpeed
           0, // requireLv
+          8,
           800, // gold
           100 // sellGold
         ]
@@ -282,7 +285,7 @@
       {
         "_strType": [
           "1-3",
-          "Resources/Images/Item/icon_adamant_sword.bmp",
+          "Resources/Images/Item/icon_adamant_sword2.bmp",
           "아다만트 검", // name
           "무기", // type
           "레어",
@@ -296,6 +299,7 @@
           24, // maxDamage
           13, // attackSpeed
           20, // requireLv
+          8,
           20000, // gold
           500 // sellGold
         ]
@@ -306,7 +310,7 @@
       {
         "_strType": [
           "2-0",
-          "Resources/Images/Item/icon_adamant_helmet.bmp",
+          "Resources/Images/Item/icon_adamant_helmet2.bmp",
           "아다만트 헬멧", // name
           "방어구", // type
           "레어", // grade
@@ -319,6 +323,7 @@
           4, // defense
           15, // maxHp
           20, // requireLv
+          8,
           null, // gold
           1035 // sellGold
         ]
@@ -327,7 +332,7 @@
       {
         "_strType": [
           "2-1",
-          "Resources/Images/Item/icon_adamant_chestPlate.bmp",
+          "Resources/Images/Item/icon_adamant_chestPlate2.bmp",
           "아다만트 갑옷 (상의)", // name
           "방어구", // type
           "레어", // grade
@@ -340,6 +345,7 @@
           6, // defense
           15, // maxHp
           20, // requireLv
+          8,
           null, // gold
           1242 // sellGold
         ]
@@ -348,7 +354,7 @@
       {
         "_strType": [
           "2-2",
-          "Resources/Images/Item/icon_adamant_legs.bmp",
+          "Resources/Images/Item/icon_adamant_legs2.bmp",
           "아다만트 갑옷 (하의)", // name
           "방어구", // type
           "레어",
@@ -361,6 +367,7 @@
           4, // defense
           8, // maxHp
           20, // requireLv
+          8,
           null, // gold
           1035 // sellGold
         ]
@@ -369,7 +376,7 @@
       {
         "_strType": [
           "2-3",
-          "Resources/Images/Item/icon_adamant_gloves.bmp",
+          "Resources/Images/Item/icon_adamant_gloves2.bmp",
           "아다만트 장갑", // name
           "방어구", // type
           "레어",
@@ -382,6 +389,7 @@
           3, // defense
           6, // maxHp
           20, // requireLv
+          8,
           null, // gold
           828 // sellGold
         ]
@@ -392,7 +400,7 @@
       {
         "_strType": [
           "3-0",
-          "Resources/Images/Item/icon_adamant_accessory.bmp",
+          "Resources/Images/Item/icon_adamant_accessory2.bmp",
           "아다만트 반지",
           "악세서리",
           "레어",
@@ -405,6 +413,7 @@
           4, // attackDamage
           4, // spellDamage
           20, // combatLv
+          8,
           7500, // gold
           500 // sellGold
         ]
@@ -413,7 +422,7 @@
       {
         "_strType": [
           "3-1",
-          "Resources/Images/Item/icon_Romance_Keepsake.bmp",
+          "Resources/Images/Item/icon_Romance_Keepsake2.bmp",
           "연애 증표",
           "악세서리",
           null,
@@ -426,6 +435,7 @@
           null, // attackDamage
           null, // spellDamage
           null, // combatLv
+          8,
           null, // gold
           50 // sellGold
         ]
@@ -436,7 +446,7 @@
     {
       "_strType": [
         "4-0",
-        "Resources/Images/Item/icon_log.bmp",
+        "Resources/Images/Item/icon_log2.bmp",
         "통나무", // name
         "재료", // type
         "판자가 되기만을 기다리고 있는 잘린 통나무입니다."
@@ -451,7 +461,7 @@
     {
       "_strType": [
         "4-1",
-        "Resources/Images/Item/icon_stone.bmp",
+        "Resources/Images/Item/icon_stone2.bmp",
         "돌", // name
         "재료", // type
         "평범한 바위 덩어리지만 쓸모있는걸로 만들 수 있을거에요."
@@ -466,7 +476,7 @@
     {
       "_strType": [
         "4-2",
-        "Resources/Images/Item/icon_woodplank.bmp",
+        "Resources/Images/Item/icon_woodplank2.bmp",
         "나무 판자", // name
         "재료", // type
         "이것으로 많은 것을 만들 수 있어요!"
@@ -481,7 +491,7 @@
     {
       "_strType": [
         "4-3",
-        "Resources/Images/Item/icon_wheat.bmp",
+        "Resources/Images/Item/icon_wheat2.bmp",
         "밀", // name  
         "재료", // type
         "밀가루를 만들 때 쓰입니다."
@@ -496,7 +506,7 @@
     {
       "_strType": [
         "4-4",
-        "Resources/Images/Item/icon_wheatSeed.bmp",
+        "Resources/Images/Item/icon_wheat_seed_bag2.bmp",
         "밀 씨앗", // name
         "재료", // type
         "다재다능한 품종으로 평가받으며 전 국토의 구불구불한 들판에서 자라는 것으로 유명합니다."
@@ -511,7 +521,7 @@
     {
       "_strType": [
         "4-5",
-        "Resources/Images/Item/icon_basic_fish.bmp",
+        "Resources/Images/Item/icon_fish_sunhaven_10.bmp",
         "일반 물고기", // name
         "재료", // type
         "영양가가 많습니다."
@@ -526,7 +536,7 @@
     {
       "_strType": [
         "4-6",
-        "Resources/Images/Item/icon_adamant_ore.bmp",
+        "Resources/Images/Item/icon_adamant_ore2.bmp",
         "아다만트 광석", // name
         "재료", // type
         "채광으로 얻을 수 있는 아다만트 광석입니다."
@@ -541,7 +551,7 @@
     {
       "_strType": [
         "4-7",
-        "Resources/Images/Item/icon_adamant_bar.bmp",
+        "Resources/Images/Item/icon_adamant_bar2.bmp",
         "아다만트 바", // name
         "재료", // type
         "돌이랑 아다만트 광석을 이용해 제작할 수 있습니다."
@@ -558,7 +568,7 @@
     {
       "_strType": [
         "5-0",
-        "Resources/Images/Item/icon_cookies.bmp",
+        "Resources/Images/Item/icon_cookies2.bmp",
         "쿠키", // name
         "소모품", // type
         "바삭하고 맛있는 쿠키입니다."

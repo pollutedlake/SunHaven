@@ -11,11 +11,9 @@ HRESULT DynusScene::init(void)
 
 	_dynus = new Dynus;
 
-	_camera = new Camera;
-	_camera->init();
-	_camera->setPosition(_player->getPlayerPosition());
-	_camera->setLimitRight(1280 - WINSIZE_X / 2);
-	_camera->setLimitBottom(720 - WINSIZE_Y / 2);
+	CAMERA->setPosition(_player->getPlayerPosition());
+	CAMERA->setLimitRight(1280 - WINSIZE_X / 2);
+	CAMERA->setLimitBottom(720 - WINSIZE_Y / 2);
 
 	for (int i = 0; i < 4; i++)
 	{
@@ -40,21 +38,19 @@ void DynusScene::release(void)
 	_dynus->release();
 	_em->release();
 	_player->release();
-	_camera->release();
 
 	_player->release();
 	SAFE_DELETE(_player);
 	SAFE_DELETE(_dynus);
 	SAFE_DELETE(_em);
-	SAFE_DELETE(_camera);
 }
 
 void DynusScene::update(void)
 {
 	_player->update();
-	_camera->setPosition(_player->getPlayerPosition());
-	_camera->update();
-	_player->worldToCamera(_camera->worldToCamera
+	CAMERA->setPosition(_player->getPlayerPosition());
+	CAMERA->update();
+	_player->worldToCamera(CAMERA->worldToCamera
 	(_player->getPlayerPosition()));
 	_dynus->update();
 	_em->update();
