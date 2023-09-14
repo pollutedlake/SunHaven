@@ -18,7 +18,7 @@ private:
 	Camera* _camera;
 
 public:
-	HRESULT init(void);
+	HRESULT init(string sceneName);
 	void release(void);
 	queue<pair<string, POINT>> updateObjects(void);
 	void render(void);

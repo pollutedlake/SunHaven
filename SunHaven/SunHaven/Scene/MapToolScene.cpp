@@ -18,11 +18,14 @@ HRESULT MapToolScene::init(void)
 	_mapName[2] = "Town";
 	_mapName[3] = "Dynus";
 
-	for(int i = 0; i < 7; i++)
+	for(int k = 0; k < 4; k++)
 	{
-		for (int j = 0; j < _tileMapSize; j++)
+		for(int i = 0; i < 7; i++)
 		{
-			ZeroMemory(&_tileMap, sizeof(_tileMap[i][j]) * _tileMapSize);
+			for (int j = 0; j < _tileMapSize; j++)
+			{
+				ZeroMemory(&_tileMap[k][i][j], sizeof(_tileMap[0][0][0][0]) * _tileMapSize);
+			}
 		}
 	}
 	for(int i = 0; i < 10; i++)
@@ -105,8 +108,8 @@ HRESULT MapToolScene::init(void)
 
 	// 맵 선택 버튼
 	radioButton = new RadioButton;
-	float x2[] = { 50.0f, 100.0f, 150.0f, 200.0f};
-	float y2[] = {0.0f, 0.0f, 0.0f, 0.0f};
+	float x2[] = { 150.0f, 350.0f, 550.0f, 750.0f};
+	float y2[] = {25.0f, 25.0f, 25.0f, 25.0f};
 	int width2[] = {200, 200, 200, 200};
 	int height2[] = {50, 50, 50, 50};
 	char* str2[] = {"FARM", "MINE", "TOWN", "DYNUS"};
@@ -115,7 +118,7 @@ HRESULT MapToolScene::init(void)
 	{
 		f2[i] = bind(&MapToolScene::changeMap, this, i);
 	}
-	radioButton->init(7, x2, y2, width2, height2, "Button1", f2, _mapName, RGB(255, 255, 255), 30, -15);
+	radioButton->init(4, x2, y2, width2, height2, "Button1", f2, str2, RGB(255, 255, 255), 30, -15);
 	_vRadioButton.push_back(radioButton);
 
 	// Layer보이는 버튼
@@ -257,7 +260,7 @@ void MapToolScene::update(void)
 		{	
 			for (int i = 0; i < _selectTilesRow; i++)
 			{
-				CopyMemory(&_tileMap[_layer][(_ptMouse.y - 50 + _cameraPos.y - MapToolHeight / 2) / TILEHEIGHT + i][(_ptMouse.x - 50 + _cameraPos.x - MapToolWidth / 2) / TILEWIDTH],
+				CopyMemory(&_tileMap[_curMap][_layer][(_ptMouse.y - 50 + _cameraPos.y - MapToolHeight / 2) / TILEHEIGHT + i][(_ptMouse.x - 50 + _cameraPos.x - MapToolWidth / 2) / TILEWIDTH],
 					&_selectTiles[i][0], sizeof(Tile) * _selectTilesCol);
 				for (int j = 0; j < _selectTilesCol; j++)
 				{
@@ -379,6 +382,10 @@ void MapToolScene::update(void)
 	{
 		copyTiles();
 	}
+	if (KEYMANAGER->isOnceKeyDown(VK_F1))
+	{
+		SCENEMANAGER->changeScene("Title");
+	}
 }
 
 void MapToolScene::render(void)
@@ -437,24 +444,6 @@ void MapToolScene::render(void)
 			}
 		}
 	}
-	/*
-	char text[64];
-	wsprintf(text, "FarmLayer%d", _layer + 1);
-	switch (_layer)
-	{
-		case 1:
-			IMAGEMANAGER->findImage(text)->alphaRender(getMemDC(), 50 - (_cameraPos.x - MapToolWidth / 2), 50 - (_cameraPos.y - MapToolHeight / 2), 128);
-		break;
-		case 2:
-			IMAGEMANAGER->findImage(text)->alphaRender(getMemDC(), 50 - (_cameraPos.x - MapToolWidth / 2), 50 - (_cameraPos.y - MapToolHeight / 2), 128);
-			break;
-		case 3:
-			IMAGEMANAGER->findImage(text)->alphaRender(getMemDC(), 50 - (_cameraPos.x - MapToolWidth / 2), 50 - (_cameraPos.y - MapToolHeight / 2), 128);
-			break;
-		case 4:
-			IMAGEMANAGER->findImage(text)->alphaRender(getMemDC(), 50 - (_cameraPos.x - MapToolWidth / 2), 50 - (_cameraPos.y - MapToolHeight / 2), 128);
-			break;
-	}*/
 
 	// 선택할 수 있는 타일들
 	for (int i = 0; i < 10; i++)
@@ -515,6 +504,40 @@ void MapToolScene::render(void)
 		_collisionBuffer->alphaRender(getMemDC(), 50, 50, MapToolWidth, MapToolHeight, _cameraPos.x - MapToolWidth / 2, _cameraPos.y - MapToolHeight / 2, MapToolWidth, MapToolHeight, 128);
 	}
 
+	char text[64];
+	if (_curMap == 0)
+	{
+		wsprintf(text, "FarmLayer%d", _layer + 1);
+		switch (_layer)
+		{
+		case 1:
+			IMAGEMANAGER->findImage(text)->alphaRender(getMemDC(), 50 - (_cameraPos.x - MapToolWidth / 2), 50 - (_cameraPos.y - MapToolHeight / 2), 160);
+			break;
+		case 2:
+			IMAGEMANAGER->findImage(text)->alphaRender(getMemDC(), 50 - (_cameraPos.x - MapToolWidth / 2), 50 - (_cameraPos.y - MapToolHeight / 2), 160);
+			break;
+		case 3:
+			IMAGEMANAGER->findImage(text)->alphaRender(getMemDC(), 50 - (_cameraPos.x - MapToolWidth / 2), 50 - (_cameraPos.y - MapToolHeight / 2), 160);
+			break;
+		case 4:
+			IMAGEMANAGER->findImage(text)->alphaRender(getMemDC(), 50 - (_cameraPos.x - MapToolWidth / 2), 50 - (_cameraPos.y - MapToolHeight / 2), 160);
+			break;
+		}
+	}
+	else if (_curMap == 1)
+	{
+		wsprintf(text, "MineLayer%d", _layer + 1);
+		switch (_layer)
+		{
+		case 2:
+			IMAGEMANAGER->findImage(text)->alphaRender(getMemDC(), 50 - (_cameraPos.x - MapToolWidth / 2), 50 - (_cameraPos.y - MapToolHeight / 2), 160);
+			break;
+		case 4:
+			IMAGEMANAGER->findImage(text)->alphaRender(getMemDC(), 50 - (_cameraPos.x - MapToolWidth / 2), 50 - (_cameraPos.y - MapToolHeight / 2), 160);
+			break;
+		}
+	}
+
 	// 버튼 렌더
 	for (_viNormalButton = _vNormalButton.begin(); _viNormalButton != _vNormalButton.end(); ++_viNormalButton)
 	{
@@ -558,10 +581,6 @@ void MapToolScene::render(void)
 
 	// 마우스 커서
 	IMAGEMANAGER->findImage("Cursor")->render(getMemDC(), _ptMouse.x, _ptMouse.y);
-	if (KEYMANAGER->isOnceKeyDown(VK_F1))
-	{
-		SCENEMANAGER->changeScene("Title");
-	}
 }
 
 void MapToolScene::changeLayer(int layerN)
@@ -591,7 +610,7 @@ void MapToolScene::erase(void)
 	{
 		for (int i = 0; i < _selectTilesRow; i++)
 		{
-			ZeroMemory(&_tileMap[_layer][_selectRC.top / TILEHEIGHT + i][_selectRC.left / TILEWIDTH], sizeof(Tile) * _selectTilesCol);
+			ZeroMemory(&_tileMap[_curMap][_layer][_selectRC.top / TILEHEIGHT + i][_selectRC.left / TILEWIDTH], sizeof(Tile) * _selectTilesCol);
 		}
 	}
 }
@@ -656,7 +675,7 @@ void MapToolScene::copyTiles(void)
 		for (int i = 0; i < _selectTilesRow; i++)
 		{
 			CopyMemory(&_selectTiles[i][0], 
-				&_tileMap[_layer][_selectRC.top / TILEHEIGHT + i][_selectRC.left / TILEWIDTH], sizeof(Tile) * _selectTilesCol);
+				&_tileMap[_curMap][_layer][_selectRC.top / TILEHEIGHT + i][_selectRC.left / TILEWIDTH], sizeof(Tile) * _selectTilesCol);
 		}
 	}
 }

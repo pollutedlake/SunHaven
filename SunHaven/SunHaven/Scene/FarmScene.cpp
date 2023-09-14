@@ -18,7 +18,7 @@ HRESULT FarmScene::init(void)
 	_camera->setLimitBottom(3600 - WINSIZE_Y / 2);
 
 	_om = new ObjectManager;
-	_om->init();
+	_om->init("Farm");
 	_om->setCameraAddress(_camera);
 
 	_inven = new Inventory;
@@ -41,8 +41,8 @@ HRESULT FarmScene::init(void)
 
 void FarmScene::release(void)
 {
-	//_inven->release();
-
+	_inven->release();
+	SAFE_DELETE(_inven);
 	_player->release();
 	SAFE_DELETE(_player);
 	_om->release();

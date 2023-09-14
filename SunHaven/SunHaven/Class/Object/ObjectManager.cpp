@@ -2,10 +2,12 @@
 #include "ObjectManager.h"
 #include "../Camera.h"
 
-HRESULT ObjectManager::init(void)
+HRESULT ObjectManager::init(string sceneName)
 {
 	FILE* _fp;
-	fopen_s(&_fp, "FarmMapObject.txt", "r");
+	char fileName[256];
+	wsprintf(fileName, "%sMapObject.txt", sceneName.c_str());
+	fopen_s(&_fp, fileName, "r");
 	if (_fp != NULL)
 	{
 		for (int j = 0; j < 100; j++)

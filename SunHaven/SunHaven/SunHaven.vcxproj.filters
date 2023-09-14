@@ -97,6 +97,7 @@
     <ClCompile Include="Scene\IntroScene.cpp" />
     <ClCompile Include="Class\NPC\Lynn.cpp" />
     <ClCompile Include="Class\Data\EnemyData.cpp" />
+    <ClCompile Include="Scene\MineScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Class\UI\Buttons.h" />
@@ -168,9 +169,8 @@
     <ClInclude Include="Manager\DataManager.h" />
     <ClInclude Include="Scene\IntroScene.h" />
     <ClInclude Include="Class\NPC\Lynn.h" />
-
-    <ClInclude Include="Class\UI.h" />
     <ClInclude Include="Class\Data\EnemyData.h" />
+    <ClInclude Include="Scene\MineScene.h" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="lib\FMOD\fmodex_vc.lib" />

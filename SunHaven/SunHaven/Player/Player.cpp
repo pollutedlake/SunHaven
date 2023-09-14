@@ -474,10 +474,6 @@ void Player::update(void)
 
 void Player::render(void)
 {
-	_fireball->aniRender(getMemDC(), _fireballRC.left, _fireballRC.top,
-		_fireballAnim);
-
-
 	if (KEYMANAGER->isStayKeyDown('U'))
 	{
 		_fireBeam->loopRender(getMemDC(), &_firebeamRC,
@@ -498,10 +494,6 @@ void Player::render(void)
 		_toolImage->aniRender(getMemDC(), _toolAnimRC.left, _toolAnimRC.top,
 			_toolAnim);
 	}
-
-	//_inven->render();
-
-
 
 	if(KEYMANAGER->isToggleKey('K'))
 		_skill->render();

@@ -161,6 +161,7 @@
     <ClCompile Include="Class\Skill\MiningSkill.cpp" />
     <ClCompile Include="Class\NPC\Lynn.cpp" />
     <ClCompile Include="Manager\DataManager.cpp" />
+    <ClCompile Include="Scene\MineScene.cpp" />
     <ClCompile Include="Scene\IntroScene.cpp" />
     <ClCompile Include="Class\Data\EnemyData.cpp" />
     <ClCompile Include="Scene\Collision.cpp" />
@@ -235,6 +236,7 @@
     <ClInclude Include="Class\Skill\FarmingSkill.h" />
     <ClInclude Include="Class\Skill\FishingSkill.h" />
     <ClInclude Include="Class\NPC\Lynn.h" />
+    <ClInclude Include="Scene\MineScene.h" />
     <ClInclude Include="Scene\IntroScene.h" />
     <ClInclude Include="Json\json.h" />
     <ClInclude Include="Class\Data\INIData.h" />
