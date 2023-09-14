@@ -90,10 +90,11 @@ void FarmScene::update(void)
 	{
 		_player->UseTool(_om, _ptMouse);
 		_inven->itemMove();
+		_inven->invenXButton();
 	}
 	if (KEYMANAGER->isOnceKeyUp(VK_LBUTTON))
 	{
-
+		_inven->putItem();
 	}
 	_player->UseToolAnim(KEYMANAGER->isStayKeyDown(VK_LBUTTON));
 
