@@ -6,6 +6,8 @@ HRESULT Shadeclaw::init(POINT position)
 	_x = position.x;
 	_y = position.y;
 
+	_worldTimeCount = GetTickCount();
+
 	_state = EEnemyState::MOVE;
 	_speed = 1.0f;
 
@@ -19,9 +21,13 @@ HRESULT Shadeclaw::init(POINT position)
 
 	_playerX = _playerY = 0.0f;
 
+	_patrolX = RND->getFromFloatTo(300, 700);
+	_patrolY = RND->getFromFloatTo(200, 650);
+
 	_waitTime = 5.0f;
+	_waitCount = 0.0f;
 	_patrolPoints = deque<pair<float, float>>();
-	_patrolPoints.push_back(make_pair(RND->getFromFloatTo(300, 700), RND->getFromFloatTo(200, 650)));
+	_patrolPoints.push_back(make_pair(_patrolX, _patrolY));
 
 	if (!_patrolPoints.empty())
 	{
@@ -44,11 +50,14 @@ void Shadeclaw::update(void)
 	case EEnemyState::IDLE:
 		_imageName = "Shadeclow_Idle";
 
-		cout << _worldTimeCount << endl;
+		_waitCount++;
 
-		if (_worldTimeCount >= _waitTime)
+		if (_waitCount > 300)
 		{
-			_patrolPoints.push_back(make_pair(RND->getFromFloatTo(300, 700), RND->getFromFloatTo(200, 650)));
+			_patrolX = RND->getFromFloatTo(300, 700);
+			_patrolY = RND->getFromFloatTo(200, 650);
+
+			_patrolPoints.push_back(make_pair(_patrolX, _patrolY));
 			if (!_patrolPoints.empty())
 			{
 				//_patrolPoints.push_back(_nextPoints);
@@ -66,13 +75,11 @@ void Shadeclaw::update(void)
 
 		move();
 
-		// 다음 Patrol 위치에 도착하면 대기 상태로 전환
 		if (getDistance(_x, _y, _nextPoints.first, _nextPoints.second) <= 10.0f)
 		{
-			
 			_worldTimeCount = 0.0f;
 
-			
+			_waitCount = 0.0f;
 			_state = EEnemyState::IDLE;
 		}
 
@@ -80,7 +87,7 @@ void Shadeclaw::update(void)
 
 	case EEnemyState::TARGETON:
 		_imageName = "Shadeclow_Idle";
-
+	
 		targetOn();
 
 		break;
@@ -100,16 +107,10 @@ void Shadeclaw::update(void)
 
 		break;
 	}
+
 	_image = IMAGEMANAGER->findImage(_imageName);
 	_rc = RectMakeCenter(_x, _y,
 		_image->getFrameWidth(), _image->getFrameHeight());
-
-	if (_playerX < _x) {
-		_isLeft = true; // 왼쪽 방향
-	}
-	else {
-		_isLeft = false; // 오른쪽 방향
-	}
 
 	cout << _x << endl;
 	cout << _playerY << endl;
@@ -141,13 +142,33 @@ void Shadeclaw::move()
 {
 	cout << "Move To PatrolPos" << endl;
 
-		_x += cosf(getAngle(_x, _y, _nextPoints.first, _nextPoints.second)) * _speed;
-		_y += -sinf(getAngle(_x, _y, _nextPoints.first, _nextPoints.second)) * _speed;
+	if (_x < _patrolX)
+	{
+		_isLeft = false; // 오른쪽
+	}
+
+	else
+	{
+		_isLeft = true; // 왼쪽
+	}
+
+	_x += cosf(getAngle(_x, _y, _nextPoints.first, _nextPoints.second)) * _speed;
+	_y += -sinf(getAngle(_x, _y, _nextPoints.first, _nextPoints.second)) * _speed;
 }
 
 void Shadeclaw::targetOn(void)
 {
 	cout << "Move To Target" << endl;
+
+	if ((_rc.left + _rc.right) / 2 < _playerX)
+	{
+		_isLeft = false; // 오른쪽
+	}
+
+	else
+	{
+		_isLeft = true; // 왼쪽
+	}
 
 	_x += cosf(getAngle((_rc.left + _rc.right) / 2, (_rc.top + _rc.bottom) / 2,
 		_playerX, _playerY)) * _speed;
@@ -159,6 +180,15 @@ void Shadeclaw::targetOn(void)
 void Shadeclaw::attack()
 {
 	cout << "Attack To Target" << endl;
+
+	if (_x < _playerX)
+	{
+		_isLeft = false; // 오른쪽
+	}
+	else
+	{
+		_isLeft = true; // 왼쪽
+	}
 
 	if (!_isLeft)
 	{
@@ -173,18 +203,18 @@ void Shadeclaw::attack()
 		}
 	}
 
-	/*else
+	else
 	{
 		if (_currentFrameX == 2 || _currentFrameX == 3 || _currentFrameX == 6 || _currentFrameX == 7)
 		{
-			_rcAttack = RectMakeCenter(_x + 50, _y + 30, 80, 80);
+			_rcAttack = RectMakeCenter(_x + 40, _y + 30, 80, 80);
 		}
 
 		else
 		{
 			_rcAttack = RectMakeCenter(-10000, 0, 0, 0);
 		}
-	}*/
+	}
 }
 
 void Shadeclaw::animation()
@@ -201,7 +231,7 @@ void Shadeclaw::animation()
 			if (_image->getMaxFrameX() < _currentFrameX)
 			{
 				_currentFrameX = 0;
-
+				
 				_state = EEnemyState::IDLE;
 			}
 		}
@@ -219,7 +249,7 @@ void Shadeclaw::animation()
 			if (0 > _currentFrameX)
 			{
 				_currentFrameX = _image->getMaxFrameX();
-
+				
 				_state = EEnemyState::IDLE;
 			}
 		}
@@ -229,5 +259,5 @@ void Shadeclaw::animation()
 void Shadeclaw::draw()
 {
 	DrawRectMake(getMemDC(), _rcAttack);
-	_image->frameRender(getMemDC(), _x, _y, _currentFrameX, _currentFrameY);
+	_image->frameRender(getMemDC(), _x, _y);
 }

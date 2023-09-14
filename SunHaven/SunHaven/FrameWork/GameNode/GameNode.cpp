@@ -15,6 +15,7 @@ HRESULT GameNode::init(bool managerInit)
     {
         setlocale(LC_ALL, "korean");
 
+        CAMERA->init();
         KEYMANAGER->init();
         RND->init();
         IMAGEMANAGER->init();
@@ -47,6 +48,8 @@ void GameNode::release(void)
         JSONDATAMANAGER->releaseSingleton();
         DATAMANAGER->release();
         DATAMANAGER->releaseSingleton();
+        CAMERA->release();
+        CAMERA->releaseSingleton();
     }
 
     ReleaseDC(_hWnd, _hdc);

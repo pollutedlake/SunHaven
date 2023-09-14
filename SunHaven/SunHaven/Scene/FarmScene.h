@@ -2,7 +2,6 @@
 #pragma once
 #include "../FrameWork/GameNode/GameNode.h"
 #include "../Player/Player.h"
-#include "../Class/Camera.h"
 #include "../Class/Object/ObjectManager.h"
 #include "../Class/UI/ProgressBar.h"
 #include "../Class/Inventory.h"
@@ -32,7 +31,6 @@ private:
 private:
 	Player* _player;
 	GImage* _bg;
-	Camera* _camera;
 	ObjectManager* _om;
 	UI* _ui;
 	priority_queue<pair<GameNode*, int>, vector<pair<GameNode*, int>>, cmp> _vRenderList;

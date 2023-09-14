@@ -76,6 +76,7 @@ ID2D1HwndRenderTarget* _ID2DRanderTarget = nullptr;*/
 #include "../../Class/Data/JsonSaveLoader.h"
 #include "../../Manager/DataManager.h"
 #include "../Utility/Utils.h"
+#include "../../Class/Camera.h"
 
 using namespace MY_UTIL;
 
@@ -90,6 +91,7 @@ using namespace MY_UTIL;
 #define INIDATAMANAGER INIData::getSingleton()
 #define DATAMANAGER DataManager::getSingleton()
 #define JSONDATAMANAGER JsonSaveLoader::getSingleton()
+#define CAMERA Camera::getSingleton()
 
 // # 매크로 # (윈도우창 초기화)
 #define WINNAME					(LPTSTR)(TEXT("WindowsAPI"))

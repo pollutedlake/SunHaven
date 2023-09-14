@@ -198,6 +198,7 @@ public:
 			_playerMoveAnim->getFrameWidth(),
 			_playerMoveAnim->getFrameHeight());
 
+
 		
 		if (KEYMANAGER->isStayKeyDown('A'))
 		{
@@ -351,16 +352,14 @@ public:
 		_isCollisionTop = top;
 		_isCollisionBottom = bottom;
 
-		cout << _isCollisionLeft <<
-			_isCollisionRight <<
-			_isCollisionTop << _isCollisionBottom << endl;
 	}
 
 	RECT getPlayerRC() { return _playerRC; }
 	RECT getPlayertoCameraRect(void) { return _playertoCameraRC; }
-	RECT getSwordRC() { return _swordSlashRC; }
 	eTools getToolType() { return _eTools; }
 	bool getIsSuccessFishing() { return _isSuccessFishing; }
+
+	RECT getSwordSlashRC() { return _swordSlashRC; }
 
 	Player() {}
 	~Player() {}

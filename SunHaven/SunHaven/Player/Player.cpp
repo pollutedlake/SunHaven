@@ -595,8 +595,6 @@ void Player::update(void)
 
 void Player::render(void)
 {
-	/*_fireball->aniRender(getMemDC(), _fireballRC.left, _fireballRC.top,
-		_fireballAnim);*/
 
 
 	_fireBall->render();
