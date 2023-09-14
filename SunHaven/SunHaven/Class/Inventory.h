@@ -1,21 +1,14 @@
 #pragma once
 #include "../FrameWork/GameNode/GameNode.h"
 
-struct inventoryList
+struct Slot
 {
 	
 	RECT _rc;
 	bool _draw;
 	string _category;
-
-};
-
-struct equipmentSlot
-{
 	
-	RECT _rc;
-	bool _draw;
-	string _category;
+
 };
 
 
@@ -40,12 +33,15 @@ private:
 
 	bool _seeInven;
 	
+	bool _inInvenSlot;
+	bool _inEquipmentSlot;
+	
 
-	vector<inventoryList> _vInvenList;
-	vector<inventoryList>::iterator _viInvenList;
+	vector<Slot> _vInvenList;
+	vector<Slot>::iterator _viInvenList;
 
-	vector<equipmentSlot> _vEquipmentSlot;
-	vector<equipmentSlot>::iterator _viEquipmentSlot;
+	vector<Slot> _vEquipmentSlot;
+	vector<Slot>::iterator _viEquipmentSlot;
 
 	/*vector<tagTool*> _vTool;
 	vector<tagTool*>::iterator _viTool;
