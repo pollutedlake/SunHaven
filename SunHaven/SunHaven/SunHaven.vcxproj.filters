@@ -180,6 +180,9 @@
     <Image Include="FarmMapCollision.bmp" />
     <Image Include="DynusMapCollision.bmp" />
     <Image Include="Shop_Bg_Collision.bmp" />
+    <Image Include="MineMap.bmp" />
+    <Image Include="MineMapCollision.bmp" />
+    <Image Include="Mines.bmp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Debug\SunHaven.pch" />
@@ -207,5 +210,8 @@
     <Text Include="Debug\SunHaven.log" />
     <Text Include="FarmMap.txt" />
     <Text Include="FarmMapObject.txt" />
+    <Text Include="IntroText.txt" />
+    <Text Include="MineMap.txt" />
+    <Text Include="MineMapObject.txt" />
   </ItemGroup>
 </Project>
