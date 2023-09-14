@@ -100,7 +100,7 @@ void MineScene::update(void)
 
 	if (KEYMANAGER->isOnceKeyDown(VK_F1))
 	{
-		SCENEMANAGER->changeScene("Shop");
+		SCENEMANAGER->changeScene("Dynus");
 	}
 }
 

@@ -96,9 +96,18 @@ void FarmScene::update(void)
 	{
 		_inven->putItem();
 	}
-	_player->UseToolAnim(KEYMANAGER->isStayKeyDown(VK_LBUTTON));
 
+	_player->UseToolAnim(KEYMANAGER->isStayKeyDown(VK_LBUTTON));
+	
 	_player->UseFishingLod(_camera->cameraToWorld(_ptMouse));
+
+	_player->Fishing();
+
+	_player->getFishItem(_player->getIsSuccessFishing(),
+		_inven, "4-5");
+
+
+
 	getDropItem();
 
 	if (KEYMANAGER->isOnceKeyDown(VK_F1))
