@@ -20,7 +20,7 @@ private:
 public:
 	HRESULT init(void);
 	void release(void);
-	void update(void);
+	queue<pair<string, POINT>> updateObjects(void);
 	void render(void);
 
 	void setCameraAddress(Camera* camera) {_camera = camera;}

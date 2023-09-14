@@ -95,6 +95,10 @@
     <ClCompile Include="Class\Boss\Dizzy.cpp" />
 =======
     <ClCompile Include="Class\Skill\SkillManager.cpp" />
+<<<<<<< HEAD
+>>>>>>> main
+=======
+    <ClCompile Include="Manager\DataManager.cpp" />
 >>>>>>> main
   </ItemGroup>
   <ItemGroup>
@@ -169,6 +173,10 @@
     <ClInclude Include="Class\Boss\Dizzy.h" />
 =======
     <ClInclude Include="Class\Skill\SkillManager.h" />
+<<<<<<< HEAD
+>>>>>>> main
+=======
+    <ClInclude Include="Manager\DataManager.h" />
 >>>>>>> main
   </ItemGroup>
   <ItemGroup>
@@ -177,6 +185,7 @@
   <ItemGroup>
     <Image Include="FarmMap.bmp" />
     <Image Include="FarmMapCollision.bmp" />
+    <Image Include="DynusMapCollision.bmp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Debug\SunHaven.pch" />

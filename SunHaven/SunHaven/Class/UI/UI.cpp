@@ -23,6 +23,10 @@ HRESULT UI::init(string sceneName)
 		_barnAnimalsIcon = IMAGEMANAGER->findImage("BarnAnimalsIcon");
 		_skillTreeIcon = IMAGEMANAGER->findImage("SkillTreeIcon");
 		_questBookIcon = IMAGEMANAGER->findImage("QuestBookIcon");
+		for (int i = 0; i < 10; i++)
+		{
+			_shortcutItemRC[i] = RectMake(WINSIZE_X / 2 - 176 + 36 * i, WINSIZE_Y - 80, 32, 32);
+		}
 	}
 	return S_OK;
 }
@@ -35,7 +39,7 @@ void UI::update(void)
 {
 	if (_sceneName == "Title")
 	{
-
+		
 	}
 	else if (_sceneName == "Farm")
 	{
@@ -74,6 +78,10 @@ void UI::render(void)
 			0, 0, _questBookIcon->getWidth(), _questBookIcon->getHeight());
 		FONTMANAGER->textOut(getMemDC(), WINSIZE_X - 40, 100, "배달의민족 을지로체", 14, 100, "퀘스트 [L]", strlen("퀘스트 [L]"), RGB(255, 255, 255));
 		SetTextAlign(getMemDC(), TA_LEFT);
+		for (int i = 0; i < 10; i++)
+		{
+			//IMAGEMANAGER->findImage("")
+		}
 	}
 	else if (_sceneName == "Farm")
 	{

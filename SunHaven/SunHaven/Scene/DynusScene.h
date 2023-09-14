@@ -2,6 +2,7 @@
 #pragma once
 #include "../GameNode/GameNode.h"
 #include "../Class/Boss/Dynus.h"
+#include "../Class/Camera.h"
 #include "../Class/Enemy/Shadeclaw.h"
 #include "../../Player/Player.h"
 #include "../Class/Enemy/EnemyManager.h"
@@ -17,6 +18,7 @@ private:
 	Shadeclaw* _shadeclaw;
 	Player* _player;
 	EnemyManager* _em;
+	Camera* _camera;
 
 	char _text[64];
 

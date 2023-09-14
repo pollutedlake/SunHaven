@@ -54,7 +54,12 @@ void FarmScene::update(void)
 	_camera->setPosition(_player->getPlayerPosition());
 	_player->worldToCamera(_camera->worldToCamera
 	(_player->getPlayerPosition()));
-	_om->update();
+	queue<pair<string, POINT>> dropItems = _om->updateObjects();
+	while (!dropItems.empty())
+	{
+		_lDropItem.push_back(dropItems.front());
+		dropItems.pop();
+	}
 	_vRenderList.push(make_pair(_player, _player->getPlayertoCameraRect().bottom));
 	for (int i = 0; i < _om->getObjectList().size(); i++)
 	{
@@ -93,7 +98,6 @@ void FarmScene::update(void)
 
 void FarmScene::render(void)
 {
-	_camera->setPosition(_player->getPlayerPosition());
 	_bg->render(getMemDC(), 0, 0, _camera->getPosition().x - WINSIZE_X / 2,
 		_camera->getPosition().y - WINSIZE_Y / 2, WINSIZE_X, WINSIZE_Y);
 	// 정렬된 순서로 렌더
@@ -102,14 +106,12 @@ void FarmScene::render(void)
 		_vRenderList.top().first->render();
 		_vRenderList.pop();
 	}
-
-
 	
 	_player->MouseOver(_om, _ptMouse);
 
+	renderDropItem();
 
 	_om->render();
-
 
 	if (KEYMANAGER->isToggleKey('Q'))
 	{
@@ -131,6 +133,62 @@ void FarmScene::Collision(void)
 			&_om->getObjectList()[i]->getRC()))
 		{
 			cout << "충돌" << endl;
+		}
+	}
+
+}
+
+void FarmScene::renderDropItem()
+{
+	for (_liDropItem = _lDropItem.begin(); _liDropItem != _lDropItem.end(); ++_liDropItem)
+	{
+		string itemIndex = _liDropItem->first.substr(2, _liDropItem->first.length() - 2);
+		tagTool* toolInfo = nullptr;
+		tagWeapon* waeponInfo = nullptr;
+		tagArmor* armorInfo = nullptr;
+		tagAccessory* accessoryInfo = nullptr;
+		tagIngredient* ingredientInfo = nullptr;
+		tagConsumable* consumableInfo = nullptr;
+		if (_camera->worldToCameraX(_liDropItem->second.x) + 32 < 0 || _camera->worldToCameraX(_liDropItem->second.x) > WINSIZE_X)
+		{
+			continue;
+		}
+		if (_camera->worldToCameraY(_liDropItem->second.y) + 32 < 0 || _camera->worldToCameraY(_liDropItem->second.y) > WINSIZE_Y)
+		{
+			continue;
+		}
+		switch (_liDropItem->first[0])
+		{
+		case '0':
+			toolInfo = DATAMANAGER->getToolInfo(atoi(itemIndex.c_str()));
+			IMAGEMANAGER->addImage(toolInfo->name, toolInfo->filePath.c_str(), 32, 32, true, RGB(255, 0, 255))->render(getMemDC(), 
+				_camera->worldToCameraX(_liDropItem->second.x), _camera->worldToCameraY(_liDropItem->second.y));
+		break;
+		case '1':
+			waeponInfo = DATAMANAGER->getWeaponInfo(atoi(itemIndex.c_str()));
+			IMAGEMANAGER->addImage(waeponInfo->name, waeponInfo->filePath.c_str(), 32, 32, true, RGB(255, 0, 255))->render(getMemDC(), 
+				_camera->worldToCameraX(_liDropItem->second.x), _camera->worldToCameraY(_liDropItem->second.y));
+			break;
+		case '2':
+			armorInfo = DATAMANAGER->getArmorInfo(atoi(itemIndex.c_str()));
+			IMAGEMANAGER->addImage(armorInfo->name, armorInfo->filePath.c_str(), 32, 32, true, RGB(255, 0, 255))->render(getMemDC(), 
+				_camera->worldToCameraX(_liDropItem->second.x), _camera->worldToCameraY(_liDropItem->second.y));
+			break;
+		case '3':
+			accessoryInfo = DATAMANAGER->getAccessoryInfo(atoi(itemIndex.c_str()));
+			IMAGEMANAGER->addImage(accessoryInfo->name, accessoryInfo->filePath.c_str(), 32, 32, true, RGB(255, 0, 255))->render(getMemDC(), 
+				_camera->worldToCameraX(_liDropItem->second.x), _camera->worldToCameraY(_liDropItem->second.y));
+			break;
+		case '4':
+			ingredientInfo = DATAMANAGER->getIngredientInfo(atoi(itemIndex.c_str()));
+			IMAGEMANAGER->addImage(ingredientInfo->name, ingredientInfo->filePath.c_str(), 32, 32, true, RGB(255, 0, 255))->render(getMemDC(), 
+				_camera->worldToCameraX(_liDropItem->second.x), _camera->worldToCameraY(_liDropItem->second.y));
+			break;
+		case '5':
+			consumableInfo = DATAMANAGER->getConsumableInfo(atoi(itemIndex.c_str()));
+			IMAGEMANAGER->addImage(consumableInfo->name, consumableInfo->filePath.c_str(), 32, 32, true, RGB(255, 0, 255))->render(getMemDC(), 
+				_camera->worldToCameraX(_liDropItem->second.x), _camera->worldToCameraY(_liDropItem->second.y));
+		break;
 		}
 	}
 }

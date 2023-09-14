@@ -161,6 +161,7 @@
     <ClCompile Include="Class\Skill\FishingSkill.cpp" />
     <ClCompile Include="Class\Skill\MiningSkill.cpp" />
     <ClCompile Include="Class\NPC\Lynn.cpp" />
+    <ClCompile Include="Manager\DataManager.cpp" />
     <ClCompile Include="Class\Boss\Dizzy.cpp" />
     <ClCompile Include="Scene\DizzyScene.cpp" />
     <ClCompile Include="Scene\IntroScene.cpp" />
@@ -228,6 +229,7 @@
     <ClInclude Include="Class\CraftingTable.h" />
     <ClInclude Include="Class\Data\JsonSaveLoader.h" />
     <ClInclude Include="Class\Data\EnemyData.h" />
+    <ClInclude Include="Manager\DataManager.h" />
     <ClInclude Include="Class\Boss\Dizzy.h" />
     <ClInclude Include="Scene\DizzyScene.h" />
     <ClInclude Include="inc\FMOD\fmod.hpp" />
@@ -350,6 +352,7 @@
     <Object Include="Debug\WinMain.obj" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="DynusMapCollision.bmp" />
     <Image Include="FarmMap.bmp" />
     <Image Include="FarmMapCollision.bmp" />
   </ItemGroup>

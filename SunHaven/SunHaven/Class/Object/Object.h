@@ -15,6 +15,7 @@ enum LivingObjectType
 class Object : public GameNode
 {
 protected:
+	queue<string> _dropItemList;
 	ProgressBar* _hpBar;
 	GImage* _image;
 	POINT _tilePos;
@@ -52,7 +53,7 @@ public:
 	virtual void setHP(int damage);
 	int getCurHP() {return _curHp;}
 
-	void dropItem();
+	queue<string> dropItem();
 
 	Object() {}
 	~Object() {}

@@ -21,6 +21,7 @@ HRESULT Grass::init(LivingObjectType type, POINT tilePos)
 		_maxHp = 5;
 		break;
 	case GRASS2:
+		_dropItemList.push("4-4");
 		_maxHp = 10;
 		break;
 	}

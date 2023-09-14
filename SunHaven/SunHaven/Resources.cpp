@@ -156,13 +156,28 @@ HRESULT Resources::init(void)
 	// Image
 
 	IMAGEMANAGER->addImage("DizzyLayer", "Resources/Images/Layer/DizzyLayer.bmp",
-		1464 * 2, 1008 * 2,
+		1464 * 1.5, 1008 * 1.5,
 		true, RGB(255, 0, 255));	// 레이어
 
 	IMAGEMANAGER->addImage("DizzyHpBarBorder", "Resources/Images/UI/DizzyHpBarBorder.bmp",
 		442, 54,
-		true, RGB(255, 0, 255));	// 다이너스 HpBar
+		true, RGB(255, 0, 255));	// 디지 HpBar
 
+	IMAGEMANAGER->addFrameImage("DizzyMeteor", "Resources/Images/Boss/Dizzy/DizzyMeteor.bmp",
+		360, 62,
+		6, 1,
+		true, RGB(255, 0, 255));	// 디지 메테오
+
+	IMAGEMANAGER->addImage("Gem0", "Resources/Images/Boss/Dizzy/Dizzy_Gems_0.bmp",
+		27, 26, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Gem1", "Resources/Images/Boss/Dizzy/Dizzy_Gems_1.bmp",
+		22, 26, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Gem2", "Resources/Images/Boss/Dizzy/Dizzy_Gems_2.bmp",
+		28, 28, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Gem3", "Resources/Images/Boss/Dizzy/Dizzy_Gems_3.bmp",
+		20, 28, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Gem4", "Resources/Images/Boss/Dizzy/Dizzy_Gems_4.bmp",
+		28, 30, true, RGB(255, 0, 255));
 
 	// Sound
 

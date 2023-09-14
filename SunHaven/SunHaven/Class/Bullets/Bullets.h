@@ -2,15 +2,13 @@
 #include "../GameNode/GameNode.h"
 #include "../Enemy/Enemy.h"
 
+#define GEM_TYPE 5
+
 struct tagBullet
 {
 	GImage* img;
 	GPImage* pImg;
-	GPImage* pImg2;
-	GPImage* pImg3;
 	RECT rc;
-	RECT rc2;
-	RECT rc3;
 	int count;
 	float x, y;
 	float fireX, fireY;
@@ -19,6 +17,7 @@ struct tagBullet
 	bool fire;
 };
 
+// 다이너스 탄알
 class Bullet : public GameNode
 {
 private:
@@ -54,15 +53,15 @@ public:
 	virtual ~Bullet() {}	// 언제 지워질지 알 수 없어서 가상 소멸자
 };
 
-// 빔
+// 다이너스 빔
 class Beam : public GameNode
 {
 private:
 	vector<tagBullet> _vBullet;
 	vector<tagBullet>::iterator _viBullet;
 
-	typedef vector<tagBullet>::iterator iterBullet;	// 협업 시 재 정의
-	//tagBullet bullet;
+	typedef vector<tagBullet>::iterator iterBullet;
+
 	float _range;
 	float _bulletMax;
 
@@ -95,5 +94,62 @@ public:
 	~Beam() {}
 };
 
+// 디지 메테오
+class Meteor : public GameNode
+{
+private:
+	vector<tagBullet> _vBullet;
+	vector<tagBullet>::iterator _viBullet;
+
+	const char* _imageName;
+	float _bulletMax;
+	float _range;
+
+public:
+	HRESULT init(const char* imageName, int bulletMax, float range);
+	void release(void);
+	void update(void);
+	void render(void);
+
+	void fire(float x, float y, float angle, float speed);
+	void draw(void);
+	void move(void);
+
+	void removeBullet(int arrNum);
+
+	vector<tagBullet> getBullet(void) { return _vBullet; }
+
+
+	Meteor() {}
+	virtual ~Meteor() {}	// 언제 지워질지 알 수 없어서 가상 소멸자
+};
+
+// 디지 잼
+class Gems : public GameNode
+{
+private:
+	vector<tagBullet> _vBullet;
+	vector<tagBullet>::iterator _viBullet;
+
+	float _bulletMax;
+	float _range;
+
+public:
+	HRESULT init(int bulletMax, float range);
+	void release(void);
+	void update(void);
+	void render(void);
+
+	void fire(float x, float y, float angle, float speed);
+	void draw(void);
+	void move(void);
+
+	void removeBullet(int arrNum);
+
+	vector<tagBullet> getBullet(void) { return _vBullet; }
+
+	Gems() {}
+	virtual ~Gems() {}	// 언제 지워질지 알 수 없어서 가상 소멸자
+};
 
 
