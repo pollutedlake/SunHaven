@@ -145,16 +145,7 @@ void ShopScene::update(void)
 	_player->worldToCamera(_camera->worldToCamera
 	(_player->getPlayerPosition()));
 
-	//if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
-	//{
-	//	//_player->UseTool(_om, _ptMouse);
-	//	_inven->itemMove();
-	//	_inven->invenXButton();
-	//}
-	//if (KEYMANAGER->isOnceKeyUp(VK_LBUTTON))
-	//{
-	//	_inven->putItem();
-	//}
+	
 
 
 	if (KEYMANAGER->isToggleKey('E'))
@@ -163,7 +154,7 @@ void ShopScene::update(void)
 		{
 			for (int j = 0; j < 3; j++)
 			{
-				if (PtInRect(&(_vShopList[i]._buttonRc[j]), _ptMouse) && KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
+				if (PtInRect(&(_vShopList[i]._buttonRc[j]), _ptMouse) && (KEYMANAGER->isOnceKeyDown(VK_LBUTTON)))
 				{
 					switch (j)
 					{
@@ -191,8 +182,20 @@ void ShopScene::update(void)
 
 		}
 	}
+	else
+	{
+		if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
+		{
+			//_player->UseTool(_om, _ptMouse);
+			_inven->itemMove();
+			_inven->invenXButton();
+		}
+		if (KEYMANAGER->isOnceKeyUp(VK_LBUTTON))
+		{
+			_inven->putItem();
+		}
+	}
 	
-
 
 	
 	if (KEYMANAGER->isOnceKeyDown(VK_F1))
