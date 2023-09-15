@@ -33,6 +33,7 @@ HRESULT FarmScene::init(void)
 
 	_ui = new UI;
 	_ui->init("Farm");
+	_ui->setAdressPlayer(_player);
 	_moveMap = true;
 	_portal = RectMake(3240, 1224, 36, 72);
 	_moveMapImg = IMAGEMANAGER->addImage("MoveMap", WINSIZE_X, WINSIZE_Y, true, RGB(255, 0, 255));
@@ -71,10 +72,14 @@ void FarmScene::update(void)
 
 	if(KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
 	{
-		if (!SamePoint(_player->UseTool(_om, _ptMouse),
-			PointMake(NULL,NULL)))
+		list<POINT> ptList;
+		ptList = _player->UseTool(_om, _ptMouse);
+		for(auto it = ptList.begin(); it != ptList.end(); ++it)
 		{
-			cout << "asd" << endl;
+			if (!SamePoint(*it, PointMake(NULL,NULL)))
+			{
+				_hitEffectList.push_back(make_pair(*it, 0));
+			}
 		}
 		_inven->itemMove();
 		_inven->invenXButton();
@@ -92,7 +97,6 @@ void FarmScene::update(void)
 
 		_player->getFishItem(_player->getIsSuccessFishing(),
 			_inven, "4-5");
-
 
 		getDropItem();
 
@@ -124,7 +128,8 @@ void FarmScene::update(void)
 		}
 	}
 
-	_vRenderList.push(make_pair(_player, _player->getPlayertoCameraRect().bottom));
+	_vRenderList.push(make_pair(_player, PointMake((_player->getPlayertoCameraRect().right + _player->getPlayertoCameraRect().left) / 2, 
+		_player->getPlayertoCameraRect().bottom)));
 	for (int i = 0; i < _om->getObjectList().size(); i++)
 	{
 		RECT temp;
@@ -141,7 +146,8 @@ void FarmScene::update(void)
 				_om->getObjectList()[i]->setHalfTrans(false);
 			}
 			// y값으로 정렬
-			_vRenderList.push(make_pair(_om->getObjectList()[i], _om->getObjectList()[i]->getRC().bottom));
+			_vRenderList.push(make_pair(_om->getObjectList()[i], PointMake((_om->getObjectList()[i]->getRC().right + _om->getObjectList()[i]->getRC().left) / 2,
+				_om->getObjectList()[i]->getRC().bottom)));
 		}
 	}
 
@@ -176,6 +182,7 @@ void FarmScene::render(void)
 			CAMERA->worldToCameraY(0));
 	}
 	
+	renderHitEffect();
 	_inven->render();
 	_ui->render();
 	if (_moveMap)
@@ -269,15 +276,15 @@ void FarmScene::renderHitEffect()
 		if (_itHitEffectList->second > IMAGEMANAGER->findImage("HitEffect")->getMaxFrameX())
 		{
 			_itHitEffectList = _hitEffectList.erase(_itHitEffectList);
-			++_itHitEffectList;
 		}
 		else
 		{
 			IMAGEMANAGER->findImage("HitEffect")->frameRender(getMemDC(), CAMERA->worldToCameraX(
-				_itHitEffectList->first.x * 36 + 18 - IMAGEMANAGER->findImage("HitEffect")->getWidth() / 2),
-				CAMERA->worldToCameraY(_itHitEffectList->first.y * 36 + 18 - IMAGEMANAGER->findImage("HitEffect")->getHeight() / 2),
+				_itHitEffectList->first.x * 36 + 18 - IMAGEMANAGER->findImage("HitEffect")->getFrameWidth() / 2),
+				CAMERA->worldToCameraY(_itHitEffectList->first.y * 36 + 18 - IMAGEMANAGER->findImage("HitEffect")->getFrameHeight() / 2),
 				_itHitEffectList->second, 0);
-			++_itHitEffectList->second;
+			(_itHitEffectList->second)++;
+			++_itHitEffectList;
 		}
 	}
 }
