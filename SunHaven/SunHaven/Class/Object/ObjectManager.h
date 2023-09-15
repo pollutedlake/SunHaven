@@ -3,6 +3,7 @@
 #include "Tree.h"
 #include "Rock.h"
 #include "Grass.h"
+#include "Dirt.h"
 
 class ObjectManager : public GameNode
 {
