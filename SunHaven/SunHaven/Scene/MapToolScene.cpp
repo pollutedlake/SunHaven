@@ -684,7 +684,7 @@ void MapToolScene::saveMaps()
 {
 	FILE* _fp;
 	char fileName[256];
-	wsprintf(fileName, "%sMap.txt\0", _mapName[_curMap]);
+	wsprintf(fileName, "./Resources/Data/Map/%sMap.txt", _mapName[_curMap]);
 	fopen_s(&_fp, fileName, "w");
 	if (_fp != NULL)
 	{
@@ -703,7 +703,7 @@ void MapToolScene::saveMaps()
 	}
 	std::fclose(_fp);
 
-	wsprintf(fileName, "%sMapObject.txt", _mapName[_curMap]);
+	wsprintf(fileName, "./Resources/Data/Map/%sMapObject.txt", _mapName[_curMap]);
 	fopen_s(&_fp, fileName, "w");
 	if (_fp != NULL)
 	{
@@ -758,7 +758,7 @@ void MapToolScene::saveMaps()
 	LPBYTE lpBits = new BYTE[bi.biSizeImage];
 	GetDIBits(_tileMapBuffer->getMemDC(), _tileMapBuffer->getImageInfo()->hBit, 0, bitmap.bmHeight, lpBits, (LPBITMAPINFO)&bi, DIB_RGB_COLORS);
 
-	wsprintf(fileName, "%sMap.bmp", _mapName[_curMap]);
+	wsprintf(fileName, "./Resources/Data/Map/%sMap.bmp", _mapName[_curMap]);
 	HANDLE hFile = CreateFile(fileName, GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
 	if (hFile == INVALID_HANDLE_VALUE)
 	{
@@ -793,7 +793,7 @@ void MapToolScene::saveMaps()
 	}
 	GetDIBits(_tileMapBuffer->getMemDC(), _tileMapBuffer->getImageInfo()->hBit, 0, bitmap.bmHeight, NULL, (LPBITMAPINFO)&bi, DIB_RGB_COLORS);
 	GetDIBits(_tileMapBuffer->getMemDC(), _tileMapBuffer->getImageInfo()->hBit, 0, bitmap.bmHeight, lpBits, (LPBITMAPINFO)&bi, DIB_RGB_COLORS);
-	wsprintf(fileName, "%sMapCollision.bmp", _mapName[_curMap]);
+	wsprintf(fileName, "./Resources/Data/Map/%sMapCollision.bmp", _mapName[_curMap]);
 	hFile = CreateFile(fileName, GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
 	if (hFile == INVALID_HANDLE_VALUE)
 	{
@@ -812,7 +812,7 @@ void MapToolScene::loadLayers()
 {
 	FILE* _fp;
 	char fileName[256];
-	wsprintf(fileName, "%sMap.txt", _mapName[_curMap]);
+	wsprintf(fileName, "./Resources/Data/Map/%sMap.txt", _mapName[_curMap]);
 	fopen_s(&_fp, fileName, "r");
 	if (_fp != NULL)
 	{
@@ -834,7 +834,7 @@ void MapToolScene::loadLayers()
 	}
 	std::fclose(_fp);
 
-	wsprintf(fileName, "%sMapObject.txt", _mapName[_curMap]);
+	wsprintf(fileName, "./Resources/Data/Map/%sMapObject.txt", _mapName[_curMap]);
 	fopen_s(&_fp, fileName, "r");
 	if (_fp != NULL)
 	{

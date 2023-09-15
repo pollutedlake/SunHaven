@@ -31,9 +31,12 @@ private:
 private:
 	Player* _player;
 	GImage* _bg;
+	GImage* _moveMapImg;
 	ObjectManager* _om;
 	UI* _ui;
 	priority_queue<pair<GameNode*, int>, vector<pair<GameNode*, int>>, cmp> _vRenderList;
+	list<pair<POINT, int>> _hitEffectList;
+	list<pair<POINT, int>>::iterator _itHitEffectList;
 	
 	lDropItem _lDropItem;
 	liDropItem _liDropItem;
@@ -41,6 +44,11 @@ private:
 	RECT _MouseRC;
 
 	Inventory* _inven;
+
+	RECT _portal;
+	bool _moveMap;
+	bool _enterScene;
+	float _clippingRaius;
 
 public:
 	HRESULT init(void);
@@ -50,9 +58,9 @@ public:
 
 	void Collision(void);
 	void renderDropItem();
+	void renderHitEffect();
 	void getDropItem();
-
-
+	void moveMap();
 
 	FarmScene() {}
 	~FarmScene() {}

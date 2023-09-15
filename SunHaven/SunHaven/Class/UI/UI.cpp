@@ -1,5 +1,6 @@
 #include "Stdafx.h"
 #include "UI.h"
+#include "../../Player/Player.h"
 
 HRESULT UI::init(void)
 {
@@ -108,8 +109,10 @@ void UI::showBasicUI()
 		0, 0, IMAGEMANAGER->findImage("ManaIcon")->getWidth(), IMAGEMANAGER->findImage("ManaIcon")->getHeight());
 	renderBar(WINSIZE_X / 2 + 80, WINSIZE_Y - 35, 165, 20, 255, "Blue");
 	renderBar(WINSIZE_X / 2 - 140, WINSIZE_Y - 35, 165, 20, 255, "Red");
+	//wsprintf(_text, "%d/%d", _player->getCurHP(), _player->getMaxHp());
 	FONTMANAGER->textOut(getMemDC(), WINSIZE_X / 2 + 162, WINSIZE_Y - 35, "배달의민족 을지로체", 20, 100, "30/30", strlen("30/30"), RGB(255, 255, 255));
 	FONTMANAGER->textOut(getMemDC(), WINSIZE_X / 2 - 58, WINSIZE_Y - 35, "배달의민족 을지로체", 20, 100, "30/30", strlen("30/30"), RGB(255, 255, 255));
+
 
 	SetTextAlign(getMemDC(), TA_LEFT);
 }

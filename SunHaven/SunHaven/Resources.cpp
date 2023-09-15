@@ -196,6 +196,7 @@ HRESULT Resources::init(void)
 	// Image
 	IMAGEMANAGER->addImage("경작지", "Resources/Images/Object/Farm_dirt.bmp", 36, 36, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("젖은 경작지", "Resources/Images/Object/Farm_wetdirt.bmp", 36, 36, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("HitEffect", "Resources/Images/Player/HitEffect.bmp", 288, 48, true, RGB(255, 0, 255));
 
 	// Sound
 
@@ -231,10 +232,6 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addImage("일반 물고기", "Resources/Images/Item/icon_fish_sunhaven_10.bmp", 32, 32, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("아다만트 광석", "Resources/Images/Item/icon_adamant_ore2.bmp", 32, 32, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("아다만트 바", "Resources/Images/Item/icon_adamant_bar2.bmp", 32, 32, true, RGB(255, 0, 255));
-
-	
-	
-	 
 	
 	// invenImage
 	IMAGEMANAGER->addImage("invenBG", "Resources/Images/Inventory/invenBG.bmp", WINSIZE_X/2, WINSIZE_Y/2);

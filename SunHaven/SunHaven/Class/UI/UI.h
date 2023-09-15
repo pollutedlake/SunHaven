@@ -1,6 +1,8 @@
 #pragma once
 #include "../../FrameWork/GameNode/GameNode.h"
 
+class Player;
+
 class UI : public GameNode
 {
 	string _sceneName;
@@ -17,10 +19,11 @@ class UI : public GameNode
 	GImage* _barnAnimalsIcon;
 	GImage* _skillTreeIcon;
 	GImage* _questBookIcon;
+	Player* _player;
 
 	string _shortcutItem[10];
 	RECT _shortcutItemRC[10];
-	char* _text[256];
+	char _text[256];
 
 public:
 	HRESULT init(void);
@@ -33,6 +36,8 @@ public:
 	void showBasicUI();
 	void updateUIWindow();
 	void showUIWindow();
+
+	void setAdressPlayer(Player* player) { _player = player;}
 
 	UI() {}
 	~UI() {}

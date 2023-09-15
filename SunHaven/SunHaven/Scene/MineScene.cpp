@@ -4,8 +4,8 @@
 
 HRESULT MineScene::init(void)
 {
-	_bg = IMAGEMANAGER->addImage("MineMap", "MineMap.bmp", 3600, 3600);
-	IMAGEMANAGER->addImage("MineMapCollision", "MineMapCollision.bmp", 3600, 3600);
+	_bg = IMAGEMANAGER->addImage("MineMap", "./Resources/Data/Map/MineMap.bmp", 3600, 3600);
+	IMAGEMANAGER->addImage("MineMapCollision", "./Resources/Data/Map/MineMapCollision.bmp", 3600, 3600);
 
 	_player = new Player;
 	_player->init(500, 1000, "MineMapCollision");

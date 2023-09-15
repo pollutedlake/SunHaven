@@ -5,8 +5,8 @@
 
 HRESULT FarmScene::init(void)
 {
-	_bg = IMAGEMANAGER->addImage("³óÀå", "FarmMap.bmp", 3600, 3600);
-	IMAGEMANAGER->addImage("Ãæµ¹", "FarmMapCollision.bmp", 3600, 3600);
+	_bg = IMAGEMANAGER->addImage("³óÀå", "./Resources/Data/Map/FarmMap.bmp", 3600, 3600);
+	IMAGEMANAGER->addImage("Ãæµ¹", "./Resources/Data/Map/FarmMapCollision.bmp", 3600, 3600);
 
 	_player = new Player;
 	_player->init(2400, 1400, "Ãæµ¹");
@@ -33,6 +33,11 @@ HRESULT FarmScene::init(void)
 
 	_ui = new UI;
 	_ui->init("Farm");
+	_moveMap = true;
+	_portal = RectMake(3240, 1224, 36, 72);
+	_moveMapImg = IMAGEMANAGER->addImage("MoveMap", WINSIZE_X, WINSIZE_Y, true, RGB(255, 0, 255));
+	_clippingRaius = 0.0f;
+	_enterScene = true;
 	return S_OK;
 }
 
@@ -48,17 +53,73 @@ void FarmScene::release(void)
 
 void FarmScene::update(void)
 {
-	_player->update();
-	_inven->update();
-	CAMERA->setPosition(_player->getPlayerPosition());
-	_player->worldToCamera(CAMERA->worldToCamera
-	(_player->getPlayerPosition()));
-	queue<pair<string, POINT>> dropItems = _om->updateObjects();
-	while (!dropItems.empty())
+	if(!_moveMap)
 	{
-		_lDropItem.push_back(dropItems.front());
-		dropItems.pop();
+		_player->update();
+		_inven->update();
+		CAMERA->setPosition(_player->getPlayerPosition());
+		_player->worldToCamera(CAMERA->worldToCamera
+		(_player->getPlayerPosition()));
+		queue<pair<string, POINT>> dropItems = _om->updateObjects();
+		while (!dropItems.empty())
+		{
+			_lDropItem.push_back(dropItems.front());
+			dropItems.pop();
+		}
+
+		_player->ObjectCollision(_om);
+
+		if(KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
+		{
+			_player->UseTool(_om, _ptMouse);
+			_inven->itemMove();
+			_inven->invenXButton();
+		}
+		if (KEYMANAGER->isOnceKeyUp(VK_LBUTTON))
+		{
+			_inven->putItem();
+		}
+
+		_player->UseToolAnim(KEYMANAGER->isStayKeyDown(VK_LBUTTON));
+		
+		_player->UseFishingLod(CAMERA->cameraToWorld(_ptMouse));
+
+		_player->Fishing();
+
+		_player->getFishItem(_player->getIsSuccessFishing(),
+			_inven, "4-5");
+
+
+		getDropItem();
+
+		if (PtInRect(&_portal, _player->getPlayerPosition()))
+		{
+			_moveMap = true;
+		}
 	}
+	else
+	{
+		if (_enterScene)
+		{
+			_clippingRaius += TIMEMANAGER->getElapsedTime() * 1000.0f;
+			if (_clippingRaius > WINSIZE_X)
+			{
+				_clippingRaius = WINSIZE_X;
+				_enterScene = false;
+				_moveMap = false;
+			}
+		}
+		else
+		{
+			_clippingRaius -= TIMEMANAGER->getElapsedTime() * 1000.0f;
+			if (_clippingRaius < 0)
+			{
+				_clippingRaius = 0.0f;
+				SCENEMANAGER->changeScene("Shop");
+			}
+		}
+	}
+
 	_vRenderList.push(make_pair(_player, _player->getPlayertoCameraRect().bottom));
 	for (int i = 0; i < _om->getObjectList().size(); i++)
 	{
@@ -80,35 +141,12 @@ void FarmScene::update(void)
 		}
 	}
 
-
-	_player->ObjectCollision(_om);
-
-	if(KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
-	{
-		_player->UseTool(_om, _ptMouse);
-		_inven->itemMove();
-		_inven->invenXButton();
-	}
-	if (KEYMANAGER->isOnceKeyUp(VK_LBUTTON))
-	{
-		_inven->putItem();
-	}
-
-	_player->UseToolAnim(KEYMANAGER->isStayKeyDown(VK_LBUTTON));
 	
-	_player->UseFishingLod(CAMERA->cameraToWorld(_ptMouse));
-
-	_player->Fishing();
-
-	_player->getFishItem(_player->getIsSuccessFishing(),
-		_inven, "4-5");
-
-
-	getDropItem();
 
 	if (KEYMANAGER->isOnceKeyDown(VK_F1))
 	{
 		SCENEMANAGER->changeScene("Shop");
+		//DATAMANAGER->setPlayer(*_player);
 	}
 }
 
@@ -137,6 +175,17 @@ void FarmScene::render(void)
 	
 	_inven->render();
 	_ui->render();
+	if (_moveMap)
+	{
+		PatBlt(_moveMapImg->getMemDC(), 0, 0, WINSIZE_X, WINSIZE_Y, BLACKNESS);
+		HBRUSH magenta = CreateSolidBrush(RGB(255, 0, 255));
+		HBRUSH oldBrush = (HBRUSH)SelectObject(_moveMapImg->getMemDC(), magenta);
+		EllipseMakeCenter(_moveMapImg->getMemDC(), (CAMERA->worldToCameraRect(_player->getPlayerRC()).right + CAMERA->worldToCameraRect(_player->getPlayerRC()).left) / 2.0f, 
+			(CAMERA->worldToCameraRect(_player->getPlayerRC()).bottom + CAMERA->worldToCameraRect(_player->getPlayerRC()).top) / 2.0f, _clippingRaius, _clippingRaius);
+		SelectObject(_moveMapImg->getMemDC(), oldBrush);
+		DeleteObject(magenta);
+		_moveMapImg->render(getMemDC());
+	}
 }
 
 void FarmScene::Collision(void)
@@ -206,6 +255,26 @@ void FarmScene::renderDropItem()
 			IMAGEMANAGER->addImage(consumableInfo->name, consumableInfo->filePath.c_str(), 32, 32, true, RGB(255, 0, 255))->render(getMemDC(), 
 				CAMERA->worldToCameraX(_liDropItem->second.x), CAMERA->worldToCameraY(_liDropItem->second.y));
 			break;
+		}
+	}
+}
+
+void FarmScene::renderHitEffect()
+{
+	for (_itHitEffectList = _hitEffectList.begin(); _itHitEffectList != _hitEffectList.end();)
+	{
+		if (_itHitEffectList->second > IMAGEMANAGER->findImage("HitEffect")->getMaxFrameX())
+		{
+			_itHitEffectList = _hitEffectList.erase(_itHitEffectList);
+			++_itHitEffectList;
+		}
+		else
+		{
+			IMAGEMANAGER->findImage("HitEffect")->frameRender(getMemDC(), CAMERA->worldToCameraX(
+				_itHitEffectList->first.x * 36 + 18 - IMAGEMANAGER->findImage("HitEffect")->getWidth() / 2),
+				CAMERA->worldToCameraY(_itHitEffectList->first.y * 36 + 18 - IMAGEMANAGER->findImage("HitEffect")->getHeight() / 2),
+				_itHitEffectList->second, 0);
+			++_itHitEffectList->second;
 		}
 	}
 }

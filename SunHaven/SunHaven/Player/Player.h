@@ -355,6 +355,8 @@ public:
 
 	RECT getSwordSlashRC() { return _swordSlashRC; }
 
+	
+
 	Player() {}
 	~Player() {}
 };
