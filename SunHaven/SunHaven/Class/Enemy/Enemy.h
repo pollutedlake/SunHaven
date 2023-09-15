@@ -1,13 +1,15 @@
 #pragma once
 #include "../GameNode/GameNode.h"
+#include "../Animation/Animation.h"
+#include "../UI/ProgressBar.h"
 
 enum class EEnemyState
 {
 	IDLE,
-	MOVE,
+	PATROL,
 	TARGETON,
 	ATTACK,
-	DIE
+	DEATH
 };
 
 class Enemy : public GameNode
@@ -18,34 +20,56 @@ protected:
 	deque<pair<float, float>> _patrolPoints;
 	pair<float, float> _nextPoints;
 
-	GImage* _image;
+	GImage* _curImg;
+	GImage* _idleImg;
+	GImage* _moveImg;
+	GImage* _atkImg;
+	GImage* _deathImg;
+
+	Animation* _curAni;
+	Animation* _idleAni;
+	Animation* _moveAni;
+	Animation* _atkAni;
+	Animation* _deathAni;
+
+	GImage* _collisionMap;
+	bool _isCollisionLeft;
+	bool _isCollisionRight;
+	bool _isCollisionTop;
+	bool _isCollisionBottom;
+
+	ProgressBar* _hpBar;
+	float _hp;
+	float _maxHp;
 
 	RECT _rc;
 	RECT _rcAttack;
 	float _detectRange;
 	float _attackRange;
 
-	char* _imageName;
+	float _speed;
+	float _targetOnSpeed;
 
-	int _currentFrameX;
-	int _currentFrameY;
+	float _patrolX;
+	float _patrolY;
 
 	float _x, _y;
-	float _detectW, _detectH;
 	float _timeCount;
 	float _worldTimeCount;
 	float _waitTime;
 	float _waitCount;
 
-	float _fireCount;
-	float _bulletFireCount;
+	float _waitTimer;
+	float _waitWorldTime;
 
 	bool _isLeft;
 
 	float _playerX, _playerY;
 
+	float _afterAttackTime;
+	float _afterAttackWorldTime;
+
 public:
-	HRESULT init(void);
 	virtual HRESULT init(POINT position);
 
 	void release(void);
@@ -57,9 +81,10 @@ public:
 	virtual void attack(void);
 
 	virtual void draw(void);
-	virtual void animation(void);
 
-	//bool bulletCountFire(void);
+	bool isWait(void);
+	virtual bool attackCoolDown(void);
+	virtual void pixelCollision(void);
 
 	EEnemyState getEState(void) { return _state; }
 	void setEState(EEnemyState state) { _state = state; }
@@ -81,9 +106,7 @@ public:
 	float getPlayerY(void) { return _playerY; }
 	void setPlayerY(float playerY) { _playerY = playerY; }
 
-	//void collisionCheck();
-
-	Enemy(void);	// 자식쪽에서 호출되면서 치환 대비
+	Enemy(void);
 	~Enemy(void) {}
 };
 

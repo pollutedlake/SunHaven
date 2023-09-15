@@ -4,6 +4,8 @@
 #include "../Class/Object/ObjectManager.h"
 #include "../Class/UI/ProgressBar.h"
 #include "../Class/Inventory.h"
+#include "../Class/Enemy/EnemyManager.h"
+#include "../Class/Enemy/SteelSlug.h"
 
 namespace Mine
 {
@@ -43,6 +45,9 @@ private:
 	RECT _MouseRC;
 
 	Inventory* _inven;
+
+	EnemyManager* _em;
+	//SteelSlug* _slug;
 
 public:
 	HRESULT init(void);
