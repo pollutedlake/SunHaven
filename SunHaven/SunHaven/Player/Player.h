@@ -177,7 +177,7 @@ public:
 
 	//void UseTool(ObjectManager* object, POINT point);
 	//bool UseTool(ObjectManager* object, POINT point);
-	POINT UseTool(ObjectManager* object, POINT point);
+	list<POINT> UseTool(ObjectManager* object, POINT point);
 
 
 	inline void UseToolAnim(bool stayKeydown)
@@ -350,10 +350,6 @@ public:
 		_firebeamRC = RectMake(position.x, position.y - 24,
 			position.x + (_firebeamRC.right - _firebeamRC.left), 50);
 	}
-
-
-
-
 
 	inline void hitDamage(float damage)
 	{

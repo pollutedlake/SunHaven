@@ -39,7 +39,7 @@ HRESULT Dynus::init(void)
 	_turnCount3 = TIMEMANAGER->getWorldTime();
 	_bulletTurnCount1 = 2.0f;
 	_bulletTurnCount2 = 2.0f;
-	_bulletTurnCount3 = 0.5f;
+	_bulletTurnCount3 = 1.5f;
 	_beamCount = 0.0f;
 	_beamFireCount = 0.0f;
 	_beamTurnCount = TIMEMANAGER->getWorldTime();
@@ -264,10 +264,10 @@ void Dynus::update(void)
 			switch (_firstP)
 			{
 			case EFirstPhase::SPREAD_X:
-				if (_curAni->getNowPlayIdx() == 20)
-				{
-					// SD: 캐스팅
-				}
+				//if (_curAni->getNowPlayIdx() == 20)
+				//{
+				//	// SD: 캐스팅
+				//}
 
 				if (spawningTime())
 				{
@@ -297,10 +297,10 @@ void Dynus::update(void)
 				break;
 
 			case EFirstPhase::SPREAD_ELLIPSE:
-				if (_curAni->getNowPlayIdx() == 20)
-				{
-					// SD: 캐스팅
-				}
+				//if (_curAni->getNowPlayIdx() == 20)
+				//{
+				//	// SD: 캐스팅
+				//}
 
 				spreadEllipse();
 
@@ -322,10 +322,10 @@ void Dynus::update(void)
 				break;
 
 			case EFirstPhase::BEAM1:
-				if (_curAni->getNowPlayIdx() == 20)
-				{
-					// SD: 캐스팅
-				}
+				//if (_curAni->getNowPlayIdx() == 20)
+				//{
+				//	// SD: 캐스팅
+				//}
 
 				beamFire();
 
@@ -347,10 +347,10 @@ void Dynus::update(void)
 				break;
 
 			case EFirstPhase::BEAM2:
-				if (_curAni->getNowPlayIdx() == 20)
-				{
-					// SD: 캐스팅
-				}
+				//if (_curAni->getNowPlayIdx() == 20)
+				//{
+				//	// SD: 캐스팅
+				//}
 
 				beamFire();
 
@@ -376,10 +376,10 @@ void Dynus::update(void)
 			switch (_secondP)
 			{
 			case ESecondPhase::SPAWN:
-				if (_curAni->getNowPlayIdx() == 20)
-				{
-					// SD: 캐스팅
-				}
+				//if (_curAni->getNowPlayIdx() == 20)
+				//{
+				//	// SD: 캐스팅
+				//}
 				if (!_isSpawnEnemy)
 				{
 					_em->spawnShadeclaw();
@@ -408,10 +408,10 @@ void Dynus::update(void)
 				break;
 
 			case ESecondPhase::SPREAD_X:
-				if (_curAni->getNowPlayIdx() == 20)
-				{
-					// SD: 캐스팅
-				}
+				//if (_curAni->getNowPlayIdx() == 20)
+				//{
+				//	// SD: 캐스팅
+				//}
 				bulletFire();
 				_isSpawnEnemy = false;
 
@@ -569,10 +569,10 @@ void Dynus::update(void)
 				switch (_rndPattern)
 				{
 				case 0:
-					if (_curAni->getNowPlayIdx() == 20)
-					{
-						// SD: 캐스팅
-					}
+					//if (_curAni->getNowPlayIdx() == 20)
+					//{
+					//	// SD: 캐스팅
+					//}
 					bulletFire();
 
 					if (_pa1StartPosIdx < 0)
@@ -596,10 +596,10 @@ void Dynus::update(void)
 					break;
 
 				case 1:
-					if (_curAni->getNowPlayIdx() == 20)
-					{
-						// SD: 캐스팅
-					}
+					//if (_curAni->getNowPlayIdx() == 20)
+					//{
+					//	// SD: 캐스팅
+					//}
 					spreadEllipse();
 
 					if (_pa2StartPosIdx < 0)
@@ -625,10 +625,10 @@ void Dynus::update(void)
 					break;
 
 				case 2:
-					if (_curAni->getNowPlayIdx() == 20)
-					{
-						// SD: 캐스팅
-					}
+					//if (_curAni->getNowPlayIdx() == 20)
+					//{
+					//	// SD: 캐스팅
+					//}
 					beamFire();
 
 					if (_pa3StartPosIdx < 0)
@@ -757,14 +757,16 @@ void Dynus::update(void)
 	_beam->update();
 	collision();
 
-	/*if (_state == EDynusState::SPELL && _phase == EDynusPhase::SECOND && _secondP == ESecondPhase::SPAWN)
+	if (_isDamaged)
 	{
-		if (_isSpawnEnemy && spawnAfterTime())
+		_invincibilityTime += TIMEMANAGER->getElapsedTime();
+
+		if (_invincibilityTime > 0.4f)
 		{
-			_spell = EDynusSpell::SPREAD_X;
-			_pa1StartPosIdx = 6;
+			_isDamaged = false;
+			_invincibilityTime = 0.0f;
 		}
-	}*/
+	}
 
 	if (_curAni->getNowPlayIdx() == 69)
 	{
@@ -807,7 +809,8 @@ void Dynus::draw(void)
 	IMAGEMANAGER->render("DynusWing", getMemDC(),
 		CAMERA->worldToCameraX(_x + 210), CAMERA->worldToCameraY(_y + 10));
 
-	_curImg->aniRender(getMemDC(), _x, _y, _curAni);
+	_curImg->aniRender(getMemDC(), CAMERA->worldToCameraX(_x),
+		CAMERA->worldToCameraY(_y), _curAni);
 	
 	for (int i = 0; i < PA1_STARTPOS_NUM_1; i++)
 	{
@@ -1123,7 +1126,7 @@ bool Dynus::turnCountFire3(void)
 	if (_bulletTurnCount3 + _turnCount3 <= TIMEMANAGER->getWorldTime())
 	{
 		_turnCount3 = TIMEMANAGER->getWorldTime();
-		_bulletTurnCount3 = 0.5f;
+		_bulletTurnCount3 = 1.5f;
 
 		return true;
 	}

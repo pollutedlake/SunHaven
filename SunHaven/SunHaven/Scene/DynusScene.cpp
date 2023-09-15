@@ -32,6 +32,7 @@ HRESULT DynusScene::init(void)
 
 	_ui = new UI;
 	_ui->init("Dynus");
+	_ui->setAdressPlayer(_player);
 
 	wsprintf(_text, "DynusScene");
 	return S_OK;
@@ -83,18 +84,17 @@ void DynusScene::render(void)
 	IMAGEMANAGER->alphaRender("StarShader", getMemDC(), 960, 400, 250);
 	IMAGEMANAGER->alphaRender("StarShader", getMemDC(), 0, 400, 250);*/
 	IMAGEMANAGER->alphaRender("BlueStarFill", getMemDC(), CAMERA->worldToCameraX(0), CAMERA->worldToCameraY(0), 150);
-	IMAGEMANAGER->alphaRender("BlueStarFill", getMemDC(), CAMERA->worldToCameraX(0), CAMERA->worldToCameraX(402), 150);
-	IMAGEMANAGER->alphaRender("BlueStarFill", getMemDC(), CAMERA->worldToCameraX(402), CAMERA->worldToCameraX(0), 150);
-	IMAGEMANAGER->alphaRender("BlueStarFill", getMemDC(), CAMERA->worldToCameraX(402), CAMERA->worldToCameraX(402), 150);
-	IMAGEMANAGER->alphaRender("BlueStarFill", getMemDC(), CAMERA->worldToCameraX(804), CAMERA->worldToCameraX(0), 150);
-	IMAGEMANAGER->alphaRender("BlueStarFill", getMemDC(), CAMERA->worldToCameraX(804), CAMERA->worldToCameraX(402), 150);
-	IMAGEMANAGER->alphaRender("BlueStarFill", getMemDC(), CAMERA->worldToCameraX(1206), CAMERA->worldToCameraX(0), 150);
-	IMAGEMANAGER->alphaRender("BlueStarFill", getMemDC(), CAMERA->worldToCameraX(1206), CAMERA->worldToCameraX(402), 150);
+	IMAGEMANAGER->alphaRender("BlueStarFill", getMemDC(), CAMERA->worldToCameraX(0), CAMERA->worldToCameraY(402), 150);
+	IMAGEMANAGER->alphaRender("BlueStarFill", getMemDC(), CAMERA->worldToCameraX(402), CAMERA->worldToCameraY(0), 150);
+	IMAGEMANAGER->alphaRender("BlueStarFill", getMemDC(), CAMERA->worldToCameraX(402), CAMERA->worldToCameraY(402), 150);
+	IMAGEMANAGER->alphaRender("BlueStarFill", getMemDC(), CAMERA->worldToCameraX(804), CAMERA->worldToCameraY(0), 150);
+	IMAGEMANAGER->alphaRender("BlueStarFill", getMemDC(), CAMERA->worldToCameraX(804), CAMERA->worldToCameraY(402), 150);
+	IMAGEMANAGER->alphaRender("BlueStarFill", getMemDC(), CAMERA->worldToCameraX(1206), CAMERA->worldToCameraY(0), 150);
+	IMAGEMANAGER->alphaRender("BlueStarFill", getMemDC(), CAMERA->worldToCameraX(1206), CAMERA->worldToCameraY(402), 150);
 	//IMAGEMANAGER->render("StarShader", getMemDC(), 0, 400);
 	//IMAGEMANAGER->alphaRender("StarShaderTest", getMemDC(), 0, 0, 150);
 	//IMAGEMANAGER->render("DynusLayer0", getMemDC(), 0, 0, 30, 95, WINSIZE_X, WINSIZE_Y);
-	IMAGEMANAGER->alphaRender("DynusLayer0", getMemDC(), CAMERA->worldToCameraX(0), CAMERA->worldToCameraX(0),
-		30, 95, WINSIZE_X, WINSIZE_Y, _dynus->getBgAlpha());
+	IMAGEMANAGER->alphaRender("DynusLayer0", getMemDC(), 0, 0, CAMERA->getPosition().x - WINSIZE_X / 2, CAMERA->getPosition().y - WINSIZE_Y / 2, WINSIZE_X, WINSIZE_Y, _dynus->getBgAlpha());
 
 	_em->render();
 	_dynus->drawPlatform();

@@ -306,7 +306,7 @@ void Bullet::draw(void)
 	{
 		//DrawRectMake(getMemDC(), _viBullet->rc);
 
-		_viBullet->pImg->GPFrameRender(getMemDC(), _viBullet->rc.left, _viBullet->rc.top, 1.5, 1.5,
+		_viBullet->pImg->GPFrameRender(getMemDC(), CAMERA->worldToCameraX(_viBullet->rc.left), CAMERA->worldToCameraY(_viBullet->rc.top), 1.5, 1.5,
 			_viBullet->pImg->getFrameX(), _viBullet->pImg->getFrameY(),
 			InterpolationModeNearestNeighbor, 0);
 	}

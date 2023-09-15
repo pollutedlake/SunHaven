@@ -150,6 +150,9 @@ private:
 	int _afterSpawnCount;
 	int _aftetKCount;
 
+	float _invincibilityTime;
+	bool _isDamaged;
+
 public:
 	bool hpMinusTemp(void);
 
@@ -182,14 +185,16 @@ public:
 
 	inline void hitDamage(float damage)
 	{
+		if (_invincibilityTime == 0.0f)
+		{
+			_isDamaged = true;
+			_hp -= damage;
+		}
+
 		if (_hp <= 0)
 		{
 			_hp = 0;
-
-			return;
 		}
-
-		_hp -= damage;
 	}
 
 	RECT getRcDynus(void) { return _rcDynus; }

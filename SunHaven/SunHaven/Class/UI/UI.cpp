@@ -51,7 +51,7 @@ void UI::render(void)
 	showBasicUI();
 }
 
-void UI::renderBar(int x, int y, int width, int height, int alpha, string color)
+void UI::renderBar(int x, int y, float width, float height, int alpha, string color)
 {
 	char key[256];
 	wsprintf(key, "%sBar", color.c_str());
@@ -107,11 +107,12 @@ void UI::showBasicUI()
 	renderBar(WINSIZE_X / 2 + 50, WINSIZE_Y - 40, 200, 30, 255, "Gray");
 	IMAGEMANAGER->render("ManaIcon", getMemDC(), WINSIZE_X / 2 + 50, WINSIZE_Y - 40, 30, 30,
 		0, 0, IMAGEMANAGER->findImage("ManaIcon")->getWidth(), IMAGEMANAGER->findImage("ManaIcon")->getHeight());
-	renderBar(WINSIZE_X / 2 + 80, WINSIZE_Y - 35, 165, 20, 255, "Blue");
-	renderBar(WINSIZE_X / 2 - 140, WINSIZE_Y - 35, 165, 20, 255, "Red");
-	//wsprintf(_text, "%d/%d", _player->getCurHP(), _player->getMaxHp());
-	FONTMANAGER->textOut(getMemDC(), WINSIZE_X / 2 + 162, WINSIZE_Y - 35, "배달의민족 을지로체", 20, 100, "30/30", strlen("30/30"), RGB(255, 255, 255));
-	FONTMANAGER->textOut(getMemDC(), WINSIZE_X / 2 - 58, WINSIZE_Y - 35, "배달의민족 을지로체", 20, 100, "30/30", strlen("30/30"), RGB(255, 255, 255));
+	renderBar(WINSIZE_X / 2 + 80, WINSIZE_Y - 35, 165.f * (float)_player->getMP() / (float)_player->getMaxMP(), 20, 255, "Blue");
+	renderBar(WINSIZE_X / 2 - 140, WINSIZE_Y - 35, 165.f * (float)_player->getHP() / (float)_player->getMaxHP(), 20, 255, "Red");
+	wsprintf(_text, "%d/%d", _player->getMP(), _player->getMaxMP());
+	FONTMANAGER->textOut(getMemDC(), WINSIZE_X / 2 + 162, WINSIZE_Y - 35, "배달의민족 을지로체", 20, 100, _text, strlen(_text), RGB(255, 255, 255));
+	wsprintf(_text, "%d/%d", _player->getHP(), _player->getMaxHP());
+	FONTMANAGER->textOut(getMemDC(), WINSIZE_X / 2 - 58, WINSIZE_Y - 35, "배달의민족 을지로체", 20, 100, _text, strlen(_text), RGB(255, 255, 255));
 
 
 	SetTextAlign(getMemDC(), TA_LEFT);
