@@ -5,7 +5,7 @@ HRESULT ObjectManager::init(string sceneName)
 {
 	FILE* _fp;
 	char fileName[256];
-	wsprintf(fileName, "%sMapObject.txt", sceneName.c_str());
+	wsprintf(fileName, "./Resources/Data/Map/%sMapObject.txt", sceneName.c_str());
 	fopen_s(&_fp, fileName, "r");
 	if (_fp != NULL)
 	{
