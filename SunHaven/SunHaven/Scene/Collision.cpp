@@ -7,11 +7,14 @@ void DynusScene::collision(void)
 
 	if (IntersectRect(&rcTemp1, &_player->getSwordSlashRC(), &_dynus->getRcGuardMine1()))
 	{
-		_dynus->setIsGM1Remove(true);
+		cout << "충돌 " << endl;
+ 		_dynus->setIsGM1Remove(true);
 	}
 
 	if (IntersectRect(&rcTemp2, &_player->getSwordSlashRC(), &_dynus->getRcGuardMine2()))
 	{
+		cout << "충돌 " << endl;
+
 		_dynus->setIsGM2Remove(true);
 	}
 }

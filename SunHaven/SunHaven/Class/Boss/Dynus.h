@@ -180,6 +180,18 @@ public:
 
 	void collision(void);
 
+	inline void hitDamage(float damage)
+	{
+		if (_hp <= 0)
+		{
+			_hp = 0;
+
+			return;
+		}
+
+		_hp -= damage;
+	}
+
 	RECT getRcDynus(void) { return _rcDynus; }
 	Bullet* getBullet(void) { return _bullet; }
 

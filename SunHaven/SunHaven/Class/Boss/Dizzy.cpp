@@ -213,6 +213,8 @@ void Dizzy::update(void)
 		break;
 
 	case EDizzyState::WAKE:
+		// SD: WAKE
+
 		if (_curAni->getNowPlayIdx() >= _curImg->getMaxFrameX())
 		{
 			_state = EDizzyState::IDLE;
@@ -265,6 +267,11 @@ void Dizzy::update(void)
 
 	case EDizzyState::SPIN:
 		spin();
+
+		if (_curAni->getNowPlayIdx() == 12 || _curAni->getNowPlayIdx() == 43)
+		{
+			// SD: 롤린
+		}
 
 		if (_isCollisionLeft || _isCollisionRight || _isCollisionTop || _isCollisionBottom)
 		{
@@ -322,6 +329,11 @@ void Dizzy::update(void)
 	case EDizzyState::GROGGY:
 		meteorFire();
 
+		if (_curAni->getNowPlayIdx() == 20 || _curAni->getNowPlayIdx() == 28)
+		{
+			// SD: 스턴
+		}
+
 		if (_meteorIdx == 0)
 		{
 			_aftetMeteorCount++;
@@ -355,6 +367,7 @@ void Dizzy::update(void)
 
 	case EDizzyState::RANGE:
 		gemFire();
+		// SD: 보석 던지기
 
 		if (_gemCount > 3)
 		{
@@ -391,7 +404,7 @@ void Dizzy::update(void)
 
 			if (_afterDeathTime > 300)
 			{
-				cout << "죽었다" << endl;
+				// SD: 죽음
 				_isDie = true;
 			}
 		}

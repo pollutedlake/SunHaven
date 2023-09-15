@@ -264,9 +264,10 @@ void Dynus::update(void)
 			switch (_firstP)
 			{
 			case EFirstPhase::SPREAD_X:
-
-				//_em->spawnShadeclaw();
-				//beamFire();
+				if (_curAni->getNowPlayIdx() == 20)
+				{
+					// SD: 캐스팅
+				}
 
 				if (spawningTime())
 				{
@@ -296,6 +297,11 @@ void Dynus::update(void)
 				break;
 
 			case EFirstPhase::SPREAD_ELLIPSE:
+				if (_curAni->getNowPlayIdx() == 20)
+				{
+					// SD: 캐스팅
+				}
+
 				spreadEllipse();
 
 				if (_pa2StartPosIdx < 0)
@@ -306,8 +312,8 @@ void Dynus::update(void)
 					_curAni = _spellAni;
 					_curAni->setPlayFrame(0, 69, false, false);
 					_curAni->AniStart();
+		
 					_pa1StartPosIdx = 6;
-
 					_pa3StartPosIdx = 2;
 					_bulletCount = 0;
 
@@ -316,6 +322,11 @@ void Dynus::update(void)
 				break;
 
 			case EFirstPhase::BEAM1:
+				if (_curAni->getNowPlayIdx() == 20)
+				{
+					// SD: 캐스팅
+				}
+
 				beamFire();
 
 				if (_pa3StartPosIdx < 0)
@@ -336,6 +347,11 @@ void Dynus::update(void)
 				break;
 
 			case EFirstPhase::BEAM2:
+				if (_curAni->getNowPlayIdx() == 20)
+				{
+					// SD: 캐스팅
+				}
+
 				beamFire();
 
 				if (_pa3StartPosIdx < 0)
@@ -346,7 +362,6 @@ void Dynus::update(void)
 					_curAni = _spellAni;
 					_curAni->setPlayFrame(0, 69, false, false);
 					_curAni->AniStart();
-
 					_pa1StartPosIdx = 6;
 					_bulletCount = 0;
 
@@ -361,6 +376,10 @@ void Dynus::update(void)
 			switch (_secondP)
 			{
 			case ESecondPhase::SPAWN:
+				if (_curAni->getNowPlayIdx() == 20)
+				{
+					// SD: 캐스팅
+				}
 				if (!_isSpawnEnemy)
 				{
 					_em->spawnShadeclaw();
@@ -382,7 +401,6 @@ void Dynus::update(void)
 						_curAni = _spellAni;
 						_curAni->setPlayFrame(0, 69, false, false);
 						_curAni->AniStart();
-						
 						_afterSpawnCount = 0;
 					}
 				}
@@ -390,6 +408,10 @@ void Dynus::update(void)
 				break;
 
 			case ESecondPhase::SPREAD_X:
+				if (_curAni->getNowPlayIdx() == 20)
+				{
+					// SD: 캐스팅
+				}
 				bulletFire();
 				_isSpawnEnemy = false;
 
@@ -547,6 +569,10 @@ void Dynus::update(void)
 				switch (_rndPattern)
 				{
 				case 0:
+					if (_curAni->getNowPlayIdx() == 20)
+					{
+						// SD: 캐스팅
+					}
 					bulletFire();
 
 					if (_pa1StartPosIdx < 0)
@@ -570,6 +596,10 @@ void Dynus::update(void)
 					break;
 
 				case 1:
+					if (_curAni->getNowPlayIdx() == 20)
+					{
+						// SD: 캐스팅
+					}
 					spreadEllipse();
 
 					if (_pa2StartPosIdx < 0)
@@ -595,6 +625,10 @@ void Dynus::update(void)
 					break;
 
 				case 2:
+					if (_curAni->getNowPlayIdx() == 20)
+					{
+						// SD: 캐스팅
+					}
 					beamFire();
 
 					if (_pa3StartPosIdx < 0)
@@ -621,6 +655,7 @@ void Dynus::update(void)
 					break;
 
 				case 3:
+					// SD: 캐스팅
 					if (!_isSpawnEnemy)
 					{
 						_em->spawnShadeclaw();
@@ -769,7 +804,8 @@ void Dynus::move(void)
 
 void Dynus::draw(void)
 {
-	IMAGEMANAGER->render("DynusWing", getMemDC(), _x + 210, _y + 10);
+	IMAGEMANAGER->render("DynusWing", getMemDC(),
+		CAMERA->worldToCameraX(_x + 210), CAMERA->worldToCameraY(_y + 10));
 
 	_curImg->aniRender(getMemDC(), _x, _y, _curAni);
 	
@@ -787,10 +823,11 @@ void Dynus::draw(void)
 					}
 
 					IMAGEMANAGER->render("DynusBulletPortal", getMemDC(),
-						_rcPa1Start[i][j].left + 7, _rcPa1Start[i][j].top + 7,
+						CAMERA->worldToCameraX(_rcPa1Start[i][j].left + 7),
+						CAMERA->worldToCameraY(_rcPa1Start[i][j].top + 7),
 						IMAGEMANAGER->findImage("DynusBulletPortal")->getWidth() * _k,
 						IMAGEMANAGER->findImage("DynusBulletPortal")->getHeight() * _k,
-						0, 0,
+						CAMERA->worldToCameraX(0), CAMERA->worldToCameraY(0),
 						22, 26);
 
 					_aftetKCount++;
@@ -803,10 +840,11 @@ void Dynus::draw(void)
 						}
 
 						IMAGEMANAGER->render("DynusBulletPortal", getMemDC(),
-							_rcPa1Start[i][j].left + 7, _rcPa1Start[i][j].top + 7,
+							CAMERA->worldToCameraX(_rcPa1Start[i][j].left + 7),
+							CAMERA->worldToCameraY(_rcPa1Start[i][j].top + 7),
 							IMAGEMANAGER->findImage("DynusBulletPortal")->getWidth() * _k,
 							IMAGEMANAGER->findImage("DynusBulletPortal")->getHeight() * _k,
-							0, 0,
+							CAMERA->worldToCameraX(0), CAMERA->worldToCameraY(0),
 							22, 26);
 
 						_aftetKCount = 0;
@@ -830,10 +868,11 @@ void Dynus::draw(void)
 					}
 
 					IMAGEMANAGER->render("DynusBulletPortal", getMemDC(),
-						_rcPa2Start[i][j].left + 15, _rcPa2Start[i][j].top + 9,
+						CAMERA->worldToCameraX(_rcPa2Start[i][j].left + 15),
+						CAMERA->worldToCameraY(_rcPa2Start[i][j].top + 9),
 						IMAGEMANAGER->findImage("DynusBulletPortal")->getWidth() * _k,
 						IMAGEMANAGER->findImage("DynusBulletPortal")->getHeight() * _k,
-						0, 0,
+						CAMERA->worldToCameraX(0), CAMERA->worldToCameraY(0),
 						22, 26);
 				}
 			}
@@ -862,7 +901,7 @@ void Dynus::draw(void)
 		{
 			for (int j = 0; j < PA1_STARTPOS_NUM_2; j++)
 			{
-				DrawRectMake(getMemDC(), _rcPa1Start[i][j]);
+				DrawRectMake(getMemDC(), CAMERA->worldToCameraRect(_rcPa1Start[i][j]));
 			}
 		}
 
@@ -870,16 +909,16 @@ void Dynus::draw(void)
 		{
 			for (int j = 0; j < PA2_STARTPOS_NUM_2; j++)
 			{
-				DrawRectMake(getMemDC(), _rcPa2Start[i][j]);
+				DrawRectMake(getMemDC(), CAMERA->worldToCameraRect(_rcPa2Start[i][j]));
 			}
 		}
 
 		for (int i = 0; i < PA3_STARTPOS_NUM; i++)
 		{
-			DrawRectMake(getMemDC(), _rcPa3Start[i]);
+			DrawRectMake(getMemDC(), CAMERA->worldToCameraRect(_rcPa3Start[i]));
 		}
 
-		DrawRectMake(getMemDC(), _player->getPlayerRC());
+		DrawRectMake(getMemDC(), CAMERA->worldToCameraRect(_player->getPlayerRC()));
 
 		SelectObject(getMemDC(), oldBrush);
 		DeleteObject(myBrush);
@@ -906,7 +945,9 @@ void Dynus::drawPlatform(void)
 						continue;
 					}
 
-					IMAGEMANAGER->render("DynusJumpPlatform", getMemDC(), _rcPlatform[i].left, _rcPlatform[i].top);
+					IMAGEMANAGER->render("DynusJumpPlatform", getMemDC(),
+						CAMERA->worldToCameraX(_rcPlatform[i].left),
+						CAMERA->worldToCameraY(_rcPlatform[i].top));
 				}
 			}
 		}
@@ -915,8 +956,12 @@ void Dynus::drawPlatform(void)
 
 void Dynus::drawGuardMine(void)
 {
-	IMAGEMANAGER->render("GuardMine", getMemDC(), _rcGuardMine1.left, _rcGuardMine1.top);
-	IMAGEMANAGER->render("GuardMine", getMemDC(), _rcGuardMine2.left, _rcGuardMine2.top);
+	DrawRectMake(getMemDC(), CAMERA->worldToCameraRect(_rcGuardMine1));
+	DrawRectMake(getMemDC(), CAMERA->worldToCameraRect(_rcGuardMine2));
+	IMAGEMANAGER->render("GuardMine", getMemDC(), CAMERA->worldToCameraX(_rcGuardMine1.left),
+		CAMERA->worldToCameraY(_rcGuardMine1.top));
+	IMAGEMANAGER->render("GuardMine", getMemDC(), CAMERA->worldToCameraX(_rcGuardMine2.left),
+		CAMERA->worldToCameraY(_rcGuardMine2.top));
 }
 
 void Dynus::bulletFire()
@@ -1123,7 +1168,7 @@ void Dynus::collision(void)
 			&_player->getPlayerRC()))
 		{
 			_bullet->removeBullet(i);
-			//_player->hitDamage(2.0f);
+			_player->hitDamage(2.0f);
 		}
 	}
 }

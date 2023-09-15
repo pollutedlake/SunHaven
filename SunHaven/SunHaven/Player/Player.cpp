@@ -259,6 +259,9 @@ HRESULT Player::init(float x, float y, string collisionMapKey)
 	
 	_isLoop = false;
 
+	_invincibilityTime = 0.0f;
+	_isDamaged = false;
+
 	return S_OK;
 }
 

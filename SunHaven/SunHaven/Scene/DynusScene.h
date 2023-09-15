@@ -6,6 +6,7 @@
 #include "../../Player/Player.h"
 #include "../Class/Enemy/EnemyManager.h"
 
+class UI;
 class DynusScene : public GameNode
 {
 private:
@@ -17,6 +18,8 @@ private:
 	Shadeclaw* _shadeclaw;
 	Player* _player;
 	EnemyManager* _em;
+
+	UI* _ui;
 
 	char _text[64];
 

@@ -1,5 +1,6 @@
 #include "Stdafx.h"
 #include "DizzyScene.h"
+#
 
 HRESULT DizzyScene::init(void)
 {
@@ -15,6 +16,8 @@ HRESULT DizzyScene::init(void)
 	CAMERA->setPosition(_player->getPlayerPosition());
 	CAMERA->setLimitRight(2196 - WINSIZE_X / 2);
 	CAMERA->setLimitBottom(1512 - WINSIZE_Y / 2);
+
+
 
 	wsprintf(_text, "DizzyScene");
 

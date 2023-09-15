@@ -164,6 +164,8 @@ private:
 
 	float _jump;
 	bool _isJump;
+	float _invincibilityTime;
+	bool _isDamaged;
 
 public:
 	HRESULT init(float x, float y, string collisionMapkey);
@@ -353,6 +355,19 @@ public:
 
 
 
+	inline void hitDamage(float damage)
+	{
+		if (_invincibilityTime == 0.0f)
+		{
+			_isDamaged = true;
+			_playerState.HP -= damage;
+		}
+
+		if (_playerState.HP <= 0)
+		{
+			_playerState.HP = 0;
+		}
+	}
 
 	bool isCollision()
 	{
