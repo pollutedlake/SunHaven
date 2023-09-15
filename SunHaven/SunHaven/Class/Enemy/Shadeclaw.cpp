@@ -3,7 +3,7 @@
 
 HRESULT Shadeclaw::init(POINT position)
 {
-	_x = position.x;
+	/*_x = position.x;
 	_y = position.y;
 
 	_worldTimeCount = GetTickCount();
@@ -33,7 +33,7 @@ HRESULT Shadeclaw::init(POINT position)
 	{
 		_nextPoints = _patrolPoints.front();
 		_patrolPoints.pop_front();
-	}
+	}*/
 
 	return S_OK;
 }
@@ -45,70 +45,70 @@ void Shadeclaw::release(void)
 
 void Shadeclaw::update(void)
 {
-	switch (_state)
-	{
-	case EEnemyState::IDLE:
-		_imageName = "Shadeclow_Idle";
+	//switch (_state)
+	//{
+	//case EEnemyState::IDLE:
+	//	_imageName = "Shadeclow_Idle";
 
-		_waitCount++;
+	//	_waitCount++;
 
-		if (_waitCount > 300)
-		{
-			_patrolX = RND->getFromFloatTo(300, 700);
-			_patrolY = RND->getFromFloatTo(200, 650);
+	//	if (_waitCount > 300)
+	//	{
+	//		_patrolX = RND->getFromFloatTo(300, 700);
+	//		_patrolY = RND->getFromFloatTo(200, 650);
 
-			_patrolPoints.push_back(make_pair(_patrolX, _patrolY));
-			if (!_patrolPoints.empty())
-			{
-				//_patrolPoints.push_back(_nextPoints);
+	//		_patrolPoints.push_back(make_pair(_patrolX, _patrolY));
+	//		if (!_patrolPoints.empty())
+	//		{
+	//			//_patrolPoints.push_back(_nextPoints);
 
-				_nextPoints = _patrolPoints.front();
-				_patrolPoints.pop_front();
-				_state = EEnemyState::MOVE;
-			}
-		}
+	//			_nextPoints = _patrolPoints.front();
+	//			_patrolPoints.pop_front();
+	//			_state = EEnemyState::MOVE;
+	//		}
+	//	}
 
-		break;
+	//	break;
 
-	case EEnemyState::MOVE:
-		_imageName = "Shadeclow_Idle";
+	//case EEnemyState::MOVE:
+	//	_imageName = "Shadeclow_Idle";
 
-		move();
+	//	move();
 
-		if (getDistance(_x, _y, _nextPoints.first, _nextPoints.second) <= 10.0f)
-		{
-			_worldTimeCount = 0.0f;
+	//	if (getDistance(_x, _y, _nextPoints.first, _nextPoints.second) <= 10.0f)
+	//	{
+	//		_worldTimeCount = 0.0f;
 
-			_waitCount = 0.0f;
-			_state = EEnemyState::IDLE;
-		}
+	//		_waitCount = 0.0f;
+	//		_state = EEnemyState::IDLE;
+	//	}
 
-		break;
+	//	break;
 
-	case EEnemyState::TARGETON:
-		_imageName = "Shadeclow_Idle";
-	
-		targetOn();
+	//case EEnemyState::TARGETON:
+	//	_imageName = "Shadeclow_Idle";
+	//
+	//	targetOn();
 
-		break;
+	//	break;
 
-	case EEnemyState::ATTACK:
-		_imageName = "Shadeclow_Attack";
+	//case EEnemyState::ATTACK:
+	//	_imageName = "Shadeclow_Attack";
 
 
 
-		attack();
+	//	attack();
 
-		break;
+	//	break;
 
-	case EEnemyState::DIE:
-		_imageName = "Shadeclow_Die";
-		
+	//case EEnemyState::DEATH:
+	//	_imageName = "Shadeclow_Die";
+	//	
 
-		break;
-	}
+	//	break;
+	//}
 
-	_image = IMAGEMANAGER->findImage(_imageName);
+	/*_image = IMAGEMANAGER->findImage(_imageName);
 	_rc = RectMakeCenter(_x, _y,
 		_image->getFrameWidth(), _image->getFrameHeight());
 
@@ -129,7 +129,7 @@ void Shadeclaw::update(void)
 	else if (getDistance(_x, _y, _playerX, _playerY) <= 50)
 	{
 		_state = EEnemyState::ATTACK;
-	}
+	}*/
 }
 
 void Shadeclaw::render(void)
@@ -160,15 +160,15 @@ void Shadeclaw::targetOn(void)
 {
 	cout << "Move To Target" << endl;
 
-	if ((_rc.left + _rc.right) / 2 < _playerX)
-	{
-		_isLeft = false; // 坷弗率
-	}
+	//if ((_rc.left + _rc.right) / 2 < _playerX)
+	//{
+	//	_isLeft = false; // 坷弗率
+	//}
 
-	else
-	{
-		_isLeft = true; // 哭率
-	}
+	//else
+	//{
+	//	_isLeft = true; // 哭率
+	//}
 
 	_x += cosf(getAngle((_rc.left + _rc.right) / 2, (_rc.top + _rc.bottom) / 2,
 		_playerX, _playerY)) * _speed;
@@ -179,85 +179,85 @@ void Shadeclaw::targetOn(void)
 
 void Shadeclaw::attack()
 {
-	cout << "Attack To Target" << endl;
+	//cout << "Attack To Target" << endl;
 
-	if (_x < _playerX)
-	{
-		_isLeft = false; // 坷弗率
-	}
-	else
-	{
-		_isLeft = true; // 哭率
-	}
+	//if (_x < _playerX)
+	//{
+	//	_isLeft = false; // 坷弗率
+	//}
+	//else
+	//{
+	//	_isLeft = true; // 哭率
+	//}
 
-	if (!_isLeft)
-	{
-		if (_currentFrameX == 3 || _currentFrameX == 4 || _currentFrameX == 7 || _currentFrameX == 8)
-		{
-			_rcAttack = RectMakeCenter(_x + 50, _y + 30, 80, 80);
-		}
+	//if (!_isLeft)
+	//{
+	//	if (_currentFrameX == 3 || _currentFrameX == 4 || _currentFrameX == 7 || _currentFrameX == 8)
+	//	{
+	//		_rcAttack = RectMakeCenter(_x + 50, _y + 30, 80, 80);
+	//	}
 
-		else
-		{
-			_rcAttack = RectMakeCenter(-10000, 0, 0, 0);
-		}
-	}
+	//	else
+	//	{
+	//		_rcAttack = RectMakeCenter(-10000, 0, 0, 0);
+	//	}
+	//}
 
-	else
-	{
-		if (_currentFrameX == 2 || _currentFrameX == 3 || _currentFrameX == 6 || _currentFrameX == 7)
-		{
-			_rcAttack = RectMakeCenter(_x + 40, _y + 30, 80, 80);
-		}
+	//else
+	//{
+	//	if (_currentFrameX == 2 || _currentFrameX == 3 || _currentFrameX == 6 || _currentFrameX == 7)
+	//	{
+	//		_rcAttack = RectMakeCenter(_x + 40, _y + 30, 80, 80);
+	//	}
 
-		else
-		{
-			_rcAttack = RectMakeCenter(-10000, 0, 0, 0);
-		}
-	}
+	//	else
+	//	{
+	//		_rcAttack = RectMakeCenter(-10000, 0, 0, 0);
+	//	}
+	//}
 }
 
 void Shadeclaw::animation()
 {
-	if (!_isLeft)	// 坷弗率
-	{
-		_image->setFrameY(0);
+	//if (!_isLeft)	// 坷弗率
+	//{
+	//	_image->setFrameY(0);
 
-		if (130 + _worldTimeCount <= GetTickCount())
-		{
-			_worldTimeCount = GetTickCount();
-			_currentFrameX++;
+	//	if (130 + _worldTimeCount <= GetTickCount())
+	//	{
+	//		_worldTimeCount = GetTickCount();
+	//		_currentFrameX++;
 
-			if (_image->getMaxFrameX() < _currentFrameX)
-			{
-				_currentFrameX = 0;
-				
-				_state = EEnemyState::IDLE;
-			}
-		}
-	}
+	//		if (_image->getMaxFrameX() < _currentFrameX)
+	//		{
+	//			_currentFrameX = 0;
+	//			
+	//			_state = EEnemyState::IDLE;
+	//		}
+	//	}
+	//}
 
-	else	// 哭率
-	{
-		_image->setFrameY(1);
+	//else	// 哭率
+	//{
+	//	_image->setFrameY(1);
 
-		if (130 + _worldTimeCount <= GetTickCount())
-		{
-			_worldTimeCount = GetTickCount();
-			_currentFrameX--;
+	//	if (130 + _worldTimeCount <= GetTickCount())
+	//	{
+	//		_worldTimeCount = GetTickCount();
+	//		_currentFrameX--;
 
-			if (0 > _currentFrameX)
-			{
-				_currentFrameX = _image->getMaxFrameX();
-				
-				_state = EEnemyState::IDLE;
-			}
-		}
-	}
+	//		if (0 > _currentFrameX)
+	//		{
+	//			_currentFrameX = _image->getMaxFrameX();
+	//			
+	//			_state = EEnemyState::IDLE;
+	//		}
+	//	}
+	//}
 }
 
 void Shadeclaw::draw()
 {
-	DrawRectMake(getMemDC(), _rcAttack);
-	_image->frameRender(getMemDC(), _x, _y);
+	/*DrawRectMake(getMemDC(), _rcAttack);
+	_image->frameRender(getMemDC(), _x, _y);*/
 }

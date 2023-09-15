@@ -27,6 +27,7 @@ private:
 	GImage* _idleImg;
 	GImage* _spinImg;
 	GImage* _rangeImg;
+	GImage* _deathImg;
 
 	GImage* _curImg;
 
@@ -41,6 +42,7 @@ private:
 	Animation* _idleAni;
 	Animation* _spinAni;
 	Animation* _rangeAni;
+	Animation* _deathAni;
 
 	Animation* _curAni;
 
@@ -54,12 +56,14 @@ private:
 	float _maxHp;
 
 	bool _isWake;
+	bool _isDie;
 	bool _isLeft;
 	float _worldTimeCount;
 
 	Player* _player;
 
-	float _spinStartX, _spinStartY;
+	float _spinFromX, _spinFromY;
+	float _spinToX, _spinToY;
 	int _spinCount;
 
 	Meteor* _meteor;
@@ -92,6 +96,9 @@ private:
 
 	int _aftetGemCount;
 
+	int _afterDeathTime;
+	float _afterDeathWorldTime;
+
 public:
 	HRESULT init(void);
 	void release(void);
@@ -102,7 +109,6 @@ public:
 
 	//void move(void);
 	void draw(void);
-	void animation(void);
 
 	void spin(void);
 	void meteorFire(void);
@@ -111,6 +117,7 @@ public:
 	void gemFire(void);
 	bool gemCountFire(void);
 	bool turnCountFire2(void);
+	bool afterDeathTime(void);
 
 	void setPlayerMemoryAddress(Player* player) { _player = player; }
 

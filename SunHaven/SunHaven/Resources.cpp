@@ -190,7 +190,18 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addImage("Gem4", "Resources/Images/Boss/Dizzy/Dizzy_Gems_4.bmp",
 		28, 30, true, RGB(255, 0, 255));
 
+
 	// Sound
+
+	// ====================MineScene====================
+	// Image
+	IMAGEMANAGER->addFrameImage("FlameImp_Fireball", "Resources/Images/Enemy/FlameImp/FlameImp_Fireball.bmp",
+		112, 19,
+		4, 1,
+		true, RGB(255, 0, 255));	// 적 파이어볼
+
+	// Sound
+
 
 	// ====================FarmScene====================
 	// Image

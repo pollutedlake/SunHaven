@@ -30,6 +30,14 @@ HRESULT MineScene::init(void)
 
 	_ui = new UI;
 	_ui->init("Mine");
+
+	_em = new EnemyManager;
+	_em->setPlayerMemoryAddress(_player);
+	//_slug->setPlayerMemoryAddress(_player);
+
+	_em->spawnSteelSlug();
+	_em->spawnFlameImp();
+
 	return S_OK;
 }
 
@@ -41,6 +49,8 @@ void MineScene::release(void)
 	SAFE_DELETE(_player);
 	_om->release();
 	SAFE_DELETE(_om);
+	_em->release();
+	SAFE_DELETE(_em);
 }
 
 void MineScene::update(void)
@@ -95,6 +105,9 @@ void MineScene::update(void)
 	_player->UseFishingLod(CAMERA->cameraToWorld(_ptMouse));
 	getDropItem();
 
+	_em->update();
+	//_slug->update();
+
 	if (KEYMANAGER->isOnceKeyDown(VK_F1))
 	{
 		SCENEMANAGER->changeScene("Dizzy");
@@ -123,6 +136,9 @@ void MineScene::render(void)
 		IMAGEMANAGER->render("MineMapCollision", getMemDC(), CAMERA->worldToCameraX(0),
 			CAMERA->worldToCameraY(0));
 	}
+
+	_em->render();
+	//_slug->render();
 
 	_inven->render();
 	_ui->render();

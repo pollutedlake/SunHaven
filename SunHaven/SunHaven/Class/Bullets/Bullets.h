@@ -50,8 +50,8 @@ public:
 	vector<tagBullet> getBullet(void) { return _vBullet; }
 
 
-	Bullet(void) {}	//차후 캐스팅 대비
-	virtual ~Bullet() {}	// 언제 지워질지 알 수 없어서 가상 소멸자
+	Bullet(void) {}	
+	virtual ~Bullet() {}
 };
 
 // 다이너스 빔
@@ -122,7 +122,7 @@ public:
 
 
 	Meteor() {}
-	virtual ~Meteor() {}	// 언제 지워질지 알 수 없어서 가상 소멸자
+	virtual ~Meteor() {}
 };
 
 // 디지 잼
@@ -150,7 +150,7 @@ public:
 	vector<tagBullet> getBullet(void) { return _vBullet; }
 
 	Gems() {}
-	virtual ~Gems() {}	// 언제 지워질지 알 수 없어서 가상 소멸자
+	virtual ~Gems() {}
 };
 
 
@@ -161,7 +161,7 @@ private:
 	vector<tagBullet> _vBullet;
 	vector<tagBullet>::iterator _viBullet;
 
-	typedef vector<tagBullet>::iterator iterBullet;	// 협업 시 재 정의
+	typedef vector<tagBullet>::iterator iterBullet;
 	//tagBullet bullet;
 	float _range;
 	float _bulletMax;
@@ -190,4 +190,38 @@ public:
 
 	Fireball() {}
 	~Fireball() {}
+};
+
+class EnemyFireBall : public GameNode
+{
+private:
+	vector<tagBullet> _vBullet;
+	vector<tagBullet>::iterator _viBullet;
+
+	const char* _imageName;
+	float _bulletMax;
+	float _range;
+
+	int _currentFrameX;
+	int _currentFrameY;
+
+	float _worldTimeCount;
+
+public:
+	HRESULT init(const char* imageName, int bulletMax, float range);
+	void release(void);
+	void update(void);
+	void render(void);
+
+	void fire(float x, float y, float angle, float speed);
+	void draw(void);
+	void move(void);
+
+	void removeBullet(int arrNum);
+
+	vector<tagBullet> getBullet(void) { return _vBullet; }
+
+
+	EnemyFireBall(void) {}
+	virtual ~EnemyFireBall() {}
 };

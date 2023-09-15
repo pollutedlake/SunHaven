@@ -1,7 +1,8 @@
 #include "stdafx.h"
 #include "EnemyManager.h"
 #include "Shadeclaw.h"
-//#include "Rocket.h"
+#include "SteelSlug.h"
+#include "FlameImp.h"
 #include "../../Player/Player.h"
 
 HRESULT EnemyManager::init(void)
@@ -52,41 +53,23 @@ void EnemyManager::render(void)
 
 void EnemyManager::setEnemy(void)
 {
-	/*for (int i = 0; i < 2; i++)
-	{
-		Enemy* shadeclaw;
-		shadeclaw = new Enemy;
-		shadeclaw->init("Shadeclow_Idle", PointMake(500 + i * 100, 200));
-		_vEnemy.push_back(shadeclaw);
-	}*/
 
+}
 
-	/*for (int i = 0; i < 3; i++)
-	{
-		for (int j = 0; j < 5; j++)
-		{
-			Enemy* jellyFish;
-			jellyFish = new Enemy;
-			jellyFish->init("해파리", PointMake(250 + j * 200, i * 100));
-			_vEnemy.push_back(jellyFish);
-		}
-	}
+void EnemyManager::spawnSteelSlug(void)
+{
+	Enemy* slug;
+	slug = new SteelSlug;
+	slug->init(PointMake(600, 800));
+	_vEnemy.push_back(slug);
+}
 
-	for (int i = 0; i < 15; i++)
-	{
-		Enemy* jellyFish;
-		jellyFish = new Enemy2;
-		jellyFish->init("해파리", PointMake(CENTER_X + 150 * cos(DEGREE_RADIAN(24 * i)), CENTER_Y + 150 * sin(DEGREE_RADIAN(24 * i))));
-		_vEnemy.push_back(jellyFish);
-	}
-
-	for (int i = 0; i < 15; i++)
-	{
-		Enemy* jellyFish;
-		jellyFish = new Enemy3;
-		jellyFish->init("해파리", PointMake(CENTER_X + 600 * cos(DEGREE_RADIAN(12 * i)), CENTER_Y - 700 + 600 * sin(DEGREE_RADIAN(12 * i))));
-		_vEnemy.push_back(jellyFish);
-	}*/
+void EnemyManager::spawnFlameImp(void)
+{
+	Enemy* flameImp;
+	flameImp = new FlameImp;
+	flameImp->init(PointMake(1000, 800));
+	_vEnemy.push_back(flameImp);
 }
 
 void EnemyManager::spawnShadeclaw(void)
@@ -108,21 +91,20 @@ void EnemyManager::removeEnemy(int arrNum)
 
 void EnemyManager::EnemyBulletFire(void)
 {
-	//for (_viEnemy = _vEnemy.begin(); _viEnemy != _vEnemy.end(); ++_viEnemy)
-	//{
-	//	if ((*_viEnemy)->bulletCountFire())	// 우선 참조
-	//	{
-	//		RECT rc = (*_viEnemy)->getRect();
+	/*for (_viEnemy = _vEnemy.begin(); _viEnemy != _vEnemy.end(); ++_viEnemy)
+	{
+		
+			RECT rc = (*_viEnemy)->getRect();
 
-	//		_bullet->fire(rc.left + (rc.right - rc.left) / 2,
-	//			rc.bottom + (rc.top - rc.bottom) / 2 + 30,
-	//			getAngle(rc.left + (rc.right - rc.left) / 2,
-	//				rc.bottom + (rc.top - rc.bottom) / 2,
-	//				_rocket->getPosition().x,
-	//				_rocket->getPosition().y),
-	//			RND->getFromFloatTo(2.0f, 4.0f));
-	//	}
-	//}
+			_bullet->fire(rc.left + (rc.right - rc.left) / 2,
+				rc.bottom + (rc.top - rc.bottom) / 2 + 30,
+				getAngle(rc.left + (rc.right - rc.left) / 2,
+					rc.bottom + (rc.top - rc.bottom) / 2,
+					_player->getPlayerPosition().x,
+					_player->getPlayerPosition().y),
+				RND->getFromFloatTo(2.0f, 4.0f));
+		
+	}*/
 }
 
 void EnemyManager::collision(void)

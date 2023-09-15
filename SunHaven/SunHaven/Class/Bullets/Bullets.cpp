@@ -401,7 +401,8 @@ void Meteor::draw(void)
 	{
 		//DrawRectMake(getMemDC(), _viBullet->rc);
 
-		_viBullet->img->frameRender(getMemDC(), _viBullet->rc.left, _viBullet->rc.top);
+		_viBullet->img->frameRender(getMemDC(), 
+			CAMERA->worldToCameraX(_viBullet->x), CAMERA->worldToCameraY(_viBullet->y));
 
 		_viBullet->count++;
 
@@ -497,9 +498,10 @@ void Gems::draw(void)
 {
 	for (_viBullet = _vBullet.begin(); _viBullet != _vBullet.end(); ++_viBullet)
 	{
-		DrawRectMake(getMemDC(), _viBullet->rc);
+		//DrawRectMake(getMemDC(), _viBullet->rc);
 		
-		_viBullet->img->render(getMemDC(), _viBullet->rc.left, _viBullet->rc.top);
+		_viBullet->img->render(getMemDC(), CAMERA->worldToCameraX(_viBullet->x), 
+			CAMERA->worldToCameraY(_viBullet->y));
 	}
 }
 
@@ -659,5 +661,97 @@ void Fireball::move(float x, float y)
 void Fireball::RemoveBullet(int arrNum)
 {
 	SAFE_DELETE(_vBullet[arrNum].img);
+	_vBullet.erase(_vBullet.begin() + arrNum);
+}
+
+HRESULT EnemyFireBall::init(const char* imageName, int bulletMax, float range)
+{
+	_imageName = imageName;
+	_bulletMax = bulletMax;
+	_range = range;
+
+	return S_OK;
+}
+
+void EnemyFireBall::release(void)
+{
+	_vBullet.clear();
+}
+
+void EnemyFireBall::update(void)
+{
+	move();
+}
+
+void EnemyFireBall::render(void)
+{
+	draw();
+}
+
+void EnemyFireBall::fire(float x, float y, float angle, float speed)
+{
+	if (_bulletMax <= _vBullet.size()) return;
+
+	tagBullet bullet;
+	ZeroMemory(&bullet, sizeof(tagBullet));
+
+	bullet.img = IMAGEMANAGER->findImage(_imageName);
+	bullet.speed = speed;
+	bullet.angle = angle;
+	bullet.x = bullet.fireX = x;
+	bullet.y = bullet.fireY = y;
+	bullet.rc = RectMakeCenter(bullet.x, bullet.y,
+		bullet.img->getFrameWidth(), bullet.img->getFrameHeight());
+
+	_vBullet.push_back(bullet);
+}
+
+void EnemyFireBall::draw(void)
+{
+	for (_viBullet = _vBullet.begin(); _viBullet != _vBullet.end(); ++_viBullet)
+	{
+		_viBullet->img->frameRender(getMemDC(), CAMERA->worldToCameraX(_viBullet->x), 
+			CAMERA->worldToCameraY(_viBullet->y));
+
+		_viBullet->img->setFrameY(0);
+
+		if (130 + _worldTimeCount <= GetTickCount())
+		{
+			_worldTimeCount = GetTickCount();
+			_currentFrameX++;
+
+			if (_viBullet->img->getMaxFrameX() < _currentFrameX)
+			{
+				_currentFrameX = 0;
+			}
+		}
+	}
+}
+
+void EnemyFireBall::move(void)
+{
+	for (_viBullet = _vBullet.begin(); _viBullet != _vBullet.end();)
+	{
+		_viBullet->x += cosf(_viBullet->angle) * _viBullet->speed;
+		_viBullet->y += -sinf(_viBullet->angle) * _viBullet->speed;
+
+		_viBullet->rc = RectMakeCenter(_viBullet->x, _viBullet->y,
+			_viBullet->img->getFrameWidth(), _viBullet->img->getFrameHeight());
+
+		if (_range < getDistance(_viBullet->fireX, _viBullet->fireY,
+			_viBullet->x, _viBullet->y))
+		{
+			_viBullet = _vBullet.erase(_viBullet);
+		}
+
+		else
+		{
+			++_viBullet;
+		}
+	}
+}
+
+void EnemyFireBall::removeBullet(int arrNum)
+{
 	_vBullet.erase(_vBullet.begin() + arrNum);
 }

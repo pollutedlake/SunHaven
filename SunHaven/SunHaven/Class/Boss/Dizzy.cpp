@@ -13,7 +13,9 @@ HRESULT Dizzy::init(void)
 	_spinImg = IMAGEMANAGER->addFrameImage("DizzySpin", "Resources/Images/Boss/Dizzy/Dizzy_Spin.bmp",
 		4872, 320, 28, 2, true, RGB(255, 0, 255));
 	_rangeImg = IMAGEMANAGER->addFrameImage("DizzyRange", "Resources/Images/Boss/Dizzy/Dizzy_Range.bmp",
-		4176, 160, 24, 1, true, RGB(255, 0, 255));
+		4176, 320, 24, 2, true, RGB(255, 0, 255));
+	_deathImg = IMAGEMANAGER->addFrameImage("DizzyDeath", "Resources/Images/Boss/Dizzy/Dizzy_Death.bmp",
+		1044, 320, 6, 2, true, RGB(255, 0, 255));
 
 	_wakeAni = new Animation;
 	_wakeAni->init(_wakeImg->getWidth(), _wakeImg->getHeight(), 174, 160);
@@ -35,6 +37,11 @@ HRESULT Dizzy::init(void)
 	_rangeAni->setDefPlayFrame(false, true);
 	_rangeAni->setFPS(12);
 
+	_deathAni = new Animation;
+	_deathAni->init(_deathImg->getWidth(), _deathImg->getHeight(), 174, 160);
+	_deathAni->setDefPlayFrame(false, true);
+	_deathAni->setFPS(12);
+
 	_curImg = _wakeImg;
 	_curAni = _wakeAni;
 	//_curAni->AniStart();
@@ -42,7 +49,7 @@ HRESULT Dizzy::init(void)
 	_x = CENTER_X + 200;
 	_y = CENTER_Y + 200;
 
-	_rcDizzy = RectMake(_x, _y, _curImg->getFrameWidth(), _curImg->getFrameHeight());
+	_rcDizzy = RectMakeCenter(_x, _y, _curImg->getFrameWidth(), _curImg->getFrameHeight());
 	_rcSpinAtk = RectMakeCenter(_x, _y, _curImg->getFrameWidth(), _curImg->getFrameHeight());
 
 	_collisionMap = IMAGEMANAGER->findImage("DizzyMapCollision");
@@ -54,6 +61,7 @@ HRESULT Dizzy::init(void)
 	_maxHp = 5000.0f;
 
 	_isWake = false;
+	_isDie = false;
 	_isLeft = false;
 	_worldTimeCount = GetTickCount();
 
@@ -62,11 +70,12 @@ HRESULT Dizzy::init(void)
 	_rcColl[2] = RectMake(_rcDizzy.right - 3, _rcDizzy.top + 3, 3, 3);
 	_rcColl[3] = RectMake(_rcDizzy.left - 3, _rcDizzy.top, 3, 3);
 
-	_spinStartX = _spinStartY = 0.0f;
+	_spinFromX = _spinFromY = 0.0f;
+	_spinToX = _spinToY = 0.0f;
 	_spinCount = 0;
-
+	
 	_meteor = new Meteor;
-	_meteor->init("DizzyMeteor", 5, 1000.0f);
+	_meteor->init("DizzyMeteor", 5, 1300.0f);
 
 	_meteorFireX = 0.0f;
 	_meteorFireY = 0.0f;
@@ -83,19 +92,6 @@ HRESULT Dizzy::init(void)
 
 	_gem = new Gems;
 	_gem->init(100, 1000.0f);
-	//_gem->init(gemImg, 100, 1000.0f);
-
-	/*_rndGenImg[0] = IMAGEMANAGER->addImage("Gem0", "Resources/Images/Boss/Dizzy/Dizzy_Gems_0.bmp",
-		27, 26, true, RGB(255, 0, 255));
-	_rndGenImg[1] = IMAGEMANAGER->addImage("Gem1", "Resources/Images/Boss/Dizzy/Dizzy_Gems_1.bmp",
-		22, 26, true, RGB(255, 0, 255));
-	_rndGenImg[2] = IMAGEMANAGER->addImage("Gem2", "Resources/Images/Boss/Dizzy/Dizzy_Gems_2.bmp",
-		28, 28, true, RGB(255, 0, 255));
-	_rndGenImg[3] = IMAGEMANAGER->addImage("Gem3", "Resources/Images/Boss/Dizzy/Dizzy_Gems_3.bmp",
-		20, 28, true, RGB(255, 0, 255));
-	_rndGenImg[4] = IMAGEMANAGER->addImage("Gem4", "Resources/Images/Boss/Dizzy/Dizzy_Gems_4.bmp",
-		28, 30, true, RGB(255, 0, 255));*/
-
 
 	_gemImg[128] = {};
 	_rndGemImg = -1;
@@ -112,6 +108,9 @@ HRESULT Dizzy::init(void)
 	_gemTurnCount = 0.5f;
 
 	_aftetGemCount = 0;
+
+	_afterDeathTime = 0;
+	_afterDeathWorldTime = TIMEMANAGER->getWorldTime();
 
 	return S_OK;
 }
@@ -149,28 +148,56 @@ void Dizzy::update(void)
 	_hpBar->update();
 	_hpBar->setGauge(_hp, _maxHp);
 
+	if (_hp <= 0)
+	{
+		_hp = 0;
+
+		_state = EDizzyState::DEATH;
+
+		_curAni->AniStop();
+		_curImg = _deathImg;
+		_curAni = _deathAni;
+
+		if (!_isLeft)
+		{
+			_curAni->setPlayFrame(0, 5, false, false);
+		}
+
+		else
+		{
+			_curAni->setPlayFrame(6, 11, true, false);
+		}
+
+		_curAni->AniStart();
+	}
+
 	_meteor->update();
 	_gem->update();
 
-	_rcDizzy = RectMake(_x, _y, _curImg->getFrameWidth(), _curImg->getFrameHeight());
+	_rcDizzy = RectMakeCenter(_x, _y, _curImg->getFrameWidth(), _curImg->getFrameHeight());
 	_curAni->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);
 
-	if (_x < _player->getPlayerPosition().x)
+	if (_x < _player->getPlayerPosition().x && _state != EDizzyState::SPIN && 
+		_state != EDizzyState::DEATH)
 	{
 		_isLeft = false;
 	}
 
-	else
+	if (_x >= _player->getPlayerPosition().x && _state != EDizzyState::SPIN &&
+		_state != EDizzyState::DEATH)
 	{
 		_isLeft = true;
 	}
 
 	if (KEYMANAGER->isOnceKeyDown('B'))
 	{
-
 		_isWake = true;
 	}
 
+	if (KEYMANAGER->isOnceKeyDown('N'))
+	{
+		_hp -= 1000;
+	}
 
 	switch (_state)
 	{
@@ -190,26 +217,18 @@ void Dizzy::update(void)
 		{
 			_state = EDizzyState::IDLE;
 
-			/*_curAni->AniStop();
-			_curImg = _idleImg;
-			_curAni = _idleAni;
-			_curAni->setPlayFrame(_curImg->getFrameX(), _curImg->getMaxFrameX(), false, false);
-			_curAni->AniStart();*/
-
 			_curAni->AniStop();
 			_curImg = _spinImg;
 			_curAni = _spinAni;
 
 			if (!_isLeft)
 			{
-				_curAni->setPlayFrame(_curImg->getFrameX(), 11, false, false);
-
+				_curAni->setPlayFrame(_curImg->getFrameX(), 11, false, true);
 			}
 
 			else
 			{
-				_curAni->setPlayFrame(45, 56, true, false);
-
+				_curAni->setPlayFrame(44, 55, true, true);
 			}
 
 			_curAni->AniStart();
@@ -222,6 +241,11 @@ void Dizzy::update(void)
 		{
 			_state = EDizzyState::SPIN;
 
+			_spinFromX = _x;
+			_spinFromY = _y;
+			_spinToX = _player->getPlayerPosition().x;
+			_spinToY = _player->getPlayerPosition().y;
+
 			_curAni->AniStop();
 
 			if (!_isLeft)
@@ -231,7 +255,7 @@ void Dizzy::update(void)
 
 			else
 			{
-				_curAni->setPlayFrame(40, 44, true, true);
+				_curAni->setPlayFrame(39, 43, true, true);
 			}
 
 			_curAni->AniStart();
@@ -261,7 +285,7 @@ void Dizzy::update(void)
 
 				else
 				{
-					_curAni->setPlayFrame(45, 56, true, true);
+					_curAni->setPlayFrame(44, 55, true, true);
 				}
 
 				_curAni->AniStart();
@@ -270,7 +294,7 @@ void Dizzy::update(void)
 			else
 			{
 				_spinCount = 0;
-
+				_meteorIdx = 2;
 				_state = EDizzyState::GROGGY;
 
 				_curAni->AniStop();
@@ -284,9 +308,9 @@ void Dizzy::update(void)
 
 				else
 				{
-					_curAni->setPlayFrame(37, 39, true, false);
+					_curAni->setPlayFrame(36, 38, true, false);
 					_curAni->AniPause();
-					_curAni->setPlayFrame(29, 36, true, true);
+					_curAni->setPlayFrame(28, 35, true, true);
 				}
 
 				_curAni->AniResume();
@@ -312,12 +336,12 @@ void Dizzy::update(void)
 
 				if (!_isLeft)
 				{
-					_curAni->setPlayFrame(_curImg->getFrameX(), _curImg->getMaxFrameX(), false, false);
+					_curAni->setPlayFrame(0, 23, false, false);
 				}
 
 				else
 				{
-					_curAni->setPlayFrame(_curImg->getFrameX(), _curImg->getMaxFrameX(), true, false);
+					_curAni->setPlayFrame(24, 47, true, false);
 				}
 
 				_curAni->AniStart();
@@ -342,13 +366,13 @@ void Dizzy::update(void)
 
 			if (!_isLeft)
 			{
-				_curAni->setPlayFrame(0, 11, false, false);
+				_curAni->setPlayFrame(0, 11, false, true);
 
 			}
 
 			else
 			{
-				_curAni->setPlayFrame(45, 56, true, false);
+				_curAni->setPlayFrame(44, 55, true, true);
 
 			}
 
@@ -360,7 +384,17 @@ void Dizzy::update(void)
 		break;
 
 	case EDizzyState::DEATH:
+		if (_curAni->getNowPlayIdx() == 5 || _curAni->getNowPlayIdx() == 6)
+		{
+			//_curAni->AniStop();
+			_afterDeathTime++;
 
+			if (_afterDeathTime > 300)
+			{
+				cout << "죽었다" << endl;
+				_isDie = true;
+			}
+		}
 
 		break;
 	}
@@ -418,52 +452,47 @@ void Dizzy::update(void)
 
 void Dizzy::render(void)
 {
-	draw();
-	animation();
+	if (!_isDie)
+	{
+		draw();
 
-	_hpBar->render();
+		_hpBar->render();
 
-	_meteor->render();
-	_gem->render();
+		_meteor->render();
+		_gem->render();
 
-	char bossHpRate[128];
+		char bossHpRate[128];
 
-	sprintf_s(bossHpRate, "%d %s %d", static_cast<int>(_hp), "/", static_cast<int>(_maxHp));
+		sprintf_s(bossHpRate, "%d %s %d", static_cast<int>(_hp), "/", static_cast<int>(_maxHp));
 
-	FONTMANAGER->textOut(getMemDC(), CENTER_X - 10, CENTER_Y + 230, "배달의민족 을지로체",
-		20, 500, "디지", strlen("디지"), RGB(255, 255, 255));
-	FONTMANAGER->textOut(getMemDC(), CENTER_X - 30, CENTER_Y + 250, "배달의민족 을지로체",
-		15, 400, bossHpRate, strlen(bossHpRate), RGB(255, 255, 255));
+		FONTMANAGER->textOut(getMemDC(), CENTER_X - 10, CENTER_Y + 230, "배달의민족 을지로체",
+			20, 500, "디지", strlen("디지"), RGB(255, 255, 255));
+		FONTMANAGER->textOut(getMemDC(), CENTER_X - 30, CENTER_Y + 250, "배달의민족 을지로체",
+			15, 400, bossHpRate, strlen(bossHpRate), RGB(255, 255, 255));
 
-	IMAGEMANAGER->render("DizzyHpBarBorder", getMemDC(), CENTER_X - 210, CENTER_Y + 223);
+		IMAGEMANAGER->render("DizzyHpBarBorder", getMemDC(), CENTER_X - 210, CENTER_Y + 223);
+	}
 }
 
 void Dizzy::draw(void)
 {
-	DrawRectMake(getMemDC(), CAMERA->worldToCameraRect(_rcDizzy));
-
-	_curImg->aniRender(getMemDC(), CAMERA->worldToCameraX(_x), CAMERA->worldToCameraY(_y), _curAni);
-}
-
-void Dizzy::animation(void)
-{
+	//DrawRectMake(getMemDC(), CAMERA->worldToCameraRect(_rcDizzy));
 	
+	_curImg->aniRender(getMemDC(), CAMERA->worldToCameraX(_x - _curImg->getFrameWidth() / 2), 
+		CAMERA->worldToCameraY(_y - _curImg->getFrameHeight() / 2), _curAni);
 }
 
 void Dizzy::spin(void)
 {
-	float spinSpeed = 5.0f;
+	float spinSpeed = 8.0f;
 	
-	if (_isCollisionLeft) _x += spinSpeed;
-	if (_isCollisionRight) _x -= spinSpeed;
-	if (_isCollisionTop) _y += spinSpeed;
-	if (_isCollisionBottom) _y -= spinSpeed;
+	if (_isCollisionLeft) _x += spinSpeed * 10;
+	if (_isCollisionRight) _x -= spinSpeed * 10;
+	if (_isCollisionTop) _y += spinSpeed * 10;
+	if (_isCollisionBottom) _y -= spinSpeed * 10;
 
-	_spinStartX = _x;
-	_spinStartY = _y;
-
-	_x += cosf(getAngle(_spinStartX, _spinStartY, _player->getPlayerPosition().x, _player->getPlayerPosition().y)) * spinSpeed;
-	_y += -sinf(getAngle(_spinStartX, _spinStartY, _player->getPlayerPosition().x, _player->getPlayerPosition().y)) * spinSpeed;
+	_x += cosf(getAngle(_spinFromX, _spinFromY, _spinToX, _spinToY)) * spinSpeed;
+	_y += -sinf(getAngle(_spinFromX, _spinFromY, _spinToX, _spinToY)) * spinSpeed;
 }
 
 void Dizzy::meteorFire(void)
@@ -526,8 +555,8 @@ void Dizzy::gemFire(void)
 	{
 		for (int i = 0; i < rndGemMax; ++i)
 		{
-			_gem->fire((_rcDizzy.left + _rcDizzy.right) / 2,
-				(_rcDizzy.top + _rcDizzy.bottom) / 2,
+			_gem->fire(_x,
+				_y,
 				DEGREE_RADIAN(i * RND->getFromIntTo(15, 30)), RND->getFromFloatTo(5.0f, 6.0f));
 		}
 
@@ -557,6 +586,20 @@ bool Dizzy::turnCountFire2(void)
 		_turnCount2 = TIMEMANAGER->getWorldTime();
 
 		_gemTurnCount = 0.5f;
+
+		return true;
+	}
+
+	return false;
+}
+
+bool Dizzy::afterDeathTime(void)
+{
+	if (_afterDeathTime + _afterDeathWorldTime <= TIMEMANAGER->getWorldTime())
+	{
+		_afterDeathWorldTime = TIMEMANAGER->getWorldTime();
+
+		_afterDeathTime = 5.5f;
 
 		return true;
 	}

@@ -1,27 +1,13 @@
 #pragma once
 #include "Enemy.h"
+#include "../Animation/Animation.h"
+#include "../UI/ProgressBar.h"
 
 class Player;
-
-//enum class EShadeclawState
-//{
-//	IDLE,
-//	MOVE,
-//	ATTACK,
-//	DIE
-//};
-
 class Shadeclaw : public Enemy
 {
 private:
-	//EShadeclawState _state;
-
-	float _speed;
-
 	Player* _player;
-
-	float _patrolX;
-	float _patrolY;
 
 public:
 	HRESULT init(POINT position);
@@ -36,9 +22,6 @@ public:
 	void draw(void) override;
 
 	void setPlayerMemoryAddress(Player* player) { _player = player; }
-
-	//EShadeclawState getEState(void) { return _state; }
-	//void setEState(EShadeclawState state) { _state = state; }
 
 	Shadeclaw() {}
 	~Shadeclaw() {}
