@@ -38,6 +38,8 @@ HRESULT MineScene::init(void)
 	_em->spawnSteelSlug();
 	_em->spawnFlameImp();
 
+	SOUNDMANAGER->play("Candy_Mines_Final2", 0.3f);
+
 	return S_OK;
 }
 
@@ -55,6 +57,7 @@ void MineScene::release(void)
 
 void MineScene::update(void)
 {
+	SOUNDMANAGER->update();
 	_player->update();
 	_inven->update();
 	CAMERA->setPosition(_player->getPlayerPosition());
@@ -110,6 +113,7 @@ void MineScene::update(void)
 
 	if (KEYMANAGER->isOnceKeyDown(VK_F1))
 	{
+		SOUNDMANAGER->stop("Candy_Mines_Final2");
 		SCENEMANAGER->changeScene("Dizzy");
 	}
 }

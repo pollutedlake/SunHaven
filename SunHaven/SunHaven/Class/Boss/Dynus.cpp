@@ -670,6 +670,7 @@ void Dynus::update(void)
 
 	if (KEYMANAGER->isOnceKeyDown('V'))
 	{
+		SOUNDMANAGER->play("dynus_battle_v7", 0.3f);
 		_state = EDynusState::SPELL;
 		_curAni->AniStop();
 		_curImg = _spellImg;

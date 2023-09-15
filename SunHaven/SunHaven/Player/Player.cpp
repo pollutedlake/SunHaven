@@ -828,6 +828,7 @@ POINT Player::UseTool(ObjectManager* object, POINT point)
 				&& _toolAnim->getNowPlayIdx() >= 0)
 			{
 				// SD : 钱海绰 家府
+				SOUNDMANAGER->play("ScytheCuttingCrops1", 1.0f);
 				object->getObjectList()[i]->setHP(1);
 				return object->getObjectList()[i]->getTilePos();
 			}
@@ -842,6 +843,7 @@ POINT Player::UseTool(ObjectManager* object, POINT point)
 				&& getDistance(_cx, _cy, point.x, point.y) < OBJECT_RANGE)
 			{
 				// SD : 唱公 海绰 家府
+				SOUNDMANAGER->play("TreeHit1", 1.0f);
 				object->getObjectList()[i]->setHP(10, _x);
 				return object->getObjectList()[i]->getTilePos();
 			}
@@ -856,6 +858,7 @@ POINT Player::UseTool(ObjectManager* object, POINT point)
 				&& _toolAnim->getNowPlayIdx() >= 0)
 			{
 				// SD : 倒某绰 家府
+				SOUNDMANAGER->play("RockHit1", 1.0f);
 				object->getObjectList()[i]->setHP(5);
 				return object->getObjectList()[i]->getTilePos();
 			}

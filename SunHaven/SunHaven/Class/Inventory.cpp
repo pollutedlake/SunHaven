@@ -130,10 +130,7 @@ void Inventory::release(void)
 
 void Inventory::update(void)
 {
-	if (KEYMANAGER->isOnceKeyDown('O'))
-	{
-		getItem("2-0");
-	}
+	
 	
 	
 
@@ -181,7 +178,7 @@ void Inventory::getItem(string index)
 			if (_vInvenList[i]._draw && _vInvenList[i]._category == index && _vInvenList[i]._currentStack < 255)
 			{
 				_vInvenList[i]._currentStack += 1;
-
+				SOUNDMANAGER->play("E_getItem_Sound1", 1.0f);
 				break;
 			}
 			else if (!_vInvenList[i]._draw)
@@ -191,6 +188,7 @@ void Inventory::getItem(string index)
 				_vInvenList[i]._draw = true;
 
 				_vInvenList[i]._currentStack + 1;
+				SOUNDMANAGER->play("E_getItem_Sound1", 1.0f);
 
 				_lastItemTime = GetTickCount64();
 				break;
@@ -202,6 +200,7 @@ void Inventory::getItem(string index)
 			_vInvenList[i]._category = index;
 
 			_vInvenList[i]._draw = true;
+			SOUNDMANAGER->play("E_getItem_Sound1", 1.0f);
 
 			_lastItemTime = GetTickCount64();
 

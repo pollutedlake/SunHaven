@@ -17,7 +17,7 @@ HRESULT DizzyScene::init(void)
 	CAMERA->setLimitBottom(1512 - WINSIZE_Y / 2);
 
 	wsprintf(_text, "DizzyScene");
-
+	
 	return S_OK;
 }
 

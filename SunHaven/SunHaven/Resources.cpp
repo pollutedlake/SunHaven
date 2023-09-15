@@ -165,6 +165,9 @@ HRESULT Resources::init(void)
 	//	true, RGB(255, 0, 255));	// 다이너스 점프 플랫폼
 
 	// Sound
+	SOUNDMANAGER->addSound("dynus_battle_v7", "Resources/Sound/dynus_battle_v7.wav", true, true);
+
+
 
 	// ====================DizzyScene====================
 	// Image
@@ -195,6 +198,8 @@ HRESULT Resources::init(void)
 
 
 	// Sound
+	
+
 
 	// ====================MineScene====================
 	// Image
@@ -203,7 +208,8 @@ HRESULT Resources::init(void)
 		4, 1,
 		true, RGB(255, 0, 255));	// 적 파이어볼
 
-	// Sound
+	// Sound 
+	SOUNDMANAGER->addSound("Candy_Mines_Final2", "Resources/Sound/Candy_Mines_Final2.wav", true, true);
 
 
 	// ====================FarmScene====================
@@ -212,7 +218,9 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addImage("젖은 경작지", "Resources/Images/Object/Farm_wetdirt.bmp", 36, 36, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("HitEffect", "Resources/Images/Player/HitEffect.bmp", 288, 48, true, RGB(255, 0, 255));
 
-	// Sound
+	// Sound 
+	SOUNDMANAGER->addSound("Player_Farm_Var1_Final1", "Resources/Sound/Player_Farm_Var1_Final1.wav", true, true);
+
 
 	// ====================ShopScene====================
 	
@@ -307,6 +315,10 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addImage("UI_icon_coin", "Resources/Images/Shop/UI_icon_coin.bmp", 10, 9, true, RGB(255, 0, 255));
 
 	// Sound
+	SOUNDMANAGER->addSound("E_getItem_Sound1", "Resources/Sound/E_getItem_Sound1.wav", false, false);
+	SOUNDMANAGER->addSound("ScytheCuttingCrops1", "Resources/Sound/ScytheCuttingCrops1.wav", false, false);
+	SOUNDMANAGER->addSound("TreeHit1", "Resources/Sound/TreeHit1.wav", false, false);
+	SOUNDMANAGER->addSound("RockHit1", "Resources/Sound/RockHit1.wav", false, false);
 
 	// ====================
 	// Image
@@ -392,8 +404,14 @@ HRESULT Resources::init(void)
 		0, 0,
 		1, 1,
 		false, NULL, RotateNoneFlipNone);
-	// Sound
+	// Sound 
 	SOUNDMANAGER->addSound("E_TextScroll3", "Resources/Sound/E_TextScroll3.wav", false, false);
+	SOUNDMANAGER->addSound("인트로 린하우스", "Resources/Sound/인트로 린하우스.wav", true, true);
+	SOUNDMANAGER->addSound("인트로 기차안 브금", "Resources/Sound/인트로 기차안 브금.wav", true, true);
+	SOUNDMANAGER->addSound("SceneTransition1", "Resources/Sound/SceneTransition1.wav", false, false);
+	SOUNDMANAGER->addSound("E_인트로 대장장이", "Resources/Sound/E_인트로 대장장이.wav", false, false);
+	
+
 
 	return S_OK;
 }
