@@ -15,7 +15,9 @@ struct tagBullet
 	float angle;
 	float speed;
 	bool fire;
+	bool isUpDown;
 	bool isLeft;
+	bool isUp;
 };
 
 // 다이너스 탄알
@@ -166,10 +168,10 @@ private:
 	float _range;
 	float _bulletMax;
 
-	bool _isLeft;
-
 	int _currentFrameX;
 	int _currentFrameY;
+
+	bool _isUpDown;
 
 	float _worldTimeCount;
 
@@ -182,6 +184,7 @@ public:
 	void render(void);
 
 	void fire(float x, float y, bool isLeft);
+	void fireUpDown(float x, float y, bool isUp);
 	void draw(void);
 	void move(float x, float y);
 	void RemoveBullet(int arrNum);

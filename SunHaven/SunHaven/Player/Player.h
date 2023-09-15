@@ -16,7 +16,8 @@ enum class eTools
 	HOE,
 	AXE,
 	PICKAXE,
-	FISHINGLOD
+	FISHINGLOD,
+	SWORD
 };
 
 struct tagPlayerState
@@ -25,6 +26,8 @@ struct tagPlayerState
 	float playerSpeed;
 	int HP;
 	int MP;
+	int MaxHP;
+	int MaxMP;
 	float HPRecoveryPerSec;
 	float MPRecoveryPerSec;
 	int gold;
@@ -49,6 +52,15 @@ private:
 	SkillManager* _skill;
 	Fireball* _fireBall;
 	eTools _eTools;
+
+	GPImage* _dashSlash;
+	POINT _currentPoint = { (int)_cx,(int)_cy };
+	RECT _dashSlashRC;
+	RECT _dashSlashCollisionRC = {0,0,0,0};
+	int _dashSlashCount = 0;
+	bool _isDashAttack = false;
+
+	float MPRecoverySec;
 
 private:
 	GImage* _playerImage;
@@ -135,6 +147,8 @@ private:
 	bool _isCollisionBottom;
 
 	bool _isLeft;
+	bool _isUpDown;
+	bool _isUp;
 
 	bool _isFishing;
 	bool _isSuccessFishing;
@@ -146,7 +160,7 @@ private:
 
 	bool _isLoop;
 
-	int cursormovespeed = 3;
+	int cursormovespeed = 2;
 
 	float _jump;
 	bool _isJump;
@@ -159,7 +173,10 @@ public:
 
 	void MouseOver(ObjectManager* object, POINT point);
 
-	void UseTool(ObjectManager* object, POINT point);
+	//void UseTool(ObjectManager* object, POINT point);
+	//bool UseTool(ObjectManager* object, POINT point);
+	POINT UseTool(ObjectManager* object, POINT point);
+
 
 	inline void UseToolAnim(bool stayKeydown)
 	{
@@ -171,6 +188,9 @@ public:
 	void getFishItem(bool successFishing, Inventory* inven, string index);
 	void UseSword();
 	void UseCrossBow();
+
+	void RecureHP();
+	void RecureMP();
 
 	void ObjectCollision(ObjectManager* object);
 
@@ -350,12 +370,18 @@ public:
 
 	RECT getPlayerRC() { return _playerRC; }
 	RECT getPlayertoCameraRect(void) { return _playertoCameraRC; }
+
+	RECT getDashSlashCollisionRC() { return _dashSlashCollisionRC; }
+	
 	eTools getToolType() { return _eTools; }
 	bool getIsSuccessFishing() { return _isSuccessFishing; }
 
 	RECT getSwordSlashRC() { return _swordSlashRC; }
 
-	
+	inline int getHP() { return _playerState.HP; }
+	inline int getMaxHP() { return _playerState.MaxHP; }
+	inline int getMP() { return _playerState.MP; }
+	inline int getMaxMP() { return _playerState.MaxMP; }
 
 	Player() {}
 	~Player() {}

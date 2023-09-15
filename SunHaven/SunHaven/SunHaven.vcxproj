@@ -160,6 +160,7 @@
     <ClCompile Include="Class\Skill\FishingSkill.cpp" />
     <ClCompile Include="Class\Skill\MiningSkill.cpp" />
     <ClCompile Include="Class\NPC\Lynn.cpp" />
+    <ClCompile Include="Class\Object\Dirt.cpp" />
     <ClCompile Include="Player\Fishing.cpp" />
     <ClCompile Include="Manager\DataManager.cpp" />
     <ClCompile Include="Class\Boss\Dizzy.cpp" />
@@ -230,6 +231,7 @@
     <ClInclude Include="Class\CraftingTable.h" />
     <ClInclude Include="Class\Data\JsonSaveLoader.h" />
     <ClInclude Include="Class\Data\EnemyData.h" />
+    <ClInclude Include="Class\Object\Dirt.h" />
     <ClInclude Include="Player\Fishing.h" />
     <ClInclude Include="Manager\DataManager.h" />
     <ClInclude Include="Class\Boss\Dizzy.h" />

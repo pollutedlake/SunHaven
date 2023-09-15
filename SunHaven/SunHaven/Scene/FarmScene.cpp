@@ -69,16 +69,20 @@ void FarmScene::update(void)
 
 		_player->ObjectCollision(_om);
 
-		if(KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
+	if(KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
+	{
+		if (!SamePoint(_player->UseTool(_om, _ptMouse),
+			PointMake(NULL,NULL)))
 		{
-			_player->UseTool(_om, _ptMouse);
-			_inven->itemMove();
-			_inven->invenXButton();
+			cout << "asd" << endl;
 		}
-		if (KEYMANAGER->isOnceKeyUp(VK_LBUTTON))
-		{
-			_inven->putItem();
-		}
+		_inven->itemMove();
+		_inven->invenXButton();
+	}
+	if (KEYMANAGER->isOnceKeyUp(VK_LBUTTON))
+	{
+		_inven->putItem();
+	}
 
 		_player->UseToolAnim(KEYMANAGER->isStayKeyDown(VK_LBUTTON));
 		
@@ -146,7 +150,6 @@ void FarmScene::update(void)
 	if (KEYMANAGER->isOnceKeyDown(VK_F1))
 	{
 		SCENEMANAGER->changeScene("Shop");
-		//DATAMANAGER->setPlayer(*_player);
 	}
 }
 

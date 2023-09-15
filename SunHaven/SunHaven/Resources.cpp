@@ -3,6 +3,9 @@
 
 HRESULT Resources::init(void)
 {
+	IMAGEMANAGER->addGPFrameImage("대시어택",
+		"Resources/Images/Player/dash_slash.png",
+		0, 0, 7, 2, false, NULL, RotateNoneFlipNone);
 	// ====================TitleScene====================
 	// Image
 	IMAGEMANAGER->addGPFrameImage("TitleLogo", "Resources/Images/UI/TitleLogo.png",

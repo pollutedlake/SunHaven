@@ -37,8 +37,10 @@ HRESULT Player::init(float x, float y, string collisionMapKey)
 		_playerMoveAnim->getFrameHeight());
 
 
-
-
+	_dashSlash = IMAGEMANAGER->findGPImage("대시어택");
+	_dashSlashRC = RectMakeCenter(_cx+5, _cy,
+		_dashSlash->getFrameWidth(),
+		_dashSlash->getFrameHeight());
 
 	_isCollisionLeft = _isCollisionRight =
 		_isCollisionTop =_isCollisionBottom = false;
@@ -87,27 +89,8 @@ HRESULT Player::init(float x, float y, string collisionMapKey)
 		_swordSwingAnim->getFrameWidth(),
 		_swordSwingAnim->getFrameHeight());
 
-	_swordSwingAnim->setFPS(10);
+	_swordSwingAnim->setFPS(18);
 	_swordSwingAnim->setPlayFrame(0, 5, false, false);
-
-	//_swordSlashAnim = new Animation;
-	//_swordSlashAnim->init(_swordSlash->getWidth(),
-	//	_swordSlash->getHeight(),
-	//	46, 66);
-
-	//_swordSlashUpDownAnim = new Animation;
-	//_swordSlashUpDownAnim->init(_swordSlash->getWidth(),
-	//	_swordSlash->getHeight(),
-	//	66, 45);
-
-	//_swordAnim = _swordSlashAnim;
-
-	//_swordAnim->setFPS(10);
-	//_swordAnim->setPlayFrame(0, 4, false, false);
-
-	//_swordSlashRC = RectMakeCenter(_x, _y,
-	//	_swordAnim->getFrameWidth(),
-	//	_swordAnim->getFrameHeight());
 
 	
 
@@ -242,16 +225,20 @@ HRESULT Player::init(float x, float y, string collisionMapKey)
 
 	//=============================================//
 
-
+	MPRecoverySec = 0.0f;
 	_jump = 5.5f;
 	_isJump = false;
 	_isLeft = false;
+	_isUp = false;
+	_isUpDown = false;
 	_isFishing = false;
 	_isSuccessFishing = false;
 
 	_playerState.playerName=INIDATAMANAGER->loadDataString("tempINIFile", "commonState", "playerName");
 	_playerState.HP = INIDATAMANAGER->loadDataInteger("tempINIFile", "commonState", "HP");
 	_playerState.MP = INIDATAMANAGER->loadDataInteger("tempINIFile", "commonState", "MP");
+	_playerState.MaxHP = INIDATAMANAGER->loadDataInteger("tempINIFile", "commonState", "MaxHP");
+	_playerState.MaxMP = INIDATAMANAGER->loadDataInteger("tempINIFile", "commonState", "MaxMP");
 	_playerState.gold = INIDATAMANAGER->loadDataInteger("tempINIFile", "commonState", "Gold");
 	
 	_playerState.HPRecoveryPerSec = (float)_playerState.HP / 1500;
@@ -318,10 +305,9 @@ void Player::update(void)
 		if (KEYMANAGER->isStayKeyDown('A'))
 		{
 			_isLeft = true;
-			_x -= _moveSpeed;/*
-			_swordSlash = IMAGEMANAGER->findImage("칼휘두르기");
-			_swordAnim = _swordSlashAnim;
-			_swordAnim->setPlayFrame(0, 4, false, false);*/
+			_isUp = false;
+			_isUpDown = false;
+			_x -= _moveSpeed;
 			_swordSwingAnim->setPlayFrame(18, 23, false, false);
 
 			for (int i = 0; i < 4; i++)
@@ -332,11 +318,12 @@ void Player::update(void)
 				scytheSwingAnimArr[i] = i + 15;
 			}
 
-			if (KEYMANAGER->isOnceKeyDown('Z'))
+			if (KEYMANAGER->isOnceKeyDown('Z') && !_isDashAttack)
 			{
-				_x -= 220;
-
-				_swordSlashAnim->AniStart();
+				_currentPoint = PointMake(_cx, _cy);
+				_isDashAttack = true;
+				_dashSlash->setFrameX(0);
+				_dashSlash->setFrameY(0);
 			}
 
 			if (stairCol == RGB(2, 62, 156))
@@ -348,11 +335,9 @@ void Player::update(void)
 		else if (KEYMANAGER->isStayKeyDown('D'))
 		{
 			_isLeft = false;
-			_x += _moveSpeed;/*
-			_swordSlash = IMAGEMANAGER->findImage("칼휘두르기");
-			_swordAnim = _swordSlashAnim;
-			int arr[5] = { 9,8,7,6,5 };
-			_swordAnim->setPlayFrame(arr, 5, false);*/
+			_isUp = false;
+			_isUpDown = false;
+			_x += _moveSpeed;
 
 			for (int i = 0; i < 4; i++)
 			{
@@ -364,10 +349,12 @@ void Player::update(void)
 
 			_swordSwingAnim->setPlayFrame(6, 11, false, false);
 
-			if (KEYMANAGER->isOnceKeyDown('Z'))
+			if (KEYMANAGER->isOnceKeyDown('Z') && !_isDashAttack)
 			{
-				_x += 220;
-				_swordSlashAnim->AniStart();
+				_currentPoint = PointMake(_cx, _cy);
+				_isDashAttack = true;
+				_dashSlash->setFrameX(0);
+				_dashSlash->setFrameY(1);
 			}
 
 			if (stairCol == RGB(2, 62, 156))
@@ -378,10 +365,9 @@ void Player::update(void)
 		}
 		else if (KEYMANAGER->isStayKeyDown('W'))
 		{
-			_y -= _moveSpeed;/*
-			_swordSlash = IMAGEMANAGER->findImage("칼 위아래 휘두르기");
-			_swordSlashUpDownAnim->setPlayFrame(0, 4, false, false);
-			_swordAnim = _swordSlashUpDownAnim;*/
+			_isUpDown = true;
+			_isUp = true;
+			_y -= _moveSpeed;
 
 			_swordSwingAnim->setPlayFrame(12, 17, false, false);
 
@@ -401,11 +387,9 @@ void Player::update(void)
 		}
 		else if (KEYMANAGER->isStayKeyDown('S'))
 		{
-			_y += _moveSpeed;/*
-			_swordSlash = IMAGEMANAGER->findImage("칼 위아래 휘두르기");
-			int arr[5] = { 9,8,7,6,5 };
-			_swordSlashUpDownAnim->setPlayFrame(arr, 5, false);
-			_swordAnim = _swordSlashUpDownAnim;*/
+			_isUpDown = true;
+			_isUp = false;
+			_y += _moveSpeed;
 			_swordSwingAnim->setPlayFrame(0, 5, false, false);
 
 			for (int i = 0; i < 4; i++)
@@ -436,6 +420,39 @@ void Player::update(void)
 	_scytheSwingAnim->setPlayFrame(scytheSwingAnimArr, 4, _isLoop);
 
 
+	if (_isDashAttack)
+	{
+		_dashSlashCount++;
+
+		if (_dashSlashCount % 3 == 0)
+		{
+			_dashSlash->setFrameX(_dashSlash->getFrameX() + 1);
+			if (_dashSlash->getFrameX() == _dashSlash->getMaxFrameX() - 4)
+			{
+				if (_dashSlash->getFrameY() == 0) _x -= 220;
+				else _x += 220;
+
+				_dashSlashCollisionRC =
+					RectMake(_currentPoint.x, _currentPoint.y - (_playerMoveAnim->getFrameHeight() / 2),
+						220, _playerMoveAnim->getFrameHeight());
+			}
+			if (_dashSlash->getFrameX() >= _dashSlash->getMaxFrameX())
+			{
+				_swordSwingAnim->AniStart();
+				_isDashAttack = false;
+			}
+
+			_dashSlashCount = 0;
+		}
+		_playerState.MP -= 5;
+	}
+
+	_dashSlashRC = RectMakeCenter(_cx - 5, _cy,
+		_dashSlash->getFrameWidth(),
+		_dashSlash->getFrameHeight());
+	
+	
+
 
 	if (KEYMANAGER->isOnceKeyDown(VK_SPACE))
 	{
@@ -460,7 +477,6 @@ void Player::update(void)
 
 	if (KEYMANAGER->isOnceKeyDown('X'))
 	{
-		//_swordAnim->AniStart();
 		_swordSwingAnim->AniStart();
 	}
 
@@ -523,14 +539,40 @@ void Player::update(void)
 	{
 		_eTools = eTools::FISHINGLOD;
 	}
-
-
-	if (KEYMANAGER->isOnceKeyDown('Y'))
+	if (KEYMANAGER->isOnceKeyDown('6'))
 	{
-		_fireBall->fire(_x, _y, _isLeft);
+		_eTools = eTools::SWORD;
+	}
+
+
+	if (KEYMANAGER->isOnceKeyDown('Y') && _playerState.MP >= 3)
+	{
+		if (_isUpDown)
+		{
+			_fireBall->fireUpDown(_x, _y, _isUp);
+		}
+		else
+		{
+			_fireBall->fire(_x, _y, _isLeft);
+		}
+
+		_playerState.MP -= 3;
 	}
 	_fireBall->update(WINSIZE_X / 2 + _x - _cx, WINSIZE_Y / 2 + _y - _cy);
+	
+	
 
+	MPRecoverySec += TIMEMANAGER->getElapsedTime();
+
+	if (MPRecoverySec > 1.0f)
+	{
+		_playerState.MP += 1;
+		if (_playerState.MP >= _playerState.MaxMP)
+			_playerState.MP = _playerState.MaxMP;
+		MPRecoverySec = 0.0f;
+	}
+
+	cout << _playerState.MP << " / " << _playerState.MaxMP << endl;
 
 
 	if (KEYMANAGER->isStayKeyDown('U'))
@@ -575,8 +617,6 @@ void Player::update(void)
 
 void Player::render(void)
 {
-
-
 	_fireBall->render();
 
 	if (KEYMANAGER->isStayKeyDown('U'))
@@ -585,26 +625,68 @@ void Player::render(void)
 			offsetX, 0);
 	}
 
-	_playerImage->aniRender(getMemDC(),
-		_playertoCameraRC.left, _playertoCameraRC.top, _playerMoveAnim);
-
-	if(_swordSwingAnim->isPlay())
+	if (_isUp)
 	{
-		_swordSlash->aniRender(getMemDC(), _swordSwingRC.left, _swordSwingRC.top,
-			_swordSwingAnim);
+		if (_swordSwingAnim->isPlay())
+		{
+			_swordSlash->aniRender(getMemDC(), _swordSwingRC.left, _swordSwingRC.top,
+				_swordSwingAnim);
+		}
+
+		if (_isFishing)
+		{
+			_fishingLod->aniRender(getMemDC(), _fishingLodRC.left, _fishingLodRC.top,
+				_fishingLodAnim);
+		}
+
+		if (_toolAnim->isPlay())
+		{
+			_toolImage->aniRender(getMemDC(), _toolAnimRC.left, _toolAnimRC.top,
+				_toolAnim);
+		}
+
+		if (!_isDashAttack)
+		{
+			_playerImage->aniRender(getMemDC(),
+				_playertoCameraRC.left, _playertoCameraRC.top, _playerMoveAnim);
+		}
+	}
+	else
+	{
+		if(!_isDashAttack)
+		{
+			_playerImage->aniRender(getMemDC(),
+				_playertoCameraRC.left, _playertoCameraRC.top, _playerMoveAnim);
+		}
+		
+		if (_swordSwingAnim->isPlay())
+		{
+			_swordSlash->aniRender(getMemDC(), _swordSwingRC.left, _swordSwingRC.top,
+				_swordSwingAnim);
+		}
+
+		if (_isFishing)
+		{
+			_fishingLod->aniRender(getMemDC(), _fishingLodRC.left, _fishingLodRC.top,
+				_fishingLodAnim);
+		}
+
+		if (_toolAnim->isPlay())
+		{
+			_toolImage->aniRender(getMemDC(), _toolAnimRC.left, _toolAnimRC.top,
+				_toolAnim);
+		}
 	}
 
-	if (_isFishing)
+	if (_isDashAttack)
 	{
-		_fishingLod->aniRender(getMemDC(), _fishingLodRC.left, _fishingLodRC.top,
-			_fishingLodAnim);
+		_dashSlash->GPFrameRender(getMemDC(),
+			_dashSlashRC.left, _dashSlashRC.top,
+			1.0f, 1.0f,
+			_dashSlash->getFrameX(), _dashSlash->getFrameY(),
+			InterpolationModeNearestNeighbor);
 	}
 
-	if (_toolAnim->isPlay())
-	{
-		_toolImage->aniRender(getMemDC(), _toolAnimRC.left, _toolAnimRC.top,
-			_toolAnim);
-	}
 
 	
 	if (_isFishing)
@@ -645,7 +727,7 @@ void Player::MouseOver(ObjectManager* object, POINT point)
 	}
 }
 
-void Player::UseTool(ObjectManager* object, POINT point)
+POINT Player::UseTool(ObjectManager* object, POINT point)
 {
 	RECT temp;
 	float updown = point.y - _cy;
@@ -747,6 +829,7 @@ void Player::UseTool(ObjectManager* object, POINT point)
 			{
 				// SD : 풀베는 소리
 				object->getObjectList()[i]->setHP(1);
+				return object->getObjectList()[i]->getTilePos();
 			}
 		}
 
@@ -760,6 +843,7 @@ void Player::UseTool(ObjectManager* object, POINT point)
 			{
 				// SD : 나무 베는 소리
 				object->getObjectList()[i]->setHP(10, _x);
+				return object->getObjectList()[i]->getTilePos();
 			}
 		}
 
@@ -773,9 +857,12 @@ void Player::UseTool(ObjectManager* object, POINT point)
 			{
 				// SD : 돌캐는 소리
 				object->getObjectList()[i]->setHP(5);
+				return object->getObjectList()[i]->getTilePos();
 			}
 		}
 	}
+
+	return { NULL,NULL };
 }
 
 void Player::UseFishingLod(POINT point)
@@ -879,7 +966,7 @@ void Player::Fishing()
 		}
 
 		_fishingLodAnim->AniResume();
-		cursormovespeed = 3;
+		cursormovespeed = 2;
 		_isFishing = false;
 	}
 }
@@ -902,6 +989,18 @@ void Player::UseSword()
 void Player::UseCrossBow()
 {
 
+}
+
+
+
+void Player::RecureHP()
+{
+	
+}
+
+void Player::RecureMP()
+{
+	
 }
 
 void Player::ObjectCollision(ObjectManager* object)

@@ -9,7 +9,9 @@ enum LivingObjectType
 	TREE1,
 	TREE2,
 	ROCK1,
-	ROCK2
+	ROCK2,
+	DIRT1,
+	DIRT2
 };
 
 class Object : public GameNode

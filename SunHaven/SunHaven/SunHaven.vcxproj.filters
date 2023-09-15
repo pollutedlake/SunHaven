@@ -95,6 +95,10 @@
     <ClCompile Include="Class\Object\Tree.cpp" />
     <ClCompile Include="Class\Skill\SkillManager.cpp" />
     <ClCompile Include="WinMain.cpp" />
+<<<<<<< HEAD
+=======
+    <ClCompile Include="Class\Object\Dirt.cpp" />
+>>>>>>> MYS
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Class\UI\Buttons.h" />
@@ -168,6 +172,10 @@
     <ClInclude Include="Class\Object\Tree.h" />
     <ClInclude Include="Class\Skill\SkillManager.h" />
     <ClInclude Include="Class\UI\UI.h" />
+<<<<<<< HEAD
+=======
+    <ClInclude Include="Class\Object\Dirt.h" />
+>>>>>>> MYS
   </ItemGroup>
   <ItemGroup>
     <Library Include="lib\FMOD\fmodex_vc.lib" />
@@ -176,6 +184,12 @@
     <Image Include="DynusMapCollision.bmp" />
     <Image Include="FarmMap.bmp" />
     <Image Include="FarmMapCollision.bmp" />
+<<<<<<< HEAD
+=======
+    <Image Include="MineMap.bmp" />
+    <Image Include="MineMapCollision.bmp" />
+    <Image Include="Mines.bmp" />
+>>>>>>> MYS
     <Image Include="Shop_Bg_Collision.bmp" />
   </ItemGroup>
   <ItemGroup>
