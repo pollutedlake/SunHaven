@@ -7,6 +7,7 @@ struct Slot
 	RECT _rc;
 	bool _draw;
 	string _category;
+	int _currentStack;
 	
 
 };

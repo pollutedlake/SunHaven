@@ -38,7 +38,7 @@ HRESULT Inventory::init(void)
 			invenSlot._rc = RectMake(_itemListBG.left + j * 42 + 7, _itemListBG.top + 10 + i * 42, 32, 32);
 			invenSlot._draw = false;
 			invenSlot._category = "";
-		
+			invenSlot._currentStack = 1;
 		
 			_vInvenList.push_back(invenSlot);
 
@@ -58,6 +58,7 @@ HRESULT Inventory::init(void)
 				equipmentSlot._rc = RectMake(_playerBG.right - 97 + i * 55, _playerBG.top + 40 + j * 50, 32, 32);
 				equipmentSlot._draw = false;
 				equipmentSlot._category = "";
+				equipmentSlot._currentStack = 1;
 
 				_vEquipmentSlot.push_back(equipmentSlot);
 			}
@@ -68,6 +69,7 @@ HRESULT Inventory::init(void)
 					equipmentSlot._rc = RectMake(_playerBG.left + 13, _playerBG.bottom - 95, 32, 32);
 					equipmentSlot._draw = false;
 					equipmentSlot._category = "";
+					equipmentSlot._currentStack = 1;
 
 					_vEquipmentSlot.push_back(equipmentSlot);
 				}
@@ -77,6 +79,7 @@ HRESULT Inventory::init(void)
 					equipmentSlot._rc = RectMake(_playerBG.left + 60, _playerBG.bottom - 95, 32, 32);
 					equipmentSlot._draw = false;
 					equipmentSlot._category = "";
+					equipmentSlot._currentStack = 1;
 
 					_vEquipmentSlot.push_back(equipmentSlot);
 				}
@@ -86,6 +89,7 @@ HRESULT Inventory::init(void)
 					equipmentSlot._rc = RectMake(_playerBG.left + 13, _playerBG.bottom - 50, 32, 32);
 					equipmentSlot._draw = false;
 					equipmentSlot._category = "";
+					equipmentSlot._currentStack = 1;
 
 					_vEquipmentSlot.push_back(equipmentSlot);
 				}
@@ -95,6 +99,7 @@ HRESULT Inventory::init(void)
 					equipmentSlot._rc = RectMake(_playerBG.left + 60, _playerBG.bottom - 50, 32, 32);
 					equipmentSlot._draw = false;
 					equipmentSlot._category = "";
+					equipmentSlot._currentStack = 1;
 
 					_vEquipmentSlot.push_back(equipmentSlot);
 				}
@@ -142,22 +147,7 @@ void Inventory::update(void)
 		_seeInven = false;
 	}
 
-	/*if (KEYMANAGER->isOnceKeyDown(VK_RBUTTON))
-	{
-		for (int i = 0; i < _vEquipmentSlot.size(); i++)
-		{
-
-			if (!_vEquipmentSlot[i]._draw)
-			{
-				_vEquipmentSlot[i]._category = index;
-
-				_vEquipmentSlot[i]._draw = true;
-
-				return;
-			}
-
-		}
-	}*/
+	
 	
 }
 
@@ -186,7 +176,28 @@ void Inventory::getItem(string index)
 	for (int i = 0; i < _vInvenList.size(); i++)
 	{
 
-		if (!_vInvenList[i]._draw)
+		if (_vInvenList[i]._category[0] == '4' || _vInvenList[i]._category[0] == '5')
+		{
+			if (_vInvenList[i]._draw && _vInvenList[i]._category == index && _vInvenList[i]._currentStack < 255)
+			{
+				_vInvenList[i]._currentStack += 1;
+
+				break;
+			}
+			else if (!_vInvenList[i]._draw)
+			{
+				_vInvenList[i]._category = index;
+
+				_vInvenList[i]._draw = true;
+
+				_vInvenList[i]._currentStack + 1;
+
+				_lastItemTime = GetTickCount64();
+				break;
+			}
+			
+		}
+		else if (!_vInvenList[i]._draw)
 		{
 			_vInvenList[i]._category = index;
 
@@ -194,7 +205,7 @@ void Inventory::getItem(string index)
 
 			_lastItemTime = GetTickCount64();
 
-			return;
+			break;
 		}
 
 	}
@@ -210,6 +221,7 @@ void Inventory::itemMove()
 		int indexInven = -1;
 		int indexEqui = -1;
 		string temp = "";
+		int shuffleStack = 0;
 		for (int i = 0; i < _vInvenList.size(); i++)
 		{
 			if (PtInRect(&_vInvenList[i]._rc, _ptMouse))
@@ -223,7 +235,7 @@ void Inventory::itemMove()
 		//장비칸
 		for (int j = 0; j < _vEquipmentSlot.size() - 1; j++)
 		{
-			if (PtInRect(&_vEquipmentSlot[j]._rc, _ptMouse))
+			if (PtInRect(&_vEquipmentSlot[j]._rc, _ptMouse) )
 			{
 				indexEqui = j;
 				
@@ -239,9 +251,14 @@ void Inventory::itemMove()
 			{
 				if (_inInvenSlot)
 				{
+					
 					temp = _vInvenList[indexInven]._category;
 					_vInvenList[indexInven]._category = _vInvenList[_selectedItem]._category;
 					_vInvenList[_selectedItem]._category = temp;
+
+					shuffleStack = _vInvenList[indexInven]._currentStack;
+					_vInvenList[indexInven]._currentStack = _vInvenList[_selectedItem]._currentStack;
+					_vInvenList[_selectedItem]._currentStack = shuffleStack;
 				}	
 
 				if (_inEquipmentSlot)
@@ -249,6 +266,11 @@ void Inventory::itemMove()
 					temp = _vInvenList[indexInven]._category;
 					_vInvenList[indexInven]._category = _vEquipmentSlot[_selectedItem]._category;
 					_vEquipmentSlot[_selectedItem]._category = temp;
+
+					shuffleStack = _vInvenList[indexInven]._currentStack;
+					_vInvenList[indexInven]._currentStack = _vEquipmentSlot[_selectedItem]._currentStack;
+					_vEquipmentSlot[_selectedItem]._currentStack = shuffleStack;
+					
 				}
 
 			}
@@ -256,6 +278,11 @@ void Inventory::itemMove()
 			{
 				_selectedItem = indexInven;
 				_vInvenList[indexInven]._draw = false;
+
+				shuffleStack = _vInvenList[indexInven]._currentStack;
+				_vInvenList[indexInven]._currentStack = _vInvenList[_selectedItem]._currentStack;
+				_vInvenList[_selectedItem]._currentStack = shuffleStack;
+
 				_inInvenSlot = true;
 				_inEquipmentSlot = false;
 			}
@@ -267,11 +294,16 @@ void Inventory::itemMove()
 		{
 			if (_selectedItem != -1)
 			{
-				if (_inInvenSlot)
+				if (_inInvenSlot && _vInvenList[_selectedItem]._category[0] == '2' || _vInvenList[_selectedItem]._category[0] == '3')
 				{
 					temp = _vEquipmentSlot[indexEqui]._category;
 					_vEquipmentSlot[indexEqui]._category = _vInvenList[_selectedItem]._category;
-					_vInvenList[_selectedItem]._category = temp;
+					_vInvenList[_selectedItem]._category = temp;	
+
+					shuffleStack = _vEquipmentSlot[indexInven]._currentStack;
+					_vEquipmentSlot[indexInven]._currentStack = _vInvenList[_selectedItem]._currentStack;
+					_vInvenList[_selectedItem]._currentStack = shuffleStack;
+					
 				}
 
 				if (_inEquipmentSlot)
@@ -279,6 +311,11 @@ void Inventory::itemMove()
 					temp = _vEquipmentSlot[indexEqui]._category;
 					_vEquipmentSlot[indexEqui]._category = _vEquipmentSlot[_selectedItem]._category;
 					_vEquipmentSlot[_selectedItem]._category = temp;
+
+					shuffleStack = _vEquipmentSlot[indexInven]._currentStack;
+					_vEquipmentSlot[indexInven]._currentStack = _vEquipmentSlot[_selectedItem]._currentStack;
+					_vEquipmentSlot[_selectedItem]._currentStack = shuffleStack;
+
 				}
 
 			}
@@ -292,19 +329,39 @@ void Inventory::itemMove()
 
 		}
 
-
 		//완전삭제로 수정예정
-		if (PtInRect(&_trashButton, _ptMouse)&& _selectedItem != -1)
+		if (PtInRect(&_trashButton, _ptMouse) && _selectedItem != -1)
 		{
-			_vInvenList[_selectedItem]._draw = false;
-			_selectedItem = -1;
+			if (_inInvenSlot)
+			{
+				_vInvenList[_selectedItem]._draw = false;
+				_vInvenList[_selectedItem]._currentStack = 1;
+				_selectedItem = -1;
+			}
+
+			if (_inEquipmentSlot)
+			{
+				_vEquipmentSlot[_selectedItem]._draw = false;
+				_selectedItem = -1;
+			}
+
 		}
 
 		//판매로 수정예정
 		if (PtInRect(&_dropButton, _ptMouse) && _selectedItem != -1)
 		{
-			_vInvenList[_selectedItem]._draw = false;
-			_selectedItem = -1;
+			if (_inInvenSlot)
+			{
+				_vInvenList[_selectedItem]._draw = false;
+				_vInvenList[_selectedItem]._currentStack = 1;
+				_selectedItem = -1;
+			}
+
+			if (_inEquipmentSlot)
+			{
+				_vEquipmentSlot[_selectedItem]._draw = false;
+				_selectedItem = -1;
+			}
 		}
 
 	}
@@ -359,6 +416,7 @@ void Inventory::invenSlot()
 
 			if (_vInvenList[i * 8 + j]._draw)
 			{
+
 				switch (_vInvenList[i * 8 + j]._category[0])
 				{
 				case '0':
@@ -424,6 +482,9 @@ void Inventory::invenSlot()
 						IMAGEMANAGER->render("item_bg_common", getMemDC(), _vInvenList[i * 8 + j]._rc.left, _vInvenList[i * 8 + j]._rc.top);
 					}
 					IMAGEMANAGER->render(DATAMANAGER->getIngredientInfo(_index)->name.c_str(), getMemDC(), _vInvenList[i * 8 + j]._rc.left, _vInvenList[i * 8 + j]._rc.top);
+					char showStack[2000];
+					sprintf_s(showStack, "%d", (_vInvenList[i * 8 + j]._currentStack));
+					FONTMANAGER->textOut(getMemDC(), _vInvenList[i * 8 + j]._rc.left, _vInvenList[i * 8 + j]._rc.top, "배달의민족 을지로체", 15, 5, showStack, strlen(showStack), RGB(0, 0, 0));
 					break;
 
 				case '5':
@@ -432,6 +493,9 @@ void Inventory::invenSlot()
 					IMAGEMANAGER->render("item_bg_common", getMemDC(), _vInvenList[i * 8 + j]._rc.left, _vInvenList[i * 8 + j]._rc.top);
 					
 					IMAGEMANAGER->render(DATAMANAGER->getConsumableInfo(_index)->name.c_str(), getMemDC(), _vInvenList[i * 8 + j]._rc.left, _vInvenList[i * 8 + j]._rc.top);
+					char showStack2[2000];
+					sprintf_s(showStack2, "%d", (_vInvenList[i * 8 + j]._currentStack));
+					FONTMANAGER->textOut(getMemDC(), _vInvenList[i * 8 + j]._rc.left, _vInvenList[i * 8 + j]._rc.top, "배달의민족 을지로체", 15, 5, showStack2, strlen(showStack2), RGB(0, 0, 0));
 					break;
 
 				}
@@ -459,32 +523,7 @@ void Inventory::equipment_Slot()
 				// 인덱스가 5 부터 헬멧 / 상의 / 하의/ 장갑 
 				switch (_vEquipmentSlot[i * 5 + j]._category[0])
 				{
-				case '0':
-					_index = (int)_vEquipmentSlot[i * 5 + j]._category[2] - 48;
-					if (DATAMANAGER->getToolInfo(_index)->grade == "커먼")
-					{
-						IMAGEMANAGER->render("item_bg_common", getMemDC(), _vEquipmentSlot[i * 5 + j]._rc.left, _vEquipmentSlot[i * 5 + j]._rc.top);
-					}
-					else
-					{
-						IMAGEMANAGER->render("item_bg_rare", getMemDC(), _vEquipmentSlot[i * 5 + j]._rc.left, _vEquipmentSlot[i * 5 + j]._rc.top);
-					}
-					IMAGEMANAGER->render(DATAMANAGER->getToolInfo(_index)->name.c_str(), getMemDC(), _vEquipmentSlot[i * 5 + j]._rc.left, _vEquipmentSlot[i * 5 + j]._rc.top);
-					break;
-
-				case '1':
-					_index = (int)_vEquipmentSlot[i * 5 + j]._category[2] - 48;
-					if (DATAMANAGER->getWeaponInfo(_index)->grade == "커먼")
-					{
-						IMAGEMANAGER->render("item_bg_common", getMemDC(), _vEquipmentSlot[i * 5 + j]._rc.left, _vEquipmentSlot[i * 5 + j]._rc.top);
-					}
-					else
-					{
-						IMAGEMANAGER->render("item_bg_rare", getMemDC(), _vEquipmentSlot[i * 5 + j]._rc.left, _vEquipmentSlot[i * 5 + j]._rc.top);
-					}
-					IMAGEMANAGER->render(DATAMANAGER->getWeaponInfo(_index)->name.c_str(), getMemDC(), _vEquipmentSlot[i * 5 + j]._rc.left, _vEquipmentSlot[i * 5 + j]._rc.top);
-					break;
-
+				
 				case '2':
 					_index = (int)_vEquipmentSlot[i * 5 + j]._category[2] - 48;
 					if (DATAMANAGER->getArmorInfo(_index)->grade == "커먼")
@@ -510,27 +549,7 @@ void Inventory::equipment_Slot()
 					}
 					IMAGEMANAGER->render(DATAMANAGER->getAccessoryInfo(_index)->name.c_str(), getMemDC(), _vEquipmentSlot[i * 5 + j]._rc.left, _vEquipmentSlot[i * 5 + j]._rc.top);
 					break;
-
-				case '4':
-					_index = (int)_vEquipmentSlot[i * 5 + j]._category[2] - 48;
-					if (DATAMANAGER->getIngredientInfo(_index)->name[0] == '아')
-					{
-						IMAGEMANAGER->render("item_bg_rare", getMemDC(), _vEquipmentSlot[i * 5 + j]._rc.left, _vEquipmentSlot[i * 5 + j]._rc.top);
-					}
-					else
-					{
-						IMAGEMANAGER->render("item_bg_common", getMemDC(), _vEquipmentSlot[i * 5 + j]._rc.left, _vEquipmentSlot[i * 5 + j]._rc.top);
-					}
-					IMAGEMANAGER->render(DATAMANAGER->getIngredientInfo(_index)->name.c_str(), getMemDC(), _vEquipmentSlot[i * 5 + j]._rc.left, _vEquipmentSlot[i * 5 + j]._rc.top);
-					break;
-
-				case '5':
-					_index = (int)_vEquipmentSlot[i * 5 + j]._category[2] - 48;
-
-					IMAGEMANAGER->render("item_bg_common", getMemDC(), _vEquipmentSlot[i * 5 + j]._rc.left, _vEquipmentSlot[i * 5 + j]._rc.top);
-
-					IMAGEMANAGER->render(DATAMANAGER->getConsumableInfo(_index)->name.c_str(), getMemDC(), _vEquipmentSlot[i * 5 + j]._rc.left, _vEquipmentSlot[i * 5 + j]._rc.top);
-					break;
+				
 				}
 			}
 			else
@@ -589,6 +608,7 @@ void Inventory::moveItemRender()
 	{
 		if (_inInvenSlot)
 		{
+			
 			switch (_vInvenList[_selectedItem]._category[0])
 			{
 			case '0':
@@ -654,12 +674,18 @@ void Inventory::moveItemRender()
 					IMAGEMANAGER->render("item_bg_common", getMemDC(), _ptMouse.x - 16, _ptMouse.y - 16);
 				}
 				IMAGEMANAGER->render(DATAMANAGER->getIngredientInfo(_index)->name.c_str(), getMemDC(), _ptMouse.x - 16, _ptMouse.y - 16);
+				char showStack3[2000];
+				sprintf_s(showStack3, "%d", (_vInvenList[_selectedItem]._currentStack));
+				FONTMANAGER->textOut(getMemDC(), _ptMouse.x - 16, _ptMouse.y - 16, "배달의민족 을지로체", 15, 5, showStack3, strlen(showStack3), RGB(0, 0, 0));
 				break;
 
 			case '5':
 				_index = (int)_vInvenList[_selectedItem]._category[2] - 48;
 				IMAGEMANAGER->render("item_bg_common", getMemDC(), _ptMouse.x - 16, _ptMouse.y - 16);
 				IMAGEMANAGER->render(DATAMANAGER->getConsumableInfo(_index)->name.c_str(), getMemDC(), _ptMouse.x - 16, _ptMouse.y - 16);
+				char showStack4[2000];
+				sprintf_s(showStack4, "%d", (_vInvenList[_selectedItem]._currentStack));
+				FONTMANAGER->textOut(getMemDC(), _ptMouse.x - 16, _ptMouse.y - 16, "배달의민족 을지로체", 15, 5, showStack4, strlen(showStack4), RGB(0, 0, 0));
 				break;
 
 			}
@@ -667,6 +693,7 @@ void Inventory::moveItemRender()
 		
 		if (_inEquipmentSlot)
 		{
+			
 			switch (_vEquipmentSlot[_selectedItem]._category[0])
 			{
 			case '0':
@@ -694,7 +721,7 @@ void Inventory::moveItemRender()
 				}
 				IMAGEMANAGER->render(DATAMANAGER->getWeaponInfo(_index)->name.c_str(), getMemDC(), _ptMouse.x - 16, _ptMouse.y - 16);
 				break;
-
+			
 			case '2':
 				_index = (int)_vEquipmentSlot[_selectedItem]._category[2] - 48;
 				if (DATAMANAGER->getArmorInfo(_index)->grade == "커먼")
@@ -706,6 +733,7 @@ void Inventory::moveItemRender()
 					IMAGEMANAGER->render("item_bg_rare", getMemDC(), _ptMouse.x - 16, _ptMouse.y - 16);
 				}
 				IMAGEMANAGER->render(DATAMANAGER->getArmorInfo(_index)->name.c_str(), getMemDC(), _ptMouse.x - 16, _ptMouse.y - 16);
+				
 				break;
 
 			case '3':
@@ -732,14 +760,20 @@ void Inventory::moveItemRender()
 					IMAGEMANAGER->render("item_bg_common", getMemDC(), _ptMouse.x - 16, _ptMouse.y - 16);
 				}
 				IMAGEMANAGER->render(DATAMANAGER->getIngredientInfo(_index)->name.c_str(), getMemDC(), _ptMouse.x - 16, _ptMouse.y - 16);
+				char showStack5[2000];
+				sprintf_s(showStack5, "%d", (_vEquipmentSlot[_selectedItem]._currentStack));
+				FONTMANAGER->textOut(getMemDC(), _ptMouse.x - 16, _ptMouse.y - 16, "배달의민족 을지로체", 15, 5, showStack5, strlen(showStack5), RGB(0, 0, 0));
+
 				break;
 
 			case '5':
 				_index = (int)_vEquipmentSlot[_selectedItem]._category[2] - 48;
 				IMAGEMANAGER->render("item_bg_common", getMemDC(), _ptMouse.x - 16, _ptMouse.y - 16);
 				IMAGEMANAGER->render(DATAMANAGER->getConsumableInfo(_index)->name.c_str(), getMemDC(), _ptMouse.x - 16, _ptMouse.y - 16);
+				char showStack6[2000];
+				sprintf_s(showStack5, "%d", (_vEquipmentSlot[_selectedItem]._currentStack));
+				FONTMANAGER->textOut(getMemDC(), _ptMouse.x - 16, _ptMouse.y - 16, "배달의민족 을지로체", 15, 5, showStack5, strlen(showStack5), RGB(0, 0, 0));
 				break;
-
 			}
 		}
 
@@ -764,6 +798,7 @@ void Inventory::putItem()
 		// 빈칸에 해당하는 인덱스를 찾음
 		int indexInven = -1;
 		int indexEqui = -1;
+		int shuffleStack = 0;
 		//인벤칸
 		for (int i = 0; i < _vInvenList.size(); i++)
 		{
@@ -787,23 +822,26 @@ void Inventory::putItem()
 		}
 
 		// 인덱스가 유효하고 _selectedItem 값이 유효하면 아이템을 놓음
-
+		
 		if (indexInven != -1 && _selectedItem != -1)
 		{
 			if (_inInvenSlot)
 			{
 				_vInvenList[indexInven]._category = _vInvenList[_selectedItem]._category;
+				_vInvenList[indexInven]._currentStack = _vInvenList[_selectedItem]._currentStack;
 				_vInvenList[indexInven]._draw = true;
 			}
+
 			if (_inEquipmentSlot)
 			{
 				_vInvenList[indexInven]._category = _vEquipmentSlot[_selectedItem]._category;
+				_vInvenList[indexInven]._currentStack = _vEquipmentSlot[_selectedItem]._currentStack;
 				_vInvenList[indexInven]._draw = true;
 			}
 			
 			
 			_selectedItem = -1;
-			//_inInvenSlot = false;
+			
 
 		}
 
@@ -812,10 +850,19 @@ void Inventory::putItem()
 
 		if (indexEqui != -1 && _selectedItem != -1)
 		{
-			if (_inInvenSlot)
+			
+			if (_inInvenSlot && _vInvenList[_selectedItem]._category[0] == '2' || _inInvenSlot && _vInvenList[_selectedItem]._category[0] == '3')
 			{
 				_vEquipmentSlot[indexEqui]._category = _vInvenList[_selectedItem]._category;
 				_vEquipmentSlot[indexEqui]._draw = true;
+				
+			}
+			else if (_vInvenList[_selectedItem]._category[0] != '2' || _vInvenList[_selectedItem]._category[0] != '3')
+			{
+				if (_inInvenSlot)
+				{
+					_vInvenList[_selectedItem]._draw = true;
+				}
 				
 			}
 
@@ -823,11 +870,11 @@ void Inventory::putItem()
 			{
 				_vEquipmentSlot[indexEqui]._category = _vEquipmentSlot[_selectedItem]._category;
 				_vEquipmentSlot[indexEqui]._draw = true;
-				
+						
 			}
 			
 			_selectedItem = -1;
-			//_inEquipmentSlot = false;
+			
 
 		}
 
