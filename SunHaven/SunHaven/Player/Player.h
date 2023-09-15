@@ -153,6 +153,8 @@ private:
 	bool _isFishing;
 	bool _isSuccessFishing;
 
+	bool _isDamaged;
+
 	int axeSwingAnimArr[4] = { 15,16,17,18 };
 	int pickaxeSwingAnimArr[4] = { 12,13,14,15 };
 	int hoeSwingAnimArr[4] = { 12,13,14,15 };
@@ -161,6 +163,8 @@ private:
 	bool _isLoop;
 
 	int cursormovespeed = 2;
+
+	float _invincibilityTime;
 
 	float _jump;
 	bool _isJump;
@@ -175,7 +179,8 @@ public:
 
 	//void UseTool(ObjectManager* object, POINT point);
 	//bool UseTool(ObjectManager* object, POINT point);
-	POINT UseTool(ObjectManager* object, POINT point);
+	//POINT UseTool(ObjectManager* object, POINT point);
+	list<POINT> UseTool(ObjectManager* object, POINT point);
 
 
 	inline void UseToolAnim(bool stayKeydown)
@@ -350,7 +355,19 @@ public:
 	}
 
 
+	inline void hitDamage(float damage)
+	{
+		if (_invincibilityTime == 0.0f)
+		{
+			_isDamaged = true;
+			_playerState.HP -= damage;
 
+			if (_playerState.HP <= 0)
+			{
+				_playerState.HP = 0;
+			}
+		}
+	}
 
 
 

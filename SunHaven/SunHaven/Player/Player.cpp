@@ -233,6 +233,7 @@ HRESULT Player::init(float x, float y, string collisionMapKey)
 	_isUpDown = false;
 	_isFishing = false;
 	_isSuccessFishing = false;
+	_isDamaged = false;
 
 	_playerState.playerName=INIDATAMANAGER->loadDataString("tempINIFile", "commonState", "playerName");
 	_playerState.HP = INIDATAMANAGER->loadDataInteger("tempINIFile", "commonState", "HP");
@@ -251,6 +252,8 @@ HRESULT Player::init(float x, float y, string collisionMapKey)
 	_toolImage = _scytheSwing;
 	_toolAnim = _scytheSwingAnim;
 	_toolAnimRC = _scytheSwingRC;
+
+	_invincibilityTime = 0.0f;
 
 	_miniRC[0] = RectMake(_playerRC.left, _playerRC.top - 3, 3, 3);
 	_miniRC[1] = RectMake(_playerRC.right + 3, _playerRC.top, 3, 3);
@@ -444,7 +447,6 @@ void Player::update(void)
 
 			_dashSlashCount = 0;
 		}
-		_playerState.MP -= 5;
 	}
 
 	_dashSlashRC = RectMakeCenter(_cx - 5, _cy,
@@ -484,7 +486,7 @@ void Player::update(void)
 
 
 
-	if (_collisionMap != nullptr)
+	if (_collisionMap != nullptr && !_isJump)
 	{
 		for (int i = _playerRC.left + 4; i <= _playerRC.right - 4; i++)
 		{
@@ -544,6 +546,17 @@ void Player::update(void)
 		_eTools = eTools::SWORD;
 	}
 
+	if (_isDamaged)
+	{
+		_invincibilityTime += TIMEMANAGER->getElapsedTime();
+
+		if (_invincibilityTime > 0.4f)
+		{
+			_isDamaged = false;
+			_invincibilityTime = 0.0f;
+		}
+	}
+	
 
 	if (KEYMANAGER->isOnceKeyDown('Y') && _playerState.MP >= 3)
 	{
@@ -727,11 +740,12 @@ void Player::MouseOver(ObjectManager* object, POINT point)
 	}
 }
 
-POINT Player::UseTool(ObjectManager* object, POINT point)
+list<POINT> Player::UseTool(ObjectManager* object, POINT point)
 {
 	RECT temp;
 	float updown = point.y - _cy;
 	float leftright = point.x - _cx;
+	list<POINT> collisionList;
 
 	switch (_eTools)
 	{
@@ -829,7 +843,7 @@ POINT Player::UseTool(ObjectManager* object, POINT point)
 			{
 				// SD : 풀베는 소리
 				object->getObjectList()[i]->setHP(1);
-				return object->getObjectList()[i]->getTilePos();
+				collisionList.push_back(object->getObjectList()[i]->getTilePos());
 			}
 		}
 
@@ -843,7 +857,7 @@ POINT Player::UseTool(ObjectManager* object, POINT point)
 			{
 				// SD : 나무 베는 소리
 				object->getObjectList()[i]->setHP(10, _x);
-				return object->getObjectList()[i]->getTilePos();
+				collisionList.push_back(object->getObjectList()[i]->getTilePos());
 			}
 		}
 
@@ -857,12 +871,24 @@ POINT Player::UseTool(ObjectManager* object, POINT point)
 			{
 				// SD : 돌캐는 소리
 				object->getObjectList()[i]->setHP(5);
-				return object->getObjectList()[i]->getTilePos();
+				collisionList.push_back(object->getObjectList()[i]->getTilePos());
 			}
 		}
+
+		//else if (_eTools == eTools::HOE
+		//	&& getDistance(_cx, _cy, point.x, point.y) < OBJECT_RANGE)
+		//{
+		//	if (PtInRect(&object->getObjectList()[i]->getCollisionRC(),
+		//		point)
+		//		&& _toolAnim->getNowPlayIdx() >= 0)
+		//	{
+		//		// SD : 경작하는 소리
+		//		return object->getObjectList()[i]->getTilePos();
+		//	}
+		//}
 	}
 
-	return { NULL,NULL };
+	return collisionList;
 }
 
 void Player::UseFishingLod(POINT point)
@@ -1013,34 +1039,16 @@ void Player::ObjectCollision(ObjectManager* object)
 		float leftright = object->getObjectList()[i]->getTilePos().x - _cx;
 
 
-		if (IntersectRect(&temp,
-			&_playertoCameraRC,
+		if (IntersectRect(&temp, &_playertoCameraRC,
 			&object->getObjectList()[i]->getCollisionRC()))
 		{
-			cout << "오브젝트 충돌" << endl;
-
-			cout << updown << ", " << leftright << endl;
 
 			if (object->getObjectList()[i]->getType() > 1)
 			{
-				if (_playertoCameraRC.left <= object->getObjectList()[i]->getCollisionRC().right)
+				if (temp.right-temp.left>temp.bottom-temp.top)
 				{
-					_x += _moveSpeed;
+					cout << "좌우 충돌" << endl;
 				}
-				else if (_playertoCameraRC.right >= object->getObjectList()[i]->getCollisionRC().left)
-				{
-					_x -= _moveSpeed;
-				}
-				else if (_playertoCameraRC.top <= object->getObjectList()[i]->getCollisionRC().bottom)
-				{
-					_y += _moveSpeed;
-				}
-				else if (_playertoCameraRC.bottom >= object->getObjectList()[i]->getCollisionRC().top)
-				{
-					_y -= _moveSpeed;
-				}
-
-				
 			}
 		}
 	}

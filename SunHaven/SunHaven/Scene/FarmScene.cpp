@@ -71,11 +71,12 @@ void FarmScene::update(void)
 
 	if(KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
 	{
-		if (!SamePoint(_player->UseTool(_om, _ptMouse),
+		_hitEffectList.push_back(make_pair(_player->UseTool(_om, _ptMouse).front(), 1));
+		/*if (!SamePoint(_player->UseTool(_om, _ptMouse),
 			PointMake(NULL,NULL)))
 		{
 			cout << "asd" << endl;
-		}
+		}*/
 		_inven->itemMove();
 		_inven->invenXButton();
 	}
