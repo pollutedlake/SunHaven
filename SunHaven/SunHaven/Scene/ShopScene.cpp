@@ -24,7 +24,7 @@ HRESULT ShopScene::init(void)
 	shopList temp;
 
 
-	for (int i = 0; i < 3; i++)
+	for (int i = 0; i < 5; i++)
 	{
 		for (int j = 0; j < 2; j++)
 		{
@@ -116,6 +116,62 @@ HRESULT ShopScene::init(void)
 
 					}
 					
+				}
+			}
+
+			if (i == 3)
+			{
+				temp._rc = RectMake(_shopBg.left + 25 + 241 * j, _shopBg.top + 60 + (10 + 103 * i), 231, 93);
+				temp._name = DATAMANAGER->getArmorInfo(j)->name;
+				temp._buyGold = DATAMANAGER->getArmorInfo(j)->gold;
+				temp._sellGold = DATAMANAGER->getArmorInfo(j)->sellGold;
+				temp._grade = "레어";
+				temp._index = DATAMANAGER->getArmorInfo(j)->index;
+				for (int k = 0; k < 3; k++)
+				{
+					if (k == 0)
+					{
+						temp._buttonRc[k] = RectMake(temp._rc.right - 93, temp._rc.top + 45, 22 + k, 20);
+					}
+
+					if (k == 1)
+					{
+						temp._buttonRc[k] = RectMake(temp._rc.right - 65, temp._rc.top + 45, 22 + k, 20);
+					}
+
+					if (k == 2)
+					{
+						temp._buttonRc[k] = RectMake(temp._rc.right - 38, temp._rc.top + 45, 22 + k * 6, 20);
+					}
+
+				}
+			}
+
+			if (i == 4)
+			{
+				temp._rc = RectMake(_shopBg.left + 25 + 241 * j, _shopBg.top + 60 + (10 + 103 * i), 231, 93);
+				temp._name = DATAMANAGER->getArmorInfo(j +2)->name;
+				temp._buyGold = DATAMANAGER->getArmorInfo(j+2)->gold;
+				temp._sellGold = DATAMANAGER->getArmorInfo(j+2)->sellGold;
+				temp._grade = "레어";
+				temp._index = DATAMANAGER->getArmorInfo(j+2)->index;
+				for (int k = 0; k < 3; k++)
+				{
+					if (k == 0)
+					{
+						temp._buttonRc[k] = RectMake(temp._rc.right - 93, temp._rc.top + 45, 22 + k, 20);
+					}
+
+					if (k == 1)
+					{
+						temp._buttonRc[k] = RectMake(temp._rc.right - 65, temp._rc.top + 45, 22 + k, 20);
+					}
+
+					if (k == 2)
+					{
+						temp._buttonRc[k] = RectMake(temp._rc.right - 38, temp._rc.top + 45, 22 + k * 6, 20);
+					}
+
 				}
 			}
 				
@@ -235,7 +291,7 @@ void ShopScene::shopMold()
 
 void ShopScene::shopSlot()
 {
-	for (int i = 0; i < 6; i++)
+	for (int i = 0; i < 10; i++)
 	{
 		IMAGEMANAGER->render("store_item_bg", getMemDC(), _vShopList[i]._rc.left, _vShopList[i]._rc.top);
 
