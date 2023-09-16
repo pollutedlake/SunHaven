@@ -19,7 +19,7 @@ HRESULT IntroScene::init(void)
 		wsprintf(text, "TrainPassenger%d", i + 1);
 		_trainPassengers[i] = IMAGEMANAGER->findImage(text);
 	}
-	_dialogWindow = IMAGEMANAGER->findImage("DialogWindow");
+	_dialogWindow = IMAGEMANAGER->findImage("DialogWindow2");
 	_trainWindow = IMAGEMANAGER->findImage("TrainWindow1");
 	_introCut[0] = IMAGEMANAGER->addImage("IntroCut1", WINSIZE_X, WINSIZE_Y);
 	_introCut[1] = IMAGEMANAGER->addImage("IntroCut2", WINSIZE_X, WINSIZE_Y);
@@ -176,7 +176,6 @@ HRESULT IntroScene::init(void)
 	_darkAlpha = 0;
 	_dialogState = HIDE;
 	_answerN = 0;
-	// SD : 인트로 린 집 배경음
 	SOUNDMANAGER->play("인트로 린하우스", 0.2f);
 	return S_OK;
 }

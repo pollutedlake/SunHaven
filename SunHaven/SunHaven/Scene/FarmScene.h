@@ -59,7 +59,6 @@ private:
 	RECT _portal;
 	bool _moveMap;
 	bool _enterScene;
-	float _time;
 	float _clippingRaius;
 
 public:

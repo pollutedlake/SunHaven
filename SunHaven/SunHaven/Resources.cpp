@@ -400,7 +400,8 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addFrameImage("LynnBlinkSheet", "Resources/Images/Intro/LynnBlinkSheet.bmp", 378, 52, 9, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("LynnBreathingSheet", "Resources/Images/Intro/LynnBreathingSheet.bmp", 1008, 52, 24, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("LynnTrainSheet", "Resources/Images/Intro/LynnTrainSheet.bmp", 750, 104, 15, 2, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("DialogWindow", "Resources/Images/Intro/image.bmp", 354, 146, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("DialogWindow2", "Resources/Images/Intro/DialogWindow2.bmp", 354, 146, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("DialogWindow1", "Resources/Images/Intro/DialogWindow1.bmp", 354, 146, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("Dialog¸°", "Resources/Images/Intro/DialogLynn.bmp", 648, 197, 6, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("LynnSadSheet", "Resources/Images/Intro/LynnSadSheet.bmp", 1680, 52, 40, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("Black", "Resources/Images/Intro/Black.bmp", WINSIZE_X, WINSIZE_Y, true, RGB(255, 0, 255));
