@@ -349,7 +349,6 @@ void Shadeclaw::targetOn(void)
 	{
 		_isLeft = false;
 	}
-
 	else
 	{
 		_isLeft = true;
@@ -361,7 +360,7 @@ void Shadeclaw::targetOn(void)
 
 void Shadeclaw::attack(void)
 {
-	DrawRectMake(getMemDC(), CAMERA->worldToCameraRect(_rcAttack));
+	//DrawRectMake(getMemDC(), CAMERA->worldToCameraRect(_rcAttack));
 
 	if (_x < _playerX)
 	{

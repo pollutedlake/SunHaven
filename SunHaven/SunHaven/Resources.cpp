@@ -54,7 +54,7 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addImage("FarmLayer5", "Resources/Images/Tile/FarmLayer5.bmp", 2184, 2400, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("MineLayer3", "Resources/Images/Tile/MineLayer3.bmp", 1704, 1032, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("MineLayer5", "Resources/Images/Tile/MineLayer5.bmp", 1704, 1032, true, RGB(255, 0, 255));
-
+	IMAGEMANAGER->addImage("Wall", "Resources/Images/UI/Wall.bmp", 10, 81);
 	IMAGEMANAGER->addFrameImage("ScrollUpButton", "Resources/Images/UI/ScrollUpButton.bmp", 48, 16, 3, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("ScrollDownButton", "Resources/Images/UI/ScrollUpButton.bmp", 48, 16, 3, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("ScrollBar", "Resources/Images/UI/ScrollBar.bmp", 15, 40, true, RGB(255, 0, 255));
@@ -62,6 +62,7 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addFrameImage("LeftButton", "Resources/Images/UI/LeftButton.bmp", 60, 20, 3, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("RightButton", "Resources/Images/UI/RightButton.bmp", 60, 20, 3, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("Button1", "Resources/Images/UI/Button1.bmp", 300, 22, 3, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("BackButton", "Resources/Images/UI/BackButton.bmp", 78, 86, 3, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("LayerShowButton", "Resources/Images/UI/LayerShowButton.bmp", 54, 17, 2, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("Object1", "Resources/Images/Object/Grass1.bmp", 24, 24, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("Object2", "Resources/Images/Object/Grass2.bmp", 24, 24, true, RGB(255, 0, 255));
@@ -78,6 +79,10 @@ HRESULT Resources::init(void)
 		1, 1,
 		false, NULL, RotateNoneFlipNone);
 	IMAGEMANAGER->addImage("Stump", "Resources/Images/Object/Stump.bmp", 24, 24, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Window","Resources/Images/UI/Window.bmp", 271, 192, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("WindowHead","Resources/Images/UI/WindowHead.bmp", 271, 49, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("WindowBottom","Resources/Images/UI/WindowBottom.bmp", 271, 189, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("MapToolBG","Resources/Images/UI/MapToolBG.bmp", 314, 186, true, RGB(255, 0, 255));
 	// Sound
 
 	// ====================DynusScene====================
@@ -368,6 +373,7 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addFrameImage("LynnMom2", "Resources/Images/Intro/LynnMom2.bmp", 364, 354, 7, 6, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("LynnMom1", "Resources/Images/Intro/LynnMom1.bmp", 936, 59, 18, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("LynnMomHouse", "Resources/Images/Intro/LynnMomHouse.bmp", 654, 462, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("PlayerHouse", "Resources/Images/Tile/PlayerHouse.bmp", 251, 198, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("Train1", "Resources/Images/Intro/Train1.bmp", 686, 357, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("Train2", "Resources/Images/Intro/Train2.bmp", 643, 357, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("LynnWalkSheet", "Resources/Images/Intro/LynnWalkSheet.bmp", 840, 104, 20, 2, true, RGB(255, 0, 255));

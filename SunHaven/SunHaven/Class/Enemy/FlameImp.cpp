@@ -114,7 +114,6 @@ void FlameImp::release(void)
 
 void FlameImp::update(void)
 {
-	cout << "FlameImp: " << (int)_state << endl;
 
 	if (_hp <= 0)
 	{

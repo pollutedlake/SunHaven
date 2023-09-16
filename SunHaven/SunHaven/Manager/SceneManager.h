@@ -1,6 +1,8 @@
 #pragma once
 #include "../FrameWork/SingletonBase/SingletonBase.h"
 class GameNode;
+class Player;
+class Inven;
 
 class SceneManager : public SingletonBase<SceneManager>
 {

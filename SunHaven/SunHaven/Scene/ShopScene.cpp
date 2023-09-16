@@ -9,11 +9,10 @@ HRESULT ShopScene::init(void)
 	_player = new Player;
 	_player->init(700,500, "Shop_Bg_Collision");
 
-	_camera = new Camera;
-	_camera->init();
-	_camera->setPosition(_player->getPlayerPosition());
-	_camera->setLimitRight(1280 - WINSIZE_X / 2);
-	_camera->setLimitBottom(720 - WINSIZE_Y / 2);
+	CAMERA->init();
+	CAMERA->setPosition(_player->getPlayerPosition());
+	CAMERA->setLimitRight(1280 - WINSIZE_X / 2);
+	CAMERA->setLimitBottom(720 - WINSIZE_Y / 2);
 	
 	_solonRc = RectMake(600, 320, 100, 100);
 	_shopBg = RectMake(WINSIZE_X / 2 - 261, WINSIZE_Y / 2 - 327, 522, 654);
@@ -178,7 +177,11 @@ HRESULT ShopScene::init(void)
 			_vShopList.push_back(temp);
 		}
 	}
-
+	_moveMap = true;
+	_portal = RectMake( 660, 560, 110, 40);
+	_clippingRaius = 0.0f;
+	_moveMapImg = IMAGEMANAGER->addImage("MoveMap", WINSIZE_X, WINSIZE_Y, true, RGB(255, 0, 255));
+	_enterScene = true;
 	return S_OK;
 }
 
@@ -186,9 +189,6 @@ void ShopScene::release(void)
 {
 	_player->release();
     SAFE_DELETE(_player);
-
-	_camera->release();
-	SAFE_DELETE(_camera);
 	
 }
 
@@ -196,64 +196,91 @@ void ShopScene::update(void)
 {
 	_player->update();
 	_inven->update();
-	_camera->setPosition(_player->getPlayerPosition());
-	_camera->update();
-	_player->worldToCamera(_camera->worldToCamera
-	(_player->getPlayerPosition()));
+	CAMERA->setPosition(_player->getPlayerPosition());
+	CAMERA->update();
+	_player->worldToCamera(CAMERA->worldToCamera
+		(_player->getPlayerPosition()));
 
-	
-
-
-	if (KEYMANAGER->isToggleKey('E'))
+	if(!_moveMap)
 	{
-		for (int i = 0; i < _vShopList.size(); i++)
+
+
+
+		if (KEYMANAGER->isToggleKey('E'))
 		{
-			for (int j = 0; j < 3; j++)
+			for (int i = 0; i < _vShopList.size(); i++)
 			{
-				if (PtInRect(&(_vShopList[i]._buttonRc[j]), _ptMouse) && (KEYMANAGER->isOnceKeyDown(VK_LBUTTON)))
+				for (int j = 0; j < 3; j++)
 				{
-					switch (j)
+					if (PtInRect(&(_vShopList[i]._buttonRc[j]), _ptMouse) && (KEYMANAGER->isOnceKeyDown(VK_LBUTTON)))
 					{
-					case 0:
-						_inven->getItem(_vShopList[i]._index);
-						break;
-
-					case 1:
-						for (int k = 0; k < 5; k++)
+						switch (j)
 						{
+						case 0:
 							_inven->getItem(_vShopList[i]._index);
-						}
+							break;
 
-						break;
+						case 1:
+							for (int k = 0; k < 5; k++)
+							{
+								_inven->getItem(_vShopList[i]._index);
+							}
 
-					case 2:
-						for (int l = 0; l < 20; l++)
-						{
-							_inven->getItem(_vShopList[i]._index);
+							break;
+
+						case 2:
+							for (int l = 0; l < 20; l++)
+							{
+								_inven->getItem(_vShopList[i]._index);
+							}
+							break;
 						}
-						break;
 					}
 				}
-			}
 
+			}
+		}
+		else
+		{
+			if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
+			{
+				//_player->UseTool(_om, _ptMouse);
+				_inven->itemMove();
+				_inven->invenXButton();
+			}
+			if (KEYMANAGER->isOnceKeyUp(VK_LBUTTON))
+			{
+				_inven->putItem();
+			}
+		}
+		if (PtInRect(&_portal, _player->getPlayerPosition()))
+		{
+			_moveMap = true;
 		}
 	}
 	else
 	{
-		if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
+		if (_enterScene)
 		{
-			//_player->UseTool(_om, _ptMouse);
-			_inven->itemMove();
-			_inven->invenXButton();
+			_clippingRaius += TIMEMANAGER->getElapsedTime() * 1000.0f;
+			if (_clippingRaius > WINSIZE_X)
+			{
+				_clippingRaius = WINSIZE_X;
+				_enterScene = false;
+				_moveMap = false;
+			}
 		}
-		if (KEYMANAGER->isOnceKeyUp(VK_LBUTTON))
+		else
 		{
-			_inven->putItem();
+			_clippingRaius -= TIMEMANAGER->getElapsedTime() * 1000.0f;
+			if (_clippingRaius < 0)
+			{
+				_clippingRaius = 0.0f;
+				SCENEMANAGER->changeScene("Mine");
+			}
 		}
 	}
-	
 
-	
 	if (KEYMANAGER->isOnceKeyDown(VK_F1))
 	{
 		SCENEMANAGER->changeScene("Mine");
@@ -279,6 +306,18 @@ void ShopScene::render(void)
 	
 	
 	IMAGEMANAGER->render("Cursor", getMemDC(), _ptMouse.x, _ptMouse.y);
+	if (_moveMap)
+	{
+		PatBlt(_moveMapImg->getMemDC(), 0, 0, WINSIZE_X, WINSIZE_Y, BLACKNESS);
+		HBRUSH magenta = CreateSolidBrush(RGB(255, 0, 255));
+		HBRUSH oldBrush = (HBRUSH)SelectObject(_moveMapImg->getMemDC(), magenta);
+		//EllipseMakeCenter(_moveMapImg->getMemDC(), WINSIZE_X / 2, WINSIZE_Y / 2, _clippingRaius, _clippingRaius);
+		EllipseMakeCenter(_moveMapImg->getMemDC(), (CAMERA->worldToCameraRect(_player->getPlayerRC()).right + CAMERA->worldToCameraRect(_player->getPlayerRC()).left) / 2.0f,
+			(CAMERA->worldToCameraRect(_player->getPlayerRC()).bottom + CAMERA->worldToCameraRect(_player->getPlayerRC()).top) / 2.0f, _clippingRaius, _clippingRaius);
+		SelectObject(_moveMapImg->getMemDC(), oldBrush);
+		DeleteObject(magenta);
+		_moveMapImg->render(getMemDC());
+	}
 }
 
 void ShopScene::shopMold()

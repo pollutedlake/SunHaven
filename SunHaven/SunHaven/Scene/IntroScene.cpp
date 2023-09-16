@@ -411,7 +411,6 @@ void IntroScene::update(void)
 					_dialogIdx += _arrDialogs[_dialogIdx]._nextDialog;
 					next = true;
 				}
-				cout << _dialogIdx << endl;
 				if(next)
 				{
 					if (_dialogIdx == 15 || _dialogIdx == 28 || _dialogIdx == 32 || _dialogIdx == 34 || _dialogIdx == 61 || _dialogIdx == 63 || _dialogIdx == 66 || _dialogIdx == 38)

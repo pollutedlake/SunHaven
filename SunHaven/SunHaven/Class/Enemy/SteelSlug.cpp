@@ -109,7 +109,6 @@ void SteelSlug::release(void)
 
 void SteelSlug::update(void)
 {
-	cout << "SteelSlug: " << (int)_state << endl;
 
 	if (_hp <= 0)
 	{
