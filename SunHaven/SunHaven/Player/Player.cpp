@@ -547,8 +547,6 @@ void Player::update(void)
 		_eTools = eTools::SWORD;
 	}
 
-	cout << "_invincibilityTime: " << _invincibilityTime << endl;
-
 	if (_isDamaged)
 	{
 		_invincibilityTime += TIMEMANAGER->getElapsedTime();

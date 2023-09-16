@@ -34,6 +34,7 @@ private:
 private:
 	Player* _player;
 	GImage* _bg;
+	GImage* _moveMapImg;
 	ObjectManager* _om;
 	UI* _ui;
 	priority_queue<pair<GameNode*, int>, vector<pair<GameNode*, int>>, Mine::cmp> _vRenderList;
@@ -47,6 +48,10 @@ private:
 
 	EnemyManager* _em;
 
+	RECT _portal;
+	bool _moveMap;
+	bool _enterScene;
+	float _clippingRaius;
 public:
 	HRESULT init(void);
 	void release(void);

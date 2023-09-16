@@ -22,7 +22,6 @@ HRESULT FarmScene::init(void)
 	_inven->init();
 
 	_player->setPlayerPosition(PointMake(2496, 1500));
-
 	_MouseOver = IMAGEMANAGER->addImage("오브젝트 선택",
 		"Resources/Images/Player/ObjectMouseOver.bmp",
 		36, 36, true, RGB(255, 0, 255));
@@ -40,7 +39,6 @@ HRESULT FarmScene::init(void)
 	_clippingRaius = 0.0f;
 	_enterScene = true;
 	SOUNDMANAGER->play("Player_Farm_Var1_Final1", 0.2f);
-	_time = 0.0f;
 	return S_OK;
 }
 
@@ -63,35 +61,35 @@ void FarmScene::update(void)
 	(_player->getPlayerPosition()));
 	SOUNDMANAGER->update();
 	
-		queue<pair<string, POINT>> dropItems = _om->updateObjects();
-		while (!dropItems.empty())
-		{
-			_lDropItem.push_back(dropItems.front());
-			dropItems.pop();
-		}
+	queue<pair<string, POINT>> dropItems = _om->updateObjects();
+	while (!dropItems.empty())
+	{
+		_lDropItem.push_back(dropItems.front());
+		dropItems.pop();
+	}
 
-		_player->ObjectCollision(_om);
+	_player->ObjectCollision(_om);
 
 	if (!_moveMap)
 	{
-	if(KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
-	{
-		list<POINT> ptList;
-		ptList = _player->UseTool(_om, _ptMouse);
-		for(auto it = ptList.begin(); it != ptList.end(); ++it)
+		if(KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
 		{
-			if (!SamePoint(*it, PointMake(NULL,NULL)))
+			list<POINT> ptList;
+			ptList = _player->UseTool(_om, _ptMouse);
+			for(auto it = ptList.begin(); it != ptList.end(); ++it)
 			{
-				_hitEffectList.push_back(make_pair(*it, 0));
+				if (!SamePoint(*it, PointMake(NULL,NULL)))
+				{
+					_hitEffectList.push_back(make_pair(*it, 0));
+				}
 			}
+			_inven->itemMove();
+			_inven->invenXButton();
 		}
-		_inven->itemMove();
-		_inven->invenXButton();
-	}
-	if (KEYMANAGER->isOnceKeyUp(VK_LBUTTON))
-	{
-		_inven->putItem();
-	}
+		if (KEYMANAGER->isOnceKeyUp(VK_LBUTTON))
+		{
+			_inven->putItem();
+		}
 
 		_player->UseToolAnim(KEYMANAGER->isStayKeyDown(VK_LBUTTON));
 		
@@ -114,16 +112,12 @@ void FarmScene::update(void)
 	{
 		if (_enterScene)
 		{
-			_time += TIMEMANAGER->getElapsedTime();
-			if(_time > 5.0f)
+			_clippingRaius += TIMEMANAGER->getElapsedTime() * 1000.0f;
+			if (_clippingRaius > WINSIZE_X)
 			{
-				_clippingRaius += TIMEMANAGER->getElapsedTime() * 1000.0f;
-				if (_clippingRaius > WINSIZE_X)
-				{
-					_clippingRaius = WINSIZE_X;
-					_enterScene = false;
-					_moveMap = false;
-				}
+				_clippingRaius = WINSIZE_X;
+				_enterScene = false;
+				_moveMap = false;
 			}
 		}
 		else

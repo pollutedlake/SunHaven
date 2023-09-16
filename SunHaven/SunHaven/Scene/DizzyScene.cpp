@@ -16,13 +16,18 @@ HRESULT DizzyScene::init(void)
 	CAMERA->setPosition(_player->getPlayerPosition());
 	CAMERA->setLimitRight(2196 - WINSIZE_X / 2);
 	CAMERA->setLimitBottom(1512 - WINSIZE_Y / 2);
+	_player->worldToCamera(CAMERA->worldToCamera(_player->getPlayerPosition()));
 
 	_ui = new UI;
 	_ui->init("Dynus");
 	_ui->setAdressPlayer(_player);
 
 	wsprintf(_text, "DizzyScene");
-	
+	_moveMap = true;
+	_portal = RectMake(1020, 1100, 180, 100);
+	_moveMapImg = IMAGEMANAGER->addImage("MoveMap", WINSIZE_X, WINSIZE_Y, true, RGB(255, 0, 255));
+	_clippingRaius = 0.0f;
+	_enterScene = true;
 	return S_OK;
 }
 
@@ -37,15 +42,42 @@ void DizzyScene::release(void)
 
 void DizzyScene::update(void)
 {
-	_dizzy->update();
 
 	_player->update();
 	_player->worldToCamera(CAMERA->worldToCamera(_player->getPlayerPosition()));
-
-	collision();
-
 	CAMERA->setPosition(_player->getPlayerPosition());
 	CAMERA->update();
+	if(!_moveMap)
+	{
+		_dizzy->update();
+		collision();
+		if (PtInRect(&_portal, _player->getPlayerPosition()))
+		{
+			_moveMap = true;
+		}
+	}
+	else
+	{
+		if (_enterScene)
+		{
+			_clippingRaius += TIMEMANAGER->getElapsedTime() * 1000.0f;
+			if (_clippingRaius > WINSIZE_X)
+			{
+				_clippingRaius = WINSIZE_X;
+				_enterScene = false;
+				_moveMap = false;
+			}
+		}
+		else
+		{
+			_clippingRaius -= TIMEMANAGER->getElapsedTime() * 1000.0f;
+			if (_clippingRaius < 0)
+			{
+				_clippingRaius = 0.0f;
+				SCENEMANAGER->changeScene("Dynus");
+			}
+		}
+	}
 	if (KEYMANAGER->isOnceKeyDown(VK_F1))
 	{
 		SCENEMANAGER->changeScene("Dynus");
@@ -60,4 +92,15 @@ void DizzyScene::render(void)
 	_dizzy->render();
 	_player->render();
 	_ui->render();
+	if (_moveMap)
+	{
+		PatBlt(_moveMapImg->getMemDC(), 0, 0, WINSIZE_X, WINSIZE_Y, BLACKNESS);
+		HBRUSH magenta = CreateSolidBrush(RGB(255, 0, 255));
+		HBRUSH oldBrush = (HBRUSH)SelectObject(_moveMapImg->getMemDC(), magenta);
+		EllipseMakeCenter(_moveMapImg->getMemDC(), (CAMERA->worldToCameraRect(_player->getPlayerRC()).right + CAMERA->worldToCameraRect(_player->getPlayerRC()).left) / 2.0f,
+			(CAMERA->worldToCameraRect(_player->getPlayerRC()).bottom + CAMERA->worldToCameraRect(_player->getPlayerRC()).top) / 2.0f, _clippingRaius, _clippingRaius);
+		SelectObject(_moveMapImg->getMemDC(), oldBrush);
+		DeleteObject(magenta);
+		_moveMapImg->render(getMemDC());
+	}
 }
