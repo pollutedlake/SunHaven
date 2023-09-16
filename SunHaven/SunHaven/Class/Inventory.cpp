@@ -8,6 +8,10 @@ HRESULT Inventory::init(void)
 	/*_ID = new ItemData;
 	_ID->init();*/
 	_sellGold = 0;
+	_att = 0;
+	_def = 0;
+	_hp = 0;
+	maxEquipmentRender = 0;
 	_seeInven = false;
 
 	_inInvenSlot = false;
@@ -146,6 +150,38 @@ void Inventory::release(void)
 
 void Inventory::update(void)
 {
+	cout << _def << endl;
+	if (_vEquipmentSlot[0]._draw )
+	{
+		maxEquipmentRender = 1;
+	}
+	else
+	{
+		maxEquipmentRender = 0;
+	}
+
+	switch (maxEquipmentRender)
+	{
+	case 0:
+		_def = 0;
+		break;
+	case 1:
+		_def = DATAMANAGER->getArmorInfo((int)_vEquipmentSlot[0]._category[2] - 48)->defense;
+		break;
+
+	case 2:
+
+		break;
+
+	case 3:
+
+		break;
+
+	case 4:
+
+		break;
+	}
+	
 	
 
 	if (!_seeInven && KEYMANAGER->isOnceKeyDown('I'))
@@ -161,12 +197,7 @@ void Inventory::update(void)
 	sellItem();
 
 	
-	/*for (int i = 0; i < 4; i++)
-	{
-		if(_vEquipmentSlot[i]._draw)
-		_def = (DATAMANAGER->getArmorInfo((int)_vEquipmentSlot[0]._category[2])->defense) + (DATAMANAGER->getArmorInfo((int)_vEquipmentSlot[1]._category[2])->defense) + (DATAMANAGER->getArmorInfo((int)_vEquipmentSlot[2]._category[2])->defense) + (DATAMANAGER->getArmorInfo((int)_vEquipmentSlot[3]._category[2])->defense);
-
-	}*/
+	
 }
 
 void Inventory::render(void)
@@ -196,7 +227,7 @@ void Inventory::render(void)
 			case 5:
 				IMAGEMANAGER->render("¼è³ú", getMemDC(), _vItemUseSlot[i]._rc.left, _vItemUseSlot[i]._rc.top);
 				break;
-			case 6:
+			/*case 6:
 				IMAGEMANAGER->render("combat_skill_tree_icons_0", getMemDC(), _vItemUseSlot[i]._rc.left, _vItemUseSlot[i]._rc.top);
 				break;
 			case 7:
@@ -207,12 +238,15 @@ void Inventory::render(void)
 				break;
 			case 9:
 				IMAGEMANAGER->render("±âº» ³¬½Ë´ë", getMemDC(), _vItemUseSlot[i]._rc.left, _vItemUseSlot[i]._rc.top);
-				break;
+				break;*/
 			}
 			
 		}
 		
 	}
+	IMAGEMANAGER->render("combat_skill_tree_icons_0", getMemDC(), _vItemUseSlot[0]._rc.left, _vItemUseSlot[0]._rc.top -32);
+	
+	IMAGEMANAGER->render("combat_skill_tree_icons_6", getMemDC(), _vItemUseSlot[1]._rc.left, _vItemUseSlot[1]._rc.top - 32);
 	
 	if (_seeInven)
 	{
@@ -947,7 +981,12 @@ void Inventory::putItem()
 
 		}
 
+		
+
 	}
+
+	
+
 }
 
 void Inventory::invenXButton()

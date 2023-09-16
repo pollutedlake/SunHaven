@@ -395,7 +395,7 @@ public:
 
 	void setDefense(int itemStat)
 	{
-		_playerState.defence = getDefense() + itemStat;
+		_playerState.defence =  itemStat;
 	}
 
 	void setAttackDamage(int itemStat)

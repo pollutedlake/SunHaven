@@ -40,6 +40,7 @@ private:
 	bool _inInvenSlot;
 	bool _inEquipmentSlot;
 	
+	int maxEquipmentRender;
 
 	int _sellGold;
 	int _att;
@@ -81,6 +82,13 @@ public:
 	int getDef() { return _def; }
 	int getHP() { return _hp; }
 
+	RECT getPlayerStatSlot1() { return _playerStat[0]; }
+	RECT getPlayerStatSlot2() { return _playerStat[1]; }
+	RECT getPlayerStatSlot3() { return _playerStat[2]; }
+	RECT getPlayerStatSlot4() { return _playerStat[3]; }
+	RECT getPlayerStatSlot5() { return _playerStat[4]; }
+
+	bool getSeeInven() { return _seeInven; }
 
 	Inventory(){}
 	~Inventory(){}

@@ -202,6 +202,7 @@ void ShopScene::update(void)
 	(_player->getPlayerPosition()));
 
 	_player->setGold(_inven->getSellGold());
+
 	_player->setDefense(_inven->getDef());
 
 	if (KEYMANAGER->isToggleKey('E'))
@@ -277,6 +278,24 @@ void ShopScene::render(void)
 			shopMold();
 			shopSlot();
 		}
+	}
+
+	char att[2000];
+	sprintf_s(att, "%d", (_player->getAttackDamage()));
+	char def[2000];
+	sprintf_s(def, "%d", (_player->getDefense()));
+	char hp[2000];
+	sprintf_s(hp, "%d", (_player->getHP()));
+	char mp[2000];
+	sprintf_s(mp, "%d", (_player->getMaxMP()));
+
+	if (_inven->getSeeInven())
+	{
+		FONTMANAGER->textOut(getMemDC(), _inven->getPlayerStatSlot1().left + 75, _inven->getPlayerStatSlot1().top, "배달의민족 을지로체", 12, 5, hp, strlen(hp), RGB(255, 255, 255));
+		FONTMANAGER->textOut(getMemDC(), _inven->getPlayerStatSlot2().left + 75, _inven->getPlayerStatSlot2().top, "배달의민족 을지로체", 12, 5, mp, strlen(mp), RGB(255, 255, 255));
+		FONTMANAGER->textOut(getMemDC(), _inven->getPlayerStatSlot3().left + 75, _inven->getPlayerStatSlot3().top, "배달의민족 을지로체", 12, 5, def, strlen(def), RGB(255, 255, 255));
+		FONTMANAGER->textOut(getMemDC(), _inven->getPlayerStatSlot4().left + 75, _inven->getPlayerStatSlot4().top, "배달의민족 을지로체", 12, 5, att, strlen(att), RGB(255, 255, 255));
+		FONTMANAGER->textOut(getMemDC(), _inven->getPlayerStatSlot5().left + 75, _inven->getPlayerStatSlot5().top, "배달의민족 을지로체", 12, 5, att, strlen(att), RGB(255, 255, 255));
 	}
 	
 	
