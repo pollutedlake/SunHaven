@@ -571,7 +571,6 @@ void Player::update(void)
 		MPRecoverySec = 0.0f;
 	}
 
-	cout << _playerState.MP << " / " << _playerState.MaxMP << endl;
 
 
 	if (KEYMANAGER->isStayKeyDown('U'))
@@ -611,7 +610,6 @@ void Player::update(void)
 	_scytheSwingAnim->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);
 	_fishingLodAnim->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);
 
-	//cout << _fishingLodAnim->getNowPlayIdx() << endl;
 }
 
 void Player::render(void)
@@ -962,7 +960,6 @@ void Player::Fishing()
 		}
 		else
 		{
-			cout << "ºø³ª°¨" << endl;
 		}
 
 		_fishingLodAnim->AniResume();
@@ -1020,7 +1017,6 @@ void Player::ObjectCollision(ObjectManager* object)
 			&object->getObjectList()[i]->getCollisionRC()))
 		{
 
-			cout << updown << ", " << leftright << endl;
 
 			if (object->getObjectList()[i]->getType() > 1)
 			{

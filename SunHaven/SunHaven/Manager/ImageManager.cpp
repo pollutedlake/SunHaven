@@ -104,7 +104,6 @@ GPImage* ImageManager::addGPFrameImage(string strKey, char* fileName, int destX,
 
 	if (FAILED(img->init(fileName, destX, destY, maxFrameX, maxFrameY, isTrans, color, rotateFlipType)))
 	{
-		cout << strKey << endl;
 		SAFE_DELETE(img);
 
 		return NULL;

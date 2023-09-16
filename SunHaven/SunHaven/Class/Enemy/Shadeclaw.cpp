@@ -112,8 +112,6 @@ void Shadeclaw::update(void)
 	_rc = RectMakeCenter(_x, _y,
 		_image->getFrameWidth(), _image->getFrameHeight());
 
-	cout << _x << endl;
-	cout << _playerY << endl;
 	
 	if (getDistance(_x, _y, _playerX, _playerY) > 200)
 	{
@@ -139,7 +137,6 @@ void Shadeclaw::render(void)
 
 void Shadeclaw::move()
 {
-	cout << "Move To PatrolPos" << endl;
 
 	if (_x < _patrolX)
 	{
@@ -157,7 +154,6 @@ void Shadeclaw::move()
 
 void Shadeclaw::targetOn(void)
 {
-	cout << "Move To Target" << endl;
 
 	//if ((_rc.left + _rc.right) / 2 < _playerX)
 	//{
@@ -178,7 +174,6 @@ void Shadeclaw::targetOn(void)
 
 void Shadeclaw::attack()
 {
-	//cout << "Attack To Target" << endl;
 
 	//if (_x < _playerX)
 	//{

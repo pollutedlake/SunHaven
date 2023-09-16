@@ -113,7 +113,6 @@ void FlameImp::release(void)
 
 void FlameImp::update(void)
 {
-	cout << "FlameImp: " << (int)_state << endl;
 
 	_rc = RectMakeCenter(_x, _y, _curImg->getFrameWidth(), _curImg->getFrameHeight());
 	_curAni->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);

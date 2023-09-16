@@ -107,7 +107,6 @@ void SteelSlug::release(void)
 
 void SteelSlug::update(void)
 {
-	cout << "SteelSlug: " << (int)_state << endl;
 
 	_rc = RectMakeCenter(_x, _y, _curImg->getFrameWidth(), _curImg->getFrameHeight());
 	_curAni->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);

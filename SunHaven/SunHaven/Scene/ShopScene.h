@@ -24,7 +24,7 @@ class ShopScene : public GameNode
 private:
 	Player* _player;
 	Camera* _camera;
-	
+
 	RECT _solonRc;
 	RECT _shopBg;
 	RECT _shopItemBg;
@@ -35,6 +35,11 @@ private:
 
 	Inventory* _inven;
 
+	GImage* _moveMapImg;
+	RECT _portal;
+	bool _moveMap;
+	bool _enterScene;
+	float _clippingRaius;
 
 public:
 	HRESULT init(void);

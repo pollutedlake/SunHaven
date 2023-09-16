@@ -39,6 +39,7 @@ HRESULT FarmScene::init(void)
 	_moveMapImg = IMAGEMANAGER->addImage("MoveMap", WINSIZE_X, WINSIZE_Y, true, RGB(255, 0, 255));
 	_clippingRaius = 0.0f;
 	_enterScene = true;
+	_time = 0.0f;
 	return S_OK;
 }
 
@@ -54,13 +55,11 @@ void FarmScene::release(void)
 
 void FarmScene::update(void)
 {
-	if(!_moveMap)
-	{
-		_player->update();
-		_inven->update();
-		CAMERA->setPosition(_player->getPlayerPosition());
-		_player->worldToCamera(CAMERA->worldToCamera
-		(_player->getPlayerPosition()));
+	_player->update();
+	_inven->update();
+	CAMERA->setPosition(_player->getPlayerPosition());
+	_player->worldToCamera(CAMERA->worldToCamera
+	(_player->getPlayerPosition()));
 		queue<pair<string, POINT>> dropItems = _om->updateObjects();
 		while (!dropItems.empty())
 		{
@@ -70,6 +69,8 @@ void FarmScene::update(void)
 
 		_player->ObjectCollision(_om);
 
+	if (!_moveMap)
+	{
 	if(KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
 	{
 		list<POINT> ptList;
@@ -109,12 +110,16 @@ void FarmScene::update(void)
 	{
 		if (_enterScene)
 		{
-			_clippingRaius += TIMEMANAGER->getElapsedTime() * 1000.0f;
-			if (_clippingRaius > WINSIZE_X)
+			_time += TIMEMANAGER->getElapsedTime();
+			if(_time > 5.0f)
 			{
-				_clippingRaius = WINSIZE_X;
-				_enterScene = false;
-				_moveMap = false;
+				_clippingRaius += TIMEMANAGER->getElapsedTime() * 1000.0f;
+				if (_clippingRaius > WINSIZE_X)
+				{
+					_clippingRaius = WINSIZE_X;
+					_enterScene = false;
+					_moveMap = false;
+				}
 			}
 		}
 		else
@@ -163,6 +168,9 @@ void FarmScene::render(void)
 {
 	_bg->render(getMemDC(), 0, 0, CAMERA->getPosition().x - WINSIZE_X / 2,
 		CAMERA->getPosition().y - WINSIZE_Y / 2, WINSIZE_X, WINSIZE_Y);
+	IMAGEMANAGER->findImage("PlayerHouse")->render(getMemDC(), CAMERA->worldToCameraX(2000), CAMERA->worldToCameraY(1000), 
+		IMAGEMANAGER->findImage("PlayerHouse")->getWidth() * 1.5, IMAGEMANAGER->findImage("PlayerHouse")->getHeight() * 1.5,
+		0, 0, IMAGEMANAGER->findImage("PlayerHouse")->getWidth(), IMAGEMANAGER->findImage("PlayerHouse")->getHeight());
 	// 정렬된 순서로 렌더
 	while (!_vRenderList.empty())
 	{

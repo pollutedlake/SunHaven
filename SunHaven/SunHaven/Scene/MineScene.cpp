@@ -30,11 +30,10 @@ HRESULT MineScene::init(void)
 
 	_ui = new UI;
 	_ui->init("Mine");
+	_ui->setAdressPlayer(_player);
 
 	_em = new EnemyManager;
 	_em->setPlayerMemoryAddress(_player);
-	//_slug->setPlayerMemoryAddress(_player);
-
 	_em->spawnSteelSlug();
 	_em->spawnFlameImp();
 
@@ -112,6 +111,8 @@ void MineScene::update(void)
 	{
 		SCENEMANAGER->changeScene("Dizzy");
 	}
+
+	//collision();
 }
 
 void MineScene::render(void)
@@ -142,22 +143,6 @@ void MineScene::render(void)
 
 	_inven->render();
 	_ui->render();
-}
-
-void MineScene::Collision(void)
-{
-	for (int i = 0; i < _om->getObjectList().size(); i++)
-	{
-		RECT temp;
-
-		if (IntersectRect(&temp,
-			&RectMakeCenter(_player->getPlayerPosition().x,
-				_player->getPlayerPosition().y, 48, 52),
-			&_om->getObjectList()[i]->getRC()))
-		{
-		}
-	}
-
 }
 
 void MineScene::renderDropItem()

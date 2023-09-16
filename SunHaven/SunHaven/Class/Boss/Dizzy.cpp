@@ -391,7 +391,6 @@ void Dizzy::update(void)
 
 			if (_afterDeathTime > 300)
 			{
-				cout << "ав╬З╢ы" << endl;
 				_isDie = true;
 			}
 		}
