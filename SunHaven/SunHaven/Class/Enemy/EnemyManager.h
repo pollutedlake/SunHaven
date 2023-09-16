@@ -31,6 +31,8 @@ public:
 
 	void removeEnemy(int arrNum);
 
+	void collision(void);
+
 	vector<Enemy*> getEnemys(void) { return _vEnemy; }
 	void setPlayerMemoryAddress(Player* player) { _player = player; }
 

@@ -15,11 +15,6 @@ HRESULT DynusScene::init(void)
 	CAMERA->setPosition(_player->getPlayerPosition());
 	CAMERA->setLimitRight(1320 - WINSIZE_X / 2);
 	CAMERA->setLimitBottom(816 - WINSIZE_Y / 2);
-	//_om = new ObjectManager;
-	//_om->init("Dynus");
-
-	//_inven = new Inventory;
-	//_inven->init();
 
 	for (int i = 0; i < 8; i++)
 	{

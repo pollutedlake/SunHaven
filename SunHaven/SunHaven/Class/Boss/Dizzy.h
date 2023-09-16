@@ -69,7 +69,6 @@ private:
 	Meteor* _meteor;
 	Gems* _gem;
 
-	char _gemImg[128];
 	int _rndGemImg;
 
 	float _meteorFireX, _meteorFireY;

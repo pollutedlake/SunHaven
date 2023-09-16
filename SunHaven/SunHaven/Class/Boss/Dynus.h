@@ -158,6 +158,8 @@ private:
 	bool _isDamaged;
 
 	bool _isPlatform;
+	bool _isMoveCenter;
+	int _isCenterCount;
 	bool _isDie;
 
 public:

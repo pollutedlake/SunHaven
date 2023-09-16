@@ -31,6 +31,8 @@ void EnemyManager::update(void)
 		(*_viEnemy)->setPlayerY(_player->getPlayerPosition().y);
 		(*_viEnemy)->update();
 	}
+
+	//collision();
 }
 
 void EnemyManager::render(void)
@@ -88,4 +90,22 @@ void EnemyManager::removeEnemy(int arrNum)
 {
 	SAFE_DELETE(_vEnemy[arrNum]);
 	_vEnemy.erase(_vEnemy.begin() + arrNum);
+}
+
+void EnemyManager::collision(void)
+{
+	/*for (_viEnemy = _vEnemy.begin(); _viEnemy != _vEnemy.end(); ++_viEnemy)
+	{
+		for (int i = 0; i < (*_viEnemy)->getFireBall()->getBullet().size(); i++)
+		{
+			RECT rc;
+
+			if (IntersectRect(&rc, &CollisionAreaResizing((*_viEnemy)->getFireBall()->getBullet()[i].rc, 21, 18),
+				&_player->getPlayerRC()))
+			{
+				(*_viEnemy)->getFireBall()->removeBullet(i);
+				_player->hitDamage(2.0f);
+			}
+		}
+	}*/
 }

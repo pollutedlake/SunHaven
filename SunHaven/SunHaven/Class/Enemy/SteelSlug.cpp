@@ -110,6 +110,10 @@ void SteelSlug::release(void)
 void SteelSlug::update(void)
 {
 
+	if (KEYMANAGER->isOnceKeyDown('P'))
+	{
+		_hp -= 10;
+	}
 	if (_hp <= 0)
 	{
 		_hp = 0;

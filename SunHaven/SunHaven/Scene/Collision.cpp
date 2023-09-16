@@ -5,13 +5,25 @@
 
 void MineScene::collision(void)
 {
-	RECT rcTemp1;
+	RECT rcTemp1, rcTemp2;
 
 	for (int i = 0; i < _em->getEnemys().size(); i++)
 	{
 		if (IntersectRect(&rcTemp1, &_player->getPlayerRC(), &_em->getEnemys()[i]->getRcAttack()))
 		{
 			_player->hitDamage(2.0f);
+		}
+	}
+
+	for (int i = 0; i < _em->getEnemys().size(); i++)
+	{
+		for (int j = 0; j < _om->getObjectList().size(); j++)
+		{
+			if (IntersectRect(&rcTemp1, &_om->getObjectList()[j]->getRC(), &_em->getEnemys()[i]->getRect()))
+			{
+				_em->getEnemys()[i]->setX(_em->getEnemys()[i]->getX() - 0.1f);
+				_em->getEnemys()[i]->setY(_em->getEnemys()[i]->getY() - 0.1f);
+			}
 		}
 	}
 }
