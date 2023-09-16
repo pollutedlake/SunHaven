@@ -798,7 +798,7 @@ void EnemyFireBall::draw(void)
 		{
 			_worldTimeCount = GetTickCount();
 			_currentFrameX++;
-
+			cout << _currentFrameX << endl;
 			if (_viBullet->img->getMaxFrameX() < _currentFrameX)
 			{
 				_currentFrameX = 0;

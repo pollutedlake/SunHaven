@@ -64,14 +64,14 @@ HRESULT FlameImp::init(POINT position)
 	_atkToX = _atkToY = 0.0f;
 	_playerX = _playerY = 0.0f;
 
-	_fireball = new EnemyFireBall;
-	_fireball->init("FlameImp_Fireball", 10, 1000.0f);
-	_fireballSpeed = 3.0f;
+	_fireBall = new EnemyFireBall;
+	_fireBall->init("FlameImp_Fireball", 10, 1000.0f);
+	_fireBallSpeed = 3.0f;
 
 	_patrolX = RND->getFromFloatTo(300, 700);
 	_patrolY = RND->getFromFloatTo(200, 650);
 
-	_detectRange = 250.0f;
+	_detectRange = 300.0f;
 	_attackRange = 200.0f;
 
 	_waitTime = 5.0f;
@@ -108,13 +108,12 @@ void FlameImp::release(void)
 	_hpBar->release();
 	SAFE_DELETE(_hpBar);
 
-	_fireball->release();
-	SAFE_DELETE(_fireball);
+	_fireBall->release();
+	SAFE_DELETE(_fireBall);
 }	
 
 void FlameImp::update(void)
 {
-
 	if (_hp <= 0)
 	{
 		_hp = 0;
@@ -144,7 +143,7 @@ void FlameImp::update(void)
 		_curAni->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);
 	}
 
-	_fireball->update();
+	_fireBall->update();
 
 	pixelCollision();
 	//collision();
@@ -159,6 +158,16 @@ void FlameImp::update(void)
 			_curAni->AniStop();
 			_curImg = _moveImg;
 			_curAni = _moveAni;
+
+			/*_patrolX = RND->getFromFloatTo(300, 700);
+			_patrolY = RND->getFromFloatTo(200, 650);
+			_patrolPoints.push_back(make_pair(_patrolX, _patrolY));
+
+			if (!_patrolPoints.empty())
+			{
+				_nextPoints = _patrolPoints.front();
+				_patrolPoints.pop_front();
+			}*/
 
 			if (_x < _nextPoints.first)
 			{
@@ -414,12 +423,22 @@ void FlameImp::render(void)
 	if (!_isDie)
 	{
 		draw();
-		_fireball->render();
+		_fireBall->render();
 	}
 }
 
 void FlameImp::move(void)
 {
+	_patrolX = RND->getFromFloatTo(1000, 800);
+	_patrolY = RND->getFromFloatTo(1000, 850);
+	_patrolPoints.push_back(make_pair(_patrolX, _patrolY));
+
+	if (!_patrolPoints.empty())
+	{
+		_nextPoints = _patrolPoints.front();
+		_patrolPoints.pop_front();
+	}
+
 	_x += cosf(getAngle(_x, _y, _nextPoints.first, _nextPoints.second)) * _speed;
 	_y += -sinf(getAngle(_x, _y, _nextPoints.first, _nextPoints.second)) * _speed;
 }
@@ -432,15 +451,13 @@ void FlameImp::targetOn(void)
 
 void FlameImp::attack(void)
 {
-	
-
 	if (!_isLeft)
 	{
 		if (_curAni->getNowPlayIdx() == 10)
 		{
 			if (attackCoolDown())
 			{
-				_fireball->fire(_x, _y, getAngle(_x, _y, _atkToX, _atkToY), _fireballSpeed);
+				_fireBall->fire(_x, _y, getAngle(_x, _y, _atkToX, _atkToY), _fireBallSpeed);
 			}
 		}
 	}
@@ -451,7 +468,7 @@ void FlameImp::attack(void)
 		{
 			if (attackCoolDown())
 			{
-				_fireball->fire(_x, _y, getAngle(_x, _y, _atkToX, _atkToY), _fireballSpeed);
+				_fireBall->fire(_x, _y, getAngle(_x, _y, _atkToX, _atkToY), _fireBallSpeed);
 			}
 		}
 	}
@@ -478,17 +495,17 @@ bool FlameImp::attackCoolDown(void)
 	return false;
 }
 
-void FlameImp::collision(void)
-{
-	for (int i = 0; i < _fireball->getBullet().size(); i++)
-	{
-		RECT rc;
-
-		if (IntersectRect(&rc, &CollisionAreaResizing(_fireball->getBullet()[i].rc, 21, 18),
-			&_player->getPlayerRC()))
-		{
-			_fireball->removeBullet(i);
-			_player->hitDamage(2.0f);
-		}
-	}
-}
+//void FlameImp::collision(void)
+//{
+//	for (int i = 0; i < _fireball->getBullet().size(); i++)
+//	{
+//		RECT rc;
+//
+//		if (IntersectRect(&rc, &CollisionAreaResizing(_fireball->getBullet()[i].rc, 21, 18),
+//			&_player->getPlayerRC()))
+//		{
+//			_fireball->removeBullet(i);
+//			_player->hitDamage(2.0f);
+//		}
+//	}
+//}

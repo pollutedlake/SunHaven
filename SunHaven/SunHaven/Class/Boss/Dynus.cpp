@@ -107,6 +107,8 @@ HRESULT Dynus::init(void)
 
 	_platformMove = 0.0f;
 
+	_isPlatform = false;
+	_isMoveCenter = false;
 	_isPlatformUp = false;
 
 	for (int i = 0; i < 7; i++)
@@ -221,6 +223,14 @@ void Dynus::update(void)
 
 		_phase = EDynusPhase::THIRD;
 		_thirdP = EThirdPhase::RANDOM_PATTERN;
+	}
+
+	if (_isMoveCenter)
+	{
+		POINT position;
+		position.x = CENTER_X;
+		position.y = CENTER_Y + 50;
+		_player->setPlayerPosition(position);
 	}
 
 	if (!_isDie)
@@ -461,6 +471,7 @@ void Dynus::update(void)
 				}
 
 				_isPlatform = true;
+				_isMoveCenter = true;
 				platformUp();
 
 				if (_isPlatformUp)
@@ -472,7 +483,7 @@ void Dynus::update(void)
 						_bgAlpha = 0.0f;
 
 						bulletFire();
-
+						_isMoveCenter = false;
 						if (_isGM1Remove && _isGM2Remove)
 						{
 							_phase = EDynusPhase::THIRD;
@@ -495,6 +506,12 @@ void Dynus::update(void)
 				_bulletTurnCount2 = 1.5f;
 				_bulletTurnCount3 = 1.5f;
 				_isStar = false;
+				_isMoveCenter = true;
+				_isCenterCount++;
+				if (_isCenterCount > 50)
+				{
+					_isMoveCenter = false;
+				}
 
 				switch (_rndPattern)
 				{
@@ -504,7 +521,7 @@ void Dynus::update(void)
 					//	// SD: Ä³½ºÆÃ
 					//}
 					bulletFire();
-
+					
 					if (_pa1StartPosIdx < 0)
 					{
 						_curAni->AniStop();

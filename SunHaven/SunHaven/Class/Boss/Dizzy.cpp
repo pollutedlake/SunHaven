@@ -46,8 +46,8 @@ HRESULT Dizzy::init(void)
 	_curAni = _wakeAni;
 	//_curAni->AniStart();
 
-	_x = CENTER_X + 200;
-	_y = CENTER_Y + 200;
+	_x = CENTER_X + 500;
+	_y = CENTER_Y + 250;
 
 	_rcDizzy = RectMakeCenter(_x, _y, _curImg->getFrameWidth(), _curImg->getFrameHeight());
 
@@ -87,7 +87,6 @@ HRESULT Dizzy::init(void)
 	_gem = new Gems;
 	_gem->init(100, 1000.0f);
 
-	_gemImg[128] = {};
 	_rndGemImg = -1;
 
 	_gemFireX = 0.0f;
@@ -142,6 +141,8 @@ void Dizzy::update(void)
 	_hpBar->update();
 	_hpBar->setGauge(_hp, _maxHp);
 
+	_curAni->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);
+
 	if (_hp <= 0)
 	{
 		_hp = 0;
@@ -169,10 +170,7 @@ void Dizzy::update(void)
 	{
 		_meteor->update();
 		_gem->update();
-
 		_rcDizzy = RectMakeCenter(_x, _y, _curImg->getFrameWidth(), _curImg->getFrameHeight());
-		_curAni->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);
-
 		collision();
 		pixelCollision();
 	}
@@ -398,8 +396,7 @@ void Dizzy::update(void)
 		break;
 
 	case EDizzyState::DEATH:
-		if (_curAni->getNowPlayIdx() == 5 || _curAni->getNowPlayIdx() == 6)
-		{
+		
 			// SD: Á×À½
 			//_curAni->AniStop();
 			_afterDeathTime++;
@@ -408,7 +405,7 @@ void Dizzy::update(void)
 			{
 				_isDie = true;
 			}
-		}
+		
 
 		break;
 	}
