@@ -387,7 +387,7 @@ public:
 	eTools getToolType() { return _eTools; }
 	bool getIsSuccessFishing() { return _isSuccessFishing; }
 
-	RECT getSwordSlashRC() { return _swordSlashRC; }
+	RECT getSwingRC() { return _swordSwingRC; }
 
 	inline int getHP() { return _playerState.HP; }
 	inline int getMaxHP() { return _playerState.MaxHP; }

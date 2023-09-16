@@ -164,6 +164,7 @@
     <ClCompile Include="Player\Fishing.cpp" />
     <ClCompile Include="Manager\DataManager.cpp" />
     <ClCompile Include="Class\Boss\Dizzy.cpp" />
+    <ClCompile Include="Class\Enemy\Rootwalker.cpp" />
     <ClCompile Include="Scene\DizzyScene.cpp" />
     <ClCompile Include="Scene\MineScene.cpp" />
     <ClCompile Include="Scene\IntroScene.cpp" />
@@ -172,7 +173,6 @@
     <ClCompile Include="Class\Enemy\Enemy.cpp" />
     <ClCompile Include="Class\Enemy\EnemyManager.cpp" />
     <ClCompile Include="Class\Enemy\FlameImp.cpp" />
-    <ClCompile Include="Class\Enemy\MagmaBug.cpp" />
     <ClCompile Include="Class\Object\Object.cpp" />
     <ClCompile Include="Class\CraftingTable.cpp" />
     <ClCompile Include="Class\Data\JsonSaveLoader.cpp" />
@@ -208,7 +208,6 @@
     <ClCompile Include="Scene\TownScene.cpp" />
     <ClCompile Include="FrameWork\Utility\Utils.cpp" />
     <ClCompile Include="Class\Enemy\SteelSlug.cpp" />
-    <ClCompile Include="Class\Enemy\TrapWeed.cpp" />
     <ClCompile Include="Class\Enemy\Shadeclaw.cpp" />
     <ClCompile Include="Class\UI\UI.cpp" />
     <ClCompile Include="Class\Skill\Skill.cpp" />
@@ -220,13 +219,12 @@
     <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Class\UI\Buttons.h" />
     <ClInclude Include="Class\Boss\Dynus.h" />
+    <ClInclude Include="Class\UI\Buttons.h" />
     <ClInclude Include="Class\Bullets\Bullets.h" />
     <ClInclude Include="Class\Enemy\Enemy.h" />
     <ClInclude Include="Class\Enemy\EnemyManager.h" />
     <ClInclude Include="Class\Enemy\FlameImp.h" />
-    <ClInclude Include="Class\Enemy\MagmaBug.h" />
     <ClInclude Include="Class\Object\Object.h" />
     <ClInclude Include="Class\CraftingTable.h" />
     <ClInclude Include="Class\Data\JsonSaveLoader.h" />
@@ -235,6 +233,7 @@
     <ClInclude Include="Player\Fishing.h" />
     <ClInclude Include="Manager\DataManager.h" />
     <ClInclude Include="Class\Boss\Dizzy.h" />
+    <ClInclude Include="Class\Enemy\Rootwalker.h" />
     <ClInclude Include="Scene\DizzyScene.h" />
     <ClInclude Include="inc\FMOD\fmod.hpp" />
     <ClInclude Include="Class\Object\Grass.h" />
@@ -287,7 +286,6 @@
     <ClInclude Include="Scene\TownScene.h" />
     <ClInclude Include="FrameWork\Utility\Utils.h" />
     <ClInclude Include="Class\Enemy\SteelSlug.h" />
-    <ClInclude Include="Class\Enemy\TrapWeed.h" />
     <ClInclude Include="Class\Enemy\Shadeclaw.h" />
     <ClInclude Include="Class\Skill\Skill.h" />
     <ClInclude Include="Player\Skill\Skill.h">

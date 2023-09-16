@@ -140,6 +140,14 @@ HRESULT Resources::init(void)
 		38 * 2, 54 * 2,
 		true, RGB(255, 0, 255));	// 다이너스 점프 플랫폼
 
+	IMAGEMANAGER->addImage("DynusGuardPlatformL", "Resources/Images/Boss/DynusGuardPlatformL.bmp",
+		69, 117,
+		true, RGB(255, 0, 255));	// 다이너스 점프 플랫폼
+
+	IMAGEMANAGER->addImage("DynusGuardPlatformR", "Resources/Images/Boss/DynusGuardPlatformR.bmp",
+		70, 119,
+		true, RGB(255, 0, 255));	// 다이너스 점프 플랫폼
+
 	IMAGEMANAGER->addImage("DynusHpBar", "Resources/Images/UI/DynusHpBar.bmp",
 		425, 58,
 		true, RGB(255, 0, 255));	// 다이너스 HpBar

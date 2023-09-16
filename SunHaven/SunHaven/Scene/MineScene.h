@@ -5,7 +5,6 @@
 #include "../Class/UI/ProgressBar.h"
 #include "../Class/Inventory.h"
 #include "../Class/Enemy/EnemyManager.h"
-#include "../Class/Enemy/SteelSlug.h"
 
 namespace Mine
 {
@@ -47,7 +46,6 @@ private:
 	Inventory* _inven;
 
 	EnemyManager* _em;
-	//SteelSlug* _slug;
 
 public:
 	HRESULT init(void);
@@ -56,6 +54,7 @@ public:
 	void render(void);
 
 	void Collision(void);
+	void collision(void);
 	void renderDropItem();
 	void getDropItem();
 

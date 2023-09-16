@@ -1,5 +1,6 @@
 #include "Stdafx.h"
 #include "FlameImp.h"
+#include "../../Player/Player.h"
 
 HRESULT FlameImp::init(POINT position)
 {
@@ -115,9 +116,6 @@ void FlameImp::update(void)
 {
 	cout << "FlameImp: " << (int)_state << endl;
 
-	_rc = RectMakeCenter(_x, _y, _curImg->getFrameWidth(), _curImg->getFrameHeight());
-	_curAni->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);
-
 	if (_hp <= 0)
 	{
 		_hp = 0;
@@ -135,15 +133,22 @@ void FlameImp::update(void)
 
 		else
 		{
-			_curAni->setPlayFrame(6, 11, true, false);
+			_curAni->setPlayFrame(13, 25, true, false);
 		}
 
 		_curAni->AniStart();
 	}
 
+	else
+	{
+		_rc = RectMakeCenter(_x, _y, _curImg->getFrameWidth(), _curImg->getFrameHeight());
+		_curAni->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);
+	}
+
 	_fireball->update();
 
 	pixelCollision();
+	//collision();
 
 	switch (_state)
 	{
@@ -155,6 +160,16 @@ void FlameImp::update(void)
 			_curAni->AniStop();
 			_curImg = _moveImg;
 			_curAni = _moveAni;
+
+			if (_x < _nextPoints.first)
+			{
+				_isLeft = false;
+			}
+
+			else
+			{
+				_isLeft = true;
+			}
 
 			if (!_isLeft)
 			{
@@ -177,6 +192,16 @@ void FlameImp::update(void)
 			_curAni->AniStop();
 			_curImg = _moveImg;
 			_curAni = _moveAni;
+
+			if (_x < _playerX)
+			{
+				_isLeft = false;
+			}
+
+			else
+			{
+				_isLeft = true;
+			}
 
 			if (!_isLeft)
 			{
@@ -227,6 +252,16 @@ void FlameImp::update(void)
 			_curImg = _moveImg;
 			_curAni = _moveAni;
 
+			if (_x < _playerX)
+			{
+				_isLeft = false;
+			}
+
+			else
+			{
+				_isLeft = true;
+			}
+
 			if (!_isLeft)
 			{
 				_curAni->setPlayFrame(0, 5, false, true);
@@ -249,14 +284,20 @@ void FlameImp::update(void)
 		{
 			_state = EEnemyState::ATTACK;
 
-			_atkFromX = _x;
-			_atkFromY = _y;
-			_atkToX = _playerX;
-			_atkToY = _playerY;
 
 			_curAni->AniStop();
 			_curImg = _atkImg;
 			_curAni = _atkAni;
+
+			if (_x < _playerX)
+			{
+				_isLeft = false;
+			}
+
+			else
+			{
+				_isLeft = true;
+			}
 
 			if (!_isLeft)
 			{
@@ -279,9 +320,19 @@ void FlameImp::update(void)
 			_curImg = _idleImg;
 			_curAni = _idleAni;
 
+			if (_x < _nextPoints.first)
+			{
+				_isLeft = false;
+			}
+
+			else
+			{
+				_isLeft = true;
+			}
+
 			if (!_isLeft)
 			{
-				_curAni->setPlayFrame(0, 5, false, false);
+				_curAni->setPlayFrame(0, 5, false, true);
 			}
 
 			else
@@ -301,13 +352,18 @@ void FlameImp::update(void)
 		break;
 
 	case EEnemyState::ATTACK:
-		if (_curAni->getNowPlayIdx() == 9 || _curAni->getNowPlayIdx() == 14)
+		if (_x < _playerX)
 		{
-			if (attackCoolDown())
-			{
-				attack();
-			}
+			_isLeft = false;
 		}
+
+		else
+		{
+			_isLeft = true;
+		}
+		_atkToX = _playerX;
+		_atkToY = _playerY;
+		attack();
 
 		if (getDistance(_x, _y, _playerX, _playerY) > _attackRange)
 		{
@@ -316,6 +372,16 @@ void FlameImp::update(void)
 			_curAni->AniStop();
 			_curImg = _moveImg;
 			_curAni = _moveAni;
+
+			if (_x < _playerX)
+			{
+				_isLeft = false;
+			}
+
+			else
+			{
+				_isLeft = true;
+			}
 
 			if (!_isLeft)
 			{
@@ -333,7 +399,12 @@ void FlameImp::update(void)
 		break;
 
 	case EEnemyState::DEATH:
+		if (_curAni->getNowPlayIdx() == 12 || _curAni->getNowPlayIdx() == 13)
+		{
+			// SD: Á×À½
 
+			_isDie = true;
+		}
 
 		break;
 	}
@@ -341,55 +412,50 @@ void FlameImp::update(void)
 
 void FlameImp::render(void)
 {
-	draw();
-	_fireball->render();
+	if (!_isDie)
+	{
+		draw();
+		_fireball->render();
+	}
 }
 
 void FlameImp::move(void)
 {
-	if (_x < _nextPoints.first)
-	{
-		_isLeft = false;
-	}
-
-	else
-	{
-		_isLeft = true;
-	}
-
 	_x += cosf(getAngle(_x, _y, _nextPoints.first, _nextPoints.second)) * _speed;
 	_y += -sinf(getAngle(_x, _y, _nextPoints.first, _nextPoints.second)) * _speed;
 }
 
 void FlameImp::targetOn(void)
 {
-	if (_x < _playerX)
-	{
-		_isLeft = false;
-	}
-
-	else
-	{
-		_isLeft = true;
-	}
-
 	_x += cosf(getAngle(_x, _y, _playerX, _playerY)) * _targetOnSpeed;
 	_y += -sinf(getAngle(_x, _y, _playerX, _playerY)) * _targetOnSpeed;
 }
 
 void FlameImp::attack(void)
 {
-	if (_x < _playerX)
+	
+
+	if (!_isLeft)
 	{
-		_isLeft = false;
+		if (_curAni->getNowPlayIdx() == 10)
+		{
+			if (attackCoolDown())
+			{
+				_fireball->fire(_x, _y, getAngle(_x, _y, _atkToX, _atkToY), _fireballSpeed);
+			}
+		}
 	}
 
 	else
 	{
-		_isLeft = true;
+		if (_curAni->getNowPlayIdx() == 13)
+		{
+			if (attackCoolDown())
+			{
+				_fireball->fire(_x, _y, getAngle(_x, _y, _atkToX, _atkToY), _fireballSpeed);
+			}
+		}
 	}
-
-	_fireball->fire(_x, _y, getAngle(_atkFromX, _atkFromY, _atkToX, _atkToY), _fireballSpeed);
 }
 
 void FlameImp::draw(void)
@@ -413,54 +479,17 @@ bool FlameImp::attackCoolDown(void)
 	return false;
 }
 
-void FlameImp::pixelCollision(void)
+void FlameImp::collision(void)
 {
-	if (_collisionMap != nullptr)
+	for (int i = 0; i < _fireball->getBullet().size(); i++)
 	{
-		for (int i = _rc.left + 4; i <= _rc.right - 4; i++)
+		RECT rc;
+
+		if (IntersectRect(&rc, &CollisionAreaResizing(_fireball->getBullet()[i].rc, 21, 18),
+			&_player->getPlayerRC()))
 		{
-			COLORREF collisionT =
-				GetPixel(_collisionMap->getMemDC(),
-					i, _rc.top);
-			COLORREF collisionB =
-				GetPixel(_collisionMap->getMemDC(),
-					i, _rc.bottom);
-
-			if (collisionT == RGB(255, 0, 255))
-			{
-				_isCollisionTop = true;
-			}
-
-			else
-			{
-				_isCollisionTop = false;
-			}
-
-			if (collisionB == RGB(255, 0, 255))
-			{
-				_isCollisionBottom = true;
-			}
-
-			else
-			{
-				_isCollisionBottom = false;
-			}
-		}
-
-		for (int i = _rc.top + 4; i <= _rc.bottom - 4; i++)
-		{
-			COLORREF collisionL =
-				GetPixel(_collisionMap->getMemDC(),
-					_rc.left, i);
-
-			COLORREF collisionR =
-				GetPixel(_collisionMap->getMemDC(),
-					_rc.right, i);
-
-			_isCollisionLeft =
-				collisionL == RGB(255, 0, 255) ? true : false;
-			_isCollisionRight =
-				collisionR == RGB(255, 0, 255) ? true : false;
+			_fireball->removeBullet(i);
+			_player->hitDamage(2.0f);
 		}
 	}
 }

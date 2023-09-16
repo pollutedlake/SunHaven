@@ -5,8 +5,8 @@
 
 HRESULT DynusScene::init(void)
 {
-
-	IMAGEMANAGER->addImage("DynusMapCollision", "DynusMapCollision.bmp", 1320, 816);
+	_bg = IMAGEMANAGER->addImage("다이너스", "./Resources/Data/Map/DynusMap.bmp", 2400, 2400, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("DynusMapCollision", "./Resources/Data/Map/DynusMapCollision.bmp", 2400, 2400);
 	_player = new Player;
 	_player->init(CENTER_X, CENTER_Y + 200, "DynusMapCollision");
 
@@ -15,14 +15,19 @@ HRESULT DynusScene::init(void)
 	CAMERA->setPosition(_player->getPlayerPosition());
 	CAMERA->setLimitRight(1320 - WINSIZE_X / 2);
 	CAMERA->setLimitBottom(816 - WINSIZE_Y / 2);
+	//_om = new ObjectManager;
+	//_om->init("Dynus");
 
-	for (int i = 0; i < 4; i++)
+	//_inven = new Inventory;
+	//_inven->init();
+
+	for (int i = 0; i < 8; i++)
 	{
-		_rcStar[i] = RectMake(960 * (i % 2), 400 * (i / 2), 960, 400);
+		_rcStar[i] = RectMake(402 * (i % 4), 402 * (i / 4), 402, 402);
 	}
 
-	_loopImg = IMAGEMANAGER->addImage("StarShader", "Resources/Images/Layer/StarShader.bmp",
-		960, 400);
+	_loopImg = IMAGEMANAGER->addImage("BlueStarFill", "Resources/Images/Layer/StarShader.bmp",
+		402, 402);
 	_offsetX = _offsetY = 0.0f;
 	_em = new EnemyManager;
 	_dynus->setEnemyManagerMemoryAddress(_em);
@@ -54,11 +59,25 @@ void DynusScene::update(void)
 {
 	_player->update();
 	CAMERA->setPosition(_player->getPlayerPosition());
-	CAMERA->update();
+	//CAMERA->update();
 	_player->worldToCamera(CAMERA->worldToCamera
 	(_player->getPlayerPosition()));
 	_dynus->update();
-	_em->update();
+	if (!_dynus->getIsDie())
+	{
+		_em->update();
+	}
+	/*if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
+	{
+		_player->UseTool(_om, _ptMouse);
+		_inven->itemMove();
+	}*/
+	if (KEYMANAGER->isOnceKeyUp(VK_LBUTTON))
+	{
+
+	}
+	_player->UseToolAnim(KEYMANAGER->isStayKeyDown(VK_LBUTTON));
+	collision();
 
 	static float offsetXDirection = 1.0f;
 	_offsetX += 0.5f * offsetXDirection;
@@ -67,40 +86,44 @@ void DynusScene::update(void)
 	{
 		offsetXDirection *= -1.0f;
 	}
-
-	collision();
 }
 
 void DynusScene::render(void)
 {
-	for (int i = 0; i < 4; i++)
+	for (int i = 0; i < 8; i++)
 	{
 		_loopImg->loopRender(getMemDC(), &_rcStar[i],
-			CAMERA->worldToCameraX(_offsetX), CAMERA->worldToCameraY(_offsetY));
+			_offsetX, _offsetY);
 	}
 
 	/*IMAGEMANAGER->alphaRender("StarShader", getMemDC(), 0, 0, 250);
 	IMAGEMANAGER->alphaRender("StarShader", getMemDC(), 960, 0, 250);
 	IMAGEMANAGER->alphaRender("StarShader", getMemDC(), 960, 400, 250);
 	IMAGEMANAGER->alphaRender("StarShader", getMemDC(), 0, 400, 250);*/
-	IMAGEMANAGER->alphaRender("BlueStarFill", getMemDC(), CAMERA->worldToCameraX(0), CAMERA->worldToCameraY(0), 150);
+	/*IMAGEMANAGER->alphaRender("BlueStarFill", getMemDC(), CAMERA->worldToCameraX(0), CAMERA->worldToCameraY(0), 150);
 	IMAGEMANAGER->alphaRender("BlueStarFill", getMemDC(), CAMERA->worldToCameraX(0), CAMERA->worldToCameraY(402), 150);
 	IMAGEMANAGER->alphaRender("BlueStarFill", getMemDC(), CAMERA->worldToCameraX(402), CAMERA->worldToCameraY(0), 150);
 	IMAGEMANAGER->alphaRender("BlueStarFill", getMemDC(), CAMERA->worldToCameraX(402), CAMERA->worldToCameraY(402), 150);
 	IMAGEMANAGER->alphaRender("BlueStarFill", getMemDC(), CAMERA->worldToCameraX(804), CAMERA->worldToCameraY(0), 150);
 	IMAGEMANAGER->alphaRender("BlueStarFill", getMemDC(), CAMERA->worldToCameraX(804), CAMERA->worldToCameraY(402), 150);
 	IMAGEMANAGER->alphaRender("BlueStarFill", getMemDC(), CAMERA->worldToCameraX(1206), CAMERA->worldToCameraY(0), 150);
-	IMAGEMANAGER->alphaRender("BlueStarFill", getMemDC(), CAMERA->worldToCameraX(1206), CAMERA->worldToCameraY(402), 150);
+	IMAGEMANAGER->alphaRender("BlueStarFill", getMemDC(), CAMERA->worldToCameraX(1206), CAMERA->worldToCameraY(402), 150);*/
 	//IMAGEMANAGER->render("StarShader", getMemDC(), 0, 400);
 	//IMAGEMANAGER->alphaRender("StarShaderTest", getMemDC(), 0, 0, 150);
 	//IMAGEMANAGER->render("DynusLayer0", getMemDC(), 0, 0, 30, 95, WINSIZE_X, WINSIZE_Y);
-	IMAGEMANAGER->alphaRender("DynusLayer0", getMemDC(), 0, 0, CAMERA->getPosition().x - WINSIZE_X / 2, CAMERA->getPosition().y - WINSIZE_Y / 2, WINSIZE_X, WINSIZE_Y, _dynus->getBgAlpha());
-
-	_em->render();
-	_dynus->drawPlatform();
-	//_dynus->drawGuardMine();
+	//IMAGEMANAGER->alphaRender("DynusLayer0", getMemDC(), 0, 0, CAMERA->getPosition().x - WINSIZE_X / 2, CAMERA->getPosition().y - WINSIZE_Y / 2, WINSIZE_X, WINSIZE_Y, _dynus->getBgAlpha());
+	_bg->alphaRender(getMemDC(), 0, 0, CAMERA->getPosition().x - WINSIZE_X / 2, CAMERA->getPosition().y - WINSIZE_Y / 2, WINSIZE_X, WINSIZE_Y, _dynus->getBgAlpha());
+	if (!_dynus->getIsDie())
+	{
+		_em->render();
+	}
+	if (_dynus->getIsPlatform())
+	{
+		IMAGEMANAGER->render("DynusGuardPlatformL", getMemDC(), CAMERA->worldToCameraX(65), CAMERA->worldToCameraY(CENTER_Y + 45));
+		IMAGEMANAGER->render("DynusGuardPlatformR", getMemDC(), CAMERA->worldToCameraX(WINSIZE_X - 95), CAMERA->worldToCameraY(CENTER_Y + 45));
+		_dynus->drawPlatform();
+	}
 	_player->render();
 	_dynus->render();
-
 	_ui->render();
 }

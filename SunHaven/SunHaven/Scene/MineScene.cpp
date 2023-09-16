@@ -30,11 +30,10 @@ HRESULT MineScene::init(void)
 
 	_ui = new UI;
 	_ui->init("Mine");
+	_ui->setAdressPlayer(_player);
 
 	_em = new EnemyManager;
 	_em->setPlayerMemoryAddress(_player);
-	//_slug->setPlayerMemoryAddress(_player);
-
 	_em->spawnSteelSlug();
 	_em->spawnFlameImp();
 
@@ -112,6 +111,8 @@ void MineScene::update(void)
 	{
 		SCENEMANAGER->changeScene("Dizzy");
 	}
+
+	collision();
 }
 
 void MineScene::render(void)

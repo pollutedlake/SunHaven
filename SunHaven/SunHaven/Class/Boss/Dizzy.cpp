@@ -50,7 +50,6 @@ HRESULT Dizzy::init(void)
 	_y = CENTER_Y + 200;
 
 	_rcDizzy = RectMakeCenter(_x, _y, _curImg->getFrameWidth(), _curImg->getFrameHeight());
-	_rcSpinAtk = RectMakeCenter(_x, _y, _curImg->getFrameWidth(), _curImg->getFrameHeight());
 
 	_collisionMap = IMAGEMANAGER->findImage("DizzyMapCollision");
 
@@ -64,11 +63,6 @@ HRESULT Dizzy::init(void)
 	_isDie = false;
 	_isLeft = false;
 	_worldTimeCount = GetTickCount();
-
-	_rcColl[0] = RectMake(_rcDizzy.left, _rcDizzy.top - 3, 3, 3);
-	_rcColl[1] = RectMake(_rcDizzy.right + 3, _rcDizzy.top, 3, 3);
-	_rcColl[2] = RectMake(_rcDizzy.right - 3, _rcDizzy.top + 3, 3, 3);
-	_rcColl[3] = RectMake(_rcDizzy.left - 3, _rcDizzy.top, 3, 3);
 
 	_spinFromX = _spinFromY = 0.0f;
 	_spinToX = _spinToY = 0.0f;
@@ -171,11 +165,17 @@ void Dizzy::update(void)
 		_curAni->AniStart();
 	}
 
-	_meteor->update();
-	_gem->update();
+	if (!_isDie)
+	{
+		_meteor->update();
+		_gem->update();
 
-	_rcDizzy = RectMakeCenter(_x, _y, _curImg->getFrameWidth(), _curImg->getFrameHeight());
-	_curAni->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);
+		_rcDizzy = RectMakeCenter(_x, _y, _curImg->getFrameWidth(), _curImg->getFrameHeight());
+		_curAni->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);
+
+		collision();
+		pixelCollision();
+	}
 
 	if (_x < _player->getPlayerPosition().x && _state != EDizzyState::SPIN && 
 		_state != EDizzyState::DEATH)
@@ -275,6 +275,7 @@ void Dizzy::update(void)
 
 		if (_isCollisionLeft || _isCollisionRight || _isCollisionTop || _isCollisionBottom)
 		{
+			_rcSpinAtk = RectMakeCenter(0, 0, 0, 0);
 			if (_spinCount < 2)
 			{
 				_spinCount++;
@@ -399,68 +400,18 @@ void Dizzy::update(void)
 	case EDizzyState::DEATH:
 		if (_curAni->getNowPlayIdx() == 5 || _curAni->getNowPlayIdx() == 6)
 		{
+			// SD: Á×À½
 			//_curAni->AniStop();
 			_afterDeathTime++;
 
 			if (_afterDeathTime > 300)
 			{
-				// SD: Á×À½
 				_isDie = true;
 			}
 		}
 
 		break;
 	}
-
-	if (_collisionMap != nullptr)
-	{
-		for (int i = _rcDizzy.left + 4; i <= _rcDizzy.right - 4; i++)
-		{
-			COLORREF collisionT =
-				GetPixel(_collisionMap->getMemDC(),
-					i, _rcDizzy.top);
-			COLORREF collisionB =
-				GetPixel(_collisionMap->getMemDC(),
-					i, _rcDizzy.bottom);
-
-			if (collisionT == RGB(255, 0, 255))
-			{
-				_isCollisionTop = true;
-			}
-
-			else
-			{
-				_isCollisionTop = false;
-			}
-
-			if (collisionB == RGB(255, 0, 255))
-			{
-				_isCollisionBottom = true;
-			}
-
-			else
-			{
-				_isCollisionBottom = false;
-			}
-		}
-
-		for (int i = _rcDizzy.top + 4; i <= _rcDizzy.bottom - 4; i++)
-		{
-			COLORREF collisionL =
-				GetPixel(_collisionMap->getMemDC(),
-					_rcDizzy.left, i);
-
-			COLORREF collisionR =
-				GetPixel(_collisionMap->getMemDC(),
-					_rcDizzy.right, i);
-
-			_isCollisionLeft =
-				collisionL == RGB(255, 0, 255) ? true : false;
-			_isCollisionRight =
-				collisionR == RGB(255, 0, 255) ? true : false;
-		}
-	}
-
 }
 
 void Dizzy::render(void)
@@ -490,6 +441,7 @@ void Dizzy::render(void)
 void Dizzy::draw(void)
 {
 	//DrawRectMake(getMemDC(), CAMERA->worldToCameraRect(_rcDizzy));
+	DrawRectMake(getMemDC(), CAMERA->worldToCameraRect(_rcSpinAtk));
 	
 	_curImg->aniRender(getMemDC(), CAMERA->worldToCameraX(_x - _curImg->getFrameWidth() / 2), 
 		CAMERA->worldToCameraY(_y - _curImg->getFrameHeight() / 2), _curAni);
@@ -497,6 +449,8 @@ void Dizzy::draw(void)
 
 void Dizzy::spin(void)
 {
+	_rcSpinAtk = RectMakeCenter(_x, _y, _curImg->getFrameWidth(), _curImg->getFrameHeight());
+
 	float spinSpeed = 8.0f;
 	
 	if (_isCollisionLeft) _x += spinSpeed * 10;
@@ -618,4 +572,81 @@ bool Dizzy::afterDeathTime(void)
 	}
 
 	return false;
+}
+
+void Dizzy::collision(void)
+{
+	for (int i = 0; i < _meteor->getBullet().size(); i++)
+	{
+		RECT rc;
+
+		if (IntersectRect(&rc, &_meteor->getBullet()[i].rc, &_player->getPlayerRC()))
+		{
+			_meteor->removeBullet(i);
+			_player->hitDamage(5.0f);
+		}
+	}
+
+	for (int i = 0; i < _gem->getBullet().size(); i++)
+	{
+		RECT rc;
+
+		if (IntersectRect(&rc, &_gem->getBullet()[i].rc, &_player->getPlayerRC()))
+		{
+			_gem->removeBullet(i);
+			_player->hitDamage(4.0f);
+		}
+	}
+}
+
+void Dizzy::pixelCollision(void)
+{
+	if (_collisionMap != nullptr)
+	{
+		for (int i = _rcDizzy.left + 4; i <= _rcDizzy.right - 4; i++)
+		{
+			COLORREF collisionT =
+				GetPixel(_collisionMap->getMemDC(),
+					i, _rcDizzy.top);
+			COLORREF collisionB =
+				GetPixel(_collisionMap->getMemDC(),
+					i, _rcDizzy.bottom);
+
+			if (collisionT == RGB(255, 0, 255))
+			{
+				_isCollisionTop = true;
+			}
+
+			else
+			{
+				_isCollisionTop = false;
+			}
+
+			if (collisionB == RGB(255, 0, 255))
+			{
+				_isCollisionBottom = true;
+			}
+
+			else
+			{
+				_isCollisionBottom = false;
+			}
+		}
+
+		for (int i = _rcDizzy.top + 4; i <= _rcDizzy.bottom - 4; i++)
+		{
+			COLORREF collisionL =
+				GetPixel(_collisionMap->getMemDC(),
+					_rcDizzy.left, i);
+
+			COLORREF collisionR =
+				GetPixel(_collisionMap->getMemDC(),
+					_rcDizzy.right, i);
+
+			_isCollisionLeft =
+				collisionL == RGB(255, 0, 255) ? true : false;
+			_isCollisionRight =
+				collisionR == RGB(255, 0, 255) ? true : false;
+		}
+	}
 }

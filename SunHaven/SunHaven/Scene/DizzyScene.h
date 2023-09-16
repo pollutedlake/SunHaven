@@ -3,12 +3,14 @@
 #include "../Class/Boss/Dizzy.h"
 #include "../../Player/Player.h"
 
-
+class UI;
 class DizzyScene : public GameNode
 {
 private:
 	Dizzy* _dizzy;
 	Player* _player;
+
+	UI* _ui;
 
 	char _text[64];
 

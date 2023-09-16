@@ -1,6 +1,6 @@
 #include "Stdafx.h"
 #include "DizzyScene.h"
-#
+#include "../Class/UI/UI.h"
 
 HRESULT DizzyScene::init(void)
 {
@@ -17,7 +17,9 @@ HRESULT DizzyScene::init(void)
 	CAMERA->setLimitRight(2196 - WINSIZE_X / 2);
 	CAMERA->setLimitBottom(1512 - WINSIZE_Y / 2);
 
-
+	_ui = new UI;
+	_ui->init("Dynus");
+	_ui->setAdressPlayer(_player);
 
 	wsprintf(_text, "DizzyScene");
 
@@ -40,6 +42,8 @@ void DizzyScene::update(void)
 	_player->update();
 	_player->worldToCamera(CAMERA->worldToCamera(_player->getPlayerPosition()));
 
+	collision();
+
 	CAMERA->setPosition(_player->getPlayerPosition());
 	CAMERA->update();
 	if (KEYMANAGER->isOnceKeyDown(VK_F1))
@@ -55,8 +59,5 @@ void DizzyScene::render(void)
 
 	_dizzy->render();
 	_player->render();
-}
-
-void DizzyScene::collision(void)
-{
+	_ui->render();
 }

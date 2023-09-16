@@ -100,8 +100,8 @@ void Beam::draw(void)
 			_viBullet->pImg->getFrameX(), _viBullet->pImg->getFrameY(),
 			InterpolationModeNearestNeighbor, 0);*/
 
-
-		_viBullet->pImg->GPRender(getMemDC(), _viBullet->rc.left, _viBullet->rc.top, 1, 1,
+		_viBullet->pImg->GPRender(getMemDC(), CAMERA->worldToCameraX(_viBullet->rc.left),
+			CAMERA->worldToCameraY(_viBullet->rc.top), 1, 1,
 			_sourX, 0, _viBullet->pImg->getWidth() - _sourX, _viBullet->pImg->getHeight(),
 			InterpolationModeNearestNeighbor, 0);
 
@@ -789,8 +789,8 @@ void EnemyFireBall::draw(void)
 {
 	for (_viBullet = _vBullet.begin(); _viBullet != _vBullet.end(); ++_viBullet)
 	{
-		_viBullet->img->frameRender(getMemDC(), CAMERA->worldToCameraX(_viBullet->x), 
-			CAMERA->worldToCameraY(_viBullet->y));
+		_viBullet->img->frameRender(getMemDC(), CAMERA->worldToCameraX(_viBullet->x - _viBullet->img->getFrameWidth() / 2),
+			CAMERA->worldToCameraY(_viBullet->y - _viBullet->img->getFrameHeight() / 2));
 
 		_viBullet->img->setFrameY(0);
 

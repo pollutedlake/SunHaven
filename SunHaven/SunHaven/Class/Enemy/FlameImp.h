@@ -28,7 +28,7 @@ public:
 
 	bool attackCoolDown(void) override;
 
-	void pixelCollision(void) override;
+	void collision(void);
 
 	void setPlayerMemoryAddress(Player* player) { _player = player; }
 

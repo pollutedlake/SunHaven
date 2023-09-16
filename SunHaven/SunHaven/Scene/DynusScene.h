@@ -11,7 +11,8 @@ class DynusScene : public GameNode
 {
 private:
 	GImage* _loopImg;
-	RECT _rcStar[4];
+	GImage* _bg;
+	RECT _rcStar[8];
 	float _offsetX, _offsetY;
 
 	Dynus* _dynus;
