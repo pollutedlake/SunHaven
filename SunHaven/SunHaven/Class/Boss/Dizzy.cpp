@@ -441,7 +441,7 @@ void Dizzy::render(void)
 void Dizzy::draw(void)
 {
 	//DrawRectMake(getMemDC(), CAMERA->worldToCameraRect(_rcDizzy));
-	DrawRectMake(getMemDC(), CAMERA->worldToCameraRect(_rcSpinAtk));
+	//DrawRectMake(getMemDC(), CAMERA->worldToCameraRect(_rcSpinAtk));
 	
 	_curImg->aniRender(getMemDC(), CAMERA->worldToCameraX(_x - _curImg->getFrameWidth() / 2), 
 		CAMERA->worldToCameraY(_y - _curImg->getFrameHeight() / 2), _curAni);

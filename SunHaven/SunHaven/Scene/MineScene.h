@@ -53,7 +53,6 @@ public:
 	void update(void);
 	void render(void);
 
-	void Collision(void);
 	void collision(void);
 	void renderDropItem();
 	void getDropItem();

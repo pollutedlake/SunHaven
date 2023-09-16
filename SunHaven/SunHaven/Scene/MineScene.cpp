@@ -145,22 +145,6 @@ void MineScene::render(void)
 	_ui->render();
 }
 
-void MineScene::Collision(void)
-{
-	for (int i = 0; i < _om->getObjectList().size(); i++)
-	{
-		RECT temp;
-
-		if (IntersectRect(&temp,
-			&RectMakeCenter(_player->getPlayerPosition().x,
-				_player->getPlayerPosition().y, 48, 52),
-			&_om->getObjectList()[i]->getRC()))
-		{
-		}
-	}
-
-}
-
 void MineScene::renderDropItem()
 {
 	for (_liDropItem = _lDropItem.begin(); _liDropItem != _lDropItem.end(); ++_liDropItem)

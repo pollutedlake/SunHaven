@@ -4,7 +4,7 @@
 
 HRESULT DizzyScene::init(void)
 {
-	IMAGEMANAGER->addImage("DizzyMapCollision", "DizzyMapCollision.bmp", 1464 * 1.5, 1008 * 1.5);
+	IMAGEMANAGER->addImage("DizzyMapCollision", "./Resources/Data/Map/DizzyMapCollision.bmp", 1464 * 1.5, 1008 * 1.5);
 
 	_player = new Player;
 	_player->init(CENTER_X, CENTER_Y + 200, "DizzyMapCollision");
