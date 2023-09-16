@@ -384,6 +384,8 @@ public:
 	inline int getMaxMP() { return _playerState.MaxMP; }
 	inline int getDefense() { return _playerState.defence; }
 	inline int getAttackDamage() { return _playerState.attackDamage; }
+	inline eTools getTools() { return _eTools; }
+	inline int getGold() { return _playerState.gold; }
 	
 
 	void setHP(int itemStat)
@@ -400,6 +402,11 @@ public:
 	{
 		_playerState.attackDamage = getAttackDamage() + itemStat;
 
+	}
+
+	void setGold(int sellgold)
+	{
+		_playerState.gold = getGold() + sellgold;
 	}
 
 	Player() {}

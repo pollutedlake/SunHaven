@@ -72,24 +72,24 @@ void FarmScene::update(void)
 
 		_player->ObjectCollision(_om);
 
-	if(KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
-	{
-		list<POINT> ptList;
-		ptList = _player->UseTool(_om, _ptMouse);
-		for(auto it = ptList.begin(); it != ptList.end(); ++it)
+		if(KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
 		{
-			if (!SamePoint(*it, PointMake(NULL,NULL)))
+			list<POINT> ptList;
+			ptList = _player->UseTool(_om, _ptMouse);
+			for(auto it = ptList.begin(); it != ptList.end(); ++it)
 			{
-				_hitEffectList.push_back(make_pair(*it, 0));
+				if (!SamePoint(*it, PointMake(NULL,NULL)))
+				{
+					_hitEffectList.push_back(make_pair(*it, 0));
+				}
 			}
+			_inven->itemMove();
+			_inven->invenXButton();
 		}
-		_inven->itemMove();
-		_inven->invenXButton();
-	}
-	if (KEYMANAGER->isOnceKeyUp(VK_LBUTTON))
-	{
-		_inven->putItem();
-	}
+		if (KEYMANAGER->isOnceKeyUp(VK_LBUTTON))
+		{
+			_inven->putItem();
+		}
 
 		_player->UseToolAnim(KEYMANAGER->isStayKeyDown(VK_LBUTTON));
 		
@@ -106,6 +106,7 @@ void FarmScene::update(void)
 		{
 			_moveMap = true;
 		}
+		
 	}
 	else
 	{
@@ -188,6 +189,7 @@ void FarmScene::render(void)
 	
 	renderHitEffect();
 	_inven->render();
+	_inven->setCurrentSlot(_player->getTools());
 	_ui->render();
 	if (_moveMap)
 	{
