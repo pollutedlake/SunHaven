@@ -178,6 +178,9 @@ HRESULT Resources::init(void)
 	//	true, RGB(255, 0, 255));	// 다이너스 점프 플랫폼
 
 	// Sound
+	SOUNDMANAGER->addSound("dynus_battle_v7", "Resources/Sound/dynus_battle_v7.wav", true, true);
+
+
 
 	// ====================DizzyScene====================
 	// Image
@@ -208,6 +211,8 @@ HRESULT Resources::init(void)
 
 
 	// Sound
+	
+
 
 	// ====================MineScene====================
 	// Image
@@ -216,7 +221,8 @@ HRESULT Resources::init(void)
 		4, 1,
 		true, RGB(255, 0, 255));	// 적 파이어볼
 
-	// Sound
+	// Sound 
+	SOUNDMANAGER->addSound("Candy_Mines_Final2", "Resources/Sound/Candy_Mines_Final2.wav", true, true);
 
 
 	// ====================FarmScene====================
@@ -225,11 +231,17 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addImage("젖은 경작지", "Resources/Images/Object/Farm_wetdirt.bmp", 36, 36, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("HitEffect", "Resources/Images/Player/HitEffect.bmp", 288, 48, 6, 1, true, RGB(255, 0, 255));
 
-	// Sound
+	// Sound 
+	SOUNDMANAGER->addSound("Player_Farm_Var1_Final1", "Resources/Sound/Player_Farm_Var1_Final1.wav", true, true);
+	SOUNDMANAGER->addSound("ScytheCuttingCrops1", "Resources/Sound/ScytheCuttingCrops1.wav", false, false);
+	SOUNDMANAGER->addSound("TreeHit1", "Resources/Sound/TreeHit1.wav", false, false);
+	SOUNDMANAGER->addSound("RockHit1", "Resources/Sound/RockHit1.wav", false, false);
 
 	// ====================ShopScene====================
 	
-	// itemImage(슬롯x)
+	// itemImage(슬롯x) icon_scythe2
+	IMAGEMANAGER->addImage("icon_scythe2", "Resources/Images/Item/icon_scythe2.bmp", 32, 32, true, RGB(255, 0, 255));
+
 	IMAGEMANAGER->addImage("녹슨 곡괭이", "Resources/Images/Item/icon_rusty_pickaxe2.bmp", 32, 32, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("아다만트 곡괭이", "Resources/Images/Item/icon_adamant_pickaxe2.bmp", 32, 32, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("녹슨 괭이", "Resources/Images/Item/icon_rusty_hoe2.bmp", 32, 32, true, RGB(255, 0, 255));
@@ -300,11 +312,17 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addImage("item_bg_common", "Resources/Images/Inventory/item_bg_common.bmp", 32, 32, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("item_bg_rare", "Resources/Images/Inventory/item_bg_rare.bmp", 32, 32, true, RGB(255, 0, 255));
 
+	IMAGEMANAGER->addImage("selection_hover-click-selected_0", "Resources/Images/Inventory/selection_hover-click-selected_0.bmp", 34, 34, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("tooltip_bg", "Resources/Images/Inventory/tooltip_bg.bmp", 137, 87, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("tooltip_bg_flipped", "Resources/Images/Inventory/tooltip_bg_flipped.bmp", 137, 87, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("combat_skill_tree_icons_0", "Resources/Images/Inventory/combat_skill_tree_icons_0.bmp", 32, 32, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("combat_skill_tree_icons_6", "Resources/Images/Inventory/combat_skill_tree_icons_6.bmp", 32, 32, true, RGB(255, 0, 255));
+
 	//CraftingImage
 	//IMAGEMANAGER->addImage("cooking_bg1" , "Resources/Images/CraftingTable/cooking_bg1.bmp",)
 
 
-	// shopImage
+	// shopImage 
 	IMAGEMANAGER->addImage("Shop_Bg", "Resources/Images/Shop/Shop_Bg.bmp", WINSIZE_X, WINSIZE_Y,true,RGB(255,0,255));
 	IMAGEMANAGER->addImage("store_bg", "Resources/Images/Shop/store_bg.bmp", 522, 654, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("store_item_bg", "Resources/Images/Shop/store_item_bg.bmp", 231, 93, true, RGB(255, 0, 255));
@@ -318,8 +336,10 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addImage("x20_button_normal", "Resources/Images/Shop/x20_button_normal.bmp", 28, 20, true, RGB(255, 0, 255));
 
 	IMAGEMANAGER->addImage("UI_icon_coin", "Resources/Images/Shop/UI_icon_coin.bmp", 10, 9, true, RGB(255, 0, 255));
-
+	IMAGEMANAGER->addImage("goldbanner", "Resources/Images/Shop/goldbanner.bmp", 133, 35, true, RGB(255, 0, 255));
 	// Sound
+	SOUNDMANAGER->addSound("E_getItem_Sound1", "Resources/Sound/E_getItem_Sound1.wav", false, false);
+	
 
 	// ====================
 	// Image
@@ -406,8 +426,14 @@ HRESULT Resources::init(void)
 		0, 0,
 		1, 1,
 		false, NULL, RotateNoneFlipNone);
-	// Sound
+	// Sound 
 	SOUNDMANAGER->addSound("E_TextScroll3", "Resources/Sound/E_TextScroll3.wav", false, false);
+	SOUNDMANAGER->addSound("인트로 린하우스", "Resources/Sound/인트로 린하우스.wav", true, true);
+	SOUNDMANAGER->addSound("인트로 기차안 브금", "Resources/Sound/인트로 기차안 브금.wav", true, true);
+	SOUNDMANAGER->addSound("SceneTransition1", "Resources/Sound/SceneTransition1.wav", false, false);
+	SOUNDMANAGER->addSound("E_인트로 대장장이", "Resources/Sound/E_인트로 대장장이.wav", false, false);
+	
+
 
 	return S_OK;
 }

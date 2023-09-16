@@ -177,6 +177,7 @@ HRESULT IntroScene::init(void)
 	_dialogState = HIDE;
 	_answerN = 0;
 	// SD : 인트로 린 집 배경음
+	SOUNDMANAGER->play("인트로 린하우스", 0.2f);
 	return S_OK;
 }
 
@@ -188,6 +189,7 @@ void IntroScene::release(void)
 
 void IntroScene::update(void)
 {
+	SOUNDMANAGER->update();
 	if(_cutIdx == 0)
 	{
 		_lynn->update();
@@ -205,6 +207,7 @@ void IntroScene::update(void)
 		{
 			if (_count > _lynnMom->getMaxFrameX())
 			{
+				SOUNDMANAGER->play("E_인트로 대장장이", 1.0f);
 				_count = 0;
 				_count2 = 0;
 			}
@@ -220,7 +223,12 @@ void IntroScene::update(void)
 				_dialogIdx++;
 				_cutIdx++;
 				// SD : 인트로 린 집 배경음 꺼줘
+				SOUNDMANAGER->stop("인트로 린하우스");
 				// SD : 인트로 기차 배경음
+				if (!SOUNDMANAGER->isPlaySound("인트로 린하우스"))
+				{
+					SOUNDMANAGER->play("인트로 기차안 브금", 0.2f);
+				}
 			}
 		}
 		if (_lynn->getActionIdx() == 5)
@@ -318,6 +326,7 @@ void IntroScene::update(void)
 			else if (_lynn->getActionIdx() == 27)
 			{
 				_changeCut = true;
+				SOUNDMANAGER->play("SceneTransition1", 1.0f);
 				_changeCut = WINSIZE_X;
 			}
 		}
@@ -428,12 +437,14 @@ void IntroScene::update(void)
 					{
 						_changeCut = true;
 						// SD : 씬 전환 소리
+						SOUNDMANAGER->play("SceneTransition1",1.0f);
 						_dialogState = CLOSE;
 						_dialogIdx = 23;
 						_changeCutTime = WINSIZE_X;
 					}
 					if (_dialogIdx == 67)
 					{
+						SOUNDMANAGER->stop("인트로 기차안 브금");
 						SCENEMANAGER->changeScene("Farm");
 					}
 				}
@@ -442,6 +453,8 @@ void IntroScene::update(void)
 	}
 	if (KEYMANAGER->isOnceKeyDown(VK_F1))
 	{
+		SOUNDMANAGER->stop("인트로 린하우스");
+		SOUNDMANAGER->stop("인트로 기차안 브금");
 		SCENEMANAGER->changeScene("Farm");
 	}
 }

@@ -22,7 +22,7 @@ HRESULT DizzyScene::init(void)
 	_ui->setAdressPlayer(_player);
 
 	wsprintf(_text, "DizzyScene");
-
+	
 	return S_OK;
 }
 

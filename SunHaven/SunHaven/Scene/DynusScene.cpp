@@ -40,6 +40,7 @@ HRESULT DynusScene::init(void)
 	_ui->setAdressPlayer(_player);
 
 	wsprintf(_text, "DynusScene");
+	
 	return S_OK;
 }
 
@@ -57,6 +58,7 @@ void DynusScene::release(void)
 
 void DynusScene::update(void)
 {
+	SOUNDMANAGER->update();
 	_player->update();
 	CAMERA->setPosition(_player->getPlayerPosition());
 	//CAMERA->update();

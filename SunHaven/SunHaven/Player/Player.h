@@ -393,6 +393,32 @@ public:
 	inline int getMaxHP() { return _playerState.MaxHP; }
 	inline int getMP() { return _playerState.MP; }
 	inline int getMaxMP() { return _playerState.MaxMP; }
+	inline int getDefense() { return _playerState.defence; }
+	inline int getAttackDamage() { return _playerState.attackDamage; }
+	inline eTools getTools() { return _eTools; }
+	inline int getGold() { return _playerState.gold; }
+	
+
+	void setHP(int itemStat)
+	{
+		_playerState.HP = getHP() + itemStat;
+	}
+
+	void setDefense(int itemStat)
+	{
+		_playerState.defence =  itemStat;
+	}
+
+	void setAttackDamage(int itemStat)
+	{
+		_playerState.attackDamage = getAttackDamage() + itemStat;
+
+	}
+
+	void setGold(int sellgold)
+	{
+		_playerState.gold = getGold() + sellgold;
+	}
 
 	Player() {}
 	~Player() {}

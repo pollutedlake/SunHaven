@@ -39,6 +39,7 @@ HRESULT FarmScene::init(void)
 	_moveMapImg = IMAGEMANAGER->addImage("MoveMap", WINSIZE_X, WINSIZE_Y, true, RGB(255, 0, 255));
 	_clippingRaius = 0.0f;
 	_enterScene = true;
+	SOUNDMANAGER->play("Player_Farm_Var1_Final1", 0.2f);
 	_time = 0.0f;
 	return S_OK;
 }
@@ -60,6 +61,8 @@ void FarmScene::update(void)
 	CAMERA->setPosition(_player->getPlayerPosition());
 	_player->worldToCamera(CAMERA->worldToCamera
 	(_player->getPlayerPosition()));
+	SOUNDMANAGER->update();
+	
 		queue<pair<string, POINT>> dropItems = _om->updateObjects();
 		while (!dropItems.empty())
 		{
@@ -105,6 +108,7 @@ void FarmScene::update(void)
 		{
 			_moveMap = true;
 		}
+		
 	}
 	else
 	{
@@ -128,6 +132,7 @@ void FarmScene::update(void)
 			if (_clippingRaius < 0)
 			{
 				_clippingRaius = 0.0f;
+				SOUNDMANAGER->stop("Player_Farm_Var1_Final1");
 				SCENEMANAGER->changeScene("Shop");
 			}
 		}
@@ -160,6 +165,7 @@ void FarmScene::update(void)
 
 	if (KEYMANAGER->isOnceKeyDown(VK_F1))
 	{
+		SOUNDMANAGER->stop("Player_Farm_Var1_Final1");
 		SCENEMANAGER->changeScene("Shop");
 	}
 }
@@ -192,6 +198,7 @@ void FarmScene::render(void)
 	
 	renderHitEffect();
 	_inven->render();
+	_inven->setCurrentSlot(_player->getTools());
 	_ui->render();
 	if (_moveMap)
 	{

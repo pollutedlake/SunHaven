@@ -201,6 +201,9 @@ void ShopScene::update(void)
 	_player->worldToCamera(CAMERA->worldToCamera
 		(_player->getPlayerPosition()));
 
+	_player->setGold(_inven->getSellGold());
+
+	_player->setDefense(_inven->getDef());
 	if(!_moveMap)
 	{
 
@@ -292,6 +295,7 @@ void ShopScene::render(void)
 	IMAGEMANAGER->render("Shop_Bg", getMemDC());
 	_player->render();
 	_inven->render();
+	_inven->setCurrentSlot(_player->getTools());
 	RECT temp;
 
 	if (IntersectRect(&temp, &_player->getPlayerRC(), &_solonRc))
@@ -302,6 +306,24 @@ void ShopScene::render(void)
 			shopMold();
 			shopSlot();
 		}
+	}
+
+	char att[2000];
+	sprintf_s(att, "%d", (_player->getAttackDamage()));
+	char def[2000];
+	sprintf_s(def, "%d", (_player->getDefense()));
+	char hp[2000];
+	sprintf_s(hp, "%d", (_player->getHP()));
+	char mp[2000];
+	sprintf_s(mp, "%d", (_player->getMaxMP()));
+
+	if (_inven->getSeeInven())
+	{
+		FONTMANAGER->textOut(getMemDC(), _inven->getPlayerStatSlot1().left + 75, _inven->getPlayerStatSlot1().top, "배달의민족 을지로체", 12, 5, hp, strlen(hp), RGB(255, 255, 255));
+		FONTMANAGER->textOut(getMemDC(), _inven->getPlayerStatSlot2().left + 75, _inven->getPlayerStatSlot2().top, "배달의민족 을지로체", 12, 5, mp, strlen(mp), RGB(255, 255, 255));
+		FONTMANAGER->textOut(getMemDC(), _inven->getPlayerStatSlot3().left + 75, _inven->getPlayerStatSlot3().top, "배달의민족 을지로체", 12, 5, def, strlen(def), RGB(255, 255, 255));
+		FONTMANAGER->textOut(getMemDC(), _inven->getPlayerStatSlot4().left + 75, _inven->getPlayerStatSlot4().top, "배달의민족 을지로체", 12, 5, att, strlen(att), RGB(255, 255, 255));
+		FONTMANAGER->textOut(getMemDC(), _inven->getPlayerStatSlot5().left + 75, _inven->getPlayerStatSlot5().top, "배달의민족 을지로체", 12, 5, att, strlen(att), RGB(255, 255, 255));
 	}
 	
 	
@@ -324,8 +346,10 @@ void ShopScene::shopMold()
 {
 	IMAGEMANAGER->render("store_bg", getMemDC(), _shopBg.left, _shopBg.top);
 	IMAGEMANAGER->render("store_upper_icon_wip", getMemDC(), WINSIZE_X / 2 - 250, WINSIZE_Y / 2 - 347);
-
-	
+	IMAGEMANAGER->render("goldbanner", getMemDC(), _shopBg.right, _shopBg.top + 60);
+	char addGold[2000];
+	sprintf_s(addGold, "%d", (_player->getGold()));
+	FONTMANAGER->textOut(getMemDC(), _shopBg.right + 70, _shopBg.top + 70, "배달의민족 을지로체", 15, 5, addGold, strlen(addGold), RGB(255, 255, 255));
 }
 
 void ShopScene::shopSlot()
@@ -346,25 +370,25 @@ void ShopScene::shopSlot()
 
 		IMAGEMANAGER->render("UI_icon_coin", getMemDC(), _vShopList[i]._rc.right - 15, _vShopList[i]._rc.top + 5);
 		//FONTMANAGER->textOut(getMemDC(), _playerStat[0].left + 15, _playerStat[0].top, "배달의민족 을지로체", 12, 5, "체력", strlen("체력"), RGB(255, 255, 255));
-		FONTMANAGER->textOut(getMemDC(), _vShopList[i]._rc.left + 5, _vShopList[i]._rc.top + 6, "", 12, 5, const_cast <char*> (_vShopList[i]._name.c_str()), strlen(_vShopList[i]._name.c_str()), RGB(255, 255, 255));
+		FONTMANAGER->textOut(getMemDC(), _vShopList[i]._rc.left + 5, _vShopList[i]._rc.top + 6, "배달의민족 을지로체", 12, 5, const_cast <char*> (_vShopList[i]._name.c_str()), strlen(_vShopList[i]._name.c_str()), RGB(255, 255, 255));
 		char showGold[2000];
 		
 		if (PtInRect(&_vShopList[i]._buttonRc[2], _ptMouse))
 		{
 			sprintf_s(showGold, "%d", (_vShopList[i]._buyGold * 20));
-			FONTMANAGER->textOut(getMemDC(), (_vShopList[i]._rc.right - 55), _vShopList[i]._rc.top + 6, "", 12, 5, showGold, strlen(showGold), RGB(255, 255, 255));
+			FONTMANAGER->textOut(getMemDC(), (_vShopList[i]._rc.right - 55), _vShopList[i]._rc.top + 6, "배달의민족 을지로체", 12, 5, showGold, strlen(showGold), RGB(255, 255, 255));
 
 		}
 		else if (PtInRect(&_vShopList[i]._buttonRc[1], _ptMouse))
 		{
 			sprintf_s(showGold, "%d", (_vShopList[i]._buyGold * 5));
-			FONTMANAGER->textOut(getMemDC(), (_vShopList[i]._rc.right - 55), _vShopList[i]._rc.top + 6, "", 12, 5, showGold , strlen(showGold), RGB(255, 255, 255));
+			FONTMANAGER->textOut(getMemDC(), (_vShopList[i]._rc.right - 55), _vShopList[i]._rc.top + 6, "배달의민족 을지로체", 12, 5, showGold , strlen(showGold), RGB(255, 255, 255));
 
 		}
 		else
 		{
 			sprintf_s(showGold, "%d", (_vShopList[i]._buyGold));
-			FONTMANAGER->textOut(getMemDC(), (_vShopList[i]._rc.right - 50), _vShopList[i]._rc.top + 6, "", 12, 5, showGold, strlen(showGold), RGB(255, 255, 255));
+			FONTMANAGER->textOut(getMemDC(), (_vShopList[i]._rc.right - 50), _vShopList[i]._rc.top + 6, "배달의민족 을지로체", 12, 5, showGold, strlen(showGold), RGB(255, 255, 255));
 
 		}
 		
@@ -375,19 +399,19 @@ void ShopScene::shopSlot()
 			{
 				//소지골드에 따라 버튼활성화추가예정
 				IMAGEMANAGER->render("x1_button", getMemDC(), _vShopList[i]._buttonRc[j].left, _vShopList[i]._buttonRc[j].top);
-				FONTMANAGER->textOut(getMemDC(), _vShopList[i]._buttonRc[j].left + 5, _vShopList[i]._buttonRc[j].top + 3, "", 10, 5, "x1", strlen("x1"), RGB(255, 255, 255));
+				FONTMANAGER->textOut(getMemDC(), _vShopList[i]._buttonRc[j].left + 5, _vShopList[i]._buttonRc[j].top + 3, "배달의민족 을지로체", 10, 5, "x1", strlen("x1"), RGB(255, 255, 255));
 			}
 
 			if (j == 1)
 			{
 				IMAGEMANAGER->render("x5_button", getMemDC(), _vShopList[i]._buttonRc[j].left, _vShopList[i]._buttonRc[j].top);
-				FONTMANAGER->textOut(getMemDC(), _vShopList[i]._buttonRc[j].left + 5, _vShopList[i]._buttonRc[j].top + 3, "", 10, 5, "x5", strlen("x5"), RGB(255, 255, 255));
+				FONTMANAGER->textOut(getMemDC(), _vShopList[i]._buttonRc[j].left + 5, _vShopList[i]._buttonRc[j].top + 3, "배달의민족 을지로체", 10, 5, "x5", strlen("x5"), RGB(255, 255, 255));
 			}
 
 			if (j == 2)
 			{
 				IMAGEMANAGER->render("x20_button", getMemDC(), _vShopList[i]._buttonRc[j].left, _vShopList[i]._buttonRc[j].top);
-				FONTMANAGER->textOut(getMemDC(), _vShopList[i]._buttonRc[j].left + 5, _vShopList[i]._buttonRc[j].top + 3, "", 10, 5, "x20", strlen("x20"), RGB(255, 255, 255));
+				FONTMANAGER->textOut(getMemDC(), _vShopList[i]._buttonRc[j].left + 5, _vShopList[i]._buttonRc[j].top + 3, "배달의민족 을지로체", 10, 5, "x20", strlen("x20"), RGB(255, 255, 255));
 			}
 
 		}

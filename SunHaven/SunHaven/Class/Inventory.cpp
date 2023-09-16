@@ -7,7 +7,11 @@ HRESULT Inventory::init(void)
 {
 	/*_ID = new ItemData;
 	_ID->init();*/
-
+	_sellGold = 0;
+	_att = 0;
+	_def = 0;
+	_hp = 0;
+	maxEquipmentRender = 0;
 	_seeInven = false;
 
 	_inInvenSlot = false;
@@ -26,6 +30,22 @@ HRESULT Inventory::init(void)
 	{
 		_playerStat[i] = RectMake(_playerBG.left + 5, (_playerBG.top + 82) + 17 * i, 10, 10);
 	}
+
+	Slot itemUseSlot;
+
+	for (int i = 0; i < 10; i++)
+	{
+		ZeroMemory(&itemUseSlot, sizeof(Slot));
+
+		itemUseSlot._rc = RectMake(WINSIZE_X/2 -150 + 32*i, WINSIZE_Y -80, 32, 32);
+		itemUseSlot._draw = false;
+		itemUseSlot._category = "";
+		itemUseSlot._currentStack = 0;
+
+		_vItemUseSlot.push_back(itemUseSlot);
+
+	}
+
 
 	Slot  invenSlot;
 
@@ -130,9 +150,36 @@ void Inventory::release(void)
 
 void Inventory::update(void)
 {
-	if (KEYMANAGER->isOnceKeyDown('O'))
+	cout << _def << endl;
+	if (_vEquipmentSlot[0]._draw )
 	{
-		getItem("2-0");
+		maxEquipmentRender = 1;
+	}
+	else
+	{
+		maxEquipmentRender = 0;
+	}
+
+	switch (maxEquipmentRender)
+	{
+	case 0:
+		_def = 0;
+		break;
+	case 1:
+		_def = DATAMANAGER->getArmorInfo((int)_vEquipmentSlot[0]._category[2] - 48)->defense;
+		break;
+
+	case 2:
+
+		break;
+
+	case 3:
+
+		break;
+
+	case 4:
+
+		break;
 	}
 	
 	
@@ -147,12 +194,59 @@ void Inventory::update(void)
 		_seeInven = false;
 	}
 
+	sellItem();
+
 	
 	
 }
 
 void Inventory::render(void)
 {
+	for (int i = 0; i < 10; i++)
+	{
+		if (!_vItemUseSlot[i]._draw)
+		{
+			IMAGEMANAGER->render("item_bg_common", getMemDC(), _vItemUseSlot[i]._rc.left, _vItemUseSlot[i]._rc.top);
+			switch (i)
+			{
+			case 0:
+				IMAGEMANAGER->render("icon_scythe2", getMemDC(), _vItemUseSlot[i]._rc.left, _vItemUseSlot[i]._rc.top);
+				break;
+			case 1:
+				IMAGEMANAGER->render("³ì½¼ ±ªÀÌ", getMemDC(), _vItemUseSlot[i]._rc.left, _vItemUseSlot[i]._rc.top);
+				break;
+			case 2:
+				IMAGEMANAGER->render("³ì½¼ µµ³¢", getMemDC(), _vItemUseSlot[i]._rc.left, _vItemUseSlot[i]._rc.top);
+				break;
+			case 3:
+				IMAGEMANAGER->render("³ì½¼ °î±ªÀÌ", getMemDC(), _vItemUseSlot[i]._rc.left, _vItemUseSlot[i]._rc.top);
+				break;
+			case 4:
+				IMAGEMANAGER->render("°Ë", getMemDC(), _vItemUseSlot[i]._rc.left, _vItemUseSlot[i]._rc.top);
+				break;
+			case 5:
+				IMAGEMANAGER->render("¼è³ú", getMemDC(), _vItemUseSlot[i]._rc.left, _vItemUseSlot[i]._rc.top);
+				break;
+			/*case 6:
+				IMAGEMANAGER->render("combat_skill_tree_icons_0", getMemDC(), _vItemUseSlot[i]._rc.left, _vItemUseSlot[i]._rc.top);
+				break;
+			case 7:
+				IMAGEMANAGER->render("combat_skill_tree_icons_6", getMemDC(), _vItemUseSlot[i]._rc.left, _vItemUseSlot[i]._rc.top);
+				break;
+			case 8:
+				IMAGEMANAGER->render("ÄíÅ°", getMemDC(), _vItemUseSlot[i]._rc.left, _vItemUseSlot[i]._rc.top);
+				break;
+			case 9:
+				IMAGEMANAGER->render("±âº» ³¬½Ë´ë", getMemDC(), _vItemUseSlot[i]._rc.left, _vItemUseSlot[i]._rc.top);
+				break;*/
+			}
+			
+		}
+		
+	}
+	IMAGEMANAGER->render("combat_skill_tree_icons_0", getMemDC(), _vItemUseSlot[0]._rc.left, _vItemUseSlot[0]._rc.top -32);
+	
+	IMAGEMANAGER->render("combat_skill_tree_icons_6", getMemDC(), _vItemUseSlot[1]._rc.left, _vItemUseSlot[1]._rc.top - 32);
 	
 	if (_seeInven)
 	{
@@ -164,10 +258,15 @@ void Inventory::render(void)
 
 		moveItemRender();
 		
-	
+		
 	}
 	
 	popupItem();
+
+	for (int i = 0; i < _vInvenList.size(); i++)
+	{
+		itemInfoPopup(i);
+	}
 	
 }
 
@@ -181,7 +280,11 @@ void Inventory::getItem(string index)
 			if (_vInvenList[i]._draw && _vInvenList[i]._category == index && _vInvenList[i]._currentStack < 255)
 			{
 				_vInvenList[i]._currentStack += 1;
-
+				if (!SOUNDMANAGER->isPlaySound("E_getItem_Sound1"))
+				{
+					SOUNDMANAGER->play("E_getItem_Sound1", 1.0f);
+				}
+				
 				break;
 			}
 			else if (!_vInvenList[i]._draw)
@@ -191,6 +294,11 @@ void Inventory::getItem(string index)
 				_vInvenList[i]._draw = true;
 
 				_vInvenList[i]._currentStack + 1;
+				if (!SOUNDMANAGER->isPlaySound("E_getItem_Sound1"))
+				{
+					SOUNDMANAGER->play("E_getItem_Sound1", 1.0f);
+				}
+
 
 				_lastItemTime = GetTickCount64();
 				break;
@@ -202,6 +310,10 @@ void Inventory::getItem(string index)
 			_vInvenList[i]._category = index;
 
 			_vInvenList[i]._draw = true;
+			if (!SOUNDMANAGER->isPlaySound("E_getItem_Sound1"))
+			{
+				SOUNDMANAGER->play("E_getItem_Sound1", 1.0f);
+			}
 
 			_lastItemTime = GetTickCount64();
 
@@ -329,7 +441,7 @@ void Inventory::itemMove()
 
 		}
 
-		//¿ÏÀü»èÁ¦·Î ¼öÁ¤¿¹Á¤
+		
 		if (PtInRect(&_trashButton, _ptMouse) && _selectedItem != -1)
 		{
 			if (_inInvenSlot)
@@ -347,22 +459,7 @@ void Inventory::itemMove()
 
 		}
 
-		//ÆÇ¸Å·Î ¼öÁ¤¿¹Á¤
-		if (PtInRect(&_dropButton, _ptMouse) && _selectedItem != -1)
-		{
-			if (_inInvenSlot)
-			{
-				_vInvenList[_selectedItem]._draw = false;
-				_vInvenList[_selectedItem]._currentStack = 1;
-				_selectedItem = -1;
-			}
-
-			if (_inEquipmentSlot)
-			{
-				_vEquipmentSlot[_selectedItem]._draw = false;
-				_selectedItem = -1;
-			}
-		}
+		
 
 	}
 	
@@ -416,7 +513,7 @@ void Inventory::invenSlot()
 
 			if (_vInvenList[i * 8 + j]._draw)
 			{
-
+				
 				switch (_vInvenList[i * 8 + j]._category[0])
 				{
 				case '0':
@@ -444,7 +541,7 @@ void Inventory::invenSlot()
 					}
 					IMAGEMANAGER->render(DATAMANAGER->getWeaponInfo(_index)->name.c_str(), getMemDC(), _vInvenList[i * 8 + j]._rc.left, _vInvenList[i * 8 + j]._rc.top);
 					break;
-
+					//
 				case '2':
 					_index = (int)_vInvenList[i * 8 + j]._category[2] - 48;
 					if (DATAMANAGER->getArmorInfo(_index)->grade == "Ä¿¸Õ")
@@ -506,6 +603,8 @@ void Inventory::invenSlot()
 				IMAGEMANAGER->render("item_bg", getMemDC(), _vInvenList[i * (8) + j]._rc.left, _vInvenList[i * (8) + j]._rc.top);
 			}
 
+			
+
 		}
 	}
 }
@@ -520,6 +619,7 @@ void Inventory::equipment_Slot()
 		{
 			if (_vEquipmentSlot[i * 5 + j]._draw)
 			{
+				
 				// ÀÎµ¦½º°¡ 5 ºÎÅÍ Çï¸ä / »óÀÇ / ÇÏÀÇ/ Àå°© 
 				switch (_vEquipmentSlot[i * 5 + j]._category[0])
 				{
@@ -597,6 +697,9 @@ void Inventory::equipment_Slot()
 					}
 				}
 			}
+
+			//itemInfoPopup(i * 5 + j);
+
 		}
 	}
 }
@@ -878,7 +981,12 @@ void Inventory::putItem()
 
 		}
 
+		
+
 	}
+
+	
+
 }
 
 void Inventory::invenXButton()
@@ -888,5 +996,102 @@ void Inventory::invenXButton()
 		_seeInven = false;
 	}
 }
+
+void Inventory::setCurrentSlot(enum eTools player)
+{
+	IMAGEMANAGER->render("selection_hover-click-selected_0", getMemDC(), _vItemUseSlot[player]._rc.left, _vItemUseSlot[player]._rc.top);
+}
+
+void Inventory::itemInfoPopup(int index)
+{
+	if (PtInRect(&_vInvenList[index]._rc, _ptMouse) && _vInvenList[index]._draw)
+	{
+		if (index < 8)
+		{
+			
+			IMAGEMANAGER->render("tooltip_bg_flipped", getMemDC(), _ptMouse.x, _ptMouse.y );
+		}
+		else
+		{
+			
+			IMAGEMANAGER->render("tooltip_bg", getMemDC(), _ptMouse.x, _ptMouse.y - 87);
+		}
+	}
+
+	if (index < 15)
+	{
+		if (PtInRect(&_vEquipmentSlot[index]._rc, _ptMouse) && _vEquipmentSlot[index]._draw)
+		{
+			if (index == 0)
+			{
+				IMAGEMANAGER->render("tooltip_bg_flipped", getMemDC(), _ptMouse.x, _ptMouse.y);
+
+			}
+			else
+			{
+				IMAGEMANAGER->render("tooltip_bg", getMemDC(), _ptMouse.x, _ptMouse.y - 87);
+			}
+		}
+	}
+	
+}
+
+void Inventory::sellItem()
+{
+	
+	if (PtInRect(&_dropButton, _ptMouse) && _selectedItem != -1)
+	{
+		if (_inInvenSlot)
+		{
+			_vInvenList[_selectedItem]._draw = false;
+			_vInvenList[_selectedItem]._currentStack = 1;
+			switch (_vInvenList[_selectedItem]._category[0])
+			{
+			case '0':
+				_sellGold += DATAMANAGER->getToolInfo((int)_vInvenList[_selectedItem]._category[2] - 48)->sellGold;
+
+				break;
+
+			case '1':
+				_sellGold += DATAMANAGER->getWeaponInfo((int)_vInvenList[_selectedItem]._category[2] - 48)->sellGold;
+
+				break;
+
+			case '2':
+				_sellGold += DATAMANAGER->getArmorInfo((int)_vInvenList[_selectedItem]._category[2] - 48)->sellGold;
+
+				break;
+
+			case '3':
+				_sellGold += DATAMANAGER->getAccessoryInfo((int)_vInvenList[_selectedItem]._category[2] - 48)->sellGold;
+
+				break;
+
+			case '4':
+				_sellGold += DATAMANAGER->getIngredientInfo((int)_vInvenList[_selectedItem]._category[2] - 48)->sellGold;
+
+				break;
+
+			case '5':
+				_sellGold += DATAMANAGER->getConsumableInfo((int)_vInvenList[_selectedItem]._category[2] - 48)->sellGold;
+
+				break;
+			}
+			_selectedItem = -1;
+		}
+
+		if (_inEquipmentSlot)
+		{
+			_vEquipmentSlot[_selectedItem]._draw = false;
+			_selectedItem = -1;
+		}
+	}
+	else
+	{
+		_sellGold = 0;
+	}
+}
+
+
 
 
