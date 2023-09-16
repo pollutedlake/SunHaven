@@ -444,7 +444,6 @@ void Player::update(void)
 
 			_dashSlashCount = 0;
 		}
-		_playerState.MP -= 5;
 	}
 
 	_dashSlashRC = RectMakeCenter(_cx - 5, _cy,
@@ -727,7 +726,7 @@ void Player::MouseOver(ObjectManager* object, POINT point)
 	}
 }
 
-POINT Player::UseTool(ObjectManager* object, POINT point)
+list<POINT> Player::UseTool(ObjectManager* object, POINT point)
 {
 	RECT temp;
 	float updown = point.y - _cy;
@@ -815,7 +814,7 @@ POINT Player::UseTool(ObjectManager* object, POINT point)
 
 	
 	_toolAnim->AniStart();
-
+	list<POINT> collisionList;
 
 	for (int i = 0; i < object->getObjectList().size(); i++)
 	{
@@ -830,7 +829,7 @@ POINT Player::UseTool(ObjectManager* object, POINT point)
 				// SD : 풀베는 소리
 				SOUNDMANAGER->play("ScytheCuttingCrops1", 1.0f);
 				object->getObjectList()[i]->setHP(1);
-				return object->getObjectList()[i]->getTilePos();
+				collisionList.push_back(object->getObjectList()[i]->getTilePos());
 			}
 		}
 
@@ -845,7 +844,7 @@ POINT Player::UseTool(ObjectManager* object, POINT point)
 				// SD : 나무 베는 소리
 				SOUNDMANAGER->play("TreeHit1", 1.0f);
 				object->getObjectList()[i]->setHP(10, _x);
-				return object->getObjectList()[i]->getTilePos();
+				collisionList.push_back(object->getObjectList()[i]->getTilePos());
 			}
 		}
 
@@ -860,13 +859,14 @@ POINT Player::UseTool(ObjectManager* object, POINT point)
 				// SD : 돌캐는 소리
 				SOUNDMANAGER->play("RockHit1", 1.0f);
 				object->getObjectList()[i]->setHP(5);
-				return object->getObjectList()[i]->getTilePos();
+				collisionList.push_back(object->getObjectList()[i]->getTilePos());
 			}
 		}
-	}
 
-	return { NULL,NULL };
+	}
+	return collisionList;
 }
+	
 
 void Player::UseFishingLod(POINT point)
 {
@@ -1016,34 +1016,39 @@ void Player::ObjectCollision(ObjectManager* object)
 		float leftright = object->getObjectList()[i]->getTilePos().x - _cx;
 
 
+		RECT collisionRC = _playertoCameraRC;
+		collisionRC.top = collisionRC.bottom - 32;
 		if (IntersectRect(&temp,
-			&_playertoCameraRC,
+			&collisionRC,
 			&object->getObjectList()[i]->getCollisionRC()))
 		{
-			cout << "오브젝트 충돌" << endl;
 
 			cout << updown << ", " << leftright << endl;
 
 			if (object->getObjectList()[i]->getType() > 1)
 			{
-				if (_playertoCameraRC.left <= object->getObjectList()[i]->getCollisionRC().right)
+				if (temp.right - temp.left > temp.bottom - temp.top)
 				{
-					_x += _moveSpeed;
+					if (collisionRC.bottom > object->getObjectList()[i]->getCollisionRC().bottom)
+					{
+						_y += _moveSpeed;
+					}
+					else
+					{
+						_y -= _moveSpeed;
+					}
 				}
-				else if (_playertoCameraRC.right >= object->getObjectList()[i]->getCollisionRC().left)
+				else
 				{
-					_x -= _moveSpeed;
+					if (collisionRC.right > object->getObjectList()[i]->getCollisionRC().right)
+					{
+						_x += _moveSpeed;
+					}
+					else
+					{
+						_x -= _moveSpeed;
+					}
 				}
-				else if (_playertoCameraRC.top <= object->getObjectList()[i]->getCollisionRC().bottom)
-				{
-					_y += _moveSpeed;
-				}
-				else if (_playertoCameraRC.bottom >= object->getObjectList()[i]->getCollisionRC().top)
-				{
-					_y -= _moveSpeed;
-				}
-
-				
 			}
 		}
 	}

@@ -7,11 +7,22 @@
 #include "../Class/Inventory.h"
 
 struct cmp {
-	bool operator()(pair<GameNode*, int> a, pair<GameNode*, int> b)
+	bool operator()(pair<GameNode*, POINT> a, pair<GameNode*, POINT> b)
 	{
-		if (a.second > b.second)
+		if (a.second.y > b.second.y)
 		{
 			return true;
+		}
+		else if (a.second.y == b.second.y)
+		{
+			if (a.second.x > b.second.x)
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
 		}
 		else
 		{
@@ -34,7 +45,7 @@ private:
 	GImage* _moveMapImg;
 	ObjectManager* _om;
 	UI* _ui;
-	priority_queue<pair<GameNode*, int>, vector<pair<GameNode*, int>>, cmp> _vRenderList;
+	priority_queue<pair<GameNode*, POINT>, vector<pair<GameNode*, POINT>>, cmp> _vRenderList;
 	list<pair<POINT, int>> _hitEffectList;
 	list<pair<POINT, int>>::iterator _itHitEffectList;
 	

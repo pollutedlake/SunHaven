@@ -216,7 +216,7 @@ HRESULT Resources::init(void)
 	// Image
 	IMAGEMANAGER->addImage("경작지", "Resources/Images/Object/Farm_dirt.bmp", 36, 36, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("젖은 경작지", "Resources/Images/Object/Farm_wetdirt.bmp", 36, 36, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("HitEffect", "Resources/Images/Player/HitEffect.bmp", 288, 48, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("HitEffect", "Resources/Images/Player/HitEffect.bmp", 288, 48, 6, 1, true, RGB(255, 0, 255));
 
 	// Sound 
 	SOUNDMANAGER->addSound("Player_Farm_Var1_Final1", "Resources/Sound/Player_Farm_Var1_Final1.wav", true, true);

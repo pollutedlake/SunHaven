@@ -175,7 +175,7 @@ public:
 
 	//void UseTool(ObjectManager* object, POINT point);
 	//bool UseTool(ObjectManager* object, POINT point);
-	POINT UseTool(ObjectManager* object, POINT point);
+	list<POINT> UseTool(ObjectManager* object, POINT point);
 
 
 	inline void UseToolAnim(bool stayKeydown)
