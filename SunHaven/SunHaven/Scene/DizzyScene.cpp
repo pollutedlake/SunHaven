@@ -43,7 +43,7 @@ void DizzyScene::release(void)
 
 void DizzyScene::update(void)
 {
-
+	SOUNDMANAGER->update();
 	_player->update();
 	_player->worldToCamera(CAMERA->worldToCamera(_player->getPlayerPosition()));
 	CAMERA->setPosition(_player->getPlayerPosition());
@@ -55,6 +55,7 @@ void DizzyScene::update(void)
 		if (PtInRect(&_portal, _player->getPlayerPosition()))
 		{
 			_moveMap = true;
+			SOUNDMANAGER->play("SceneTransition1", 1.0f);
 		}
 	}
 	else
@@ -75,6 +76,7 @@ void DizzyScene::update(void)
 			if (_clippingRaius < 0)
 			{
 				_clippingRaius = 0.0f;
+				SOUNDMANAGER->stop("Mines_5_OST_Final_Loop1");
 				DATAMANAGER->setData(_player->getPlayerState());
 				SCENEMANAGER->changeScene("Dynus");
 			}
@@ -82,6 +84,8 @@ void DizzyScene::update(void)
 	}
 	if (KEYMANAGER->isOnceKeyDown(VK_F1))
 	{
+		SOUNDMANAGER->stop("Mines_5_OST_Final_Loop1");
+		SOUNDMANAGER->play("SceneTransition1", 1.0f);
 		DATAMANAGER->setData(_player->getPlayerState());
 		SCENEMANAGER->changeScene("Dynus");
 	}

@@ -98,7 +98,7 @@ void TitleScene::update(void)
     }
 
    
-    //buttonSound();
+    buttonSound();
     
 
     SOUNDMANAGER->update();
@@ -133,14 +133,14 @@ void TitleScene::render(void)
     {
         if (PtInRect(&_rc[i], _ptMouse))
         {
-            SOUNDMANAGER->play("E_titleButton", 1.0f);
+            
             IMAGEMANAGER->GPFrameRender("TitleButton", getMemDC(),
                 50, 408 + i * 59, 2.2, 2,
                 IMAGEMANAGER->findGPImage("TitleButton")->getFrameX(), IMAGEMANAGER->findGPImage("TitleButton")->getFrameY(),
                 InterpolationModeNearestNeighbor, 0);
             if (!PtInRect(&_rc[i], _exPtMouse))
             {
-                SOUNDMANAGER->play("E_titleButton", 1.0f);
+               
             }
         }
     }
@@ -182,7 +182,7 @@ void TitleScene::buttonSound()
             _sound = 2;
         }
 
-        if (_rc[0].bottom == _ptMouse.y || _rc[1].bottom == _ptMouse.y) //|| _rc[2].bottom == _ptMouse.y)
+        if (_rc[0].bottom == _ptMouse.y || _rc[1].bottom == _ptMouse.y || _rc[2].bottom == _ptMouse.y)
         {
             _sound = 0;
         }

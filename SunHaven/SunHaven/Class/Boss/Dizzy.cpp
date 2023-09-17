@@ -199,6 +199,10 @@ void Dizzy::update(void)
 	if (KEYMANAGER->isOnceKeyDown('B'))
 	{
 		_isWake = true;
+
+
+		SOUNDMANAGER->play("DizzyWake1",1.0f);
+		SOUNDMANAGER->play("Mines_5_OST_Final_Loop1", 0.5f);
 	}
 
 	if (KEYMANAGER->isOnceKeyDown('N'))
@@ -275,13 +279,10 @@ void Dizzy::update(void)
 	case EDizzyState::SPIN:
 		spin();
 
-		if (_curAni->getNowPlayIdx() == 12 || _curAni->getNowPlayIdx() == 43)
-		{
-			// SD: 롤린
-		}
-
 		if (_isCollisionLeft || _isCollisionRight || _isCollisionTop || _isCollisionBottom)
 		{
+
+			SOUNDMANAGER->stop("DizzyRocksFalling1");
 			_rcSpinAtk = RectMakeCenter(0, 0, 0, 0);
 			if (_spinCount < 2)
 			{
@@ -336,6 +337,11 @@ void Dizzy::update(void)
 
 	case EDizzyState::GROGGY:
 		meteorFire();
+		if (!SOUNDMANAGER->isPlaySound("DizzyConFusion1"))
+		{
+			SOUNDMANAGER->play("DizzyConFusion1", 1.0f);
+		}
+
 
 		if (_curAni->getNowPlayIdx() == 20 || _curAni->getNowPlayIdx() == 28)
 		{
@@ -375,8 +381,10 @@ void Dizzy::update(void)
 
 	case EDizzyState::RANGE:
 		gemFire();
-		// SD: 보석 던지기
-
+		if (!SOUNDMANAGER->isPlaySound("DizzyTransForm1"))
+		{
+			SOUNDMANAGER->play("DizzyTransForm1", 1.0f);
+		}
 		if (_gemCount > 3)
 		{
 			_state = EDizzyState::IDLE;
@@ -405,15 +413,22 @@ void Dizzy::update(void)
 		break;
 
 	case EDizzyState::DEATH:
-		
-			// SD: 죽음
-			//_curAni->AniStop();
-			_afterDeathTime++;
-
-			if (_afterDeathTime > 300)
-			{
-				_isDie = true;
-			}
+		if (!SOUNDMANAGER->isPlaySound("DizzyDeath1"))
+		{
+			SOUNDMANAGER->play("DizzyDeath1", 1.0f);
+		}
+		// SD: 죽음
+		//_curAni->AniStop();
+		_afterDeathTime++;
+		soundTime++;
+		if (soundTime > 100)
+		{
+			SOUNDMANAGER->stop("DizzyDeath1");
+		}
+		if (_afterDeathTime > 300)
+		{
+			_isDie = true;
+		}
 		
 
 		break;
@@ -453,7 +468,10 @@ void Dizzy::draw(void)
 void Dizzy::spin(void)
 {
 	_rcSpinAtk = RectMakeCenter(_x, _y, _curImg->getFrameWidth(), _curImg->getFrameHeight());
-
+	if (!SOUNDMANAGER->isPlaySound("DizzyRocksFalling1"))
+	{
+		SOUNDMANAGER->play("DizzyRocksFalling1", 1.0f);
+	}
 	float spinSpeed = 8.0f;
 	
 	if (_isCollisionLeft) _x += spinSpeed * 10;

@@ -452,6 +452,7 @@ void IntroScene::update(void)
 	}
 	if (KEYMANAGER->isOnceKeyDown(VK_F1))
 	{
+		SOUNDMANAGER->play("SceneTransition1", 1.0f);
 		SOUNDMANAGER->stop("인트로 린하우스");
 		SOUNDMANAGER->stop("인트로 기차안 브금");
 		SCENEMANAGER->changeScene("Farm");

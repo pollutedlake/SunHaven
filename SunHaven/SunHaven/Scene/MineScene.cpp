@@ -114,6 +114,7 @@ void MineScene::update(void)
 		if (PtInRect(&_portal, _player->getPlayerPosition()))
 		{
 			_moveMap = true;
+			SOUNDMANAGER->play("SceneTransition1", 1.0f);
 		}
 	}
 	else
@@ -143,6 +144,7 @@ void MineScene::update(void)
 	if (KEYMANAGER->isOnceKeyDown(VK_F1))
 	{
 		SOUNDMANAGER->stop("Candy_Mines_Final2");
+		SOUNDMANAGER->play("SceneTransition1", 1.0f);
 		DATAMANAGER->setData(_player->getPlayerState(), _inven->getInvenList(), _inven->getEquipmentList());
 		SCENEMANAGER->changeScene("Dizzy");
 	}

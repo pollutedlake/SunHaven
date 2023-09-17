@@ -96,6 +96,7 @@ private:
 	int _aftetGemCount;
 
 	int _afterDeathTime;
+	int soundTime;
 	float _afterDeathWorldTime;
 	float _invincibilityTime;
 	bool _isDamaged;

@@ -9,7 +9,7 @@ HRESULT ShopScene::init(void)
 	_player = new Player;
 	_player->init(700,500, "Shop_Bg_Collision");
 	_player->setPlayerState(DATAMANAGER->getPlayereState());
-
+	SOUNDMANAGER->play("Salon_Final1",0.5f);
 	CAMERA->init();
 	CAMERA->setPosition(_player->getPlayerPosition());
 	CAMERA->setLimitRight(1280 - WINSIZE_X / 2);
@@ -200,6 +200,7 @@ void ShopScene::release(void)
 
 void ShopScene::update(void)
 {
+	SOUNDMANAGER->update();
 	_player->update();
 	_inven->update();
 	CAMERA->setPosition(_player->getPlayerPosition());
@@ -253,7 +254,6 @@ void ShopScene::update(void)
 		{
 			if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
 			{
-				//_player->UseTool(_om, _ptMouse);
 				_inven->itemMove();
 				_inven->invenXButton();
 			}
@@ -265,6 +265,7 @@ void ShopScene::update(void)
 		if (PtInRect(&_portal, _player->getPlayerPosition()))
 		{
 			_moveMap = true;
+			SOUNDMANAGER->play("SceneTransition1", 1.0f);
 		}
 	}
 	else
@@ -285,6 +286,7 @@ void ShopScene::update(void)
 			if (_clippingRaius < 0)
 			{
 				_clippingRaius = 0.0f;
+				SOUNDMANAGER->stop("Salon_Final1");
 				SCENEMANAGER->changeScene("Mine");
 				DATAMANAGER->setData(_player->getPlayerState(), _inven->getInvenList(), _inven->getEquipmentList());
 			}
@@ -293,6 +295,8 @@ void ShopScene::update(void)
 
 	if (KEYMANAGER->isOnceKeyDown(VK_F1))
 	{
+		SOUNDMANAGER->stop("Salon_Final1");
+		SOUNDMANAGER->play("SceneTransition1", 1.0f);
 		DATAMANAGER->setData(_player->getPlayerState(), _inven->getInvenList(), _inven->getEquipmentList());
 		SCENEMANAGER->changeScene("Mine");
 	}

@@ -180,7 +180,9 @@ HRESULT Resources::init(void)
 
 	// Sound
 	SOUNDMANAGER->addSound("dynus_battle_v7", "Resources/Sound/dynus_battle_v7.wav", true, true);
-
+	SOUNDMANAGER->addSound("DynusCast2", "Resources/Sound/DynusCast2.wav", false,false);
+	SOUNDMANAGER->addSound("RockCandyMonster1Death1", "Resources/Sound/RockCandyMonster1Death1.wav", false, false);
+	SOUNDMANAGER->addSound("MonsterBookDeath1", "Resources/Sound/MonsterBookDeath1.wav", false, false);
 
 
 	// ====================DizzyScene====================
@@ -212,7 +214,15 @@ HRESULT Resources::init(void)
 
 
 	// Sound
-	
+	SOUNDMANAGER->addSound("DizzyConFusion1", "Resources/Sound/DizzyConFusion1.wav", false, false);
+	SOUNDMANAGER->addSound("DizzyDeath1", "Resources/Sound/DizzyDeath1.wav", false, false);
+	SOUNDMANAGER->addSound("DizzyRocksFalling1", "Resources/Sound/DizzyRocksFalling1.wav", false, false);
+	SOUNDMANAGER->addSound("DizzyTransForm1", "Resources/Sound/DizzyTransForm1.wav", false, false);
+	SOUNDMANAGER->addSound("DizzyWake1", "Resources/Sound/DizzyWake1.wav", false, false);
+	SOUNDMANAGER->addSound("boss_music1-2", "Resources/Sound/boss_music1-2.wav", false, false);
+	SOUNDMANAGER->addSound("Mines_5_OST_Final_Loop1", "Resources/Sound/Mines_5_OST_Final_Loop1.wav", true, true);
+	SOUNDMANAGER->addSound("DizzyConFusion1", "Resources/Sound/DizzyConFusion1.wav", false, false);
+
 
 
 	// ====================MineScene====================
@@ -340,7 +350,7 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addImage("goldbanner", "Resources/Images/Shop/goldbanner.bmp", 133, 35, true, RGB(255, 0, 255));
 	// Sound
 	SOUNDMANAGER->addSound("E_getItem_Sound1", "Resources/Sound/E_getItem_Sound1.wav", false, false);
-	
+	SOUNDMANAGER->addSound("Salon_Final1,", "Resources/Sound/Salon_Final1.wav", true, true);
 
 	// ====================
 	// Image

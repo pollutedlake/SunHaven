@@ -257,10 +257,13 @@ void Dynus::update(void)
 			switch (_firstP)
 			{
 			case EFirstPhase::SPREAD_X:
-				//if (_curAni->getNowPlayIdx() == 20)
-				//{
-				//	// SD: 캐스팅
-				//}
+				if (_curAni->getNowPlayIdx() == 20)
+				{
+					if (!SOUNDMANAGER->isPlaySound("DynusCast2"))
+					{
+						SOUNDMANAGER->play("DynusCast2", 1.0f);
+					}
+				}
 				_pa2StartPosIdx = 3;
 				_pa3StartPosIdx = 2;
 				if (spawningTime())
@@ -290,10 +293,13 @@ void Dynus::update(void)
 				break;
 
 			case EFirstPhase::SPREAD_ELLIPSE:
-				//if (_curAni->getNowPlayIdx() == 20)
-				//{
-				//	// SD: 캐스팅
-				//}
+				if (_curAni->getNowPlayIdx() == 20)
+				{
+					if (!SOUNDMANAGER->isPlaySound("DynusCast2"))
+					{
+						SOUNDMANAGER->play("DynusCast2", 1.0f);
+					}
+				}
 
 				spreadEllipse();
 				_bulletCount = 0;
@@ -317,6 +323,13 @@ void Dynus::update(void)
 				break;
 
 			case EFirstPhase::BEAM1:
+				if(_curAni->getNowPlayIdx() == 20)
+				{
+					if (!SOUNDMANAGER->isPlaySound("DynusCast2"))
+					{
+						SOUNDMANAGER->play("DynusCast2", 1.0f);
+					}
+				}
 				_bulletCount = 0;
 				_pa1StartPosIdx = 6;
 				_pa2StartPosIdx = 3;
@@ -335,6 +348,13 @@ void Dynus::update(void)
 				break;
 
 			case EFirstPhase::BEAM2:
+				if (_curAni->getNowPlayIdx() == 20)
+				{
+					if (!SOUNDMANAGER->isPlaySound("DynusCast2"))
+					{
+						SOUNDMANAGER->play("DynusCast2", 1.0f);
+					}
+				}
 				_bulletCount = 0;
 				_pa1StartPosIdx = 6;
 				_pa2StartPosIdx = 3;
@@ -362,6 +382,13 @@ void Dynus::update(void)
 			switch (_secondP)
 			{
 			case ESecondPhase::SPAWN:
+				if (_curAni->getNowPlayIdx() == 20)
+				{
+					if (!SOUNDMANAGER->isPlaySound("DynusCast2"))
+					{
+						SOUNDMANAGER->play("DynusCast2", 1.0f);
+					}
+				}
 				_bulletCount = 0;
 				_pa1StartPosIdx = 6;
 
