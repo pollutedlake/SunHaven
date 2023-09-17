@@ -507,7 +507,10 @@ void IntroScene::render(void)
 		_trainPassengers[9]->frameRender(_introCut[2]->getMemDC(), 55, 160, _darkAlpha == 128 ? _count % 8 : _count % (_trainPassengers[9]->getMaxFrameX() + 1), 
 			_darkAlpha == 128 ? 1 : 0);
 		_trainPassengers[10]->frameRender(_introCut[2]->getMemDC(), 425, 160, _count % (_trainPassengers[10]->getMaxFrameX() + 1), _darkAlpha == 128 ? 1 : 0);
-		_catSleep->aniRender(_introCut[2]->getMemDC(), 375, 0, _catAnim);
+		IMAGEMANAGER->addFrameImage("임시플레이어",
+			"Resources/Images/Player/kittywalk.bmp",
+			960, 52, 20, 1, true, RGB(255, 0, 255))->frameRender(_introCut[2]->getMemDC(), 270, 120, 5, 0);
+			_catSleep->aniRender(_introCut[2]->getMemDC(), 375, 0, _catAnim);
 		IMAGEMANAGER->frameRender("Frog", _introCut[2]->getMemDC(), 90, 140, _catSleep->getMaxFrameX() - ((_count / 10) % 2), 0);
 		_lynn->render(_introCut[2]->getMemDC());
 		_introCut[2]->render(getMemDC(), WINSIZE_X / 2 - _train2->getWidth() * 0.65f, 0, _train2->getWidth() * 1.3f, _train2->getHeight() * 1.3f, 0, 0, _train2->getWidth(), _train2->getHeight());

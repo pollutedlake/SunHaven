@@ -64,6 +64,7 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addFrameImage("Button1", "Resources/Images/UI/Button1.bmp", 300, 22, 3, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("BackButton", "Resources/Images/UI/BackButton.bmp", 78, 86, 3, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("LayerShowButton", "Resources/Images/UI/LayerShowButton.bmp", 54, 17, 2, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("TilesButton", "Resources/Images/UI/TilesButton.bmp", 81, 28, 3, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("Object1", "Resources/Images/Object/Grass1.bmp", 24, 24, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("Object2", "Resources/Images/Object/Grass2.bmp", 24, 24, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("Object3", "Resources/Images/Object/Tree1.bmp", 89, 121, true, RGB(255, 0, 255));

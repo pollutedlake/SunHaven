@@ -17,6 +17,17 @@ void MineScene::collision(void)
 
 	for (int i = 0; i < _em->getEnemys().size(); i++)
 	{
+		if(_player->isSlash())
+		{
+			if (IntersectRect(&rcTemp1, &_player->getSwingRC(), &CAMERA->worldToCameraRect(_em->getEnemys()[i]->getRect())))
+			{
+				_em->getEnemys()[i]->hitDamage(_player->getAttackDamage() / 2);
+			}
+		}
+	}
+
+	for (int i = 0; i < _em->getEnemys().size(); i++)
+	{
 		for (int j = 0; j < _om->getObjectList().size(); j++)
 		{
 			if (IntersectRect(&rcTemp1, &_om->getObjectList()[j]->getRC(), &_em->getEnemys()[i]->getRect()))
@@ -37,6 +48,13 @@ void DizzyScene::collision(void)
 		cout << "Ãæµ¹ " << endl;
 		_player->hitDamage(5.0f);
 	}
+	if (_player->isSlash())
+	{
+		if (IntersectRect(&rcTemp1, &_player->getSwingRC(), &CAMERA->worldToCameraRect(_dizzy->getRcDizzy())))
+		{
+			_dizzy->hitDamage(_player->getAttackDamage() * 10);
+		}
+	}
 }
 
 void DynusScene::collision(void)
@@ -48,6 +66,23 @@ void DynusScene::collision(void)
 		if (IntersectRect(&rcTemp1, &_player->getPlayerRC(), &_em->getEnemys()[i]->getRcAttack()))
 		{
 			_player->hitDamage(4.0f);
+		}
+	}
+	if (_player->isSlash())
+	{
+		if (IntersectRect(&rcTemp1, &_player->getSwingRC(), &CAMERA->worldToCameraRect(_dynus->getRcDynus())))
+		{
+			_dynus->hitDamage(_player->getAttackDamage() * 10);
+		}
+	}
+	for (int i = 0; i < _em->getEnemys().size(); i++)
+	{
+		if (_player->isSlash())
+		{
+			if (IntersectRect(&rcTemp1, &_player->getSwingRC(), &CAMERA->worldToCameraRect(_em->getEnemys()[i]->getRect())))
+			{
+				_em->getEnemys()[i]->hitDamage(_player->getAttackDamage() / 2);
+			}
 		}
 	}
 

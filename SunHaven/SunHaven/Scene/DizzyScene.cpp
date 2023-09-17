@@ -8,6 +8,7 @@ HRESULT DizzyScene::init(void)
 
 	_player = new Player;
 	_player->init(CENTER_X + 500, CENTER_Y + 700, "DizzyMapCollision");
+	_player->setPlayerState(DATAMANAGER->getPlayereState());
 
 	_dizzy = new Dizzy;
 	_dizzy->setPlayerMemoryAddress(_player);
@@ -74,12 +75,14 @@ void DizzyScene::update(void)
 			if (_clippingRaius < 0)
 			{
 				_clippingRaius = 0.0f;
+				DATAMANAGER->setData(_player->getPlayerState());
 				SCENEMANAGER->changeScene("Dynus");
 			}
 		}
 	}
 	if (KEYMANAGER->isOnceKeyDown(VK_F1))
 	{
+		DATAMANAGER->setData(_player->getPlayerState());
 		SCENEMANAGER->changeScene("Dynus");
 	}
 }

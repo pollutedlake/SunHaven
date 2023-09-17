@@ -1,6 +1,5 @@
 #pragma once
 #include "../GameNode/GameNode.h"
-//#include "../Boss/Dynus.h"
 #include "../Enemy/Enemy.h"
 #include "../Bullets/Bullets.h"
 

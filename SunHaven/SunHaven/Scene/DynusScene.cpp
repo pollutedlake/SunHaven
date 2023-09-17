@@ -9,6 +9,7 @@ HRESULT DynusScene::init(void)
 	IMAGEMANAGER->addImage("DynusMapCollision", "./Resources/Data/Map/DynusMapCollision.bmp", 2400, 2400);
 	_player = new Player;
 	_player->init(CENTER_X, CENTER_Y + 200, "DynusMapCollision");
+	_player->setPlayerState(DATAMANAGER->getPlayereState());
 
 	_dynus = new Dynus;
 

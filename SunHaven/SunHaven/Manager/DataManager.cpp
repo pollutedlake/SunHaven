@@ -108,3 +108,16 @@ tagConsumable* DataManager::getConsumableInfo(int index)
 {
 	return _vConsumable[index];
 }
+
+void DataManager::setData(tagPlayerState playerState, vector<Slot>* vInvenList, vector<Slot>* vEquipmentSlot)
+{
+	_playerState = playerState;
+	if(vInvenList != nullptr)
+	{
+		_vInvenList = *vInvenList;
+	}
+	if (vEquipmentSlot != nullptr)
+	{
+		_vEquipmentSlot = *vEquipmentSlot;
+	}
+}

@@ -104,7 +104,7 @@ HRESULT Dizzy::init(void)
 
 	_afterDeathTime = 0;
 	_afterDeathWorldTime = TIMEMANAGER->getWorldTime();
-
+	_invincibilityTime = 0;
 	return S_OK;
 }
 
@@ -165,7 +165,16 @@ void Dizzy::update(void)
 
 		_curAni->AniStart();
 	}
+	if (_isDamaged)
+	{
+		_invincibilityTime += TIMEMANAGER->getElapsedTime();
 
+		if (_invincibilityTime > 0.4f)
+		{
+			_isDamaged = false;
+			_invincibilityTime = 0.0f;
+		}
+	}
 	if (!_isDie)
 	{
 		_meteor->update();
@@ -436,10 +445,7 @@ void Dizzy::render(void)
 }
 
 void Dizzy::draw(void)
-{
-	//DrawRectMake(getMemDC(), CAMERA->worldToCameraRect(_rcDizzy));
-	//DrawRectMake(getMemDC(), CAMERA->worldToCameraRect(_rcSpinAtk));
-	
+{	
 	_curImg->aniRender(getMemDC(), CAMERA->worldToCameraX(_x - _curImg->getFrameWidth() / 2), 
 		CAMERA->worldToCameraY(_y - _curImg->getFrameHeight() / 2), _curAni);
 }

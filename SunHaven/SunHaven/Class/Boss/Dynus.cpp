@@ -74,7 +74,7 @@ HRESULT Dynus::init(void)
 	_beam = new Beam;
 	_beam->init(50, 1500.0f);
 
-	_rcDynus = RectMakeCenter(_x, _y,
+	_rcDynus = RectMakeCenter(_x + 300, _y + 120,
 		_breatheImg->getFrameWidth(), _breatheImg->getFrameHeight());
 
 	for (int i = 0; i < PA1_STARTPOS_NUM_1; i++)
@@ -785,19 +785,6 @@ void Dynus::draw(void)
 			}
 		}
 	}
-
-	/*for (int i = 0; i < PA2_STARTPOS_NUM_1; i++)
-	{
-		for (int j = 0; j < PA2_STARTPOS_NUM_2; j++)
-		{
-			DrawRectMake(getMemDC(), _rcPa2Start[i][j]);
-		}
-	}
-
-	for (int i = 0; i < PA3_STARTPOS_NUM; i++)
-	{
-		DrawRectMake(getMemDC(), _rcPa3Start[i]);
-	}*/
 
 	if (KEYMANAGER->isToggleKey('G'))
 	{

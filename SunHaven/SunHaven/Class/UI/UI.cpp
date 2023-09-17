@@ -36,14 +36,7 @@ void UI::release(void)
 
 void UI::update(void)
 {
-	if (_sceneName == "Title")
-	{
-		
-	}
-	else if (_sceneName == "Farm")
-	{
-		updateUIWindow();
-	}
+
 }
 
 void UI::render(void)
@@ -80,7 +73,15 @@ void UI::showBasicUI()
 	FONTMANAGER->textOut(getMemDC(), 135, 60, "배달의민족 을지로체", 20, 100, "일요일 1일", strlen("일요일 1일"), RGB(255, 255, 255));
 	FONTMANAGER->textOut(getMemDC(), 135, 100, "배달의민족 을지로체", 20, 100, "06:00AM", strlen("06:00AM"), RGB(255, 255, 255));
 	_goldIcon->render(getMemDC(), WINSIZE_X - 300, 8, _goldIcon->getWidth() * 1.5f, _goldIcon->getHeight() * 1.5f, 0, 0, _goldIcon->getWidth(), _goldIcon->getHeight());
-	FONTMANAGER->textOut(getMemDC(), WINSIZE_X - 280, 8, "배달의민족 을지로체", 14, 100, "1,669", strlen("1,669"), RGB(255, 255, 255));
+	if (_player->getGold() / 1000 > 0)
+	{
+		wsprintf(_text, "%d,%d", _player->getGold() / 1000, _player->getGold() % 1000);
+	}
+	else
+	{
+		wsprintf(_text, "%d", _player->getGold());
+	}
+	FONTMANAGER->textOut(getMemDC(), WINSIZE_X - 280, 8, "배달의민족 을지로체", 14, 100, _text, strlen(_text), RGB(255, 255, 255));
 	_orbIcon->render(getMemDC(), WINSIZE_X - 200, 8, _orbIcon->getWidth() * 1.5f, _orbIcon->getHeight() * 1.5f, 0, 0, _orbIcon->getWidth(), _orbIcon->getHeight());
 	FONTMANAGER->textOut(getMemDC(), WINSIZE_X - 180, 8, "배달의민족 을지로체", 14, 100, "8", strlen("8"), RGB(255, 255, 255));
 	_ticketIcon->render(getMemDC(), WINSIZE_X - 100, 4);
@@ -115,13 +116,4 @@ void UI::showBasicUI()
 	FONTMANAGER->textOut(getMemDC(), WINSIZE_X / 2 - 58, WINSIZE_Y - 35, "배달의민족 을지로체", 20, 100, _text, strlen(_text), RGB(255, 255, 255));
 
 	SetTextAlign(getMemDC(), TA_LEFT);
-}
-
-void UI::updateUIWindow()
-{
-}
-
-void UI::showUIWindow()
-{
-	
 }

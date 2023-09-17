@@ -48,8 +48,6 @@ protected:
 	float _detectRange;
 	float _attackRange;
 
-	//EnemyFireBall* _fireBall;
-
 	float _speed;
 	float _targetOnSpeed;
 
@@ -117,8 +115,6 @@ public:
 	void setPosition(POINT pos) { PointMake(_x, _y) = pos; }
 
 	RECT getRcAttack() { return _rcAttack; }
-
-	//EnemyFireBall* getFireBall() { return _fireBall; }
 
 	float getX(void) { return _x; }
 	void setX(float x) { _x = x; }

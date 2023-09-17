@@ -127,6 +127,7 @@ void FarmScene::update(void)
 			{
 				_clippingRaius = 0.0f;
 				SOUNDMANAGER->stop("Player_Farm_Var1_Final1");
+				DATAMANAGER->setData(_player->getPlayerState(), _inven->getInvenList(), _inven->getEquipmentList());
 				SCENEMANAGER->changeScene("Shop");
 			}
 		}
@@ -160,6 +161,7 @@ void FarmScene::update(void)
 	if (KEYMANAGER->isOnceKeyDown(VK_F1))
 	{
 		SOUNDMANAGER->stop("Player_Farm_Var1_Final1");
+		DATAMANAGER->setData(_player->getPlayerState(), _inven->getInvenList(), _inven->getEquipmentList());
 		SCENEMANAGER->changeScene("Shop");
 	}
 }

@@ -1,13 +1,14 @@
 // ±è¼ºÀÇ
 #include "Stdafx.h"
 #include "ShopScene.h"
-
+#include "../Class/UI/UI.h"
 
 HRESULT ShopScene::init(void)
 {
 	IMAGEMANAGER->addImage("Shop_Bg_Collision", "Shop_Bg_Collision.bmp", WINSIZE_X, WINSIZE_Y);
 	_player = new Player;
 	_player->init(700,500, "Shop_Bg_Collision");
+	_player->setPlayerState(DATAMANAGER->getPlayereState());
 
 	CAMERA->init();
 	CAMERA->setPosition(_player->getPlayerPosition());
@@ -19,6 +20,8 @@ HRESULT ShopScene::init(void)
 
 	_inven = new Inventory;
 	_inven->init();
+	_inven->setInvenList(DATAMANAGER->getInvenList());
+	_inven->setEuqipmentList(DATAMANAGER->getEquipmentList());
 
 	shopList temp;
 
@@ -177,6 +180,9 @@ HRESULT ShopScene::init(void)
 			_vShopList.push_back(temp);
 		}
 	}
+	_ui = new UI;
+	_ui->init("Mine");
+	_ui->setAdressPlayer(_player);
 	_moveMap = true;
 	_portal = RectMake( 660, 560, 110, 40);
 	_clippingRaius = 0.0f;
@@ -280,12 +286,14 @@ void ShopScene::update(void)
 			{
 				_clippingRaius = 0.0f;
 				SCENEMANAGER->changeScene("Mine");
+				DATAMANAGER->setData(_player->getPlayerState(), _inven->getInvenList(), _inven->getEquipmentList());
 			}
 		}
 	}
 
 	if (KEYMANAGER->isOnceKeyDown(VK_F1))
 	{
+		DATAMANAGER->setData(_player->getPlayerState(), _inven->getInvenList(), _inven->getEquipmentList());
 		SCENEMANAGER->changeScene("Mine");
 	}
 }
@@ -308,6 +316,7 @@ void ShopScene::render(void)
 		}
 	}
 
+	_ui->render();
 	char att[2000];
 	sprintf_s(att, "%d", (_player->getAttackDamage()));
 	char def[2000];

@@ -138,6 +138,20 @@ HRESULT MapToolScene::init(void)
 	radioButton->init(4, x2, y2, width2, height2, "Button1", f2, str2, RGB(255, 255, 255), 30, -15);
 	_vRadioButton.push_back(radioButton);
 
+	radioButton = new RadioButton;
+	float x4[] = { 930.0f, 950.0f, 970.0f, 990.0f, 1010.0f, 1030.0f, 1050.0f, 1070.0f, 1090.0f, 1110.0f };
+	float y4[] = { 20.0f, 20.0f, 20.0f, 20.0f, 20.0f, 20.0f, 20.0f, 20.0f, 20.0f, 20.0f };
+	int width4[] = { 20, 20, 20, 20, 20, 20, 20, 20, 20, 20 };
+	int height4[] = { 30, 30, 30, 30, 30, 30, 30, 30, 30, 30 };
+	char* str4[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" };
+	function<void(int)> f4[10];
+	for (int i = 0; i < 10; i++)
+	{
+		f4[i] = bind(&MapToolScene::changeTiles, this, i);
+	}
+	radioButton->init(10, x4, y4, width4, height4, "TilesButton", f4, str4, RGB(255, 255, 255), 20, -10);
+	_vRadioButton.push_back(radioButton);
+
 	// Layer보이는 버튼
 	ToggleButton* toggleButton;
 	for (int i = 0; i < 7; i++)
@@ -585,13 +599,25 @@ void MapToolScene::changeMap(int map)
 
 void MapToolScene::prevTiles(void)
 {
-	_curTiles--; if (_curTiles < 0) _curTiles = 9; PatBlt(_tilesBuffer->getMemDC(), 0, 0, TILEWIDTH * 10, TILEHEIGHT * 10, WHITENESS);
+	_curTiles--;
+	if (_curTiles < 0)
+	{
+		_curTiles = 9;
+	}
+	_vRadioButton[3]->setButtonDown(_curTiles);
+	PatBlt(_tilesBuffer->getMemDC(), 0, 0, TILEWIDTH * 10, TILEHEIGHT * 10, WHITENESS);
 }
 
 
 void MapToolScene::nextTiles(void)
 {
-	_curTiles++; if (_curTiles > 9) _curTiles = 0; PatBlt(_tilesBuffer->getMemDC(), 0, 0, TILEWIDTH * 10, TILEHEIGHT * 10, WHITENESS);
+	_curTiles++; 
+	if (_curTiles > 9)
+	{
+		_curTiles = 0;
+	}
+	_vRadioButton[3]->setButtonDown(_curTiles);
+	PatBlt(_tilesBuffer->getMemDC(), 0, 0, TILEWIDTH * 10, TILEHEIGHT * 10, WHITENESS);
 }
 
 void MapToolScene::erase(void)
@@ -642,6 +668,12 @@ void MapToolScene::selectObject(int objectType)
 	_selectTilesCol = 1;
 	_selectRC = { NULL, NULL, NULL, NULL };
 	changeLayer(6);
+}
+
+void MapToolScene::changeTiles(int tilesN)
+{
+	_curTiles = tilesN;
+	PatBlt(_tilesBuffer->getMemDC(), 0, 0, TILEWIDTH * 10, TILEHEIGHT * 10, WHITENESS);
 }
 
 void MapToolScene::copyTiles(void)

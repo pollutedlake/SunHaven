@@ -18,6 +18,8 @@ struct shopList
 
 };
 
+class UI;
+
 class ShopScene : public GameNode
 {
 
@@ -28,8 +30,8 @@ private:
 	RECT _solonRc;
 	RECT _shopBg;
 	RECT _shopItemBg;
-	
 
+	UI* _ui;
 	vector<shopList> _vShopList;
 	vector<shopList>::iterator _viShopList;
 

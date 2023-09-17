@@ -3,18 +3,6 @@
 
 class Player;
 
-struct Slot
-{
-	
-	RECT _rc;
-	bool _draw;
-	string _category;
-	int _currentStack;
-	
-
-};
-
-
 class Inventory : public GameNode
 {
 
@@ -87,6 +75,10 @@ public:
 	RECT getPlayerStatSlot3() { return _playerStat[2]; }
 	RECT getPlayerStatSlot4() { return _playerStat[3]; }
 	RECT getPlayerStatSlot5() { return _playerStat[4]; }
+	vector<Slot>* getInvenList() {return &_vInvenList;}
+	vector<Slot>* getEquipmentList() {return &_vEquipmentSlot;}
+	void setInvenList(vector<Slot> vInvenList) {_vInvenList = vInvenList;}
+	void setEuqipmentList(vector<Slot> vEquipmentList) { _vEquipmentSlot = vEquipmentList;}
 
 	bool getSeeInven() { return _seeInven; }
 

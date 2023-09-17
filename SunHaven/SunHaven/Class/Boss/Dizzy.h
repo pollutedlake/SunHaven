@@ -97,6 +97,8 @@ private:
 
 	int _afterDeathTime;
 	float _afterDeathWorldTime;
+	float _invincibilityTime;
+	bool _isDamaged;
 
 public:
 	HRESULT init(void);
@@ -116,6 +118,20 @@ public:
 	bool afterDeathTime(void);
 
 	void setPlayerMemoryAddress(Player* player) { _player = player; }
+
+	inline void hitDamage(float damage)
+	{
+		if (_invincibilityTime == 0.0f)
+		{
+			_isDamaged = true;
+			_hp -= damage;
+		}
+
+		if (_hp <= 0)
+		{
+			_hp = 0;
+		}
+	}
 
 	void collision(void);
 	void pixelCollision(void);

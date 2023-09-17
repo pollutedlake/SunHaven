@@ -102,7 +102,6 @@ private:
 	bool _isGM1Remove;
 	bool _isGM2Remove;
 
-	//RECT _rcHpBar;
 	float _hp;
 	float _maxHp;
 
