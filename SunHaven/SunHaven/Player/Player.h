@@ -78,11 +78,7 @@ private:
 	RECT _selectRC;
 
 	GImage* _swordSlash;
-	Animation* _swordAnim;
 	Animation* _swordSwingAnim;
-	Animation* _swordSlashAnim;
-	Animation* _swordSlashUpDownAnim;
-	RECT _swordSlashRC;
 	RECT _swordSwingRC;
 
 	GImage* _axeSwing;
@@ -179,7 +175,6 @@ public:
 
 	//void UseTool(ObjectManager* object, POINT point);
 	//bool UseTool(ObjectManager* object, POINT point);
-	//POINT UseTool(ObjectManager* object, POINT point);
 	list<POINT> UseTool(ObjectManager* object, POINT point);
 
 
@@ -232,19 +227,19 @@ public:
 			_firebeamRC = RectMake(_cx, _cy - 24,
 				_cx - (_firebeamRC.right - _firebeamRC.left), 50);
 
-			_axeSwingRC = RectMakeCenter(_cx, _cy,
+			_axeSwingRC = RectMakeCenter(_cx, _cy + 6,
 				_axeSwingAnim->getFrameWidth(),
 				_axeSwingAnim->getFrameHeight());
 
-			_pickaxeSwingRC = RectMakeCenter(_cx-12, _cy,
+			_pickaxeSwingRC = RectMakeCenter(_cx, _cy+12,
 				_pickaxeSwingAnim->getFrameWidth(),
 				_pickaxeSwingAnim->getFrameHeight());
 
-			_hoeSwingRC = RectMakeCenter(_cx-8, _cy+6,
+			_hoeSwingRC = RectMakeCenter(_cx, _cy + 10,
 				_hoeSwingAnim->getFrameWidth(),
 				_hoeSwingAnim->getFrameHeight());
 
-			_scytheSwingRC = RectMakeCenter(_cx-12, _cy,
+			_scytheSwingRC = RectMakeCenter(_cx-6, _cy + 10,
 				_scytheSwingAnim->getFrameWidth(),
 				_scytheSwingAnim->getFrameHeight());
 
@@ -254,27 +249,24 @@ public:
 		}
 		else if (KEYMANAGER->isStayKeyDown('D'))
 		{
-			/*_swordSlashRC = RectMakeCenter(_cx + 28, _cy,
-				_swordAnim->getFrameWidth(),
-				_swordAnim->getFrameHeight());*/
 			_swordSwingRC = RectMakeCenter(_cx, _cy,
 				_swordSwingAnim->getFrameWidth(),
 				_swordSwingAnim->getFrameHeight());
 
 
-			_axeSwingRC = RectMakeCenter(_cx, _cy,
+			_axeSwingRC = RectMakeCenter(_cx, _cy + 6,
 				_axeSwingAnim->getFrameWidth(),
 				_axeSwingAnim->getFrameHeight());
 
-			_pickaxeSwingRC = RectMakeCenter(_cx+12, _cy,
+			_pickaxeSwingRC = RectMakeCenter(_cx, _cy + 12,
 				_pickaxeSwingAnim->getFrameWidth(),
 				_pickaxeSwingAnim->getFrameHeight());
 
-			_hoeSwingRC = RectMakeCenter(_cx+8, _cy + 6,
+			_hoeSwingRC = RectMakeCenter(_cx, _cy + 10,
 				_hoeSwingAnim->getFrameWidth(),
 				_hoeSwingAnim->getFrameHeight());
 
-			_scytheSwingRC = RectMakeCenter(_cx + 12, _cy,
+			_scytheSwingRC = RectMakeCenter(_cx + 6, _cy + 10,
 				_scytheSwingAnim->getFrameWidth(),
 				_scytheSwingAnim->getFrameHeight());
 
@@ -284,15 +276,12 @@ public:
 		}
 		else if (KEYMANAGER->isStayKeyDown('W'))
 		{
-			/*_swordSlashRC = RectMakeCenter(_cx, _cy-28,
-				_swordAnim->getFrameWidth(),
-				_swordAnim->getFrameHeight());*/
 			_swordSwingRC = RectMakeCenter(_cx, _cy,
 				_swordSwingAnim->getFrameWidth(),
 				_swordSwingAnim->getFrameHeight());
 
 
-			_axeSwingRC = RectMakeCenter(_cx, _cy,
+			_axeSwingRC = RectMakeCenter(_cx, _cy+12,
 				_axeSwingAnim->getFrameWidth(),
 				_axeSwingAnim->getFrameHeight());
 
@@ -304,7 +293,7 @@ public:
 				_hoeSwingAnim->getFrameWidth(),
 				_hoeSwingAnim->getFrameHeight());
 
-			_scytheSwingRC = RectMakeCenter(_cx, _cy,
+			_scytheSwingRC = RectMakeCenter(_cx, _cy + 20,
 				_scytheSwingAnim->getFrameWidth(),
 				_scytheSwingAnim->getFrameHeight());
 
@@ -322,7 +311,7 @@ public:
 				_swordSwingAnim->getFrameHeight());
 
 
-			_axeSwingRC = RectMakeCenter(_cx, _cy,
+			_axeSwingRC = RectMakeCenter(_cx, _cy+10,
 				_axeSwingAnim->getFrameWidth(),
 				_axeSwingAnim->getFrameHeight());
 
@@ -334,7 +323,7 @@ public:
 				_hoeSwingAnim->getFrameWidth(),
 				_hoeSwingAnim->getFrameHeight());
 
-			_scytheSwingRC = RectMakeCenter(_cx, _cy+12,
+			_scytheSwingRC = RectMakeCenter(_cx, _cy+10,
 				_scytheSwingAnim->getFrameWidth(),
 				_scytheSwingAnim->getFrameHeight());
 
@@ -369,13 +358,6 @@ public:
 		}
 	}
 
-
-
-	bool isCollision()
-	{
-
-	}
-
 	void setCollision(bool left, bool right, bool top, bool bottom)
 	{
 		_isCollisionLeft = left;
@@ -385,7 +367,10 @@ public:
 
 	}
 
-	RECT getPlayerRC() { return _playerRC; }
+	RECT getPlayerRC() 
+	{
+		return CollisionAreaResizing(_playerRC, 25, 47);
+	}
 	RECT getPlayertoCameraRect(void) { return _playertoCameraRC; }
 
 	RECT getDashSlashCollisionRC() { return _dashSlashCollisionRC; }
@@ -393,12 +378,15 @@ public:
 	eTools getToolType() { return _eTools; }
 	bool getIsSuccessFishing() { return _isSuccessFishing; }
 
-	RECT getSwordSlashRC() { return _swordSlashRC; }
+	RECT getSwordSwingRC() { return _swordSwingRC; }
 
 	inline int getHP() { return _playerState.HP; }
 	inline int getMaxHP() { return _playerState.MaxHP; }
 	inline int getMP() { return _playerState.MP; }
 	inline int getMaxMP() { return _playerState.MaxMP; }
+
+	Animation* getPlayerAnim() { return _playerMoveAnim; }
+
 
 	Player() {}
 	~Player() {}

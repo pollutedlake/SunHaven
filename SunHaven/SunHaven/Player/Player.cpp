@@ -18,13 +18,14 @@ HRESULT Player::init(float x, float y, string collisionMapKey)
 	_fireBall = new Fireball;
 	_fireBall->init(50, 500);
 
-	_playerImage = IMAGEMANAGER->addImage("임시플레이어",
-		"Resources/Images/Player/kittywalk.bmp",
-		960, 52, true, RGB(255, 0, 255));
+
+	_playerImage = IMAGEMANAGER->addImage("플레이어",
+		"Resources/Images/Player/PlayerMovement.bmp",
+		2400, 47, true, RGB(255, 0, 255));
 	_playerMoveAnim = new Animation;
 	_playerMoveAnim->init(_playerImage->getWidth(),
 		_playerImage->getHeight(),
-		48, 52);
+		40, 47);
 
 	_playerMoveAnim->setFPS(8);
 
@@ -280,17 +281,27 @@ void Player::release(void)
 	_fireballAnim->release();
 	SAFE_DELETE(_fireballAnim);
 
-	_swordSlashAnim->release();
-	SAFE_DELETE(_swordSlashAnim);
+	_swordSwingAnim->release();
+	SAFE_DELETE(_swordSwingAnim);
 
 	_axeSwingAnim->release();
 	SAFE_DELETE(_axeSwingAnim);
+
+	_pickaxeSwingAnim->release();
+	SAFE_DELETE(_pickaxeSwingAnim);
+
+	_axeSwingAnim->release();
+	SAFE_DELETE(_axeSwingAnim);
+
+	_scytheSwingAnim->release();
+	SAFE_DELETE(_scytheSwingAnim);
+
+	_fishingLodAnim->release();
+	SAFE_DELETE(_fishingLodAnim);
 }
 
 void Player::update(void)
 {
-	//_inven->update();
-
 	if (KEYMANAGER->isOnceKeyDown('W') ||
 		KEYMANAGER->isOnceKeyDown('S') ||
 		KEYMANAGER->isOnceKeyDown('A') ||
@@ -298,6 +309,21 @@ void Player::update(void)
 	{
 		_playerMoveAnim->AniStart();
 	}
+	if (KEYMANAGER->isOnceKeyUp('W') ||
+		KEYMANAGER->isOnceKeyUp('S') ||
+		KEYMANAGER->isOnceKeyUp('A') ||
+		KEYMANAGER->isOnceKeyUp('D'))
+	{
+		_playerMoveAnim->AniStop();
+	}
+	else if (_toolAnim->getNowPlayIdx() == 1)
+	{
+		//_playerMoveAnim->AniStart();
+	}
+
+	cout << _toolAnim->isPlay() << endl;
+	cout << _toolAnim->getNowPlayIdx() << endl;
+	cout<<"_playerMoveAnim" << _playerMoveAnim->getNowPlayIdx() << endl;
 
 	COLORREF stairCol =
 		GetPixel(_collisionMap->getMemDC(),
@@ -333,7 +359,7 @@ void Player::update(void)
 			{
 				_y -= _moveSpeed;
 			}
-			_playerMoveAnim->setPlayFrame(5, 9, false, true);
+			_playerMoveAnim->setPlayFrame(45, 49, false, true);
 		}
 		else if (KEYMANAGER->isStayKeyDown('D'))
 		{
@@ -386,7 +412,7 @@ void Player::update(void)
 			{
 				_y -= 220;
 			}
-			_playerMoveAnim->setPlayFrame(10, 14, false, true);
+			_playerMoveAnim->setPlayFrame(30, 34, false, true);
 		}
 		else if (KEYMANAGER->isStayKeyDown('S'))
 		{
@@ -410,13 +436,13 @@ void Player::update(void)
 			}
 			_playerMoveAnim->setPlayFrame(0, 4, false, true);
 		}
-		else
-		{
-			_playerMoveAnim->AniStop();
-		}
 	}
-
-
+	else if (_toolAnim->getNowPlayIdx() == 1)
+	{
+		_playerMoveAnim->AniStart();
+	}
+	
+	
 	_axeSwingAnim->setPlayFrame(axeSwingAnimArr, 4, _isLoop);
 	_pickaxeSwingAnim->setPlayFrame(pickaxeSwingAnimArr, 4, _isLoop);
 	_hoeSwingAnim->setPlayFrame(hoeSwingAnimArr, 4, _isLoop);
@@ -585,8 +611,6 @@ void Player::update(void)
 		MPRecoverySec = 0.0f;
 	}
 
-	cout << _playerState.MP << " / " << _playerState.MaxMP << endl;
-
 
 	if (KEYMANAGER->isStayKeyDown('U'))
 	{
@@ -624,8 +648,6 @@ void Player::update(void)
 	_hoeSwingAnim->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);
 	_scytheSwingAnim->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);
 	_fishingLodAnim->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);
-
-	//cout << _fishingLodAnim->getNowPlayIdx() << endl;
 }
 
 void Player::render(void)
@@ -637,7 +659,7 @@ void Player::render(void)
 		_fireBeam->loopRender(getMemDC(), &_firebeamRC,
 			offsetX, 0);
 	}
-
+	
 	if (_isUp)
 	{
 		if (_swordSwingAnim->isPlay())
@@ -700,7 +722,7 @@ void Player::render(void)
 			InterpolationModeNearestNeighbor);
 	}
 
-
+	DrawRectMake(getMemDC(), CollisionAreaResizing(_playertoCameraRC, 25, 47));
 	
 	if (_isFishing)
 	{
@@ -786,7 +808,25 @@ list<POINT> Player::UseTool(ObjectManager* object, POINT point)
 			hoeSwingAnimArr[i] = i + 8;
 			scytheSwingAnimArr[i] = i + 10;
 		}
-		_playerMoveAnim->setPlayFrame(10, 14, false, true);
+		//_playerMoveAnim->setPlayFrame(10, 14, false, true);
+		switch (_eTools)
+		{
+		case eTools::SICKLE:
+			_playerMoveAnim->setPlayFrame(41, 43, false, _isLoop);
+			break;
+
+		case eTools::HOE:
+			_playerMoveAnim->setPlayFrame(39, 40, false, _isLoop);
+			break;
+
+		case eTools::AXE:
+			_playerMoveAnim->setPlayFrame(41, 43, false, _isLoop);
+			break;
+
+		case eTools::PICKAXE:
+			_playerMoveAnim->setPlayFrame(39, 40, false, _isLoop);
+			break;
+		}
 	}
 	else if (updown > 0 && abs(leftright) < updown)
 	{
@@ -797,7 +837,25 @@ list<POINT> Player::UseTool(ObjectManager* object, POINT point)
 			hoeSwingAnimArr[i] = i;
 			scytheSwingAnimArr[i] = i;
 		}
-		_playerMoveAnim->setPlayFrame(0, 4, false, true);
+		//_playerMoveAnim->setPlayFrame(0, 4, false, true);
+		switch (_eTools)
+		{
+		case eTools::SICKLE:
+			_playerMoveAnim->setPlayFrame(11, 13, false, _isLoop);
+			break;
+
+		case eTools::HOE:
+			_playerMoveAnim->setPlayFrame(9, 10, false, _isLoop);
+			break;
+
+		case eTools::AXE:
+			_playerMoveAnim->setPlayFrame(11, 13, false, _isLoop);
+			break;
+
+		case eTools::PICKAXE:
+			_playerMoveAnim->setPlayFrame(9, 10, false, _isLoop);
+			break;
+		}
 	}
 	else if (leftright < 0)
 	{
@@ -808,7 +866,25 @@ list<POINT> Player::UseTool(ObjectManager* object, POINT point)
 			hoeSwingAnimArr[i] = i + 12;
 			scytheSwingAnimArr[i] = i + 15;
 		}
-		_playerMoveAnim->setPlayFrame(5, 9, false, true);
+		//_playerMoveAnim->setPlayFrame(5, 9, false, true);
+		switch (_eTools)
+		{
+		case eTools::SICKLE:
+			_playerMoveAnim->setPlayFrame(56, 58, false, _isLoop);
+			break;
+
+		case eTools::HOE:
+			_playerMoveAnim->setPlayFrame(54, 55, false, _isLoop);
+			break;
+
+		case eTools::AXE:
+			_playerMoveAnim->setPlayFrame(56, 58, false, _isLoop);
+			break;
+
+		case eTools::PICKAXE:
+			_playerMoveAnim->setPlayFrame(54, 55, false, _isLoop);
+			break;
+		}
 	}
 	else
 	{
@@ -819,7 +895,24 @@ list<POINT> Player::UseTool(ObjectManager* object, POINT point)
 			hoeSwingAnimArr[i] = i + 4;
 			scytheSwingAnimArr[i] = i + 5;
 		}
-		_playerMoveAnim->setPlayFrame(15, 19, false, true);
+		switch (_eTools)
+		{
+		case eTools::SICKLE:
+			_playerMoveAnim->setPlayFrame(26, 28, false, _isLoop);
+			break;
+
+		case eTools::HOE:
+			_playerMoveAnim->setPlayFrame(24, 25, false, _isLoop);
+			break;
+
+		case eTools::AXE:
+			_playerMoveAnim->setPlayFrame(26, 28, false, _isLoop);
+			break;
+
+		case eTools::PICKAXE:
+			_playerMoveAnim->setPlayFrame(24, 25, false, _isLoop);
+			break;
+		}
 	}
 
 	_axeSwingAnim->setPlayFrame(axeSwingAnimArr, 4, _isLoop);
@@ -827,9 +920,8 @@ list<POINT> Player::UseTool(ObjectManager* object, POINT point)
 	_hoeSwingAnim->setPlayFrame(hoeSwingAnimArr, 4, _isLoop);
 	_scytheSwingAnim->setPlayFrame(scytheSwingAnimArr, 4, _isLoop);
 
-	
-	_toolAnim->AniStart();
 
+	_toolAnim->AniStart();
 
 	for (int i = 0; i < object->getObjectList().size(); i++)
 	{
@@ -875,21 +967,10 @@ list<POINT> Player::UseTool(ObjectManager* object, POINT point)
 			}
 		}
 
-		//else if (_eTools == eTools::HOE
-		//	&& getDistance(_cx, _cy, point.x, point.y) < OBJECT_RANGE)
-		//{
-		//	if (PtInRect(&object->getObjectList()[i]->getCollisionRC(),
-		//		point)
-		//		&& _toolAnim->getNowPlayIdx() >= 0)
-		//	{
-		//		// SD : 경작하는 소리
-		//		return object->getObjectList()[i]->getTilePos();
-		//	}
-		//}
 	}
-
 	return collisionList;
 }
+	
 
 void Player::UseFishingLod(POINT point)
 {
@@ -986,10 +1067,6 @@ void Player::Fishing()
 				_isSuccessFishing = true;
 			}
 		}
-		else
-		{
-			cout << "빗나감" << endl;
-		}
 
 		_fishingLodAnim->AniResume();
 		cursormovespeed = 2;
@@ -1039,15 +1116,36 @@ void Player::ObjectCollision(ObjectManager* object)
 		float leftright = object->getObjectList()[i]->getTilePos().x - _cx;
 
 
-		if (IntersectRect(&temp, &_playertoCameraRC,
+		RECT collisionRC = _playertoCameraRC;
+		collisionRC.top = collisionRC.bottom - 32;
+		if (IntersectRect(&temp,
+			&collisionRC,
 			&object->getObjectList()[i]->getCollisionRC()))
 		{
 
 			if (object->getObjectList()[i]->getType() > 1)
 			{
-				if (temp.right-temp.left>temp.bottom-temp.top)
+				if (temp.right - temp.left > temp.bottom - temp.top)
 				{
-					cout << "좌우 충돌" << endl;
+					if (collisionRC.bottom > object->getObjectList()[i]->getCollisionRC().bottom)
+					{
+						_y += _moveSpeed;
+					}
+					else
+					{
+						_y -= _moveSpeed;
+					}
+				}
+				else
+				{
+					if (collisionRC.right > object->getObjectList()[i]->getCollisionRC().right)
+					{
+						_x += _moveSpeed;
+					}
+					else
+					{
+						_x -= _moveSpeed;
+					}
 				}
 			}
 		}
