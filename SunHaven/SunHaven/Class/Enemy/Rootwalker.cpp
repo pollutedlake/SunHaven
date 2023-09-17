@@ -104,8 +104,6 @@ void Rootwalker::release(void)
 
 void Rootwalker::update(void)
 {
-	cout << "Shadeclaw: " << (int)_state << endl;
-
 	_rc = RectMakeCenter(_x, _y, _curImg->getFrameWidth(), _curImg->getFrameHeight());
 	_curAni->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);
 

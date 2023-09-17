@@ -104,8 +104,6 @@ void Shadeclaw::release(void)
 
 void Shadeclaw::update(void)
 {
-	cout << "Shadeclaw: " << (int)_state << endl;
-
 	_rc = RectMakeCenter(_x, _y, _curImg->getFrameWidth(), _curImg->getFrameHeight());
 	_curAni->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);
 

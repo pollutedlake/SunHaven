@@ -128,6 +128,8 @@ public:
 	float getPlayerY(void) { return _playerY; }
 	void setPlayerY(float playerY) { _playerY = playerY; }
 
+	int getHP() {return _hp;}
+
 	Enemy(void);
 	~Enemy(void) {}
 };

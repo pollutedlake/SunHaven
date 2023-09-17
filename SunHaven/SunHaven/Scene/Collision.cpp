@@ -82,6 +82,10 @@ void DynusScene::collision(void)
 			if (IntersectRect(&rcTemp1, &_player->getSwingRC(), &CAMERA->worldToCameraRect(_em->getEnemys()[i]->getRect())))
 			{
 				_em->getEnemys()[i]->hitDamage(_player->getAttackDamage() / 2);
+				if (_em->getEnemys()[i]->getHP() == 0)
+				{
+					_em->removeEnemy(i);
+				}
 			}
 		}
 	}
