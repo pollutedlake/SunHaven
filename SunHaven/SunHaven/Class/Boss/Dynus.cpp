@@ -53,8 +53,8 @@ HRESULT Dynus::init(void)
 	_spellAni->setDefPlayFrame(false, true);
 	_spellAni->setFPS(20);
 	
-	_gruntImg = IMAGEMANAGER->addFrameImage("DynusGrunt", "Resources/Images/Boss/DynusGrunt.bmp",
-		5072, 594, 8, 2, true, RGB(255, 0, 255));
+	_gruntImg = IMAGEMANAGER->addFrameImage("DynusGrunt", "Resources/Images/Boss/DynusLaughing.bmp",
+		2536, 1188, 4, 4, true, RGB(255, 0, 255));
 
 	_gruntAni = new Animation;
 	_gruntAni->init(_gruntImg->getWidth(), _gruntImg->getHeight(), 634, 297);
@@ -185,8 +185,6 @@ void Dynus::update(void)
 
 	else if (_hp <= 1000)
 	{
-		_isDie = true;
-
 		_phase = EDynusPhase::DEATH;
 
 		_curAni->AniStop();
@@ -194,6 +192,7 @@ void Dynus::update(void)
 		_curAni = _gruntAni;
 		_curAni->setPlayFrame(0, 15, false, false);
 		_curAni->AniStart();
+		_isDie = true;
 	}
 
 	if (_isStar)
@@ -318,10 +317,6 @@ void Dynus::update(void)
 				break;
 
 			case EFirstPhase::BEAM1:
-				//if (_curAni->getNowPlayIdx() == 20)
-				//{
-				//	// SD: 캐스팅
-				//}
 				_bulletCount = 0;
 				_pa1StartPosIdx = 6;
 				_pa2StartPosIdx = 3;
@@ -330,11 +325,6 @@ void Dynus::update(void)
 				if (_pa3StartPosIdx < 0)
 				{
 					_firstP = EFirstPhase::BEAM2;
-					/*_curAni->AniStop();
-					_curImg = _spellImg;
-					_curAni = _spellAni;
-					_curAni->setPlayFrame(0, 69, false, false);
-					_curAni->AniStart();*/
 					_pa1StartPosIdx = 6;
 
 					_pa3StartPosIdx = 2;
@@ -345,10 +335,6 @@ void Dynus::update(void)
 				break;
 
 			case EFirstPhase::BEAM2:
-				//if (_curAni->getNowPlayIdx() == 20)
-				//{
-				//	// SD: 캐스팅
-				//}
 				_bulletCount = 0;
 				_pa1StartPosIdx = 6;
 				_pa2StartPosIdx = 3;
@@ -376,10 +362,6 @@ void Dynus::update(void)
 			switch (_secondP)
 			{
 			case ESecondPhase::SPAWN:
-				//if (_curAni->getNowPlayIdx() == 20)
-				//{
-				//	// SD: 캐스팅
-				//}
 				_bulletCount = 0;
 				_pa1StartPosIdx = 6;
 
@@ -421,10 +403,6 @@ void Dynus::update(void)
 				break;
 
 			case ESecondPhase::SPREAD_X:
-				//if (_curAni->getNowPlayIdx() == 20)
-				//{
-				//	// SD: 캐스팅
-				//}
 				bulletFire();
 				_pa2StartPosIdx = 3;
 				_pa3StartPosIdx = 2;
@@ -462,7 +440,7 @@ void Dynus::update(void)
 
 				if (!_isGM2Remove)
 				{
-					_rcGuardMine2 = RectMakeCenter(CENTER_X + 530, CENTER_Y, 47, 44);
+					_rcGuardMine2 = RectMakeCenter(CENTER_X + 580, CENTER_Y + 50, 47, 44);
 				}
 
 				else
@@ -543,10 +521,6 @@ void Dynus::update(void)
 					break;
 
 				case 1:
-					//if (_curAni->getNowPlayIdx() == 20)
-					//{
-					//	// SD: 캐스팅
-					//}
 					spreadEllipse();
 
 					if (_pa2StartPosIdx < 0)
@@ -572,10 +546,6 @@ void Dynus::update(void)
 					break;
 
 				case 2:
-					//if (_curAni->getNowPlayIdx() == 20)
-					//{
-					//	// SD: 캐스팅
-					//}
 					beamFire();
 
 					if (_pa3StartPosIdx < 0)
@@ -602,7 +572,6 @@ void Dynus::update(void)
 					break;
 
 				case 3:
-					// SD: 캐스팅
 					if (!_isSpawnEnemy)
 					{
 						_em->spawnShadeclaw();
@@ -785,19 +754,6 @@ void Dynus::draw(void)
 			}
 		}
 	}
-
-	/*for (int i = 0; i < PA2_STARTPOS_NUM_1; i++)
-	{
-		for (int j = 0; j < PA2_STARTPOS_NUM_2; j++)
-		{
-			DrawRectMake(getMemDC(), _rcPa2Start[i][j]);
-		}
-	}
-
-	for (int i = 0; i < PA3_STARTPOS_NUM; i++)
-	{
-		DrawRectMake(getMemDC(), _rcPa3Start[i]);
-	}*/
 
 	if (KEYMANAGER->isToggleKey('G'))
 	{

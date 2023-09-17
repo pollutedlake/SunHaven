@@ -52,7 +52,6 @@ HRESULT Shadeclaw::init(POINT position)
 	_collisionMap = IMAGEMANAGER->findImage("DynusMapCollision");
 
 	_hpBar = new ProgressBar;
-	//_hpBar->init("", "ProgressBarBGW", "ProgressBarW", _x, _y - 100, 92 * 4 + 25, 14);
 
 	_hp = 100.0f;
 	_maxHp = 100.0f;
@@ -104,8 +103,6 @@ void Shadeclaw::release(void)
 
 void Shadeclaw::update(void)
 {
-	cout << "Shadeclaw: " << (int)_state << endl;
-
 	_rc = RectMakeCenter(_x, _y, _curImg->getFrameWidth(), _curImg->getFrameHeight());
 	_curAni->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);
 
@@ -403,8 +400,6 @@ void Shadeclaw::attack(void)
 
 void Shadeclaw::draw(void)
 {
-	//DrawRectMake(getMemDC(), CAMERA->worldToCameraRect(_rc));
-
 	_curImg->aniRender(getMemDC(), CAMERA->worldToCameraX(_x - _curImg->getFrameWidth() / 2),
 		CAMERA->worldToCameraY(_y - _curImg->getFrameHeight() / 2), _curAni);
 }

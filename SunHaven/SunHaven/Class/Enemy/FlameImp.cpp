@@ -53,7 +53,7 @@ HRESULT FlameImp::init(POINT position)
 	_collisionMap = IMAGEMANAGER->findImage("MineMapCollision");
 
 	_hpBar = new ProgressBar;
-	//_hpBar->init("", "ProgressBarBGW", "ProgressBarW", _x, _y - 100, 92 * 4 + 25, 14);
+	_hpBar->init("ObjectHpBarTop", "", "ObjectHpBarFill", _x, _y - 10, 36, 7);
 
 	_hp = 100.0f;
 	_maxHp = 100.0f;
@@ -68,8 +68,8 @@ HRESULT FlameImp::init(POINT position)
 	_fireBall->init("FlameImp_Fireball", 10, 1000.0f);
 	_fireBallSpeed = 3.0f;
 
-	_patrolX = RND->getFromFloatTo(300, 700);
-	_patrolY = RND->getFromFloatTo(200, 650);
+	_patrolX = RND->getFromFloatTo(600, 1500);
+	_patrolY = RND->getFromFloatTo(1200, 2000);
 
 	_detectRange = 300.0f;
 	_attackRange = 200.0f;
@@ -85,7 +85,7 @@ HRESULT FlameImp::init(POINT position)
 		_patrolPoints.pop_front();
 	}
 
-	_afterAttackTime = 0.5f;
+	_afterAttackTime = 0.1f;
 	_afterAttackWorldTime = TIMEMANAGER->getWorldTime();
 
 	return S_OK;
@@ -141,12 +141,13 @@ void FlameImp::update(void)
 	{
 		_rc = RectMakeCenter(_x, _y, _curImg->getFrameWidth(), _curImg->getFrameHeight());
 		_curAni->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);
+		_hpBar->update();
+		_hpBar->setGauge(_hp, _maxHp);
 	}
 
 	_fireBall->update();
 
 	pixelCollision();
-	//collision();
 
 	switch (_state)
 	{
@@ -158,16 +159,6 @@ void FlameImp::update(void)
 			_curAni->AniStop();
 			_curImg = _moveImg;
 			_curAni = _moveAni;
-
-			/*_patrolX = RND->getFromFloatTo(300, 700);
-			_patrolY = RND->getFromFloatTo(200, 650);
-			_patrolPoints.push_back(make_pair(_patrolX, _patrolY));
-
-			if (!_patrolPoints.empty())
-			{
-				_nextPoints = _patrolPoints.front();
-				_patrolPoints.pop_front();
-			}*/
 
 			if (_x < _nextPoints.first)
 			{
@@ -234,6 +225,16 @@ void FlameImp::update(void)
 		{
 			_state = EEnemyState::IDLE;
 
+			_patrolX = RND->getFromFloatTo(600, 1500);
+			_patrolY = RND->getFromFloatTo(1200, 2000);
+			_patrolPoints.push_back(make_pair(_patrolX, _patrolY));
+
+			if (!_patrolPoints.empty())
+			{
+				_nextPoints = _patrolPoints.front();
+				_patrolPoints.pop_front();
+			}
+
 			_curAni->AniStop();
 			_curImg = _idleImg;
 			_curAni = _idleAni;
@@ -291,7 +292,6 @@ void FlameImp::update(void)
 		if (getDistance(_x, _y, _playerX, _playerY) <= _attackRange)
 		{
 			_state = EEnemyState::ATTACK;
-
 
 			_curAni->AniStop();
 			_curImg = _atkImg;
@@ -424,21 +424,12 @@ void FlameImp::render(void)
 	{
 		draw();
 		_fireBall->render();
+		_hpBar->render();
 	}
 }
 
 void FlameImp::move(void)
 {
-	_patrolX = RND->getFromFloatTo(1000, 800);
-	_patrolY = RND->getFromFloatTo(1000, 850);
-	_patrolPoints.push_back(make_pair(_patrolX, _patrolY));
-
-	if (!_patrolPoints.empty())
-	{
-		_nextPoints = _patrolPoints.front();
-		_patrolPoints.pop_front();
-	}
-
 	_x += cosf(getAngle(_x, _y, _nextPoints.first, _nextPoints.second)) * _speed;
 	_y += -sinf(getAngle(_x, _y, _nextPoints.first, _nextPoints.second)) * _speed;
 }
@@ -476,8 +467,6 @@ void FlameImp::attack(void)
 
 void FlameImp::draw(void)
 {
-	//DrawRectMake(getMemDC(), CAMERA->worldToCameraRect(_rc));
-
 	_curImg->aniRender(getMemDC(), CAMERA->worldToCameraX(_x - _curImg->getFrameWidth() / 2),
 		CAMERA->worldToCameraY(_y - _curImg->getFrameHeight() / 2), _curAni);
 }
@@ -487,25 +476,10 @@ bool FlameImp::attackCoolDown(void)
 	if (_afterAttackTime + _afterAttackWorldTime <= TIMEMANAGER->getWorldTime())
 	{
 		_afterAttackWorldTime = TIMEMANAGER->getWorldTime();
-		_afterAttackTime = 0.5f;
+		_afterAttackTime = 0.1f;
 
 		return true;
 	}
 
 	return false;
 }
-
-//void FlameImp::collision(void)
-//{
-//	for (int i = 0; i < _fireball->getBullet().size(); i++)
-//	{
-//		RECT rc;
-//
-//		if (IntersectRect(&rc, &CollisionAreaResizing(_fireball->getBullet()[i].rc, 21, 18),
-//			&_player->getPlayerRC()))
-//		{
-//			_fireball->removeBullet(i);
-//			_player->hitDamage(2.0f);
-//		}
-//	}
-//}
