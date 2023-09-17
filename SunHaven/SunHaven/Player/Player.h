@@ -20,29 +20,6 @@ enum class eTools
 	SWORD
 };
 
-struct tagPlayerState
-{
-	char* playerName;
-	float playerSpeed;
-	int HP;
-	int MP;
-	int MaxHP;
-	int MaxMP;
-	float HPRecoveryPerSec;
-	float MPRecoveryPerSec;
-	int gold;
-
-	int attackDamage;
-	int spellDamage;
-	int defence;
-	float critical;
-
-	int mineEXP;
-	int combatEXP;
-	int farmingEXP;
-};
-
-
 class Player : public GameNode
 {
 private:
@@ -113,10 +90,6 @@ private:
 	RECT _firebeamRC;
 	int offsetX = 0;
 
-	//Inventory* _inven;
-
-
-
 	GImage* _fishingBorder;
 	RECT _fishingBorderRC;
 
@@ -164,6 +137,8 @@ private:
 
 	float _jump;
 	bool _isJump;
+	float _invincibilityTime;
+	bool _isDamaged;
 
 public:
 	HRESULT init(float x, float y, string collisionMapkey);
@@ -173,8 +148,6 @@ public:
 
 	void MouseOver(ObjectManager* object, POINT point);
 
-	//void UseTool(ObjectManager* object, POINT point);
-	//bool UseTool(ObjectManager* object, POINT point);
 	list<POINT> UseTool(ObjectManager* object, POINT point);
 
 
@@ -343,6 +316,13 @@ public:
 			position.x + (_firebeamRC.right - _firebeamRC.left), 50);
 	}
 
+	inline void hitDamage(float damage)
+	{
+		if (_invincibilityTime == 0.0f)
+		{
+			_isDamaged = true;
+			_playerState.HP -= damage;
+		}
 
 	inline void hitDamage(float damage)
 	{
@@ -378,12 +358,41 @@ public:
 	eTools getToolType() { return _eTools; }
 	bool getIsSuccessFishing() { return _isSuccessFishing; }
 
-	RECT getSwordSwingRC() { return _swordSwingRC; }
+	RECT getSwingRC() { return _swordSwingRC; }
 
 	inline int getHP() { return _playerState.HP; }
 	inline int getMaxHP() { return _playerState.MaxHP; }
 	inline int getMP() { return _playerState.MP; }
 	inline int getMaxMP() { return _playerState.MaxMP; }
+	inline int getDefense() { return _playerState.defence; }
+	inline int getAttackDamage() { return _playerState.attackDamage; }
+	inline eTools getTools() { return _eTools; }
+	inline int getGold() { return _playerState.gold; }
+	inline tagPlayerState getPlayerState() { return _playerState; }
+	inline void setPlayerState(tagPlayerState playerState) {_playerState = playerState; }
+	
+	bool isSlash() { return  (_swordSwingAnim->getNowPlayIdx() == 1); }
+
+	void setHP(int itemStat)
+	{
+		_playerState.HP = getHP() + itemStat;
+	}
+
+	void setDefense(int itemStat)
+	{
+		_playerState.defence =  itemStat;
+	}
+
+	void setAttackDamage(int itemStat)
+	{
+		_playerState.attackDamage = getAttackDamage() + itemStat;
+
+	}
+
+	void setGold(int sellgold)
+	{
+		_playerState.gold = getGold() + sellgold;
+	}
 
 	Animation* getPlayerAnim() { return _playerMoveAnim; }
 

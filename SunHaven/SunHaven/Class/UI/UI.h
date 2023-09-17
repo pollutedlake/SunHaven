@@ -34,8 +34,6 @@ public:
 	
 	void renderBar(int x, int y, float width, float height, int alph, string Color);
 	void showBasicUI();
-	void updateUIWindow();
-	void showUIWindow();
 
 	void setAdressPlayer(Player* player) { _player = player;}
 

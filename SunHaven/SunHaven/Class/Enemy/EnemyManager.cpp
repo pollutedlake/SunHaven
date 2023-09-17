@@ -1,6 +1,7 @@
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "EnemyManager.h"
 #include "Shadeclaw.h"
+#include "Rootwalker.h"
 #include "SteelSlug.h"
 #include "FlameImp.h"
 #include "../../Player/Player.h"
@@ -8,10 +9,6 @@
 HRESULT EnemyManager::init(void)
 {
 	setEnemy();
-
-	/*_bullet = new Bullet;
-
-	_bullet->init("bullet", 100, 1000.0f);*/
 
 	return S_OK;
 }
@@ -24,9 +21,6 @@ void EnemyManager::release(void)
 
 		SAFE_DELETE(*_viEnemy);
 	}
-
-	//_bullet->release();
-	//SAFE_DELETE(_bullet);
 }
 
 void EnemyManager::update(void)
@@ -38,8 +32,6 @@ void EnemyManager::update(void)
 		(*_viEnemy)->update();
 	}
 
-	//EnemyBulletFire();
-	//_bullet->update();
 	//collision();
 }
 
@@ -78,8 +70,19 @@ void EnemyManager::spawnShadeclaw(void)
 	{
 		Enemy* shadeclaw;
 		shadeclaw = new Shadeclaw;
-		shadeclaw->init(PointMake(500 + i * 100, 300));
+		shadeclaw->init(PointMake(650 + i * 100, 350));
 		_vEnemy.push_back(shadeclaw);
+	}
+}
+
+void EnemyManager::spawnRootwalker(void)
+{
+	for (int i = 0; i < 2; i++)
+	{
+		Enemy* rootwalker;
+		rootwalker = new Rootwalker;
+		rootwalker->init(PointMake(650 + i * 100, 350));
+		_vEnemy.push_back(rootwalker);
 	}
 }
 
@@ -89,34 +92,20 @@ void EnemyManager::removeEnemy(int arrNum)
 	_vEnemy.erase(_vEnemy.begin() + arrNum);
 }
 
-void EnemyManager::EnemyBulletFire(void)
+void EnemyManager::collision(void)
 {
 	/*for (_viEnemy = _vEnemy.begin(); _viEnemy != _vEnemy.end(); ++_viEnemy)
 	{
-		
-			RECT rc = (*_viEnemy)->getRect();
-
-			_bullet->fire(rc.left + (rc.right - rc.left) / 2,
-				rc.bottom + (rc.top - rc.bottom) / 2 + 30,
-				getAngle(rc.left + (rc.right - rc.left) / 2,
-					rc.bottom + (rc.top - rc.bottom) / 2,
-					_player->getPlayerPosition().x,
-					_player->getPlayerPosition().y),
-				RND->getFromFloatTo(2.0f, 4.0f));
-		
-	}*/
-}
-
-void EnemyManager::collision(void)
-{
-	/*for (int i = 0; i < _bullet->getBullet().size(); i++)
-	{
-		RECT rc;
-
-		if (IntersectRect(&rc, &_bullet->getBullet()[i].rc, &_rocket->getRect()))
+		for (int i = 0; i < (*_viEnemy)->getFireBall()->getBullet().size(); i++)
 		{
-			_bullet->removeBullet(i);
-			_rocket->hitDamage(2.0f);
+			RECT rc;
+
+			if (IntersectRect(&rc, &CollisionAreaResizing((*_viEnemy)->getFireBall()->getBullet()[i].rc, 21, 18),
+				&_player->getPlayerRC()))
+			{
+				(*_viEnemy)->getFireBall()->removeBullet(i);
+				_player->hitDamage(2.0f);
+			}
 		}
 	}*/
 }

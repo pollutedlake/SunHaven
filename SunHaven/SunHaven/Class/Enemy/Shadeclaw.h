@@ -1,13 +1,12 @@
 #pragma once
-#include "Enemy.h"
-#include "../Animation/Animation.h"
-#include "../UI/ProgressBar.h"
+#include "../Enemy/Enemy.h"
 
 class Player;
 class Shadeclaw : public Enemy
 {
 private:
 	Player* _player;
+
 
 public:
 	HRESULT init(POINT position);
@@ -19,6 +18,8 @@ public:
 	void targetOn(void) override;
 	void attack(void) override;
 	void draw(void) override;
+
+	bool attackCoolDown(void) override;
 
 	void setPlayerMemoryAddress(Player* player) { _player = player; }
 

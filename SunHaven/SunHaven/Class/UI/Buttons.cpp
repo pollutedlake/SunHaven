@@ -276,6 +276,21 @@ void RadioButton::buttonUp(int num)
 	}
 }
 
+void RadioButton::setButtonDown(int idx)
+{
+	_vButtons[idx]->_frameX = 2;
+	_vButtons[idx]->_click = true;
+	for (int i = 0; i < _vButtons.size(); i++)
+	{
+		if (idx == i)
+		{
+			continue;
+		}
+		_vButtons[i]->_click = false;
+		_vButtons[i]->_frameX = 0;
+	}
+}
+
 RadioButton::RadioButton()
 {
 }

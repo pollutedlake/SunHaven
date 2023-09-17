@@ -1,7 +1,37 @@
 #pragma once
 #include "../FrameWork/SingletonBase/SingletonBase.h"
 #include "../Class/Data/ItemData.h"
-//#include "../Player/Player.h"
+
+struct tagPlayerState
+{
+	char* playerName;
+	float playerSpeed;
+	int HP;
+	int MP;
+	int MaxHP;
+	int MaxMP;
+	float HPRecoveryPerSec;
+	float MPRecoveryPerSec;
+	int gold;
+
+	int attackDamage;
+	int spellDamage;
+	int defence;
+	float critical;
+
+	int mineEXP;
+	int combatEXP;
+	int farmingEXP;
+};
+
+struct Slot
+{
+
+	RECT _rc;
+	bool _draw;
+	string _category;
+	int _currentStack;
+};
 
 class DataManager : public SingletonBase<DataManager>
 {
@@ -13,7 +43,13 @@ private:
 	vector<tagAccessory*> _vAcc;
 	vector<tagIngredient*> _vIngredient;
 	vector<tagConsumable*> _vConsumable;
-	//Player _player;
+
+	tagPlayerState _playerState;
+	vector<Slot> _vInvenList;
+	vector<Slot>::iterator _viInvenList;
+
+	vector<Slot> _vEquipmentSlot;
+	vector<Slot>::iterator _viEquipmentSlot;
 
 public:
 	HRESULT init(void);
@@ -26,8 +62,10 @@ public:
 	tagIngredient* getIngredientInfo(int index);
 	tagConsumable* getConsumableInfo(int index);
 
-	//void setPlayer(Player player) { _player = Player(player); }
-	//Player getPlayer() {return _player;}
+	void setData(tagPlayerState playerState, vector<Slot>* vInvenList = nullptr, vector<Slot>* vEquipmentSlot = nullptr);
+	vector<Slot> getInvenList() {return _vInvenList;}
+	vector<Slot> getEquipmentList() {return _vEquipmentSlot;}
+	tagPlayerState getPlayereState() {return _playerState;}
 
 	DataManager() {}
 	~DataManager() {}

@@ -22,7 +22,6 @@ HRESULT FarmScene::init(void)
 	_inven->init();
 
 	_player->setPlayerPosition(PointMake(2496, 1500));
-
 	_MouseOver = IMAGEMANAGER->addImage("오브젝트 선택",
 		"Resources/Images/Player/ObjectMouseOver.bmp",
 		36, 36, true, RGB(255, 0, 255));
@@ -39,6 +38,7 @@ HRESULT FarmScene::init(void)
 	_moveMapImg = IMAGEMANAGER->addImage("MoveMap", WINSIZE_X, WINSIZE_Y, true, RGB(255, 0, 255));
 	_clippingRaius = 0.0f;
 	_enterScene = true;
+	SOUNDMANAGER->play("Player_Farm_Var1_Final1", 0.2f);
 	return S_OK;
 }
 
@@ -54,42 +54,43 @@ void FarmScene::release(void)
 
 void FarmScene::update(void)
 {
-	if(!_moveMap)
+	_player->update();
+	_inven->update();
+	CAMERA->setPosition(_player->getPlayerPosition());
+	_player->worldToCamera(CAMERA->worldToCamera
+	(_player->getPlayerPosition()));
+	SOUNDMANAGER->update();
+	
+	queue<pair<string, POINT>> dropItems = _om->updateObjects();
+	while (!dropItems.empty())
 	{
-		_player->update();
-		_inven->update();
-		CAMERA->setPosition(_player->getPlayerPosition());
-		_player->worldToCamera(CAMERA->worldToCamera
-		(_player->getPlayerPosition()));
-		queue<pair<string, POINT>> dropItems = _om->updateObjects();
-		while (!dropItems.empty())
-		{
-			_lDropItem.push_back(dropItems.front());
-			dropItems.pop();
-		}
+		_lDropItem.push_back(dropItems.front());
+		dropItems.pop();
+	}
 
-		_player->ObjectCollision(_om);
+	_player->ObjectCollision(_om);
 
-	if(KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
+	if (!_moveMap)
 	{
-		list<POINT> ptList;
-		ptList = _player->UseTool(_om, _ptMouse);
-		_player->getPlayerAnim()->AniStart();
-		//_player->playerUseToolAnim(_ptMouse);
-		for(auto it = ptList.begin(); it != ptList.end(); ++it)
+		if(KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
 		{
-			if (!SamePoint(*it, PointMake(NULL,NULL)))
+			list<POINT> ptList;
+			ptList = _player->UseTool(_om, _ptMouse);
+			_player->getPlayerAnim()->AniStart();
+			for(auto it = ptList.begin(); it != ptList.end(); ++it)
 			{
-				_hitEffectList.push_back(make_pair(*it, 0));
+				if (!SamePoint(*it, PointMake(NULL,NULL)))
+				{
+					_hitEffectList.push_back(make_pair(*it, 0));
+				}
 			}
+			_inven->itemMove();
+			_inven->invenXButton();
 		}
-		_inven->itemMove();
-		_inven->invenXButton();
-	}
-	if (KEYMANAGER->isOnceKeyUp(VK_LBUTTON))
-	{
-		_inven->putItem();
-	}
+		if (KEYMANAGER->isOnceKeyUp(VK_LBUTTON))
+		{
+			_inven->putItem();
+		}
 
 		_player->UseToolAnim(KEYMANAGER->isStayKeyDown(VK_LBUTTON));
 		
@@ -106,6 +107,7 @@ void FarmScene::update(void)
 		{
 			_moveMap = true;
 		}
+		
 	}
 	else
 	{
@@ -125,6 +127,8 @@ void FarmScene::update(void)
 			if (_clippingRaius < 0)
 			{
 				_clippingRaius = 0.0f;
+				SOUNDMANAGER->stop("Player_Farm_Var1_Final1");
+				DATAMANAGER->setData(_player->getPlayerState(), _inven->getInvenList(), _inven->getEquipmentList());
 				SCENEMANAGER->changeScene("Shop");
 			}
 		}
@@ -157,6 +161,8 @@ void FarmScene::update(void)
 
 	if (KEYMANAGER->isOnceKeyDown(VK_F1))
 	{
+		SOUNDMANAGER->stop("Player_Farm_Var1_Final1");
+		DATAMANAGER->setData(_player->getPlayerState(), _inven->getInvenList(), _inven->getEquipmentList());
 		SCENEMANAGER->changeScene("Shop");
 	}
 }
@@ -165,6 +171,9 @@ void FarmScene::render(void)
 {
 	_bg->render(getMemDC(), 0, 0, CAMERA->getPosition().x - WINSIZE_X / 2,
 		CAMERA->getPosition().y - WINSIZE_Y / 2, WINSIZE_X, WINSIZE_Y);
+	IMAGEMANAGER->findImage("PlayerHouse")->render(getMemDC(), CAMERA->worldToCameraX(2000), CAMERA->worldToCameraY(1000), 
+		IMAGEMANAGER->findImage("PlayerHouse")->getWidth() * 1.5, IMAGEMANAGER->findImage("PlayerHouse")->getHeight() * 1.5,
+		0, 0, IMAGEMANAGER->findImage("PlayerHouse")->getWidth(), IMAGEMANAGER->findImage("PlayerHouse")->getHeight());
 	// 정렬된 순서로 렌더
 	while (!_vRenderList.empty())
 	{
@@ -186,6 +195,7 @@ void FarmScene::render(void)
 	
 	renderHitEffect();
 	_inven->render();
+	_inven->setCurrentSlot(_player->getTools());
 	_ui->render();
 	if (_moveMap)
 	{

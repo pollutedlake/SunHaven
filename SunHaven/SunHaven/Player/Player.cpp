@@ -263,6 +263,9 @@ HRESULT Player::init(float x, float y, string collisionMapKey)
 	
 	_isLoop = false;
 
+	_invincibilityTime = 0.0f;
+	_isDamaged = false;
+
 	return S_OK;
 }
 
@@ -550,6 +553,7 @@ void Player::update(void)
 	if (KEYMANAGER->isOnceKeyDown('1'))
 	{
 		_eTools = eTools::SICKLE;
+
 	}
 	if (KEYMANAGER->isOnceKeyDown('2'))
 	{
@@ -582,7 +586,6 @@ void Player::update(void)
 			_invincibilityTime = 0.0f;
 		}
 	}
-	
 
 	if (KEYMANAGER->isOnceKeyDown('Y') && _playerState.MP >= 3)
 	{
@@ -641,13 +644,13 @@ void Player::update(void)
 
 	_playerMoveAnim->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);
 	_fireballAnim->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);
-	//_swordAnim->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);
 	_swordSwingAnim->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);
 	_axeSwingAnim->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);
 	_pickaxeSwingAnim->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);
 	_hoeSwingAnim->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);
 	_scytheSwingAnim->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);
 	_fishingLodAnim->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);
+
 }
 
 void Player::render(void)
@@ -934,6 +937,11 @@ list<POINT> Player::UseTool(ObjectManager* object, POINT point)
 				&& _toolAnim->getNowPlayIdx() >= 0)
 			{
 				// SD : 钱海绰 家府
+				if (!SOUNDMANAGER->isPlaySound("ScytheCuttingCrops1"))
+				{
+					SOUNDMANAGER->play("ScytheCuttingCrops1", 1.0f);
+				}
+				
 				object->getObjectList()[i]->setHP(1);
 				collisionList.push_back(object->getObjectList()[i]->getTilePos());
 			}
@@ -948,6 +956,9 @@ list<POINT> Player::UseTool(ObjectManager* object, POINT point)
 				&& getDistance(_cx, _cy, point.x, point.y) < OBJECT_RANGE)
 			{
 				// SD : 唱公 海绰 家府
+				
+					SOUNDMANAGER->play("TreeHit1", 1.0f);
+				
 				object->getObjectList()[i]->setHP(10, _x);
 				collisionList.push_back(object->getObjectList()[i]->getTilePos());
 			}
@@ -962,6 +973,10 @@ list<POINT> Player::UseTool(ObjectManager* object, POINT point)
 				&& _toolAnim->getNowPlayIdx() >= 0)
 			{
 				// SD : 倒某绰 家府
+				
+					SOUNDMANAGER->play("RockHit1", 1.0f);
+				
+				
 				object->getObjectList()[i]->setHP(5);
 				collisionList.push_back(object->getObjectList()[i]->getTilePos());
 			}
@@ -1093,8 +1108,6 @@ void Player::UseCrossBow()
 {
 
 }
-
-
 
 void Player::RecureHP()
 {

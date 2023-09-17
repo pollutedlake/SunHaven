@@ -54,7 +54,7 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addImage("FarmLayer5", "Resources/Images/Tile/FarmLayer5.bmp", 2184, 2400, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("MineLayer3", "Resources/Images/Tile/MineLayer3.bmp", 1704, 1032, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("MineLayer5", "Resources/Images/Tile/MineLayer5.bmp", 1704, 1032, true, RGB(255, 0, 255));
-
+	IMAGEMANAGER->addImage("Wall", "Resources/Images/UI/Wall.bmp", 10, 81);
 	IMAGEMANAGER->addFrameImage("ScrollUpButton", "Resources/Images/UI/ScrollUpButton.bmp", 48, 16, 3, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("ScrollDownButton", "Resources/Images/UI/ScrollUpButton.bmp", 48, 16, 3, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("ScrollBar", "Resources/Images/UI/ScrollBar.bmp", 15, 40, true, RGB(255, 0, 255));
@@ -62,7 +62,9 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addFrameImage("LeftButton", "Resources/Images/UI/LeftButton.bmp", 60, 20, 3, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("RightButton", "Resources/Images/UI/RightButton.bmp", 60, 20, 3, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("Button1", "Resources/Images/UI/Button1.bmp", 300, 22, 3, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("BackButton", "Resources/Images/UI/BackButton.bmp", 78, 86, 3, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("LayerShowButton", "Resources/Images/UI/LayerShowButton.bmp", 54, 17, 2, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("TilesButton", "Resources/Images/UI/TilesButton.bmp", 81, 28, 3, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("Object1", "Resources/Images/Object/Grass1.bmp", 24, 24, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("Object2", "Resources/Images/Object/Grass2.bmp", 24, 24, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("Object3", "Resources/Images/Object/Tree1.bmp", 89, 121, true, RGB(255, 0, 255));
@@ -78,6 +80,10 @@ HRESULT Resources::init(void)
 		1, 1,
 		false, NULL, RotateNoneFlipNone);
 	IMAGEMANAGER->addImage("Stump", "Resources/Images/Object/Stump.bmp", 24, 24, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Window","Resources/Images/UI/Window.bmp", 271, 192, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("WindowHead","Resources/Images/UI/WindowHead.bmp", 271, 49, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("WindowBottom","Resources/Images/UI/WindowBottom.bmp", 271, 189, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("MapToolBG","Resources/Images/UI/MapToolBG.bmp", 314, 186, true, RGB(255, 0, 255));
 	// Sound
 
 	// ====================DynusScene====================
@@ -140,6 +146,14 @@ HRESULT Resources::init(void)
 		38 * 2, 54 * 2,
 		true, RGB(255, 0, 255));	// 다이너스 점프 플랫폼
 
+	IMAGEMANAGER->addImage("DynusGuardPlatformL", "Resources/Images/Boss/DynusGuardPlatformL.bmp",
+		69, 117,
+		true, RGB(255, 0, 255));	// 다이너스 점프 플랫폼
+
+	IMAGEMANAGER->addImage("DynusGuardPlatformR", "Resources/Images/Boss/DynusGuardPlatformR.bmp",
+		70, 119,
+		true, RGB(255, 0, 255));	// 다이너스 점프 플랫폼
+
 	IMAGEMANAGER->addImage("DynusHpBar", "Resources/Images/UI/DynusHpBar.bmp",
 		425, 58,
 		true, RGB(255, 0, 255));	// 다이너스 HpBar
@@ -165,6 +179,9 @@ HRESULT Resources::init(void)
 	//	true, RGB(255, 0, 255));	// 다이너스 점프 플랫폼
 
 	// Sound
+	SOUNDMANAGER->addSound("dynus_battle_v7", "Resources/Sound/dynus_battle_v7.wav", true, true);
+
+
 
 	// ====================DizzyScene====================
 	// Image
@@ -195,6 +212,8 @@ HRESULT Resources::init(void)
 
 
 	// Sound
+	
+
 
 	// ====================MineScene====================
 	// Image
@@ -203,7 +222,8 @@ HRESULT Resources::init(void)
 		4, 1,
 		true, RGB(255, 0, 255));	// 적 파이어볼
 
-	// Sound
+	// Sound 
+	SOUNDMANAGER->addSound("Candy_Mines_Final2", "Resources/Sound/Candy_Mines_Final2.wav", true, true);
 
 
 	// ====================FarmScene====================
@@ -212,11 +232,17 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addImage("젖은 경작지", "Resources/Images/Object/Farm_wetdirt.bmp", 36, 36, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("HitEffect", "Resources/Images/Player/HitEffect.bmp", 288, 48, 6, 1, true, RGB(255, 0, 255));
 
-	// Sound
+	// Sound 
+	SOUNDMANAGER->addSound("Player_Farm_Var1_Final1", "Resources/Sound/Player_Farm_Var1_Final1.wav", true, true);
+	SOUNDMANAGER->addSound("ScytheCuttingCrops1", "Resources/Sound/ScytheCuttingCrops1.wav", false, false);
+	SOUNDMANAGER->addSound("TreeHit1", "Resources/Sound/TreeHit1.wav", false, false);
+	SOUNDMANAGER->addSound("RockHit1", "Resources/Sound/RockHit1.wav", false, false);
 
 	// ====================ShopScene====================
 	
-	// itemImage(슬롯x)
+	// itemImage(슬롯x) icon_scythe2
+	IMAGEMANAGER->addImage("icon_scythe2", "Resources/Images/Item/icon_scythe2.bmp", 32, 32, true, RGB(255, 0, 255));
+
 	IMAGEMANAGER->addImage("녹슨 곡괭이", "Resources/Images/Item/icon_rusty_pickaxe2.bmp", 32, 32, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("아다만트 곡괭이", "Resources/Images/Item/icon_adamant_pickaxe2.bmp", 32, 32, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("녹슨 괭이", "Resources/Images/Item/icon_rusty_hoe2.bmp", 32, 32, true, RGB(255, 0, 255));
@@ -287,11 +313,17 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addImage("item_bg_common", "Resources/Images/Inventory/item_bg_common.bmp", 32, 32, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("item_bg_rare", "Resources/Images/Inventory/item_bg_rare.bmp", 32, 32, true, RGB(255, 0, 255));
 
+	IMAGEMANAGER->addImage("selection_hover-click-selected_0", "Resources/Images/Inventory/selection_hover-click-selected_0.bmp", 34, 34, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("tooltip_bg", "Resources/Images/Inventory/tooltip_bg.bmp", 137, 87, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("tooltip_bg_flipped", "Resources/Images/Inventory/tooltip_bg_flipped.bmp", 137, 87, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("combat_skill_tree_icons_0", "Resources/Images/Inventory/combat_skill_tree_icons_0.bmp", 32, 32, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("combat_skill_tree_icons_6", "Resources/Images/Inventory/combat_skill_tree_icons_6.bmp", 32, 32, true, RGB(255, 0, 255));
+
 	//CraftingImage
 	//IMAGEMANAGER->addImage("cooking_bg1" , "Resources/Images/CraftingTable/cooking_bg1.bmp",)
 
 
-	// shopImage
+	// shopImage 
 	IMAGEMANAGER->addImage("Shop_Bg", "Resources/Images/Shop/Shop_Bg.bmp", WINSIZE_X, WINSIZE_Y,true,RGB(255,0,255));
 	IMAGEMANAGER->addImage("store_bg", "Resources/Images/Shop/store_bg.bmp", 522, 654, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("store_item_bg", "Resources/Images/Shop/store_item_bg.bmp", 231, 93, true, RGB(255, 0, 255));
@@ -305,8 +337,10 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addImage("x20_button_normal", "Resources/Images/Shop/x20_button_normal.bmp", 28, 20, true, RGB(255, 0, 255));
 
 	IMAGEMANAGER->addImage("UI_icon_coin", "Resources/Images/Shop/UI_icon_coin.bmp", 10, 9, true, RGB(255, 0, 255));
-
+	IMAGEMANAGER->addImage("goldbanner", "Resources/Images/Shop/goldbanner.bmp", 133, 35, true, RGB(255, 0, 255));
 	// Sound
+	SOUNDMANAGER->addSound("E_getItem_Sound1", "Resources/Sound/E_getItem_Sound1.wav", false, false);
+	
 
 	// ====================
 	// Image
@@ -360,13 +394,15 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addFrameImage("LynnMom2", "Resources/Images/Intro/LynnMom2.bmp", 364, 354, 7, 6, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("LynnMom1", "Resources/Images/Intro/LynnMom1.bmp", 936, 59, 18, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("LynnMomHouse", "Resources/Images/Intro/LynnMomHouse.bmp", 654, 462, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("PlayerHouse", "Resources/Images/Tile/PlayerHouse.bmp", 251, 198, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("Train1", "Resources/Images/Intro/Train1.bmp", 686, 357, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("Train2", "Resources/Images/Intro/Train2.bmp", 643, 357, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("LynnWalkSheet", "Resources/Images/Intro/LynnWalkSheet.bmp", 840, 104, 20, 2, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("LynnBlinkSheet", "Resources/Images/Intro/LynnBlinkSheet.bmp", 378, 52, 9, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("LynnBreathingSheet", "Resources/Images/Intro/LynnBreathingSheet.bmp", 1008, 52, 24, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("LynnTrainSheet", "Resources/Images/Intro/LynnTrainSheet.bmp", 750, 104, 15, 2, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("DialogWindow", "Resources/Images/Intro/image.bmp", 354, 146, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("DialogWindow2", "Resources/Images/Intro/DialogWindow2.bmp", 354, 146, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("DialogWindow1", "Resources/Images/Intro/DialogWindow1.bmp", 354, 146, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("Dialog린", "Resources/Images/Intro/DialogLynn.bmp", 648, 197, 6, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("LynnSadSheet", "Resources/Images/Intro/LynnSadSheet.bmp", 1680, 52, 40, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("Black", "Resources/Images/Intro/Black.bmp", WINSIZE_X, WINSIZE_Y, true, RGB(255, 0, 255));
@@ -392,8 +428,14 @@ HRESULT Resources::init(void)
 		0, 0,
 		1, 1,
 		false, NULL, RotateNoneFlipNone);
-	// Sound
+	// Sound 
 	SOUNDMANAGER->addSound("E_TextScroll3", "Resources/Sound/E_TextScroll3.wav", false, false);
+	SOUNDMANAGER->addSound("인트로 린하우스", "Resources/Sound/인트로 린하우스.wav", true, true);
+	SOUNDMANAGER->addSound("인트로 기차안 브금", "Resources/Sound/인트로 기차안 브금.wav", true, true);
+	SOUNDMANAGER->addSound("SceneTransition1", "Resources/Sound/SceneTransition1.wav", false, false);
+	SOUNDMANAGER->addSound("E_인트로 대장장이", "Resources/Sound/E_인트로 대장장이.wav", false, false);
+	
+
 
 	return S_OK;
 }

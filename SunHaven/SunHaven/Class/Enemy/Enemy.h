@@ -2,6 +2,7 @@
 #include "../GameNode/GameNode.h"
 #include "../Animation/Animation.h"
 #include "../UI/ProgressBar.h"
+//#include "../Bullets/Bullets.h"
 
 enum class EEnemyState
 {
@@ -69,6 +70,10 @@ protected:
 	float _afterAttackTime;
 	float _afterAttackWorldTime;
 
+	float _invincibilityTime;
+	bool _isDamaged;
+	bool _isDie;
+
 public:
 	virtual HRESULT init(POINT position);
 
@@ -84,7 +89,22 @@ public:
 
 	bool isWait(void);
 	virtual bool attackCoolDown(void);
-	virtual void pixelCollision(void);
+
+	void pixelCollision(void);
+
+	inline void hitDamage(float damage)
+	{
+		if (_invincibilityTime == 0.0f)
+		{
+			_isDamaged = true;
+			_hp -= damage;
+		}
+
+		if (_hp <= 0)
+		{
+			_hp = 0;
+		}
+	}
 
 	EEnemyState getEState(void) { return _state; }
 	void setEState(EEnemyState state) { _state = state; }
@@ -93,6 +113,8 @@ public:
 
 	POINT getPosition(void) { return PointMake(_x, _y); }
 	void setPosition(POINT pos) { PointMake(_x, _y) = pos; }
+
+	RECT getRcAttack() { return _rcAttack; }
 
 	float getX(void) { return _x; }
 	void setX(float x) { _x = x; }
@@ -105,6 +127,8 @@ public:
 
 	float getPlayerY(void) { return _playerY; }
 	void setPlayerY(float playerY) { _playerY = playerY; }
+
+	int getHP() {return _hp;}
 
 	Enemy(void);
 	~Enemy(void) {}

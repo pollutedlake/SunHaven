@@ -6,11 +6,38 @@
 #include "../../Player/Player.h"
 #include "../Class/Enemy/EnemyManager.h"
 
+namespace DynusSceneDialog
+{
+	enum DialogState
+	{
+		OPEN,
+		SHOW,
+		HIDE,
+		CLOSE
+	};
+	struct Dialog
+	{
+		string _charName;
+		int _expression;
+		string _dialog;
+		int _letterN;
+		int _answerN;
+		int _nextDialog;
+		pair<string, int> _answer[4];
+	};
+};
+
+
+class UI;
 class DynusScene : public GameNode
 {
 private:
 	GImage* _loopImg;
-	RECT _rcStar[4];
+	GImage* _bg;
+	GImage* _dialogWindow2;
+	GImage* _dialogWindow1;
+	GImage* _moveMapImg;
+	RECT _rcStar[8];
 	float _offsetX, _offsetY;
 
 	Dynus* _dynus;
@@ -18,14 +45,31 @@ private:
 	Player* _player;
 	EnemyManager* _em;
 
+	DynusSceneDialog::Dialog _arrDialogs[67];
+	int _dialogIdx;
+	GImage* _speaker;
+	float _typingTime;
+	DynusSceneDialog::DialogState _dialogState;
+	RECT _dialogRC;
+	float _dialogSize;
+
+	UI* _ui;
+
 	char _text[64];
 
+	RECT _portal;
+	bool _moveMap;
+	bool _enterScene;
+	float _clippingRaius;
 public:
 	HRESULT init(void);
 	void release(void);
 	void update(void);
 	void render(void);
 
+	void renderDialog();
+	void updateDialog();
+	void dialog(DynusSceneDialog::Dialog dialog);
 	void collision(void);
 
 	DynusScene() {}

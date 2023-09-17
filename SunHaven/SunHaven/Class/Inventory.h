@@ -1,17 +1,7 @@
 #pragma once
 #include "../FrameWork/GameNode/GameNode.h"
 
-struct Slot
-{
-	
-	RECT _rc;
-	bool _draw;
-	string _category;
-	int _currentStack;
-	
-
-};
-
+class Player;
 
 class Inventory : public GameNode
 {
@@ -27,6 +17,7 @@ private:
 	RECT _xButton;
 
 	RECT _playerStat[5];
+	
 
 	DWORD _lastItemTime;
 	string _getItem;
@@ -37,6 +28,14 @@ private:
 	bool _inInvenSlot;
 	bool _inEquipmentSlot;
 	
+	int maxEquipmentRender;
+
+	int _sellGold;
+	int _att;
+	int _def;
+	int _hp;
+
+	int _defIndex[5];
 
 	vector<Slot> _vInvenList;
 	vector<Slot>::iterator _viInvenList;
@@ -44,28 +43,9 @@ private:
 	vector<Slot> _vEquipmentSlot;
 	vector<Slot>::iterator _viEquipmentSlot;
 
-	/*vector<tagTool*> _vTool;
-	vector<tagTool*>::iterator _viTool;
+	vector<Slot> _vItemUseSlot;
+	vector<Slot>::iterator _viItemUseSlot;
 
-	vector<tagWeapon*> _vWeapon;
-	vector<tagWeapon*>::iterator _viWeapon;
-
-	vector<tagAccessory*> _vAccessory;
-	vector<tagAccessory*>::iterator _viAccessory;
-
-	vector<tagConsumable*> _vConsumable;
-	vector<tagConsumable*>::iterator _viConsumable;
-
-	vector<tagArmor*> _vArmor;
-	vector<tagArmor*>::iterator _viArmor;
-
-	vector<tagIngredient*> _vIngredient;
-	vector<tagIngredient*>::iterator _viIngredient;*/
-
-	
-
-	
-	
 
 
 public:
@@ -73,7 +53,6 @@ public:
 	void release(void);
 	void update(void);
 	void render(void);
-	//void getItem();
 	void getItem(string index);
 	void itemMove();
 	void invenMold();
@@ -83,13 +62,25 @@ public:
 	void popupItem();
 	void putItem();
 	void invenXButton();
+	void setCurrentSlot(enum eTools player);
+	void itemInfoPopup(int index);
+	void sellItem();
+	int getSellGold() { return _sellGold; }
+	int getAtt() { return _att; }
+	int getDef() { return _def; }
+	int getHP() { return _hp; }
 
-	//vector<tagWeapon*> getWeapon() { return _vWeapon; }
-	//
-	//vector<tagAccessory*> getAccessory() { return _vAccessory; }
-	//
-	//vector<tagConsumable*> getConsumable() { return _vConsumable; }
-	
+	RECT getPlayerStatSlot1() { return _playerStat[0]; }
+	RECT getPlayerStatSlot2() { return _playerStat[1]; }
+	RECT getPlayerStatSlot3() { return _playerStat[2]; }
+	RECT getPlayerStatSlot4() { return _playerStat[3]; }
+	RECT getPlayerStatSlot5() { return _playerStat[4]; }
+	vector<Slot>* getInvenList() {return &_vInvenList;}
+	vector<Slot>* getEquipmentList() {return &_vEquipmentSlot;}
+	void setInvenList(vector<Slot> vInvenList) {_vInvenList = vInvenList;}
+	void setEuqipmentList(vector<Slot> vEquipmentList) { _vEquipmentSlot = vEquipmentList;}
+
+	bool getSeeInven() { return _seeInven; }
 
 	Inventory(){}
 	~Inventory(){}

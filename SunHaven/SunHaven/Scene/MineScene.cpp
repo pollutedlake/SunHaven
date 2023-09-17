@@ -9,6 +9,7 @@ HRESULT MineScene::init(void)
 
 	_player = new Player;
 	_player->init(500, 1000, "MineMapCollision");
+	_player->setPlayerState(DATAMANAGER->getPlayereState());
 
 	CAMERA->setPosition(_player->getPlayerPosition());
 	CAMERA->setLimitRight(2556 - WINSIZE_X / 2);
@@ -19,6 +20,8 @@ HRESULT MineScene::init(void)
 
 	_inven = new Inventory;
 	_inven->init();
+	_inven->setInvenList(DATAMANAGER->getInvenList());
+	_inven->setEuqipmentList(DATAMANAGER->getEquipmentList());
 
 	_MouseOver = IMAGEMANAGER->addImage("오브젝트 선택",
 		"Resources/Images/Player/ObjectMouseOver.bmp",
@@ -30,13 +33,18 @@ HRESULT MineScene::init(void)
 
 	_ui = new UI;
 	_ui->init("Mine");
+	_ui->setAdressPlayer(_player);
 
 	_em = new EnemyManager;
 	_em->setPlayerMemoryAddress(_player);
-	//_slug->setPlayerMemoryAddress(_player);
-
 	_em->spawnSteelSlug();
 	_em->spawnFlameImp();
+	_moveMap = true;
+	_portal = RectMake(1750, 1450, 400, 50);
+	_moveMapImg = IMAGEMANAGER->addImage("MoveMap", WINSIZE_X, WINSIZE_Y, true, RGB(255, 0, 255));
+	_clippingRaius = 0.0f;
+	_enterScene = true;
+	SOUNDMANAGER->play("Candy_Mines_Final2", 0.3f);
 
 	return S_OK;
 }
@@ -55,6 +63,7 @@ void MineScene::release(void)
 
 void MineScene::update(void)
 {
+	SOUNDMANAGER->update();
 	_player->update();
 	_inven->update();
 	CAMERA->setPosition(_player->getPlayerPosition());
@@ -87,31 +96,62 @@ void MineScene::update(void)
 			_vRenderList.push(make_pair(_om->getObjectList()[i], _om->getObjectList()[i]->getRC().bottom));
 		}
 	}
-
-
-	_player->ObjectCollision(_om);
-
-	if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
+	if(!_moveMap)
 	{
-		_player->UseTool(_om, _ptMouse);
-		_inven->itemMove();
+		_player->ObjectCollision(_om);
+
+		if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
+		{
+			_player->UseTool(_om, _ptMouse);
+			_inven->itemMove();
+		}
+		if (KEYMANAGER->isOnceKeyUp(VK_LBUTTON))
+		{
+
+		}
+		_player->UseToolAnim(KEYMANAGER->isStayKeyDown(VK_LBUTTON));
+
+		_player->UseFishingLod(CAMERA->cameraToWorld(_ptMouse));
+		getDropItem();
+		
+		_em->update();
+		if (PtInRect(&_portal, _player->getPlayerPosition()))
+		{
+			_moveMap = true;
+		}
 	}
-	if (KEYMANAGER->isOnceKeyUp(VK_LBUTTON))
+	else
 	{
-
+		if (_enterScene)
+		{
+			_clippingRaius += TIMEMANAGER->getElapsedTime() * 1000.0f;
+			if (_clippingRaius > WINSIZE_X)
+			{
+				_clippingRaius = WINSIZE_X;
+				_enterScene = false;
+				_moveMap = false;
+			}
+		}
+		else
+		{
+			_clippingRaius -= TIMEMANAGER->getElapsedTime() * 1000.0f;
+			if (_clippingRaius < 0)
+			{
+				_clippingRaius = 0.0f;
+				SOUNDMANAGER->stop("Candy_Mines_Final2");
+				DATAMANAGER->setData(_player->getPlayerState(), _inven->getInvenList(), _inven->getEquipmentList());
+				SCENEMANAGER->changeScene("Dizzy");
+			}
+		}
 	}
-	_player->UseToolAnim(KEYMANAGER->isStayKeyDown(VK_LBUTTON));
-
-	_player->UseFishingLod(CAMERA->cameraToWorld(_ptMouse));
-	getDropItem();
-
-	_em->update();
-	//_slug->update();
-
 	if (KEYMANAGER->isOnceKeyDown(VK_F1))
 	{
+		SOUNDMANAGER->stop("Candy_Mines_Final2");
+		DATAMANAGER->setData(_player->getPlayerState(), _inven->getInvenList(), _inven->getEquipmentList());
 		SCENEMANAGER->changeScene("Dizzy");
 	}
+
+	collision();
 }
 
 void MineScene::render(void)
@@ -138,26 +178,20 @@ void MineScene::render(void)
 	}
 
 	_em->render();
-	//_slug->render();
 
 	_inven->render();
 	_ui->render();
-}
-
-void MineScene::Collision(void)
-{
-	for (int i = 0; i < _om->getObjectList().size(); i++)
+	if (_moveMap)
 	{
-		RECT temp;
-
-		if (IntersectRect(&temp,
-			&RectMakeCenter(_player->getPlayerPosition().x,
-				_player->getPlayerPosition().y, 48, 52),
-			&_om->getObjectList()[i]->getRC()))
-		{
-		}
+		PatBlt(_moveMapImg->getMemDC(), 0, 0, WINSIZE_X, WINSIZE_Y, BLACKNESS);
+		HBRUSH magenta = CreateSolidBrush(RGB(255, 0, 255));
+		HBRUSH oldBrush = (HBRUSH)SelectObject(_moveMapImg->getMemDC(), magenta);
+		EllipseMakeCenter(_moveMapImg->getMemDC(), (CAMERA->worldToCameraRect(_player->getPlayerRC()).right + CAMERA->worldToCameraRect(_player->getPlayerRC()).left) / 2.0f,
+			(CAMERA->worldToCameraRect(_player->getPlayerRC()).bottom + CAMERA->worldToCameraRect(_player->getPlayerRC()).top) / 2.0f, _clippingRaius, _clippingRaius);
+		SelectObject(_moveMapImg->getMemDC(), oldBrush);
+		DeleteObject(magenta);
+		_moveMapImg->render(getMemDC());
 	}
-
 }
 
 void MineScene::renderDropItem()

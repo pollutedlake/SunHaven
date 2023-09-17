@@ -76,6 +76,7 @@ public:
 
 	void buttonDown();
 	void buttonUp(int num);
+	void setButtonDown(int idx);
 
 	RadioButton();
 	~RadioButton() {}

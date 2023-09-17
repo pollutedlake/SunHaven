@@ -86,8 +86,10 @@ public:
 	void erase(void);
 	void toggleShowLayer(int layer);
 	void selectObject(int objectType);
+	void changeTiles(int tilesN);
 
 	void copyTiles(void);
+	void Exit(void);
 
 	void saveMaps();
 	void loadLayers();

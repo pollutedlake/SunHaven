@@ -26,9 +26,8 @@ public:
 
 	bool attackCoolDown(void) override;
 
-	void pixelCollision(void) override;
-
 	void setPlayerMemoryAddress(Player* player) { _player = player; }
+
 
 	SteelSlug() {}
 	~SteelSlug() {}

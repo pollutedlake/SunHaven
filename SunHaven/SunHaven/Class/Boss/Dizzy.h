@@ -69,7 +69,6 @@ private:
 	Meteor* _meteor;
 	Gems* _gem;
 
-	char _gemImg[128];
 	int _rndGemImg;
 
 	float _meteorFireX, _meteorFireY;
@@ -98,6 +97,8 @@ private:
 
 	int _afterDeathTime;
 	float _afterDeathWorldTime;
+	float _invincibilityTime;
+	bool _isDamaged;
 
 public:
 	HRESULT init(void);
@@ -105,9 +106,6 @@ public:
 	void update(void);
 	void render(void);
 
-	RECT _rcColl[4];
-
-	//void move(void);
 	void draw(void);
 
 	void spin(void);
@@ -120,6 +118,26 @@ public:
 	bool afterDeathTime(void);
 
 	void setPlayerMemoryAddress(Player* player) { _player = player; }
+
+	inline void hitDamage(float damage)
+	{
+		if (_invincibilityTime == 0.0f)
+		{
+			_isDamaged = true;
+			_hp -= damage;
+		}
+
+		if (_hp <= 0)
+		{
+			_hp = 0;
+		}
+	}
+
+	void collision(void);
+	void pixelCollision(void);
+
+	RECT getRcDizzy(void) { return _rcDizzy; }
+	RECT getRcSpinAttack(void) { return _rcSpinAtk; }
 
 	Dizzy() {}
 	~Dizzy() {}

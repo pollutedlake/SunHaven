@@ -11,9 +11,9 @@ private:
 	float _atkFromX, _atkFromY;
 	float _atkToX, _atkToY;
 
-	EnemyFireBall* _fireball;
+	EnemyFireBall* _fireBall;
 
-	float _fireballSpeed;
+	float _fireBallSpeed;
 
 public:
 	HRESULT init(POINT position);
@@ -27,8 +27,6 @@ public:
 	void draw(void) override;
 
 	bool attackCoolDown(void) override;
-
-	void pixelCollision(void) override;
 
 	void setPlayerMemoryAddress(Player* player) { _player = player; }
 

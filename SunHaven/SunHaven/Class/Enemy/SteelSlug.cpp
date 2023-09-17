@@ -84,6 +84,8 @@ HRESULT SteelSlug::init(POINT position)
 	_afterAttackTime = 1.5f;
 	_afterAttackWorldTime = TIMEMANAGER->getWorldTime();
 
+	_isDie = false;
+	
 	return S_OK;
 }
 
@@ -107,12 +109,41 @@ void SteelSlug::release(void)
 
 void SteelSlug::update(void)
 {
-	cout << "SteelSlug: " << (int)_state << endl;
 
-	_rc = RectMakeCenter(_x, _y, _curImg->getFrameWidth(), _curImg->getFrameHeight());
-	_curAni->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);
+	if (KEYMANAGER->isOnceKeyDown('P'))
+	{
+		_hp -= 10;
+	}
+	if (_hp <= 0)
+	{
+		_hp = 0;
 
-	pixelCollision();
+		_state = EEnemyState::DEATH;
+
+		_curAni->AniStop();
+		_curImg = _deathImg;
+		_curAni = _deathAni;
+
+		if (!_isLeft)
+		{
+			_curAni->setPlayFrame(0, 8, false, false);
+		}
+
+		else
+		{
+			_curAni->setPlayFrame(9, 17, true, false);
+		}
+
+		_curAni->AniStart();
+	}
+
+	else
+	{
+		_rc = RectMakeCenter(_x, _y, _curImg->getFrameWidth(), _curImg->getFrameHeight());
+		_curAni->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);
+
+		pixelCollision();
+	}
 
 	switch (_state)
 	{
@@ -233,12 +264,12 @@ void SteelSlug::update(void)
 
 			if (!_isLeft)
 			{
-				_curAni->setPlayFrame(0, 15, false, false);
+				_curAni->setPlayFrame(0, 15, false, true);
 			}
 
 			else
 			{
-				_curAni->setPlayFrame(16, 31, true, false);
+				_curAni->setPlayFrame(16, 31, true, true);
 			}
 
 			_curAni->AniStart();
@@ -254,7 +285,7 @@ void SteelSlug::update(void)
 
 			if (!_isLeft)
 			{
-				_curAni->setPlayFrame(0, 3, false, false);
+				_curAni->setPlayFrame(0, 3, false, true);
 
 			}
 
@@ -292,7 +323,7 @@ void SteelSlug::update(void)
 
 				if (!_isLeft)
 				{
-					_curAni->setPlayFrame(0, 3, false, false);
+					_curAni->setPlayFrame(0, 3, false, true);
 				}
 
 				else
@@ -307,7 +338,12 @@ void SteelSlug::update(void)
 		break;
 
 	case EEnemyState::DEATH:
-
+		if (_curAni->getNowPlayIdx() == 8 || _curAni->getNowPlayIdx() == 9)
+		{
+			// SD: Á×À½
+			
+			_isDie = true;
+		}
 
 		break;
 	}
@@ -315,7 +351,10 @@ void SteelSlug::update(void)
 
 void SteelSlug::render(void)
 {
-	draw();
+	if (!_isDie)
+	{
+		draw();
+	}
 }
 
 void SteelSlug::move(void)
@@ -352,8 +391,6 @@ void SteelSlug::targetOn(void)
 
 void SteelSlug::attack(void)
 {
-	DrawRectMake(getMemDC(), CAMERA->worldToCameraRect(_rcAttack));
-
 	if (_x < _playerX)
 	{
 		_isLeft = false;
@@ -376,7 +413,7 @@ void SteelSlug::attack(void)
 
 		else
 		{
-			_rcAttack = RectMakeCenter(-10000, 0, 0, 0);
+			_rcAttack = RectMakeCenter(0, 0, 0, 0);
 		}
 	}
 
@@ -392,15 +429,21 @@ void SteelSlug::attack(void)
 
 		else
 		{
-			_rcAttack = RectMakeCenter(-10000, 0, 0, 0);
+			_rcAttack = RectMakeCenter(0, 0, 0, 0);
 		}
+	}
+
+	if (_isCollisionLeft || _isCollisionRight || _isCollisionTop || _isCollisionBottom)
+	{
+		_x -= cosf(getAngle(_atkFromX, _atkFromY, _atkToX, _atkToY)) * _atkSpeed;
+		_y -= -sinf(getAngle(_atkFromX, _atkFromY, _atkToX, _atkToY)) * _atkSpeed;
 	}
 }
 
 void SteelSlug::draw(void)
 {
 	//DrawRectMake(getMemDC(), CAMERA->worldToCameraRect(_rc));
-
+	DrawRectMake(getMemDC(), CAMERA->worldToCameraRect(_rcAttack));
 	_curImg->aniRender(getMemDC(), CAMERA->worldToCameraX(_x - _curImg->getFrameWidth() / 2), 
 		CAMERA->worldToCameraY(_y - _curImg->getFrameHeight() / 2), _curAni);
 }
@@ -416,56 +459,4 @@ bool SteelSlug::attackCoolDown(void)
 	}
 
 	return false;
-}
-
-void SteelSlug::pixelCollision(void)
-{
-	if (_collisionMap != nullptr)
-	{
-		for (int i = _rc.left + 4; i <= _rc.right - 4; i++)
-		{
-			COLORREF collisionT =
-				GetPixel(_collisionMap->getMemDC(),
-					i, _rc.top);
-			COLORREF collisionB =
-				GetPixel(_collisionMap->getMemDC(),
-					i, _rc.bottom);
-
-			if (collisionT == RGB(255, 0, 255))
-			{
-				_isCollisionTop = true;
-			}
-
-			else
-			{
-				_isCollisionTop = false;
-			}
-
-			if (collisionB == RGB(255, 0, 255))
-			{
-				_isCollisionBottom = true;
-			}
-
-			else
-			{
-				_isCollisionBottom = false;
-			}
-		}
-
-		for (int i = _rc.top + 4; i <= _rc.bottom - 4; i++)
-		{
-			COLORREF collisionL =
-				GetPixel(_collisionMap->getMemDC(),
-					_rc.left, i);
-
-			COLORREF collisionR =
-				GetPixel(_collisionMap->getMemDC(),
-					_rc.right, i);
-
-			_isCollisionLeft =
-				collisionL == RGB(255, 0, 255) ? true : false;
-			_isCollisionRight =
-				collisionR == RGB(255, 0, 255) ? true : false;
-		}
-	}
 }

@@ -19,7 +19,7 @@ HRESULT IntroScene::init(void)
 		wsprintf(text, "TrainPassenger%d", i + 1);
 		_trainPassengers[i] = IMAGEMANAGER->findImage(text);
 	}
-	_dialogWindow = IMAGEMANAGER->findImage("DialogWindow");
+	_dialogWindow = IMAGEMANAGER->findImage("DialogWindow2");
 	_trainWindow = IMAGEMANAGER->findImage("TrainWindow1");
 	_introCut[0] = IMAGEMANAGER->addImage("IntroCut1", WINSIZE_X, WINSIZE_Y);
 	_introCut[1] = IMAGEMANAGER->addImage("IntroCut2", WINSIZE_X, WINSIZE_Y);
@@ -176,7 +176,7 @@ HRESULT IntroScene::init(void)
 	_darkAlpha = 0;
 	_dialogState = HIDE;
 	_answerN = 0;
-	// SD : 인트로 린 집 배경음
+	SOUNDMANAGER->play("인트로 린하우스", 0.2f);
 	return S_OK;
 }
 
@@ -188,6 +188,7 @@ void IntroScene::release(void)
 
 void IntroScene::update(void)
 {
+	SOUNDMANAGER->update();
 	if(_cutIdx == 0)
 	{
 		_lynn->update();
@@ -205,6 +206,7 @@ void IntroScene::update(void)
 		{
 			if (_count > _lynnMom->getMaxFrameX())
 			{
+				SOUNDMANAGER->play("E_인트로 대장장이", 1.0f);
 				_count = 0;
 				_count2 = 0;
 			}
@@ -220,7 +222,12 @@ void IntroScene::update(void)
 				_dialogIdx++;
 				_cutIdx++;
 				// SD : 인트로 린 집 배경음 꺼줘
+				SOUNDMANAGER->stop("인트로 린하우스");
 				// SD : 인트로 기차 배경음
+				if (!SOUNDMANAGER->isPlaySound("인트로 린하우스"))
+				{
+					SOUNDMANAGER->play("인트로 기차안 브금", 0.2f);
+				}
 			}
 		}
 		if (_lynn->getActionIdx() == 5)
@@ -318,6 +325,7 @@ void IntroScene::update(void)
 			else if (_lynn->getActionIdx() == 27)
 			{
 				_changeCut = true;
+				SOUNDMANAGER->play("SceneTransition1", 1.0f);
 				_changeCut = WINSIZE_X;
 			}
 		}
@@ -411,7 +419,6 @@ void IntroScene::update(void)
 					_dialogIdx += _arrDialogs[_dialogIdx]._nextDialog;
 					next = true;
 				}
-				cout << _dialogIdx << endl;
 				if(next)
 				{
 					if (_dialogIdx == 15 || _dialogIdx == 28 || _dialogIdx == 32 || _dialogIdx == 34 || _dialogIdx == 61 || _dialogIdx == 63 || _dialogIdx == 66 || _dialogIdx == 38)
@@ -429,12 +436,14 @@ void IntroScene::update(void)
 					{
 						_changeCut = true;
 						// SD : 씬 전환 소리
+						SOUNDMANAGER->play("SceneTransition1",1.0f);
 						_dialogState = CLOSE;
 						_dialogIdx = 23;
 						_changeCutTime = WINSIZE_X;
 					}
 					if (_dialogIdx == 67)
 					{
+						SOUNDMANAGER->stop("인트로 기차안 브금");
 						SCENEMANAGER->changeScene("Farm");
 					}
 				}
@@ -443,6 +452,8 @@ void IntroScene::update(void)
 	}
 	if (KEYMANAGER->isOnceKeyDown(VK_F1))
 	{
+		SOUNDMANAGER->stop("인트로 린하우스");
+		SOUNDMANAGER->stop("인트로 기차안 브금");
 		SCENEMANAGER->changeScene("Farm");
 	}
 }
@@ -496,7 +507,10 @@ void IntroScene::render(void)
 		_trainPassengers[9]->frameRender(_introCut[2]->getMemDC(), 55, 160, _darkAlpha == 128 ? _count % 8 : _count % (_trainPassengers[9]->getMaxFrameX() + 1), 
 			_darkAlpha == 128 ? 1 : 0);
 		_trainPassengers[10]->frameRender(_introCut[2]->getMemDC(), 425, 160, _count % (_trainPassengers[10]->getMaxFrameX() + 1), _darkAlpha == 128 ? 1 : 0);
-		_catSleep->aniRender(_introCut[2]->getMemDC(), 375, 0, _catAnim);
+		IMAGEMANAGER->addFrameImage("임시플레이어",
+			"Resources/Images/Player/kittywalk.bmp",
+			960, 52, 20, 1, true, RGB(255, 0, 255))->frameRender(_introCut[2]->getMemDC(), 270, 120, 5, 0);
+			_catSleep->aniRender(_introCut[2]->getMemDC(), 375, 0, _catAnim);
 		IMAGEMANAGER->frameRender("Frog", _introCut[2]->getMemDC(), 90, 140, _catSleep->getMaxFrameX() - ((_count / 10) % 2), 0);
 		_lynn->render(_introCut[2]->getMemDC());
 		_introCut[2]->render(getMemDC(), WINSIZE_X / 2 - _train2->getWidth() * 0.65f, 0, _train2->getWidth() * 1.3f, _train2->getHeight() * 1.3f, 0, 0, _train2->getWidth(), _train2->getHeight());
