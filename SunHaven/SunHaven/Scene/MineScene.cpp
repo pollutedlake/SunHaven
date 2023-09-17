@@ -8,7 +8,7 @@ HRESULT MineScene::init(void)
 	IMAGEMANAGER->addImage("MineMapCollision", "./Resources/Data/Map/MineMapCollision.bmp", 3600, 3600);
 
 	_player = new Player;
-	_player->init(500, 1000, "MineMapCollision");
+	_player->init(500, 1400, "MineMapCollision");
 	_player->setPlayerState(DATAMANAGER->getPlayereState());
 
 	CAMERA->setPosition(_player->getPlayerPosition());

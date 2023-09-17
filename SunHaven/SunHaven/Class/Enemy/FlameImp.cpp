@@ -55,8 +55,8 @@ HRESULT FlameImp::init(POINT position)
 	_hpBar = new ProgressBar;
 	_hpBar->init("ObjectHpBarTop", "", "ObjectHpBarFill", _x, _y - 10, 36, 7);
 
-	_hp = 100.0f;
-	_maxHp = 100.0f;
+	_hp = 50.0f;
+	_maxHp = 50.0f;
 
 	_isLeft = false;
 
@@ -141,6 +141,8 @@ void FlameImp::update(void)
 	{
 		_rc = RectMakeCenter(_x, _y, _curImg->getFrameWidth(), _curImg->getFrameHeight());
 		_curAni->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);
+		_hpBar->setX(CAMERA->worldToCameraX(_x));
+		_hpBar->setY(CAMERA->worldToCameraY(_y));
 		_hpBar->update();
 		_hpBar->setGauge(_hp, _maxHp);
 	}
@@ -353,8 +355,8 @@ void FlameImp::update(void)
 
 		if (_isCollisionLeft || _isCollisionRight || _isCollisionTop || _isCollisionBottom)
 		{
-			_x -= cosf(getAngle(_x, _y, _playerX, _playerY)) * _targetOnSpeed;
-			_y -= -sinf(getAngle(_x, _y, _playerX, _playerY)) * _targetOnSpeed;
+			_x -= _targetOnSpeed;
+			_y -= _targetOnSpeed;
 		}
 
 		break;
@@ -427,7 +429,7 @@ void FlameImp::render(void)
 	{
 		draw();
 		_fireBall->render();
-		_hpBar->render();
+		//_hpBar->render();
 	}
 }
 

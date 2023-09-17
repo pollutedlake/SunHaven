@@ -16,7 +16,7 @@ HRESULT TitleScene::init(void)
     _isDone.reset();
     _isDone.set(0, true);
 
-    SOUNDMANAGER->play("Main_Menu_Final", 0.5f);
+    //SOUNDMANAGER->play("Main_Menu_Final", 0.5f);
     //_sound = 0;
     _exPtMouse = _ptMouse;
     return S_OK;
@@ -99,7 +99,10 @@ void TitleScene::update(void)
 
    
     buttonSound();
-    
+    if (KEYMANAGER->isOnceKeyDown('S'))
+    {
+        SOUNDMANAGER->play("Main_Menu_Final", 0.5f);
+    }
 
     SOUNDMANAGER->update();
 }

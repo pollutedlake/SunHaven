@@ -75,7 +75,7 @@ void UI::showBasicUI()
 	_goldIcon->render(getMemDC(), WINSIZE_X - 300, 8, _goldIcon->getWidth() * 1.5f, _goldIcon->getHeight() * 1.5f, 0, 0, _goldIcon->getWidth(), _goldIcon->getHeight());
 	if (_player->getGold() / 1000 > 0)
 	{
-		wsprintf(_text, "%d,%d", _player->getGold() / 1000, _player->getGold() % 1000);
+		wsprintf(_text, "%d,%03d", _player->getGold() / 1000, _player->getGold() % 1000);
 	}
 	else
 	{

@@ -309,8 +309,8 @@ void SteelSlug::update(void)
 
 		if (_isCollisionLeft || _isCollisionRight || _isCollisionTop || _isCollisionBottom)
 		{
-			_x -= cosf(getAngle(_x, _y, _playerX, _playerY)) * _targetOnSpeed;
-			_y -= -sinf(getAngle(_x, _y, _playerX, _playerY)) * _targetOnSpeed;
+			_x -= _targetOnSpeed;
+			_y -= _targetOnSpeed;
 		}
 
 		break;
@@ -458,8 +458,8 @@ void SteelSlug::attack(void)
 
 	if (_isCollisionLeft || _isCollisionRight || _isCollisionTop || _isCollisionBottom)
 	{
-		_x -= cosf(getAngle(_atkFromX, _atkFromY, _atkToX, _atkToY)) * _atkSpeed;
-		_y -= -sinf(getAngle(_atkFromX, _atkFromY, _atkToX, _atkToY)) * _atkSpeed;
+		_x -= _atkSpeed;
+		_y -= _atkSpeed;
 	}
 }
 
