@@ -147,7 +147,6 @@ void Inventory::release(void)
 
 void Inventory::update(void)
 {
-	cout << _def << endl;
 	if (_vEquipmentSlot[0]._draw )
 	{
 		maxEquipmentRender = 1;

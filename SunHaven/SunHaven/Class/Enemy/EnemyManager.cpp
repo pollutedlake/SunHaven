@@ -8,7 +8,6 @@
 
 HRESULT EnemyManager::init(void)
 {
-	setEnemy();
 
 	return S_OK;
 }
@@ -41,22 +40,16 @@ void EnemyManager::render(void)
 	}
 }
 
-void EnemyManager::setEnemy(void)
-{
-
-}
-
 void EnemyManager::spawnSteelSlug(void)
 {
 	for (int i = 0; i < 2; i++)
 	{
-		for (int j = 0; j < 2; j++)
-		{
+		
 			Enemy* slug;
 			slug = new SteelSlug;
-			slug->init(PointMake(600 + i * 950, 800 + j * 250));
+			slug->init(PointMake(600 + i * 950, 800));
 			_vEnemy.push_back(slug);
-		}
+		
 	}
 }
 
@@ -64,13 +57,12 @@ void EnemyManager::spawnFlameImp(void)
 {
 	for (int i = 0; i < 2; i++)
 	{
-		for (int j = 0; j < 2; j++)
-		{
+		
 			Enemy* flameImp;
 			flameImp = new FlameImp;
-			flameImp->init(PointMake(1200 + i * 1200, 850 + j * 150));
+			flameImp->init(PointMake(1200 + i * 1200, 850 ));
 			_vEnemy.push_back(flameImp);
-		}
+		
 	}
 }
 

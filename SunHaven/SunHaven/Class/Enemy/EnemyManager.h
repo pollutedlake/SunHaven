@@ -22,7 +22,6 @@ public:
 	void update(void);
 	void render(void);
 
-	void setEnemy(void);
 	void spawnSteelSlug(void);
 	void spawnFlameImp(void);
 	void spawnShadeclaw(void);

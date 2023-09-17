@@ -20,8 +20,8 @@ HRESULT MineScene::init(void)
 
 	_inven = new Inventory;
 	_inven->init();
-	_inven->setInvenList(DATAMANAGER->getInvenList());
-	_inven->setEuqipmentList(DATAMANAGER->getEquipmentList());
+	/*_inven->setInvenList(DATAMANAGER->getInvenList());
+	_inven->setEuqipmentList(DATAMANAGER->getEquipmentList());*/
 
 	_MouseOver = IMAGEMANAGER->addImage("오브젝트 선택",
 		"Resources/Images/Player/ObjectMouseOver.bmp",
@@ -104,10 +104,6 @@ void MineScene::update(void)
 		{
 			_player->UseTool(_om, _ptMouse);
 			_inven->itemMove();
-		}
-		if (KEYMANAGER->isOnceKeyUp(VK_LBUTTON))
-		{
-
 		}
 		_player->UseToolAnim(KEYMANAGER->isStayKeyDown(VK_LBUTTON));
 
