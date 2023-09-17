@@ -229,12 +229,14 @@ void ShopScene::update(void)
 						{
 						case 0:
 							_inven->getItem(_vShopList[i]._index);
+							_player->setGold(-_vShopList[i]._buyGold);
 							break;
 
 						case 1:
 							for (int k = 0; k < 5; k++)
 							{
 								_inven->getItem(_vShopList[i]._index);
+								_player->setGold(-_vShopList[i]._buyGold);
 							}
 
 							break;
@@ -243,6 +245,7 @@ void ShopScene::update(void)
 							for (int l = 0; l < 20; l++)
 							{
 								_inven->getItem(_vShopList[i]._index);
+								_player->setGold(-_vShopList[i]._buyGold);
 							}
 							break;
 						}
