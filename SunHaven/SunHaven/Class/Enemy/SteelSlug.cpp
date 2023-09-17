@@ -64,8 +64,9 @@ HRESULT SteelSlug::init(POINT position)
 	_atkToX = _atkToY = 0.0f;
 	_playerX = _playerY = 0.0f;
 
-	_patrolX = RND->getFromFloatTo(300, 700);
-	_patrolY = RND->getFromFloatTo(200, 650);
+	
+	_patrolX = RND->getFromFloatTo(600, 1500);
+	_patrolY = RND->getFromFloatTo(1200, 2000);
 
 	_detectRange = 200.0f;
 	_attackRange = 60.0f;
@@ -201,6 +202,14 @@ void SteelSlug::update(void)
 		{
 			_state = EEnemyState::IDLE;
 			
+			_patrolPoints.push_back(make_pair(_patrolX, _patrolY));
+
+			if (!_patrolPoints.empty())
+			{
+				_nextPoints = _patrolPoints.front();
+				_patrolPoints.pop_front();
+			}
+
 			_curAni->AniStop();
 			_curImg = _idleImg;
 			_curAni = _idleAni;
@@ -347,6 +356,17 @@ void SteelSlug::update(void)
 
 		break;
 	}
+
+	if (_isDamaged)
+	{
+		_invincibilityTime += TIMEMANAGER->getElapsedTime();
+
+		if (_invincibilityTime > 0.4f)
+		{
+			_isDamaged = false;
+			_invincibilityTime = 0.0f;
+		}
+	}
 }
 
 void SteelSlug::render(void)
@@ -442,8 +462,6 @@ void SteelSlug::attack(void)
 
 void SteelSlug::draw(void)
 {
-	//DrawRectMake(getMemDC(), CAMERA->worldToCameraRect(_rc));
-	DrawRectMake(getMemDC(), CAMERA->worldToCameraRect(_rcAttack));
 	_curImg->aniRender(getMemDC(), CAMERA->worldToCameraX(_x - _curImg->getFrameWidth() / 2), 
 		CAMERA->worldToCameraY(_y - _curImg->getFrameHeight() / 2), _curAni);
 }

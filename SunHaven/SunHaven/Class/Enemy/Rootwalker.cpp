@@ -398,8 +398,6 @@ void Rootwalker::attack(void)
 
 void Rootwalker::draw(void)
 {
-	//DrawRectMake(getMemDC(), CAMERA->worldToCameraRect(_rc));
-
 	_curImg->aniRender(getMemDC(), CAMERA->worldToCameraX(_x - _curImg->getFrameWidth() / 2),
 		CAMERA->worldToCameraY(_y - _curImg->getFrameHeight() / 2), _curAni);
 }

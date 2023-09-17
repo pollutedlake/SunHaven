@@ -45,7 +45,6 @@ void DizzyScene::collision(void)
 
 	if (IntersectRect(&rcTemp1, &_player->getPlayerRC(), &_dizzy->getRcSpinAttack()))
 	{
-		cout << "충돌 " << endl;
 		_player->hitDamage(5.0f);
 	}
 	if (_player->isSlash())
@@ -92,14 +91,11 @@ void DynusScene::collision(void)
 
 	if (IntersectRect(&rcTemp3, &_player->getSwingRC(), &_dynus->getRcGuardMine1()))
 	{
-		cout << "충돌 " << endl;
  		_dynus->setIsGM1Remove(true);
 	}
 
 	if (IntersectRect(&rcTemp4, &_player->getSwingRC(), &_dynus->getRcGuardMine2()))
 	{
-		cout << "충돌 " << endl;
-
 		_dynus->setIsGM2Remove(true);
 	}
 }

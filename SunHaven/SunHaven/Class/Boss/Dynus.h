@@ -3,8 +3,6 @@
 #include "../Animation/Animation.h"
 #include "../Bullets/Bullets.h"
 #include "../UI/ProgressBar.h"
-//#include "../Enemy/Enemy.h"
-//#include "../Enemy/EnemyManager.h"
 
 // 1페이즈 패턴 시작 위치 갯수
 #define PA1_STARTPOS_NUM_1	7
