@@ -319,14 +319,7 @@ void Player::update(void)
 	{
 		_playerMoveAnim->AniStop();
 	}
-	else if (_toolAnim->getNowPlayIdx() == 1)
-	{
-		//_playerMoveAnim->AniStart();
-	}
 
-	cout << _toolAnim->isPlay() << endl;
-	cout << _toolAnim->getNowPlayIdx() << endl;
-	cout<<"_playerMoveAnim" << _playerMoveAnim->getNowPlayIdx() << endl;
 
 	COLORREF stairCol =
 		GetPixel(_collisionMap->getMemDC(),
@@ -505,10 +498,31 @@ void Player::update(void)
 		_jump -= 0.2f;
 	}
 
-
 	if (KEYMANAGER->isOnceKeyDown('X'))
 	{
 		_swordSwingAnim->AniStart();
+
+		if (_isUpDown)
+		{
+			if (_isUp)
+			{
+				_playerMoveAnim->setPlayFrame(41, 43, false, false);
+			}
+			else
+			{
+				_playerMoveAnim->setPlayFrame(11, 13, false, false);
+			}
+		}
+		else if (_isLeft)
+		{
+			_playerMoveAnim->setPlayFrame(56, 58, false, false);
+		}
+		else
+		{
+			_playerMoveAnim->setPlayFrame(26, 28, false, false);
+		}
+
+		_playerMoveAnim->AniStart();
 	}
 
 
@@ -996,22 +1010,22 @@ void Player::UseFishingLod(POINT point)
 	{
 		if (updown < 0 && abs(updown) > leftright)
 		{
-			_playerMoveAnim->setPlayFrame(10, 14, false, true);
+			_playerMoveAnim->setPlayFrame(39, 40, false, false);
 			_fishingLodAnim->setPlayFrame(0, 6, false, false);
 		}
 		else if (updown > 0 && abs(leftright) < updown)
 		{
-			_playerMoveAnim->setPlayFrame(0, 4, false, true);
+			_playerMoveAnim->setPlayFrame(9, 10, false, true);
 			_fishingLodAnim->setPlayFrame(14, 20, false, false);
 		}
 		else if (leftright < 0)
 		{
-			_playerMoveAnim->setPlayFrame(5, 9, false, true);
+			_playerMoveAnim->setPlayFrame(54, 55, false, true);
 			_fishingLodAnim->setPlayFrame(21, 27, false, false);
 		}
 		else
 		{
-			_playerMoveAnim->setPlayFrame(15, 19, false, true);
+			_playerMoveAnim->setPlayFrame(24, 25, false, true);
 			_fishingLodAnim->setPlayFrame(7, 13, false, false);
 		}
 

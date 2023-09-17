@@ -122,7 +122,6 @@ private:
 	bool _isFishing;
 	bool _isSuccessFishing;
 
-	bool _isDamaged;
 
 	int axeSwingAnimArr[4] = { 15,16,17,18 };
 	int pickaxeSwingAnimArr[4] = { 12,13,14,15 };
@@ -133,7 +132,6 @@ private:
 
 	int cursormovespeed = 2;
 
-	float _invincibilityTime;
 
 	float _jump;
 	bool _isJump;
@@ -189,11 +187,7 @@ public:
 		
 		if (KEYMANAGER->isStayKeyDown('A'))
 		{
-			/*_swordSlashRC = RectMakeCenter(_cx - 28, _cy,
-				_swordSlashAnim->getFrameWidth(),
-				_swordSlashAnim->getFrameHeight());*/
-
-			_swordSwingRC = RectMakeCenter(_cx, _cy,
+			_swordSwingRC = RectMakeCenter(_cx, _cy + 6,
 				_swordSwingAnim->getFrameWidth(),
 				_swordSwingAnim->getFrameHeight());
 
@@ -222,7 +216,7 @@ public:
 		}
 		else if (KEYMANAGER->isStayKeyDown('D'))
 		{
-			_swordSwingRC = RectMakeCenter(_cx, _cy,
+			_swordSwingRC = RectMakeCenter(_cx, _cy + 6,
 				_swordSwingAnim->getFrameWidth(),
 				_swordSwingAnim->getFrameHeight());
 
@@ -249,7 +243,7 @@ public:
 		}
 		else if (KEYMANAGER->isStayKeyDown('W'))
 		{
-			_swordSwingRC = RectMakeCenter(_cx, _cy,
+			_swordSwingRC = RectMakeCenter(_cx, _cy + 6,
 				_swordSwingAnim->getFrameWidth(),
 				_swordSwingAnim->getFrameHeight());
 
@@ -276,10 +270,7 @@ public:
 		}
 		else if (KEYMANAGER->isStayKeyDown('S'))
 		{
-			/*_swordSlashRC = RectMakeCenter(_cx, _cy+28,
-				_swordAnim->getFrameWidth(),
-				_swordAnim->getFrameHeight());*/
-			_swordSwingRC = RectMakeCenter(_cx, _cy,
+			_swordSwingRC = RectMakeCenter(_cx, _cy + 6,
 				_swordSwingAnim->getFrameWidth(),
 				_swordSwingAnim->getFrameHeight());
 
@@ -316,14 +307,7 @@ public:
 			position.x + (_firebeamRC.right - _firebeamRC.left), 50);
 	}
 
-	inline void hitDamage(float damage)
-	{
-		if (_invincibilityTime == 0.0f)
-		{
-			_isDamaged = true;
-			_playerState.HP -= damage;
-		}
-
+	
 	inline void hitDamage(float damage)
 	{
 		if (_invincibilityTime == 0.0f)
@@ -336,15 +320,6 @@ public:
 				_playerState.HP = 0;
 			}
 		}
-	}
-
-	void setCollision(bool left, bool right, bool top, bool bottom)
-	{
-		_isCollisionLeft = left;
-		_isCollisionRight = right;
-		_isCollisionTop = top;
-		_isCollisionBottom = bottom;
-
 	}
 
 	RECT getPlayerRC() 
