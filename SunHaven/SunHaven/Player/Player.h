@@ -20,29 +20,6 @@ enum class eTools
 	SWORD
 };
 
-struct tagPlayerState
-{
-	char* playerName;
-	float playerSpeed;
-	int HP;
-	int MP;
-	int MaxHP;
-	int MaxMP;
-	float HPRecoveryPerSec;
-	float MPRecoveryPerSec;
-	int gold;
-
-	int attackDamage;
-	int spellDamage;
-	int defence;
-	float critical;
-
-	int mineEXP;
-	int combatEXP;
-	int farmingEXP;
-};
-
-
 class Player : public GameNode
 {
 private:
@@ -117,10 +94,6 @@ private:
 	RECT _firebeamRC;
 	int offsetX = 0;
 
-	//Inventory* _inven;
-
-
-
 	GImage* _fishingBorder;
 	RECT _fishingBorderRC;
 
@@ -175,8 +148,6 @@ public:
 
 	void MouseOver(ObjectManager* object, POINT point);
 
-	//void UseTool(ObjectManager* object, POINT point);
-	//bool UseTool(ObjectManager* object, POINT point);
 	list<POINT> UseTool(ObjectManager* object, POINT point);
 
 
@@ -397,7 +368,10 @@ public:
 	inline int getAttackDamage() { return _playerState.attackDamage; }
 	inline eTools getTools() { return _eTools; }
 	inline int getGold() { return _playerState.gold; }
+	inline tagPlayerState getPlayerState() { return _playerState; }
+	inline void setPlayerState(tagPlayerState playerState) {_playerState = playerState; }
 	
+	bool isSlash() { return  (_swordSwingAnim->getNowPlayIdx() == 1); }
 
 	void setHP(int itemStat)
 	{

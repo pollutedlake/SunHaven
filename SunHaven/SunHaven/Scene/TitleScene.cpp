@@ -133,14 +133,14 @@ void TitleScene::render(void)
     {
         if (PtInRect(&_rc[i], _ptMouse))
         {
-           
+            
             IMAGEMANAGER->GPFrameRender("TitleButton", getMemDC(),
                 50, 408 + i * 59, 2.2, 2,
                 IMAGEMANAGER->findGPImage("TitleButton")->getFrameX(), IMAGEMANAGER->findGPImage("TitleButton")->getFrameY(),
                 InterpolationModeNearestNeighbor, 0);
             if (!PtInRect(&_rc[i], _exPtMouse))
             {
-                
+               
             }
         }
     }

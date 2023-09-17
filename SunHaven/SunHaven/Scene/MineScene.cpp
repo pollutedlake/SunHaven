@@ -9,6 +9,7 @@ HRESULT MineScene::init(void)
 
 	_player = new Player;
 	_player->init(500, 1000, "MineMapCollision");
+	_player->setPlayerState(DATAMANAGER->getPlayereState());
 
 	CAMERA->setPosition(_player->getPlayerPosition());
 	CAMERA->setLimitRight(2556 - WINSIZE_X / 2);
@@ -20,6 +21,9 @@ HRESULT MineScene::init(void)
 	_inven = new Inventory;
 	_inven->init();
 	_inven->setPlayerAdsress(_player);
+	_inven->setInvenList(DATAMANAGER->getInvenList());
+	_inven->setEuqipmentList(DATAMANAGER->getEquipmentList());
+
 	_MouseOver = IMAGEMANAGER->addImage("오브젝트 선택",
 		"Resources/Images/Player/ObjectMouseOver.bmp",
 		36, 36, true, RGB(255, 0, 255));
@@ -103,12 +107,6 @@ void MineScene::update(void)
 		{
 			_player->UseTool(_om, _ptMouse);
 			_inven->itemMove();
-
-
-		}
-		if (KEYMANAGER->isOnceKeyUp(VK_LBUTTON))
-		{
-
 		}
 		_player->UseToolAnim(KEYMANAGER->isStayKeyDown(VK_LBUTTON));
 
@@ -141,7 +139,7 @@ void MineScene::update(void)
 			{
 				_clippingRaius = 0.0f;
 				SOUNDMANAGER->stop("Candy_Mines_Final2");
-				
+				DATAMANAGER->setData(_player->getPlayerState(), _inven->getInvenList(), _inven->getEquipmentList());
 				SCENEMANAGER->changeScene("Dizzy");
 			}
 		}
@@ -150,6 +148,7 @@ void MineScene::update(void)
 	{
 		SOUNDMANAGER->stop("Candy_Mines_Final2");
 		SOUNDMANAGER->play("SceneTransition1", 1.0f);
+		DATAMANAGER->setData(_player->getPlayerState(), _inven->getInvenList(), _inven->getEquipmentList());
 		SCENEMANAGER->changeScene("Dizzy");
 	}
 
@@ -180,7 +179,7 @@ void MineScene::render(void)
 	}
 
 	_em->render();
-	_player->render();
+
 	_inven->render();
 	_ui->render();
 	if (_moveMap)

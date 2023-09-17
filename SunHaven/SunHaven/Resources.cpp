@@ -64,6 +64,7 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addFrameImage("Button1", "Resources/Images/UI/Button1.bmp", 300, 22, 3, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("BackButton", "Resources/Images/UI/BackButton.bmp", 78, 86, 3, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("LayerShowButton", "Resources/Images/UI/LayerShowButton.bmp", 54, 17, 2, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("TilesButton", "Resources/Images/UI/TilesButton.bmp", 81, 28, 3, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("Object1", "Resources/Images/Object/Grass1.bmp", 24, 24, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("Object2", "Resources/Images/Object/Grass2.bmp", 24, 24, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("Object3", "Resources/Images/Object/Tree1.bmp", 89, 121, true, RGB(255, 0, 255));
@@ -179,10 +180,9 @@ HRESULT Resources::init(void)
 
 	// Sound   
 	SOUNDMANAGER->addSound("dynus_battle_v7", "Resources/Sound/dynus_battle_v7.wav", true, true);
-	SOUNDMANAGER->addSound("DynusCast2", "Resources/Sound/DynusCast2.wav", false, false);
+	SOUNDMANAGER->addSound("DynusCast2", "Resources/Sound/DynusCast2.wav", false,false);
 	SOUNDMANAGER->addSound("RockCandyMonster1Death1", "Resources/Sound/RockCandyMonster1Death1.wav", false, false);
 	SOUNDMANAGER->addSound("MonsterBookDeath1", "Resources/Sound/MonsterBookDeath1.wav", false, false);
-
 
 
 	// ====================DizzyScene====================
@@ -213,15 +213,17 @@ HRESULT Resources::init(void)
 		28, 30, true, RGB(255, 0, 255));
 
 
-	// Sound  
-	SOUNDMANAGER->addSound("DizzyConfusion1", "Resources/Sound/DizzyConfusion1.wav", false, false);
+	// Sound
+	SOUNDMANAGER->addSound("DizzyConFusion1", "Resources/Sound/DizzyConFusion1.wav", false, false);
 	SOUNDMANAGER->addSound("DizzyDeath1", "Resources/Sound/DizzyDeath1.wav", false, false);
 	SOUNDMANAGER->addSound("DizzyRocksFalling1", "Resources/Sound/DizzyRocksFalling1.wav", false, false);
-	SOUNDMANAGER->addSound("DizzyTransform1", "Resources/Sound/DizzyTransform1.wav", false, false);
+	SOUNDMANAGER->addSound("DizzyTransForm1", "Resources/Sound/DizzyTransForm1.wav", false, false);
 	SOUNDMANAGER->addSound("DizzyWake1", "Resources/Sound/DizzyWake1.wav", false, false);
-	SOUNDMANAGER->addSound("boss_music1-2", "Resources/Sound/boss_music1-2.wav", true, true);
+	SOUNDMANAGER->addSound("boss_music1-2", "Resources/Sound/boss_music1-2.wav", false, false);
 	SOUNDMANAGER->addSound("Mines_5_OST_Final_Loop1", "Resources/Sound/Mines_5_OST_Final_Loop1.wav", true, true);
-	
+	SOUNDMANAGER->addSound("DizzyConFusion1", "Resources/Sound/DizzyConFusion1.wav", false, false);
+
+
 
 	// ====================MineScene====================
 	// Image
@@ -348,7 +350,7 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addImage("goldbanner", "Resources/Images/Shop/goldbanner.bmp", 133, 35, true, RGB(255, 0, 255));
 	// Sound
 	SOUNDMANAGER->addSound("E_getItem_Sound1", "Resources/Sound/E_getItem_Sound1.wav", false, false);
-	SOUNDMANAGER->addSound("Salon_Final1", "Resources/Sound/Salon_Final1.wav", true, true);
+	SOUNDMANAGER->addSound("Salon_Final1,", "Resources/Sound/Salon_Final1.wav", true, true);
 
 	// ====================
 	// Image

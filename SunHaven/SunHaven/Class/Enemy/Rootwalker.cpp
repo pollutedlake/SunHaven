@@ -104,8 +104,6 @@ void Rootwalker::release(void)
 
 void Rootwalker::update(void)
 {
-	cout << "Shadeclaw: " << (int)_state << endl;
-
 	_rc = RectMakeCenter(_x, _y, _curImg->getFrameWidth(), _curImg->getFrameHeight());
 	_curAni->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);
 
@@ -400,8 +398,6 @@ void Rootwalker::attack(void)
 
 void Rootwalker::draw(void)
 {
-	//DrawRectMake(getMemDC(), CAMERA->worldToCameraRect(_rc));
-
 	_curImg->aniRender(getMemDC(), CAMERA->worldToCameraX(_x - _curImg->getFrameWidth() / 2),
 		CAMERA->worldToCameraY(_y - _curImg->getFrameHeight() / 2), _curAni);
 }

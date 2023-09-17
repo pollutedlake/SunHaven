@@ -53,8 +53,8 @@ HRESULT Dynus::init(void)
 	_spellAni->setDefPlayFrame(false, true);
 	_spellAni->setFPS(20);
 	
-	_gruntImg = IMAGEMANAGER->addFrameImage("DynusGrunt", "Resources/Images/Boss/DynusGrunt.bmp",
-		5072, 594, 8, 2, true, RGB(255, 0, 255));
+	_gruntImg = IMAGEMANAGER->addFrameImage("DynusGrunt", "Resources/Images/Boss/DynusLaughing.bmp",
+		2536, 1188, 4, 4, true, RGB(255, 0, 255));
 
 	_gruntAni = new Animation;
 	_gruntAni->init(_gruntImg->getWidth(), _gruntImg->getHeight(), 634, 297);
@@ -74,7 +74,7 @@ HRESULT Dynus::init(void)
 	_beam = new Beam;
 	_beam->init(50, 1500.0f);
 
-	_rcDynus = RectMakeCenter(_x, _y,
+	_rcDynus = RectMakeCenter(_x + 300, _y + 120,
 		_breatheImg->getFrameWidth(), _breatheImg->getFrameHeight());
 
 	for (int i = 0; i < PA1_STARTPOS_NUM_1; i++)
@@ -185,8 +185,6 @@ void Dynus::update(void)
 
 	else if (_hp <= 1000)
 	{
-		_isDie = true;
-
 		_phase = EDynusPhase::DEATH;
 
 		_curAni->AniStop();
@@ -194,6 +192,7 @@ void Dynus::update(void)
 		_curAni = _gruntAni;
 		_curAni->setPlayFrame(0, 15, false, false);
 		_curAni->AniStart();
+		_isDie = true;
 	}
 
 	if (_isStar)
@@ -264,7 +263,6 @@ void Dynus::update(void)
 					{
 						SOUNDMANAGER->play("DynusCast2", 1.0f);
 					}
-					
 				}
 				_pa2StartPosIdx = 3;
 				_pa3StartPosIdx = 2;
@@ -325,7 +323,7 @@ void Dynus::update(void)
 				break;
 
 			case EFirstPhase::BEAM1:
-				if (_curAni->getNowPlayIdx() == 20)
+				if(_curAni->getNowPlayIdx() == 20)
 				{
 					if (!SOUNDMANAGER->isPlaySound("DynusCast2"))
 					{
@@ -340,11 +338,6 @@ void Dynus::update(void)
 				if (_pa3StartPosIdx < 0)
 				{
 					_firstP = EFirstPhase::BEAM2;
-					/*_curAni->AniStop();
-					_curImg = _spellImg;
-					_curAni = _spellAni;
-					_curAni->setPlayFrame(0, 69, false, false);
-					_curAni->AniStart();*/
 					_pa1StartPosIdx = 6;
 
 					_pa3StartPosIdx = 2;
@@ -437,13 +430,6 @@ void Dynus::update(void)
 				break;
 
 			case ESecondPhase::SPREAD_X:
-				if (_curAni->getNowPlayIdx() == 20)
-				{
-					if (!SOUNDMANAGER->isPlaySound("DynusCast2"))
-					{
-						SOUNDMANAGER->play("DynusCast2", 1.0f);
-					}
-				}
 				bulletFire();
 				_pa2StartPosIdx = 3;
 				_pa3StartPosIdx = 2;
@@ -481,7 +467,7 @@ void Dynus::update(void)
 
 				if (!_isGM2Remove)
 				{
-					_rcGuardMine2 = RectMakeCenter(CENTER_X + 530, CENTER_Y, 47, 44);
+					_rcGuardMine2 = RectMakeCenter(CENTER_X + 580, CENTER_Y + 50, 47, 44);
 				}
 
 				else
@@ -535,13 +521,10 @@ void Dynus::update(void)
 				switch (_rndPattern)
 				{
 				case 0:
-					if (_curAni->getNowPlayIdx() == 20)
-					{
-						if (!SOUNDMANAGER->isPlaySound("DynusCast2"))
-						{
-							SOUNDMANAGER->play("DynusCast2", 1.0f);
-						}
-					}
+					//if (_curAni->getNowPlayIdx() == 20)
+					//{
+					//	// SD: Ä³½ºÆÃ
+					//}
 					bulletFire();
 					
 					if (_pa1StartPosIdx < 0)
@@ -565,13 +548,6 @@ void Dynus::update(void)
 					break;
 
 				case 1:
-					if (_curAni->getNowPlayIdx() == 20)
-					{
-						if (!SOUNDMANAGER->isPlaySound("DynusCast2"))
-						{
-							SOUNDMANAGER->play("DynusCast2", 1.0f);
-						}
-					}
 					spreadEllipse();
 
 					if (_pa2StartPosIdx < 0)
@@ -597,13 +573,6 @@ void Dynus::update(void)
 					break;
 
 				case 2:
-					if (_curAni->getNowPlayIdx() == 20)
-					{
-						if (!SOUNDMANAGER->isPlaySound("DynusCast2"))
-						{
-							SOUNDMANAGER->play("DynusCast2", 1.0f);
-						}
-					}
 					beamFire();
 
 					if (_pa3StartPosIdx < 0)
@@ -630,10 +599,6 @@ void Dynus::update(void)
 					break;
 
 				case 3:
-					if (!SOUNDMANAGER->isPlaySound("DynusCast2"))
-					{
-						SOUNDMANAGER->play("DynusCast2", 1.0f);
-					}
 					if (!_isSpawnEnemy)
 					{
 						_em->spawnShadeclaw();
@@ -816,19 +781,6 @@ void Dynus::draw(void)
 			}
 		}
 	}
-
-	/*for (int i = 0; i < PA2_STARTPOS_NUM_1; i++)
-	{
-		for (int j = 0; j < PA2_STARTPOS_NUM_2; j++)
-		{
-			DrawRectMake(getMemDC(), _rcPa2Start[i][j]);
-		}
-	}
-
-	for (int i = 0; i < PA3_STARTPOS_NUM; i++)
-	{
-		DrawRectMake(getMemDC(), _rcPa3Start[i]);
-	}*/
 
 	if (KEYMANAGER->isToggleKey('G'))
 	{

@@ -1,14 +1,15 @@
 // 김성의
 #include "Stdafx.h"
 #include "ShopScene.h"
-
+#include "../Class/UI/UI.h"
 
 HRESULT ShopScene::init(void)
 {
 	IMAGEMANAGER->addImage("Shop_Bg_Collision", "Shop_Bg_Collision.bmp", WINSIZE_X, WINSIZE_Y);
 	_player = new Player;
 	_player->init(700,500, "Shop_Bg_Collision");
-	SOUNDMANAGER->play("Salon_Final1", 0.5f);
+	_player->setPlayerState(DATAMANAGER->getPlayereState());
+	SOUNDMANAGER->play("Salon_Final1",0.5f);
 	CAMERA->init();
 	CAMERA->setPosition(_player->getPlayerPosition());
 	CAMERA->setLimitRight(1280 - WINSIZE_X / 2);
@@ -19,6 +20,9 @@ HRESULT ShopScene::init(void)
 
 	_inven = new Inventory;
 	_inven->init();
+	_inven->setInvenList(DATAMANAGER->getInvenList());
+	_inven->setEuqipmentList(DATAMANAGER->getEquipmentList());
+
 	_inven->setPlayerAdsress(_player);
 	shopList temp;
 
@@ -177,6 +181,9 @@ HRESULT ShopScene::init(void)
 			_vShopList.push_back(temp);
 		}
 	}
+	_ui = new UI;
+	_ui->init("Mine");
+	_ui->setAdressPlayer(_player);
 	_moveMap = true;
 	_portal = RectMake( 660, 560, 110, 40);
 	_clippingRaius = 0.0f;
@@ -248,7 +255,6 @@ void ShopScene::update(void)
 		{
 			if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
 			{
-				//_player->UseTool(_om, _ptMouse);
 				_inven->itemMove();
 				_inven->invenXButton();
 			}
@@ -283,8 +289,8 @@ void ShopScene::update(void)
 			{
 				_clippingRaius = 0.0f;
 				SOUNDMANAGER->stop("Salon_Final1");
-				
 				SCENEMANAGER->changeScene("Mine");
+				DATAMANAGER->setData(_player->getPlayerState(), _inven->getInvenList(), _inven->getEquipmentList());
 			}
 		}
 	}
@@ -293,6 +299,7 @@ void ShopScene::update(void)
 	{
 		SOUNDMANAGER->stop("Salon_Final1");
 		SOUNDMANAGER->play("SceneTransition1", 1.0f);
+		DATAMANAGER->setData(_player->getPlayerState(), _inven->getInvenList(), _inven->getEquipmentList());
 		SCENEMANAGER->changeScene("Mine");
 	}
 }
@@ -302,27 +309,7 @@ void ShopScene::render(void)
 	IMAGEMANAGER->render("Shop_Bg", getMemDC());
 	_player->render();
 	_inven->render();
-
-	char att[2000];
-	sprintf_s(att, "%d", (_player->getAttackDamage()));
-	char def[2000];
-	sprintf_s(def, "%d", (_player->getDefense()));
-	char hp[2000];
-	sprintf_s(hp, "%d", (_player->getHP()));
-	char mp[2000];
-	sprintf_s(mp, "%d", (_player->getMP()));
-
-	if (_inven->getSeeInven())
-	{
-		FONTMANAGER->textOut(getMemDC(), _inven->getPlayerStatSlot1().left + 75, _inven->getPlayerStatSlot1().top, "배달의민족 을지로체", 12, 5, hp, strlen(hp), RGB(255, 255, 255));
-		FONTMANAGER->textOut(getMemDC(), _inven->getPlayerStatSlot2().left + 75, _inven->getPlayerStatSlot2().top, "배달의민족 을지로체", 12, 5, mp, strlen(mp), RGB(255, 255, 255));
-		FONTMANAGER->textOut(getMemDC(), _inven->getPlayerStatSlot3().left + 75, _inven->getPlayerStatSlot3().top, "배달의민족 을지로체", 12, 5, def, strlen(def), RGB(255, 255, 255));
-		FONTMANAGER->textOut(getMemDC(), _inven->getPlayerStatSlot4().left + 75, _inven->getPlayerStatSlot4().top, "배달의민족 을지로체", 12, 5, att, strlen(att), RGB(255, 255, 255));
-		FONTMANAGER->textOut(getMemDC(), _inven->getPlayerStatSlot5().left + 75, _inven->getPlayerStatSlot5().top, "배달의민족 을지로체", 12, 5, att, strlen(att), RGB(255, 255, 255));
-	}
-
-
-
+	_inven->setCurrentSlot();
 	RECT temp;
 
 	if (IntersectRect(&temp, &_player->getPlayerRC(), &_solonRc))
@@ -335,6 +322,24 @@ void ShopScene::render(void)
 		}
 	}
 
+	_ui->render();
+	char att[2000];
+	sprintf_s(att, "%d", (_player->getAttackDamage()));
+	char def[2000];
+	sprintf_s(def, "%d", (_player->getDefense()));
+	char hp[2000];
+	sprintf_s(hp, "%d", (_player->getHP()));
+	char mp[2000];
+	sprintf_s(mp, "%d", (_player->getMaxMP()));
+
+	if (_inven->getSeeInven())
+	{
+		FONTMANAGER->textOut(getMemDC(), _inven->getPlayerStatSlot1().left + 75, _inven->getPlayerStatSlot1().top, "배달의민족 을지로체", 12, 5, hp, strlen(hp), RGB(255, 255, 255));
+		FONTMANAGER->textOut(getMemDC(), _inven->getPlayerStatSlot2().left + 75, _inven->getPlayerStatSlot2().top, "배달의민족 을지로체", 12, 5, mp, strlen(mp), RGB(255, 255, 255));
+		FONTMANAGER->textOut(getMemDC(), _inven->getPlayerStatSlot3().left + 75, _inven->getPlayerStatSlot3().top, "배달의민족 을지로체", 12, 5, def, strlen(def), RGB(255, 255, 255));
+		FONTMANAGER->textOut(getMemDC(), _inven->getPlayerStatSlot4().left + 75, _inven->getPlayerStatSlot4().top, "배달의민족 을지로체", 12, 5, att, strlen(att), RGB(255, 255, 255));
+		FONTMANAGER->textOut(getMemDC(), _inven->getPlayerStatSlot5().left + 75, _inven->getPlayerStatSlot5().top, "배달의민족 을지로체", 12, 5, att, strlen(att), RGB(255, 255, 255));
+	}
 	
 	
 	IMAGEMANAGER->render("Cursor", getMemDC(), _ptMouse.x, _ptMouse.y);

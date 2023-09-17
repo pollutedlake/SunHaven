@@ -8,6 +8,7 @@ HRESULT DizzyScene::init(void)
 
 	_player = new Player;
 	_player->init(CENTER_X + 500, CENTER_Y + 700, "DizzyMapCollision");
+	_player->setPlayerState(DATAMANAGER->getPlayereState());
 
 	_dizzy = new Dizzy;
 	_dizzy->setPlayerMemoryAddress(_player);
@@ -76,7 +77,7 @@ void DizzyScene::update(void)
 			{
 				_clippingRaius = 0.0f;
 				SOUNDMANAGER->stop("Mines_5_OST_Final_Loop1");
-				
+				DATAMANAGER->setData(_player->getPlayerState());
 				SCENEMANAGER->changeScene("Dynus");
 			}
 		}
@@ -86,6 +87,7 @@ void DizzyScene::update(void)
 	{
 		SOUNDMANAGER->stop("Mines_5_OST_Final_Loop1");
 		SOUNDMANAGER->play("SceneTransition1", 1.0f);
+		DATAMANAGER->setData(_player->getPlayerState());
 		SCENEMANAGER->changeScene("Dynus");
 	}
 }

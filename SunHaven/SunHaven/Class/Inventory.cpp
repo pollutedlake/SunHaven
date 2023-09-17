@@ -6,8 +6,6 @@
 
 HRESULT Inventory::init(void)
 {
-	/*_ID = new ItemData;
-	_ID->init();*/
 	_sellGold = 0;
 	_att = 0;
 	_def = 0;

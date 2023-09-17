@@ -104,7 +104,7 @@ HRESULT Dizzy::init(void)
 
 	_afterDeathTime = 0;
 	_afterDeathWorldTime = TIMEMANAGER->getWorldTime();
-
+	_invincibilityTime = 0;
 	return S_OK;
 }
 
@@ -165,7 +165,16 @@ void Dizzy::update(void)
 
 		_curAni->AniStart();
 	}
+	if (_isDamaged)
+	{
+		_invincibilityTime += TIMEMANAGER->getElapsedTime();
 
+		if (_invincibilityTime > 0.4f)
+		{
+			_isDamaged = false;
+			_invincibilityTime = 0.0f;
+		}
+	}
 	if (!_isDie)
 	{
 		_meteor->update();
@@ -191,10 +200,9 @@ void Dizzy::update(void)
 	{
 		_isWake = true;
 
-		
-		SOUNDMANAGER->play("DizzyWake1", 1.0f);
+
+		SOUNDMANAGER->play("DizzyWake1",1.0f);
 		SOUNDMANAGER->play("Mines_5_OST_Final_Loop1", 0.5f);
-		
 	}
 
 	if (KEYMANAGER->isOnceKeyDown('N'))
@@ -216,7 +224,7 @@ void Dizzy::update(void)
 		break;
 
 	case EDizzyState::WAKE:
-		
+		// SD: WAKE
 
 		if (_curAni->getNowPlayIdx() >= _curImg->getMaxFrameX())
 		{
@@ -274,7 +282,7 @@ void Dizzy::update(void)
 
 		if (_isCollisionLeft || _isCollisionRight || _isCollisionTop || _isCollisionBottom)
 		{
-			//Ãæµ¹½Ã È¿°úÀ½ ¸ØÃã
+
 			SOUNDMANAGER->stop("DizzyRocksFalling1");
 			_rcSpinAtk = RectMakeCenter(0, 0, 0, 0);
 			if (_spinCount < 2)
@@ -331,8 +339,13 @@ void Dizzy::update(void)
 
 	case EDizzyState::GROGGY:
 		meteorFire();
+		if (!SOUNDMANAGER->isPlaySound("DizzyConFusion1"))
+		{
+			SOUNDMANAGER->play("DizzyConFusion1", 1.0f);
+		}
 
-		if (!SOUNDMANAGER->isPlaySound("DizzyConfusion1"))
+
+		if (_curAni->getNowPlayIdx() == 20 || _curAni->getNowPlayIdx() == 28)
 		{
 			SOUNDMANAGER->play("DizzyConfusion1", 1.0f);
 		}
@@ -372,12 +385,10 @@ void Dizzy::update(void)
 
 	case EDizzyState::RANGE:
 		gemFire();
-
-		if (!SOUNDMANAGER->isPlaySound("DizzyTransform1"))
+		if (!SOUNDMANAGER->isPlaySound("DizzyTransForm1"))
 		{
-			SOUNDMANAGER->play("DizzyTransform1", 1.0f);
+			SOUNDMANAGER->play("DizzyTransForm1", 1.0f);
 		}
-
 		if (_gemCount > 3)
 		{
 			_state = EDizzyState::IDLE;
@@ -406,24 +417,23 @@ void Dizzy::update(void)
 		break;
 
 	case EDizzyState::DEATH:
-		
 		if (!SOUNDMANAGER->isPlaySound("DizzyDeath1"))
 		{
 			SOUNDMANAGER->play("DizzyDeath1", 1.0f);
 		}
-			_afterDeathTime++;
-			soundTime++;
-			if (soundTime > 100)
-			{
-				SOUNDMANAGER->stop("DizzyDeath1");
-			}
-
-			if (_afterDeathTime > 300)
-			{
-				
-				_isDie = true;
-			}
-			
+		// SD: Á×À½
+		//_curAni->AniStop();
+		_afterDeathTime++;
+		soundTime++;
+		if (soundTime > 100)
+		{
+			SOUNDMANAGER->stop("DizzyDeath1");
+		}
+		if (_afterDeathTime > 300)
+		{
+			_isDie = true;
+		}
+		
 
 		break;
 	}
@@ -454,10 +464,7 @@ void Dizzy::render(void)
 }
 
 void Dizzy::draw(void)
-{
-	//DrawRectMake(getMemDC(), CAMERA->worldToCameraRect(_rcDizzy));
-	//DrawRectMake(getMemDC(), CAMERA->worldToCameraRect(_rcSpinAtk));
-	
+{	
 	_curImg->aniRender(getMemDC(), CAMERA->worldToCameraX(_x - _curImg->getFrameWidth() / 2), 
 		CAMERA->worldToCameraY(_y - _curImg->getFrameHeight() / 2), _curAni);
 }
@@ -465,14 +472,10 @@ void Dizzy::draw(void)
 void Dizzy::spin(void)
 {
 	_rcSpinAtk = RectMakeCenter(_x, _y, _curImg->getFrameWidth(), _curImg->getFrameHeight());
-
 	if (!SOUNDMANAGER->isPlaySound("DizzyRocksFalling1"))
 	{
 		SOUNDMANAGER->play("DizzyRocksFalling1", 1.0f);
 	}
-
-	
-	
 	float spinSpeed = 8.0f;
 	
 	if (_isCollisionLeft) _x += spinSpeed * 10;

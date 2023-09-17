@@ -129,7 +129,7 @@ void FarmScene::update(void)
 			{
 				_clippingRaius = 0.0f;
 				SOUNDMANAGER->stop("Player_Farm_Var1_Final1");
-				
+				DATAMANAGER->setData(_player->getPlayerState(), _inven->getInvenList(), _inven->getEquipmentList());
 				SCENEMANAGER->changeScene("Shop");
 			}
 		}
@@ -164,6 +164,7 @@ void FarmScene::update(void)
 	{
 		SOUNDMANAGER->stop("Player_Farm_Var1_Final1");
 		SOUNDMANAGER->play("SceneTransition1", 1.0f);
+		DATAMANAGER->setData(_player->getPlayerState(), _inven->getInvenList(), _inven->getEquipmentList());
 		SCENEMANAGER->changeScene("Shop");
 	}
 }
@@ -196,6 +197,7 @@ void FarmScene::render(void)
 	
 	renderHitEffect();
 	_inven->render();
+	_inven->setCurrentSlot();
 	_ui->render();
 	if (_moveMap)
 	{

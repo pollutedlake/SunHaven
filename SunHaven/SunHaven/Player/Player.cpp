@@ -616,7 +616,6 @@ void Player::update(void)
 
 	_playerMoveAnim->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);
 	_fireballAnim->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);
-	//_swordAnim->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);
 	_swordSwingAnim->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);
 	_axeSwingAnim->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);
 	_pickaxeSwingAnim->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);
@@ -1013,8 +1012,6 @@ void Player::UseCrossBow()
 {
 
 }
-
-
 
 void Player::RecureHP()
 {

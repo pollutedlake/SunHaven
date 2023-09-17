@@ -29,7 +29,7 @@ void SoundManager::release(void)
 {
 	if (_channel != nullptr || _sound != nullptr)
 	{
-		for (int i = 0; i < totalSoundChannel; i++)
+		for (int i = 0; i < 45; i++)
 		{
 			if (_channel != nullptr)
 			{
@@ -172,7 +172,7 @@ bool SoundManager::isPlaySound(string keyName)
 {
 	arrSoundsIter iter = _mTotalSounds.begin();
 
-	bool isPlay;
+	bool isPlay = false;
 	int count = 0;
 
 	for (iter; iter != _mTotalSounds.end(); ++iter, count++)
