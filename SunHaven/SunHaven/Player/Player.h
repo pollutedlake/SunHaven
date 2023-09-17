@@ -164,6 +164,8 @@ private:
 
 	float _jump;
 	bool _isJump;
+	float _invincibilityTime;
+	bool _isDamaged;
 
 public:
 	HRESULT init(float x, float y, string collisionMapkey);
@@ -349,10 +351,19 @@ public:
 			position.x + (_firebeamRC.right - _firebeamRC.left), 50);
 	}
 
+	inline void hitDamage(float damage)
+	{
+		if (_invincibilityTime == 0.0f)
+		{
+			_isDamaged = true;
+			_playerState.HP -= damage;
+		}
 
-
-
-
+		if (_playerState.HP <= 0)
+		{
+			_playerState.HP = 0;
+		}
+	}
 
 	bool isCollision()
 	{
@@ -376,7 +387,7 @@ public:
 	eTools getToolType() { return _eTools; }
 	bool getIsSuccessFishing() { return _isSuccessFishing; }
 
-	RECT getSwordSlashRC() { return _swordSlashRC; }
+	RECT getSwingRC() { return _swordSwingRC; }
 
 	inline int getHP() { return _playerState.HP; }
 	inline int getMaxHP() { return _playerState.MaxHP; }

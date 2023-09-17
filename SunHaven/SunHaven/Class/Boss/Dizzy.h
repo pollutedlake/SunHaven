@@ -69,7 +69,6 @@ private:
 	Meteor* _meteor;
 	Gems* _gem;
 
-	char _gemImg[128];
 	int _rndGemImg;
 
 	float _meteorFireX, _meteorFireY;
@@ -95,7 +94,7 @@ private:
 	float _turnCount2;
 
 	int _aftetGemCount;
-
+	int soundTime;
 	int _afterDeathTime;
 	float _afterDeathWorldTime;
 
@@ -105,9 +104,6 @@ public:
 	void update(void);
 	void render(void);
 
-	RECT _rcColl[4];
-
-	//void move(void);
 	void draw(void);
 
 	void spin(void);
@@ -120,6 +116,12 @@ public:
 	bool afterDeathTime(void);
 
 	void setPlayerMemoryAddress(Player* player) { _player = player; }
+
+	void collision(void);
+	void pixelCollision(void);
+
+	RECT getRcDizzy(void) { return _rcDizzy; }
+	RECT getRcSpinAttack(void) { return _rcSpinAtk; }
 
 	Dizzy() {}
 	~Dizzy() {}

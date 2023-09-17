@@ -88,6 +88,7 @@ public:
 	void selectObject(int objectType);
 
 	void copyTiles(void);
+	void Exit(void);
 
 	void saveMaps();
 	void loadLayers();

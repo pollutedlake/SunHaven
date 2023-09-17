@@ -19,7 +19,7 @@ HRESULT IntroScene::init(void)
 		wsprintf(text, "TrainPassenger%d", i + 1);
 		_trainPassengers[i] = IMAGEMANAGER->findImage(text);
 	}
-	_dialogWindow = IMAGEMANAGER->findImage("DialogWindow");
+	_dialogWindow = IMAGEMANAGER->findImage("DialogWindow2");
 	_trainWindow = IMAGEMANAGER->findImage("TrainWindow1");
 	_introCut[0] = IMAGEMANAGER->addImage("IntroCut1", WINSIZE_X, WINSIZE_Y);
 	_introCut[1] = IMAGEMANAGER->addImage("IntroCut2", WINSIZE_X, WINSIZE_Y);
@@ -176,7 +176,6 @@ HRESULT IntroScene::init(void)
 	_darkAlpha = 0;
 	_dialogState = HIDE;
 	_answerN = 0;
-	// SD : 인트로 린 집 배경음
 	SOUNDMANAGER->play("인트로 린하우스", 0.2f);
 	return S_OK;
 }
@@ -222,9 +221,9 @@ void IntroScene::update(void)
 				_lynn->popAction();
 				_dialogIdx++;
 				_cutIdx++;
-				// SD : 인트로 린 집 배경음 꺼줘
+				
 				SOUNDMANAGER->stop("인트로 린하우스");
-				// SD : 인트로 기차 배경음
+				
 				if (!SOUNDMANAGER->isPlaySound("인트로 린하우스"))
 				{
 					SOUNDMANAGER->play("인트로 기차안 브금", 0.2f);
@@ -420,7 +419,6 @@ void IntroScene::update(void)
 					_dialogIdx += _arrDialogs[_dialogIdx]._nextDialog;
 					next = true;
 				}
-				cout << _dialogIdx << endl;
 				if(next)
 				{
 					if (_dialogIdx == 15 || _dialogIdx == 28 || _dialogIdx == 32 || _dialogIdx == 34 || _dialogIdx == 61 || _dialogIdx == 63 || _dialogIdx == 66 || _dialogIdx == 38)
@@ -437,7 +435,7 @@ void IntroScene::update(void)
 					if (_dialogIdx > 23 && _cutIdx == 0)
 					{
 						_changeCut = true;
-						// SD : 씬 전환 소리
+						
 						SOUNDMANAGER->play("SceneTransition1",1.0f);
 						_dialogState = CLOSE;
 						_dialogIdx = 23;

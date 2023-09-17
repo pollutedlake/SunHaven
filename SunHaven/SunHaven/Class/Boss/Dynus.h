@@ -12,7 +12,7 @@
 
 #define PA2_STARTPOS_NUM_1	4 
 #define PA2_STARTPOS_NUM_2	16
- 
+
 #define PA3_STARTPOS_NUM	3 
 
 #define PLATFORM_NUM		7
@@ -23,10 +23,8 @@ class EnemyManager;
 enum class EDynusState
 {
 	BREATHE,
-	GRUNT,
-	HAIR,
-	LAUGHING,
-	SPELL
+	SPELL,
+	DEATH
 };
 
 enum class EDynusPhase
@@ -34,7 +32,8 @@ enum class EDynusPhase
 	FIRST,
 	SECOND,
 	STAR,
-	THIRD
+	THIRD,
+	DEATH
 };
 
 enum class EFirstPhase
@@ -78,9 +77,11 @@ private:
 	GImage* _curImg;
 	GImage* _breatheImg;
 	GImage* _spellImg;
+	GImage* _gruntImg;
 
 	Animation* _breatheAni;
 	Animation* _spellAni;
+	Animation* _gruntAni;
 	Animation* _curAni;
 
 	ProgressBar* _hpBar;
@@ -130,8 +131,6 @@ private:
 	int _pa3StartPosIdx;
 
 	int _rndPattern;
-	
-	//int _nextPaIdx;		// 페이즈마다 다른 패턴 간격(카운트로 관리)
 
 	float _hpTime;
 	float _hpTurnCount;
@@ -142,19 +141,29 @@ private:
 	bool _isSpawn;
 	bool _isSpawnEnemy;
 	bool _isSpawnAfter;
+	
+	bool _isStar;
 
-	float _k;
+	float _p1PotalSize;
+	float _p2PotalSize;
 
 	float _bgAlpha;
 
 	int _afterSpawnCount;
 	int _aftetKCount;
 
-public:
-	bool hpMinusTemp(void);
+	int _hpRegenCount;
 
+	float _invincibilityTime;
+	bool _isDamaged;
+
+	bool _isPlatform;
+	bool _isMoveCenter;
+	int _isCenterCount;
+	bool _isDie;
+
+public:
 	HRESULT init(void);
-	HRESULT init(const char* imageName, POINT position);
 
 	void release(void);
 	void update(void);
@@ -169,7 +178,7 @@ public:
 	void spreadEllipse(void);
 	void beamFire(void);
 	bool spawningTime(void);
-
+	void platformUp(void);
 
 	bool bulletCountFire(void);
 	bool turnCountFire1(void);
@@ -180,8 +189,25 @@ public:
 
 	void collision(void);
 
+	inline void hitDamage(float damage)
+	{
+		if (_invincibilityTime == 0.0f)
+		{
+			_isDamaged = true;
+			_hp -= damage;
+		}
+
+		if (_hp <= 0)
+		{
+			_hp = 0;
+		}
+	}
+
 	RECT getRcDynus(void) { return _rcDynus; }
 	Bullet* getBullet(void) { return _bullet; }
+	
+	bool getIsPlatform(void) { return _isPlatform; }
+	bool getIsDie(void) { return _isDie; }
 
 	RECT getRcGuardMine1(void) { return _rcGuardMine1; }
 	RECT getRcGuardMine2(void) { return _rcGuardMine2; }
@@ -197,4 +223,3 @@ public:
 	Dynus() {}
 	~Dynus() {}
 };
-

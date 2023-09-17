@@ -54,7 +54,6 @@
     <ClCompile Include="Class\Enemy\Enemy.cpp" />
     <ClCompile Include="Class\Enemy\EnemyManager.cpp" />
     <ClCompile Include="Class\Enemy\FlameImp.cpp" />
-    <ClCompile Include="Class\Enemy\MagmaBug.cpp" />
     <ClCompile Include="Class\Object\Object.cpp" />
     <ClCompile Include="Class\CraftingTable.cpp" />
     <ClCompile Include="Class\Data\JsonSaveLoader.cpp" />
@@ -88,7 +87,6 @@
     <ClCompile Include="Scene\TownScene.cpp" />
     <ClCompile Include="FrameWork\Utility\Utils.cpp" />
     <ClCompile Include="Class\Enemy\SteelSlug.cpp" />
-    <ClCompile Include="Class\Enemy\TrapWeed.cpp" />
     <ClCompile Include="Class\Enemy\Shadeclaw.cpp" />
     <ClCompile Include="Class\UI\UI.cpp" />
     <ClCompile Include="Class\Skill\Skill.cpp" />
@@ -96,15 +94,14 @@
     <ClCompile Include="Class\Object\Tree.cpp" />
     <ClCompile Include="Class\Skill\SkillManager.cpp" />
     <ClCompile Include="WinMain.cpp" />
+    <ClCompile Include="Class\Enemy\Rootwalker.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Class\UI\Buttons.h" />
-    <ClInclude Include="Class\Boss\Dynus.h" />
     <ClInclude Include="Class\Bullets\Bullets.h" />
     <ClInclude Include="Class\Enemy\Enemy.h" />
     <ClInclude Include="Class\Enemy\EnemyManager.h" />
     <ClInclude Include="Class\Enemy\FlameImp.h" />
-    <ClInclude Include="Class\Enemy\MagmaBug.h" />
     <ClInclude Include="Class\Object\Object.h" />
     <ClInclude Include="Class\CraftingTable.h" />
     <ClInclude Include="Class\Data\JsonSaveLoader.h" />
@@ -163,13 +160,14 @@
     <ClInclude Include="Scene\TownScene.h" />
     <ClInclude Include="FrameWork\Utility\Utils.h" />
     <ClInclude Include="Class\Enemy\SteelSlug.h" />
-    <ClInclude Include="Class\Enemy\TrapWeed.h" />
     <ClInclude Include="Class\Enemy\Shadeclaw.h" />
     <ClInclude Include="Class\Skill\Skill.h" />
     <ClInclude Include="Player\Skill\Skill.h" />
     <ClInclude Include="Class\Object\Tree.h" />
     <ClInclude Include="Class\Skill\SkillManager.h" />
     <ClInclude Include="Class\UI\UI.h" />
+    <ClInclude Include="Class\Enemy\Rootwalker.h" />
+    <ClInclude Include="Class\Boss\Dynus.h" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="lib\FMOD\fmodex_vc.lib" />

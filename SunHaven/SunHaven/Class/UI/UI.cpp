@@ -114,7 +114,6 @@ void UI::showBasicUI()
 	wsprintf(_text, "%d/%d", _player->getHP(), _player->getMaxHP());
 	FONTMANAGER->textOut(getMemDC(), WINSIZE_X / 2 - 58, WINSIZE_Y - 35, "배달의민족 을지로체", 20, 100, _text, strlen(_text), RGB(255, 255, 255));
 
-
 	SetTextAlign(getMemDC(), TA_LEFT);
 }
 

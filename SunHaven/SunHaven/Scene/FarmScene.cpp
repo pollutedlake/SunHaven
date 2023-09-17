@@ -23,7 +23,6 @@ HRESULT FarmScene::init(void)
 	_inven->setPlayerAdsress(_player);
 
 	_player->setPlayerPosition(PointMake(2496, 1500));
-
 	_MouseOver = IMAGEMANAGER->addImage("오브젝트 선택",
 		"Resources/Images/Player/ObjectMouseOver.bmp",
 		36, 36, true, RGB(255, 0, 255));
@@ -56,23 +55,24 @@ void FarmScene::release(void)
 
 void FarmScene::update(void)
 {
+	_player->update();
+	_inven->update();
+	CAMERA->setPosition(_player->getPlayerPosition());
+	_player->worldToCamera(CAMERA->worldToCamera
+	(_player->getPlayerPosition()));
 	SOUNDMANAGER->update();
-	if(!_moveMap)
+	
+	queue<pair<string, POINT>> dropItems = _om->updateObjects();
+	while (!dropItems.empty())
 	{
-		_player->update();
-		_inven->update();
-		CAMERA->setPosition(_player->getPlayerPosition());
-		_player->worldToCamera(CAMERA->worldToCamera
-		(_player->getPlayerPosition()));
-		queue<pair<string, POINT>> dropItems = _om->updateObjects();
-		while (!dropItems.empty())
-		{
-			_lDropItem.push_back(dropItems.front());
-			dropItems.pop();
-		}
+		_lDropItem.push_back(dropItems.front());
+		dropItems.pop();
+	}
 
-		_player->ObjectCollision(_om);
+	_player->ObjectCollision(_om);
 
+	if (!_moveMap)
+	{
 		if(KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
 		{
 			list<POINT> ptList;
@@ -106,6 +106,7 @@ void FarmScene::update(void)
 		if (PtInRect(&_portal, _player->getPlayerPosition()))
 		{
 			_moveMap = true;
+			SOUNDMANAGER->play("SceneTransition1", 1.0f);
 		}
 		
 	}
@@ -128,6 +129,7 @@ void FarmScene::update(void)
 			{
 				_clippingRaius = 0.0f;
 				SOUNDMANAGER->stop("Player_Farm_Var1_Final1");
+				
 				SCENEMANAGER->changeScene("Shop");
 			}
 		}
@@ -161,6 +163,7 @@ void FarmScene::update(void)
 	if (KEYMANAGER->isOnceKeyDown(VK_F1))
 	{
 		SOUNDMANAGER->stop("Player_Farm_Var1_Final1");
+		SOUNDMANAGER->play("SceneTransition1", 1.0f);
 		SCENEMANAGER->changeScene("Shop");
 	}
 }
@@ -169,6 +172,9 @@ void FarmScene::render(void)
 {
 	_bg->render(getMemDC(), 0, 0, CAMERA->getPosition().x - WINSIZE_X / 2,
 		CAMERA->getPosition().y - WINSIZE_Y / 2, WINSIZE_X, WINSIZE_Y);
+	IMAGEMANAGER->findImage("PlayerHouse")->render(getMemDC(), CAMERA->worldToCameraX(2000), CAMERA->worldToCameraY(1000), 
+		IMAGEMANAGER->findImage("PlayerHouse")->getWidth() * 1.5, IMAGEMANAGER->findImage("PlayerHouse")->getHeight() * 1.5,
+		0, 0, IMAGEMANAGER->findImage("PlayerHouse")->getWidth(), IMAGEMANAGER->findImage("PlayerHouse")->getHeight());
 	// 정렬된 순서로 렌더
 	while (!_vRenderList.empty())
 	{

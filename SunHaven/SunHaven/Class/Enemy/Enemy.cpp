@@ -101,5 +101,52 @@ bool Enemy::attackCoolDown(void)
 
 void Enemy::pixelCollision(void)
 {
+	if (_collisionMap != nullptr)
+	{
+		for (int i = _rc.left + 4; i <= _rc.right - 4; i++)
+		{
+			COLORREF collisionT =
+				GetPixel(_collisionMap->getMemDC(),
+					i, _rc.top);
+			COLORREF collisionB =
+				GetPixel(_collisionMap->getMemDC(),
+					i, _rc.bottom);
 
+			if (collisionT == RGB(255, 0, 255))
+			{
+				_isCollisionTop = true;
+			}
+
+			else
+			{
+				_isCollisionTop = false;
+			}
+
+			if (collisionB == RGB(255, 0, 255))
+			{
+				_isCollisionBottom = true;
+			}
+
+			else
+			{
+				_isCollisionBottom = false;
+			}
+		}
+
+		for (int i = _rc.top + 4; i <= _rc.bottom - 4; i++)
+		{
+			COLORREF collisionL =
+				GetPixel(_collisionMap->getMemDC(),
+					_rc.left, i);
+
+			COLORREF collisionR =
+				GetPixel(_collisionMap->getMemDC(),
+					_rc.right, i);
+
+			_isCollisionLeft =
+				collisionL == RGB(255, 0, 255) ? true : false;
+			_isCollisionRight =
+				collisionR == RGB(255, 0, 255) ? true : false;
+		}
+	}
 }
