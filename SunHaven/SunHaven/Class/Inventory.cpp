@@ -230,12 +230,18 @@ void Inventory::render(void)
 		
 	}
 	
-	popupItem();
+	
 
-	for (int i = 0; i < _vInvenList.size(); i++)
+	
+	/*for (int i = 0; i < 40; i++)
 	{
-		itemInfoPopup(i);
-	}
+		if (PtInRect(&_vInvenList[i]._rc, _ptMouse))
+		{
+			itemInfoPopup(i);
+		}
+		
+	}*/
+
 	setCurrentSlot();
 }
 
@@ -888,7 +894,7 @@ void Inventory::putItem()
 			if (PtInRect(&_vEquipmentSlot[j]._rc, _ptMouse) && !_vEquipmentSlot[j]._draw)
 			{
 				indexEqui = j;
-				//_player->setDefense(_player->getDefense() + DATAMANAGER->getArmorInfo((int)_vInvenList[_selectedItem]._category[2] - 48)->defense);
+				
 				break;
 			}
 			
@@ -922,8 +928,7 @@ void Inventory::putItem()
 				_vInvenList[indexInven]._currentStack = _vEquipmentSlot[_selectedItem]._currentStack;
 				_vInvenList[indexInven]._draw = true;
 				
-				//
-				//_player->setAttackDamage(_player->getDefense() - DATAMANAGER->getAccessoryInfo((int)_vInvenList[indexInven]._category[2] - 48)->attackDamage);
+				
 
 			}
 			
@@ -1001,48 +1006,86 @@ void Inventory::setCurrentSlot()
 
 void Inventory::itemInfoPopup(int index)
 {
-	if (PtInRect(&_vInvenList[index]._rc, _ptMouse) && _vInvenList[index]._draw)
+	if (_vInvenList[index]._draw)
 	{
-		if (index < 8)
-		{
-			// +
-			IMAGEMANAGER->render("tooltip_bg_flipped", getMemDC(), _ptMouse.x, _ptMouse.y );
+		
+		IMAGEMANAGER->render("tooltip_bg_flipped", getMemDC(), _ptMouse.x, _ptMouse.y );
 
-			switch (_vInvenList[index]._category[0])
+		switch (_vInvenList[index]._category[0])
+		{
+		
+		case '2':
+			if(_vInvenList[index]._category[2] == '0')
 			{
 			
-			case '2':
-				//좋버그임
-				//FONTMANAGER->textOut(getMemDC(), _ptMouse.x + 67, _ptMouse.y, "배달의민족 을지로체", 12, 5, const_cast<char*>(DATAMANAGER->getArmorInfo(_vInvenList[index]._category[2])->name.c_str()), strlen((DATAMANAGER->getArmorInfo(_vInvenList[index]._category[2])->name.c_str())), RGB(255, 255, 255));
-				break;
+				FONTMANAGER->textOut(getMemDC(), _ptMouse.x + 107, _ptMouse.y + 20, "배달의민족 을지로체", 15, 5, "아다만트 헬멧", strlen("아다만트 헬멧"), RGB(255, 255, 255));
+				FONTMANAGER->textOut(getMemDC(), _ptMouse.x + 47, _ptMouse.y + 50, "배달의민족 을지로체", 15, 5, "머리를 보호하기에 최적의 헬멧입니다.", strlen("머리를 보호하기에 최적의 헬멧입니다."), RGB(241, 224, 109));
+				FONTMANAGER->textOut(getMemDC(), _ptMouse.x + 107, _ptMouse.y + 80, "배달의민족 을지로체", 15, 5, "4 방어력", strlen("4 방어력"), RGB(255, 255, 255));
+				IMAGEMANAGER->render("icon_defense #2480984", getMemDC(), _ptMouse.x + 95, _ptMouse.y + 82);
+				FONTMANAGER->textOut(getMemDC(), _ptMouse.x + 107, _ptMouse.y + 110, "배달의민족 을지로체", 15, 5, "15 체력", strlen("15 체력"), RGB(255, 255, 255));
+				IMAGEMANAGER->render("icon_hp", getMemDC(), _ptMouse.x + 95, _ptMouse.y + 112);
+			}
+			else if (_vInvenList[index]._category[2] == '1')
+			{
+				FONTMANAGER->textOut(getMemDC(), _ptMouse.x + 87, _ptMouse.y + 20, "배달의민족 을지로체", 15, 5, "아다만트 갑옷 (상의)", strlen("아다만트 갑옷 (상의)"), RGB(255, 255, 255));
+				FONTMANAGER->textOut(getMemDC(), _ptMouse.x + 67, _ptMouse.y + 50, "배달의민족 을지로체", 15, 5, "아다만트로 만든 상의입니다.", strlen("아다만트로 만든 상의입니다."), RGB(241, 224, 109));
+				FONTMANAGER->textOut(getMemDC(), _ptMouse.x + 107, _ptMouse.y + 80, "배달의민족 을지로체", 15, 5, "6 방어력", strlen("6 방어력"), RGB(255, 255, 255));
+				IMAGEMANAGER->render("icon_defense #2480984", getMemDC(), _ptMouse.x + 95, _ptMouse.y + 82);
+				FONTMANAGER->textOut(getMemDC(), _ptMouse.x + 107, _ptMouse.y + 110, "배달의민족 을지로체", 15, 5, "15 체력", strlen("15 체력"), RGB(255, 255, 255));
+				IMAGEMANAGER->render("icon_hp", getMemDC(), _ptMouse.x + 95, _ptMouse.y + 112);
+			}
+			else if (_vInvenList[index]._category[2] == '2')
+			{
+				FONTMANAGER->textOut(getMemDC(), _ptMouse.x + 87, _ptMouse.y + 20, "배달의민족 을지로체", 15, 5, "아다만트 갑옷 (하의)", strlen("아다만트 갑옷 (하의)"), RGB(255, 255, 255));
+				FONTMANAGER->textOut(getMemDC(), _ptMouse.x + 67, _ptMouse.y + 50, "배달의민족 을지로체", 15, 5, "아다만트로 만든 하의입니다.", strlen("머리를 보호하기에 최적의 헬멧입니다."), RGB(241, 224, 109));
+				FONTMANAGER->textOut(getMemDC(), _ptMouse.x + 107, _ptMouse.y + 80, "배달의민족 을지로체", 15, 5, "4 방어력", strlen("4 방어력"), RGB(255, 255, 255));
+				IMAGEMANAGER->render("icon_defense #2480984", getMemDC(), _ptMouse.x + 95, _ptMouse.y + 82);
+				FONTMANAGER->textOut(getMemDC(), _ptMouse.x + 107, _ptMouse.y + 110, "배달의민족 을지로체", 15, 5, "8 체력", strlen("8 체력"), RGB(255, 255, 255));
+				IMAGEMANAGER->render("icon_hp", getMemDC(), _ptMouse.x + 95, _ptMouse.y + 112);
+			}
+			else if (_vInvenList[index]._category[2] == '3')
+			{
+				FONTMANAGER->textOut(getMemDC(), _ptMouse.x + 97, _ptMouse.y + 20, "배달의민족 을지로체", 15, 5, "아다만트 장갑", strlen("아다만트 장갑"), RGB(255, 255, 255));
+				FONTMANAGER->textOut(getMemDC(), _ptMouse.x + 67, _ptMouse.y + 50, "배달의민족 을지로체", 15, 5, "아다만트로 만든 장갑입니다.", strlen("아다만트로 만든 장갑입니다."), RGB(241, 224, 109));
+				FONTMANAGER->textOut(getMemDC(), _ptMouse.x + 107, _ptMouse.y + 80, "배달의민족 을지로체", 15, 5, "3 방어력", strlen("3 방어력"), RGB(255, 255, 255));
+				IMAGEMANAGER->render("icon_defense #2480984", getMemDC(), _ptMouse.x + 95, _ptMouse.y + 82);
+				FONTMANAGER->textOut(getMemDC(), _ptMouse.x + 107, _ptMouse.y + 110, "배달의민족 을지로체", 15, 5, "6 체력", strlen("6 체력"), RGB(255, 255, 255));
+				IMAGEMANAGER->render("icon_hp", getMemDC(), _ptMouse.x + 95, _ptMouse.y + 112);
 			}
 			
-			
+			break;
 
-		}
-		else
-		{
-			// -
-			IMAGEMANAGER->render("tooltip_bg", getMemDC(), _ptMouse.x, _ptMouse.y - 87);
-			//FONTMANAGER->textOut(getMemDC(), _ptMouse.x + 67, _ptMouse.y - 87, "배달의민족 을지로체", 12, 5, const_cast<char*>(DATAMANAGER->getArmorInfo(_vInvenList[index]._category[2])->name.c_str()), strlen((DATAMANAGER->getArmorInfo(_vInvenList[index]._category[2])->name.c_str())), RGB(255, 255, 255));
+		case 3:
+
+			if (_vInvenList[index]._category[2] == '0')
+			{
+				FONTMANAGER->textOut(getMemDC(), _ptMouse.x + 97, _ptMouse.y + 20, "배달의민족 을지로체", 15, 5, "아다만트 반지", strlen("아다만트 반지"), RGB(255, 255, 255));
+				FONTMANAGER->textOut(getMemDC(), _ptMouse.x + 37, _ptMouse.y + 50, "배달의민족 을지로체", 15, 5, "아다만트로 만든 반지입니다.", strlen("아다만트로 만든 반지입니다."), RGB(241, 224, 109));
+				FONTMANAGER->textOut(getMemDC(), _ptMouse.x + 107, _ptMouse.y + 80, "배달의민족 을지로체", 15, 5, "4 공격력", strlen("4 공격력"), RGB(255, 255, 255));
+				IMAGEMANAGER->render("icon_defense #2480984", getMemDC(), _ptMouse.x + 95, _ptMouse.y + 82);
+				FONTMANAGER->textOut(getMemDC(), _ptMouse.x + 107, _ptMouse.y + 110, "배달의민족 을지로체", 15, 5, "4 공격력", strlen("4 공격력"), RGB(255, 255, 255));
+				IMAGEMANAGER->render("icon_defense #2480984", getMemDC(), _ptMouse.x + 95, _ptMouse.y + 82);
+			
+			}
+
+			break;
+		
 			
 		}
+			
+			
+		
 	}
 
 	if (index < 15)
 	{
-		if (PtInRect(&_vEquipmentSlot[index]._rc, _ptMouse) && _vEquipmentSlot[index]._draw)
+		if (_vEquipmentSlot[index]._draw)
 		{
-			if (index == 0)
-			{
-				IMAGEMANAGER->render("tooltip_bg_flipped", getMemDC(), _ptMouse.x, _ptMouse.y);
-
-			}
-			else
-			{
-				IMAGEMANAGER->render("tooltip_bg", getMemDC(), _ptMouse.x, _ptMouse.y - 87);
-			}
+			IMAGEMANAGER->render("tooltip_bg_flipped", getMemDC(), _ptMouse.x, _ptMouse.y);
 		}
+	
+
+		
 	}
 	
 }

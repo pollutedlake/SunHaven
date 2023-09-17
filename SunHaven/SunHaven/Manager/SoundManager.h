@@ -4,11 +4,11 @@
 
 
 // 사운드 갯수
-constexpr auto soundBuffer = 10;
+constexpr auto soundBuffer = 40;
 
 
 // 여분의 채널 갯수 (버퍼)
-constexpr auto extraSoundChannel = 5;
+constexpr auto extraSoundChannel = 40;
 
 
 // 총 사운드 갯수

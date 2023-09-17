@@ -194,6 +194,7 @@ void ShopScene::release(void)
 
 void ShopScene::update(void)
 {
+	SOUNDMANAGER->update();
 	_player->update();
 	_inven->update();
 	CAMERA->setPosition(_player->getPlayerPosition());

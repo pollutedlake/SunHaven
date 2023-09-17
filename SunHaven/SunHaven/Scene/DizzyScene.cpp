@@ -42,7 +42,7 @@ void DizzyScene::release(void)
 
 void DizzyScene::update(void)
 {
-
+	SOUNDMANAGER->update();
 	_player->update();
 	_player->worldToCamera(CAMERA->worldToCamera(_player->getPlayerPosition()));
 	CAMERA->setPosition(_player->getPlayerPosition());

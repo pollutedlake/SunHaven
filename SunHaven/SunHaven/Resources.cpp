@@ -221,7 +221,7 @@ HRESULT Resources::init(void)
 	SOUNDMANAGER->addSound("DizzyWake1", "Resources/Sound/DizzyWake1.wav", false, false);
 	SOUNDMANAGER->addSound("boss_music1-2", "Resources/Sound/boss_music1-2.wav", true, true);
 	SOUNDMANAGER->addSound("Mines_5_OST_Final_Loop1", "Resources/Sound/Mines_5_OST_Final_Loop1.wav", true, true);
-	SOUNDMANAGER->addSound("DizzyDeath1", "Resources/Sound/DizzyDeath1.wav", false, false);
+	
 
 	// ====================MineScene====================
 	// Image
@@ -322,8 +322,8 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addImage("item_bg_rare", "Resources/Images/Inventory/item_bg_rare.bmp", 32, 32, true, RGB(255, 0, 255));
 
 	IMAGEMANAGER->addImage("selection_hover-click-selected_0", "Resources/Images/Inventory/selection_hover-click-selected_0.bmp", 34, 34, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("tooltip_bg", "Resources/Images/Inventory/tooltip_bg.bmp", 137, 87, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("tooltip_bg_flipped", "Resources/Images/Inventory/tooltip_bg_flipped.bmp", 137, 87, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("tooltip_bg", "Resources/Images/Inventory/tooltip_bg.bmp", 274, 174, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("tooltip_bg_flipped", "Resources/Images/Inventory/tooltip_bg_flipped.bmp", 274, 174, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("combat_skill_tree_icons_0", "Resources/Images/Inventory/combat_skill_tree_icons_0.bmp", 32, 32, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("combat_skill_tree_icons_6", "Resources/Images/Inventory/combat_skill_tree_icons_6.bmp", 32, 32, true, RGB(255, 0, 255));
 
