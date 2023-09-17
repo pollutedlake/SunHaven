@@ -20,6 +20,7 @@ HRESULT FarmScene::init(void)
 
 	_inven = new Inventory;
 	_inven->init();
+	_inven->setPlayerAdsress(_player);
 
 	_player->setPlayerPosition(PointMake(2496, 1500));
 
@@ -189,7 +190,6 @@ void FarmScene::render(void)
 	
 	renderHitEffect();
 	_inven->render();
-	_inven->setCurrentSlot(_player->getTools());
 	_ui->render();
 	if (_moveMap)
 	{

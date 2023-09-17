@@ -1,5 +1,6 @@
 #include "Stdafx.h"
 #include "Inventory.h"
+#include "../Player/Player.h"
 //#include <string>
 
 
@@ -150,38 +151,6 @@ void Inventory::release(void)
 
 void Inventory::update(void)
 {
-	cout << _def << endl;
-	if (_vEquipmentSlot[0]._draw )
-	{
-		maxEquipmentRender = 1;
-	}
-	else
-	{
-		maxEquipmentRender = 0;
-	}
-
-	switch (maxEquipmentRender)
-	{
-	case 0:
-		_def = 0;
-		break;
-	case 1:
-		_def = DATAMANAGER->getArmorInfo((int)_vEquipmentSlot[0]._category[2] - 48)->defense;
-		break;
-
-	case 2:
-
-		break;
-
-	case 3:
-
-		break;
-
-	case 4:
-
-		break;
-	}
-	
 	
 
 	if (!_seeInven && KEYMANAGER->isOnceKeyDown('I'))
@@ -267,7 +236,7 @@ void Inventory::render(void)
 	{
 		itemInfoPopup(i);
 	}
-	
+	setCurrentSlot();
 }
 
 void Inventory::getItem(string index)
@@ -919,9 +888,12 @@ void Inventory::putItem()
 			if (PtInRect(&_vEquipmentSlot[j]._rc, _ptMouse) && !_vEquipmentSlot[j]._draw)
 			{
 				indexEqui = j;
+				//_player->setDefense(_player->getDefense() + DATAMANAGER->getArmorInfo((int)_vInvenList[_selectedItem]._category[2] - 48)->defense);
 				break;
 			}
-
+			
+			
+			
 		}
 
 		// 인덱스가 유효하고 _selectedItem 값이 유효하면 아이템을 놓음
@@ -937,9 +909,22 @@ void Inventory::putItem()
 
 			if (_inEquipmentSlot)
 			{
+				if (_vEquipmentSlot[_selectedItem]._category[0] == '2')
+				{
+					_player->setDefense(_player->getDefense() - DATAMANAGER->getArmorInfo((int)_vEquipmentSlot[_selectedItem]._category[2] - 48)->defense);
+					_player->setHP(_player->getHP() - DATAMANAGER->getArmorInfo((int)_vEquipmentSlot[_selectedItem]._category[2] - 48)->maxHp);
+				}
+				else if (_vEquipmentSlot[_selectedItem]._category[0] == '3')
+				{
+					_player->setAttackDamage(_player->getAttackDamage() - DATAMANAGER->getAccessoryInfo((int)_vEquipmentSlot[_selectedItem]._category[2] - 48)->attackDamage);
+				}	
 				_vInvenList[indexInven]._category = _vEquipmentSlot[_selectedItem]._category;
 				_vInvenList[indexInven]._currentStack = _vEquipmentSlot[_selectedItem]._currentStack;
 				_vInvenList[indexInven]._draw = true;
+				
+				//
+				//_player->setAttackDamage(_player->getDefense() - DATAMANAGER->getAccessoryInfo((int)_vInvenList[indexInven]._category[2] - 48)->attackDamage);
+
 			}
 			
 			
@@ -958,6 +943,18 @@ void Inventory::putItem()
 			{
 				_vEquipmentSlot[indexEqui]._category = _vInvenList[_selectedItem]._category;
 				_vEquipmentSlot[indexEqui]._draw = true;
+
+				if (_vInvenList[_selectedItem]._category[0] == '2')
+				{
+					_player->setDefense(_player->getDefense() + DATAMANAGER->getArmorInfo((int)_vInvenList[_selectedItem]._category[2] - 48)->defense);
+					_player->setHP(_player->getHP() + DATAMANAGER->getArmorInfo((int)_vInvenList[_selectedItem]._category[2] - 48)->maxHp);
+				}
+				else if (_inInvenSlot && _vInvenList[_selectedItem]._category[0] == '3')
+				{
+					_player->setAttackDamage(_player->getAttackDamage() + DATAMANAGER->getAccessoryInfo((int)_vInvenList[_selectedItem]._category[2] - 48)->attackDamage);
+
+				}
+				
 				
 			}
 			else if (_vInvenList[_selectedItem]._category[0] != '2' || _vInvenList[_selectedItem]._category[0] != '3')
@@ -997,9 +994,9 @@ void Inventory::invenXButton()
 	}
 }
 
-void Inventory::setCurrentSlot(enum eTools player)
+void Inventory::setCurrentSlot()
 {
-	IMAGEMANAGER->render("selection_hover-click-selected_0", getMemDC(), _vItemUseSlot[player]._rc.left, _vItemUseSlot[player]._rc.top);
+	IMAGEMANAGER->render("selection_hover-click-selected_0", getMemDC(), _vItemUseSlot[(int)_player->getTools()]._rc.left, _vItemUseSlot[(int)_player->getTools()]._rc.top);
 }
 
 void Inventory::itemInfoPopup(int index)
@@ -1008,13 +1005,27 @@ void Inventory::itemInfoPopup(int index)
 	{
 		if (index < 8)
 		{
-			
+			// +
 			IMAGEMANAGER->render("tooltip_bg_flipped", getMemDC(), _ptMouse.x, _ptMouse.y );
+
+			switch (_vInvenList[index]._category[0])
+			{
+			
+			case '2':
+				//좋버그임
+				//FONTMANAGER->textOut(getMemDC(), _ptMouse.x + 67, _ptMouse.y, "배달의민족 을지로체", 12, 5, const_cast<char*>(DATAMANAGER->getArmorInfo(_vInvenList[index]._category[2])->name.c_str()), strlen((DATAMANAGER->getArmorInfo(_vInvenList[index]._category[2])->name.c_str())), RGB(255, 255, 255));
+				break;
+			}
+			
+			
+
 		}
 		else
 		{
-			
+			// -
 			IMAGEMANAGER->render("tooltip_bg", getMemDC(), _ptMouse.x, _ptMouse.y - 87);
+			//FONTMANAGER->textOut(getMemDC(), _ptMouse.x + 67, _ptMouse.y - 87, "배달의민족 을지로체", 12, 5, const_cast<char*>(DATAMANAGER->getArmorInfo(_vInvenList[index]._category[2])->name.c_str()), strlen((DATAMANAGER->getArmorInfo(_vInvenList[index]._category[2])->name.c_str())), RGB(255, 255, 255));
+			
 		}
 	}
 

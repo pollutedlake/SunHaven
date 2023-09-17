@@ -390,17 +390,17 @@ public:
 
 	void setHP(int itemStat)
 	{
-		_playerState.HP = getHP() + itemStat;
+		_playerState.HP = itemStat;
 	}
 
 	void setDefense(int itemStat)
 	{
-		_playerState.defence =  itemStat;
+		_playerState.defence = itemStat;
 	}
 
 	void setAttackDamage(int itemStat)
 	{
-		_playerState.attackDamage = getAttackDamage() + itemStat;
+		_playerState.attackDamage = itemStat;
 
 	}
 

@@ -29,7 +29,7 @@ private:
 	RECT _xButton;
 
 	RECT _playerStat[5];
-	
+	Player* _player;
 
 	DWORD _lastItemTime;
 	string _getItem;
@@ -74,7 +74,7 @@ public:
 	void popupItem();
 	void putItem();
 	void invenXButton();
-	void setCurrentSlot(enum eTools player);
+	void setCurrentSlot();
 	void itemInfoPopup(int index);
 	void sellItem();
 	int getSellGold() { return _sellGold; }
@@ -87,7 +87,7 @@ public:
 	RECT getPlayerStatSlot3() { return _playerStat[2]; }
 	RECT getPlayerStatSlot4() { return _playerStat[3]; }
 	RECT getPlayerStatSlot5() { return _playerStat[4]; }
-
+	void setPlayerAdsress(Player* player) {_player = player; }
 	bool getSeeInven() { return _seeInven; }
 
 	Inventory(){}
