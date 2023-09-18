@@ -51,7 +51,7 @@ void DizzyScene::collision(void)
 	{
 		if (IntersectRect(&rcTemp1, &_player->getSwingRC(), &CAMERA->worldToCameraRect(_dizzy->getRcDizzy())))
 		{
-			_dizzy->hitDamage(_player->getAttackDamage() * 10);
+			_dizzy->hitDamage(_player->getAttackDamage());
 		}
 	}
 }
@@ -71,7 +71,7 @@ void DynusScene::collision(void)
 	{
 		if (IntersectRect(&rcTemp1, &_player->getSwingRC(), &CAMERA->worldToCameraRect(_dynus->getRcDynus())))
 		{
-			_dynus->hitDamage(_player->getAttackDamage() * 10);
+			_dynus->hitDamage(_player->getAttackDamage());
 		}
 	}
 	for (int i = 0; i < _em->getEnemys().size(); i++)
