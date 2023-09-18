@@ -9,7 +9,7 @@ HRESULT ShopScene::init(void)
 	_player = new Player;
 	_player->init(700,500, "Shop_Bg_Collision");
 	_player->setPlayerState(DATAMANAGER->getPlayereState());
-	SOUNDMANAGER->play("Salon_Final1",0.5f);
+	SOUNDMANAGER->play("Salon_Final1", 0.5f);
 	CAMERA->init();
 	CAMERA->setPosition(_player->getPlayerPosition());
 	CAMERA->setLimitRight(1280 - WINSIZE_X / 2);

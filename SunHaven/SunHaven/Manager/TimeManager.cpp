@@ -30,7 +30,7 @@ void TimeManager::render(HDC hdc)
     char str[256];
 
     SetBkMode(hdc, TRANSPARENT);
-    SetTextColor(hdc, RGB(0, 0, 0));
+    SetTextColor(hdc, RGB(255, 255, 255));
 
 #ifdef _DEBUG
     if (_timer != nullptr)

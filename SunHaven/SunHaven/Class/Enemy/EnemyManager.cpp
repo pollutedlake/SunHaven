@@ -44,13 +44,10 @@ void EnemyManager::spawnSteelSlug(void)
 {
 	for (int i = 0; i < 2; i++)
 	{
-		for (int j = 0; j < 2; j++)
-		{
-			Enemy* slug;
-			slug = new SteelSlug;
-			slug->init(PointMake(600 + i * 950, 800 + j * 300));
-			_vEnemy.push_back(slug);
-		}
+		Enemy* slug;
+		slug = new SteelSlug;
+		slug->init(PointMake(600 + i * 950, 900));
+		_vEnemy.push_back(slug);
 	}
 }
 
@@ -58,13 +55,10 @@ void EnemyManager::spawnFlameImp(void)
 {
 	for (int i = 0; i < 2; i++)
 	{
-		for (int j = 0; j < 2; j++)
-		{
-			Enemy* flameImp;
-			flameImp = new FlameImp;
-			flameImp->init(PointMake(1200 + i * 1200, 750 + j * 200));
-			_vEnemy.push_back(flameImp);
-		}
+		Enemy* flameImp;
+		flameImp = new FlameImp;
+		flameImp->init(PointMake(1200 + i * 1200, 850));
+		_vEnemy.push_back(flameImp);
 	}
 }
 

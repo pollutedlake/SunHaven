@@ -350,7 +350,7 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addImage("goldbanner", "Resources/Images/Shop/goldbanner.bmp", 133, 35, true, RGB(255, 0, 255));
 	// Sound
 	SOUNDMANAGER->addSound("E_getItem_Sound1", "Resources/Sound/E_getItem_Sound1.wav", false, false);
-	SOUNDMANAGER->addSound("Salon_Final1,", "Resources/Sound/Salon_Final1.wav", true, true);
+	SOUNDMANAGER->addSound("Salon_Final1", "Resources/Sound/Salon_Final1.wav", true, true);
 
 	// ====================
 	// Image
