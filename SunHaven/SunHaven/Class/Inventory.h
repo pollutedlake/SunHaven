@@ -3,18 +3,6 @@
 
 class Player;
 
-//struct Slot
-//{
-//	
-//	RECT _rc;
-//	bool _draw;
-//	string _category;
-//	int _currentStack;
-//	
-//
-//};
-
-
 class Inventory : public GameNode
 {
 

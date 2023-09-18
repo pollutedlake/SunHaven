@@ -3,7 +3,6 @@
 
 void ItemData::init(void)
 {
-	//itemSetUp();
 	toolSetUp();
 	weaponSetUp();
 	armorSetUp();
@@ -53,7 +52,6 @@ void ItemData::toolSetUp(tagTool* qTool)
 			qTool->attackSpeed = intType[3];
 			qTool->requireLv = intType[4];
 			qTool->time = intType[5];
-			//qTool->gold = intType[6];
 			qTool->sellGold = intType[6];
 
 			free(intType);
@@ -71,10 +69,8 @@ void ItemData::weaponSetUp(tagWeapon* qWeapon)
 		if ((*it).isObject())
 		{
 			tagWeapon* qWeapon = new tagWeapon;
-			//Item* qItem = new Item;
 
 			Json::Value arrStrType = (*it)["_strType"];
-			//string* strType = (string*)malloc(sizeof(string) * arrStrType.size());
 			vector<string> strType;
 			for (int i = 0; i < arrStrType.size(); i++)
 			{

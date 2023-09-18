@@ -150,9 +150,6 @@
     <ClCompile Include="Class\Boss\Dynus.cpp" />
     <ClCompile Include="Class\Bullets\Bullets.cpp" />
     <ClCompile Include="Class\Data\ItemData.cpp" />
-    <ClCompile Include="Class\Data\ObjectData.cpp" />
-    <ClCompile Include="Class\Data\QuestData.cpp" />
-    <ClCompile Include="Class\Quest\Quest.cpp" />
     <ClCompile Include="Class\Data\PlayerData.cpp" />
     <ClCompile Include="Class\Skill\CombatSkill.cpp" />
     <ClCompile Include="Class\Skill\ExplorationSkill.cpp" />
@@ -160,21 +157,17 @@
     <ClCompile Include="Class\Skill\FishingSkill.cpp" />
     <ClCompile Include="Class\Skill\MiningSkill.cpp" />
     <ClCompile Include="Class\NPC\Lynn.cpp" />
-    <ClCompile Include="Class\Object\Dirt.cpp" />
-    <ClCompile Include="Player\Fishing.cpp" />
     <ClCompile Include="Manager\DataManager.cpp" />
     <ClCompile Include="Class\Boss\Dizzy.cpp" />
     <ClCompile Include="Class\Enemy\Rootwalker.cpp" />
     <ClCompile Include="Scene\DizzyScene.cpp" />
     <ClCompile Include="Scene\MineScene.cpp" />
     <ClCompile Include="Scene\IntroScene.cpp" />
-    <ClCompile Include="Class\Data\EnemyData.cpp" />
     <ClCompile Include="Scene\Collision.cpp" />
     <ClCompile Include="Class\Enemy\Enemy.cpp" />
     <ClCompile Include="Class\Enemy\EnemyManager.cpp" />
     <ClCompile Include="Class\Enemy\FlameImp.cpp" />
     <ClCompile Include="Class\Object\Object.cpp" />
-    <ClCompile Include="Class\CraftingTable.cpp" />
     <ClCompile Include="Class\Data\JsonSaveLoader.cpp" />
     <ClCompile Include="Class\Data\INIData.cpp" />
     <ClCompile Include="Class\Inventory.cpp" />
@@ -205,15 +198,11 @@
     <ClCompile Include="FrameWork\Timer\Timer.cpp" />
     <ClCompile Include="Scene\TitleScene.cpp" />
     <ClCompile Include="Scene\ShopScene.cpp" />
-    <ClCompile Include="Scene\TownScene.cpp" />
     <ClCompile Include="FrameWork\Utility\Utils.cpp" />
     <ClCompile Include="Class\Enemy\SteelSlug.cpp" />
     <ClCompile Include="Class\Enemy\Shadeclaw.cpp" />
     <ClCompile Include="Class\UI\UI.cpp" />
     <ClCompile Include="Class\Skill\Skill.cpp" />
-    <ClCompile Include="Player\Skill\Skill.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="Class\Object\Tree.cpp" />
     <ClCompile Include="Class\Skill\SkillManager.cpp" />
     <ClCompile Include="WinMain.cpp" />
@@ -226,11 +215,7 @@
     <ClInclude Include="Class\Enemy\EnemyManager.h" />
     <ClInclude Include="Class\Enemy\FlameImp.h" />
     <ClInclude Include="Class\Object\Object.h" />
-    <ClInclude Include="Class\CraftingTable.h" />
     <ClInclude Include="Class\Data\JsonSaveLoader.h" />
-    <ClInclude Include="Class\Data\EnemyData.h" />
-    <ClInclude Include="Class\Object\Dirt.h" />
-    <ClInclude Include="Player\Fishing.h" />
     <ClInclude Include="Manager\DataManager.h" />
     <ClInclude Include="Class\Boss\Dizzy.h" />
     <ClInclude Include="Class\Enemy\Rootwalker.h" />
@@ -248,14 +233,10 @@
     <ClInclude Include="Json\json.h" />
     <ClInclude Include="Class\Data\INIData.h" />
     <ClInclude Include="Class\Inventory.h" />
-    <ClInclude Include="Class\Item.h" />
     <ClInclude Include="Class\Object\ObjectManager.h" />
-    <ClInclude Include="Class\Data\ObjectData.h" />
     <ClInclude Include="Class\Data\PlayerData.h" />
     <ClInclude Include="Class\Skill\MiningSkill.h" />
     <ClInclude Include="Player\Player.h" />
-    <ClInclude Include="Class\Data\QuestData.h" />
-    <ClInclude Include="Class\Quest\Quest.h" />
     <ClInclude Include="Class\Object\Rock.h" />
     <ClInclude Include="Class\UI\ProgressBar.h" />
     <ClInclude Include="Scene\FarmScene.h" />
@@ -283,14 +264,10 @@
     <ClInclude Include="Scene\TitleScene.h" />
     <ClInclude Include="FrameWork\PCH\Stdafx.h" />
     <ClInclude Include="Scene\ShopScene.h" />
-    <ClInclude Include="Scene\TownScene.h" />
     <ClInclude Include="FrameWork\Utility\Utils.h" />
     <ClInclude Include="Class\Enemy\SteelSlug.h" />
     <ClInclude Include="Class\Enemy\Shadeclaw.h" />
     <ClInclude Include="Class\Skill\Skill.h" />
-    <ClInclude Include="Player\Skill\Skill.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-    </ClInclude>
     <ClInclude Include="Class\Object\Tree.h" />
     <ClInclude Include="Class\Skill\SkillManager.h" />
   </ItemGroup>
@@ -312,16 +289,12 @@
     <None Include="fmodex.dll" />
     <None Include="INIData\temp.ini.ini" />
     <None Include="INIData\tempINIFile.ini" />
-    <None Include="Schema\Enemy.json" />
     <None Include="Schema\Item.json" />
-    <None Include="Schema\Object.json" />
-    <None Include="Schema\Quest.json" />
     <None Include="Schema\Player.json" />
     <None Include="Stdafx.pch" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Debug\SunHaven.log" />
-    <Text Include="IntroText.txt" />
   </ItemGroup>
   <ItemGroup>
     <Object Include="Debug\Animation.obj" />
@@ -351,10 +324,6 @@
     <Object Include="Debug\UI.obj" />
     <Object Include="Debug\Utils.obj" />
     <Object Include="Debug\WinMain.obj" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="DynusMapCollision.bmp" />
-    <Image Include="Shop_Bg_Collision.bmp" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="lib\FMOD\fmodex_vc.lib" />

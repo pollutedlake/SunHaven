@@ -1,4 +1,3 @@
-// Á¤¼ºÁø
 #include "Stdafx.h"
 #include "DynusScene.h"
 #include "../Class/UI/UI.h"
@@ -44,7 +43,7 @@ HRESULT DynusScene::init(void)
 	_dialogWindow2 = IMAGEMANAGER->findImage("DialogWindow2");
 	_dialogWindow1 = IMAGEMANAGER->findImage("DialogWindow1");
 	FILE* fp;
-	fopen_s(&fp, "DynusText.txt", "r");
+	fopen_s(&fp, "Resources/Data/Text/DynusText.txt", "r");
 	if (fp != nullptr)
 	{
 		for (int i = 0; i < 67; i++)
@@ -98,7 +97,7 @@ void DynusScene::update(void)
 	SOUNDMANAGER->update();
 	_player->update();
 	CAMERA->setPosition(_player->getPlayerPosition());
-	//CAMERA->update();
+	CAMERA->update();
 	_player->worldToCamera(CAMERA->worldToCamera
 	(_player->getPlayerPosition()));
 	if(!_moveMap)

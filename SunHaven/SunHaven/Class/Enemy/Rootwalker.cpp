@@ -52,7 +52,6 @@ HRESULT Rootwalker::init(POINT position)
 	_collisionMap = IMAGEMANAGER->findImage("DynusMapCollision");
 
 	_hpBar = new ProgressBar;
-	//_hpBar->init("", "ProgressBarBGW", "ProgressBarW", _x, _y - 100, 92 * 4 + 25, 14);
 
 	_hp = 100.0f;
 	_maxHp = 100.0f;

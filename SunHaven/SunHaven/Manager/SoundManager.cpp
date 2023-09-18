@@ -8,7 +8,6 @@ SoundManager::SoundManager() : _system(nullptr),
 
 }
 
-
 HRESULT SoundManager::init(void)
 {
 	System_Create(&_system);
@@ -69,14 +68,12 @@ void SoundManager::addSound(string keyName, string soundName, bool background, b
 		{
 			fResult = _system->createStream(soundName.c_str(), FMOD_LOOP_NORMAL, 0, &_sound[_mTotalSounds.size()]);
 		}
-		
 		else
 		{
 			fResult = _system->createSound(soundName.c_str(), FMOD_LOOP_NORMAL, 0, &_sound[_mTotalSounds.size()]);
 
 			
 		}
-
 	}
 	else
 	{
@@ -204,5 +201,4 @@ bool SoundManager::isPauseSound(string keyName)
 		}
 	}
 	return isPause;
-
 }

@@ -75,8 +75,6 @@ public:
 	void render(HDC hdc);
 	void move();
 	void idle();
-	/*void trainSitIdle();
-	void trainSit*/
 	void pushMovePoint(pair<float, float> movePoint);
 
 	void setState(State state) {_state = state;}

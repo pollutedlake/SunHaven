@@ -1,7 +1,6 @@
 #pragma once
 #include "../FrameWork/GameNode/GameNode.h"
 #include "../FrameWork/Animation/Animation.h"
-//#include "../Class/Inventory.h"
 #include "../Class/Skill/SkillManager.h"
 #include "../Class/Bullets/Bullets.h"
 
@@ -189,10 +188,6 @@ public:
 		
 		if (KEYMANAGER->isStayKeyDown('A'))
 		{
-			/*_swordSlashRC = RectMakeCenter(_cx - 28, _cy,
-				_swordSlashAnim->getFrameWidth(),
-				_swordSlashAnim->getFrameHeight());*/
-
 			_swordSwingRC = RectMakeCenter(_cx, _cy,
 				_swordSwingAnim->getFrameWidth(),
 				_swordSwingAnim->getFrameHeight());
@@ -222,9 +217,6 @@ public:
 		}
 		else if (KEYMANAGER->isStayKeyDown('D'))
 		{
-			/*_swordSlashRC = RectMakeCenter(_cx + 28, _cy,
-				_swordAnim->getFrameWidth(),
-				_swordAnim->getFrameHeight());*/
 			_swordSwingRC = RectMakeCenter(_cx, _cy,
 				_swordSwingAnim->getFrameWidth(),
 				_swordSwingAnim->getFrameHeight());
@@ -252,9 +244,6 @@ public:
 		}
 		else if (KEYMANAGER->isStayKeyDown('W'))
 		{
-			/*_swordSlashRC = RectMakeCenter(_cx, _cy-28,
-				_swordAnim->getFrameWidth(),
-				_swordAnim->getFrameHeight());*/
 			_swordSwingRC = RectMakeCenter(_cx, _cy,
 				_swordSwingAnim->getFrameWidth(),
 				_swordSwingAnim->getFrameHeight());
@@ -282,9 +271,6 @@ public:
 		}
 		else if (KEYMANAGER->isStayKeyDown('S'))
 		{
-			/*_swordSlashRC = RectMakeCenter(_cx, _cy+28,
-				_swordAnim->getFrameWidth(),
-				_swordAnim->getFrameHeight());*/
 			_swordSwingRC = RectMakeCenter(_cx, _cy,
 				_swordSwingAnim->getFrameWidth(),
 				_swordSwingAnim->getFrameHeight());

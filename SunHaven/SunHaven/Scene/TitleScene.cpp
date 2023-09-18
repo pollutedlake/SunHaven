@@ -16,8 +16,7 @@ HRESULT TitleScene::init(void)
     _isDone.reset();
     _isDone.set(0, true);
 
-    //SOUNDMANAGER->play("Main_Menu_Final", 0.5f);
-    //_sound = 0;
+    SOUNDMANAGER->play("Main_Menu_Final", 0.5f);
     _exPtMouse = _ptMouse;
     return S_OK;
 }
@@ -96,13 +95,7 @@ void TitleScene::update(void)
             }
         }
     }
-
-   
     buttonSound();
-    if (KEYMANAGER->isOnceKeyDown('S'))
-    {
-        SOUNDMANAGER->play("Main_Menu_Final", 0.5f);
-    }
 
     SOUNDMANAGER->update();
 }
@@ -115,12 +108,6 @@ void TitleScene::render(void)
         IMAGEMANAGER->findGPImage("TitleLogo")->getFrameX(), IMAGEMANAGER->findGPImage("TitleLogo")->getFrameY(),
         InterpolationModeNearestNeighbor, 0);
 
-    /*for (int i = 0; i < 3; i++)
-    {
-       DrawRectMake(getMemDC(), _rc[i]);
-    }*/
-    //IMAGEMANAGER->alphaRender("TITLE_MENU", getMemDC(), 0, 400, 0, 0, IMAGEMANAGER->findImage("TITLE_MENU")->getWidth(), 40, 150);
-
     // 메뉴 바탕 알파 클리핑
     IMAGEMANAGER->alphaRender("TitleMenu", getMemDC(), 0, 400, 0, 0, IMAGEMANAGER->findImage("TitleMenu")->getWidth(), 16, 150);
 
@@ -130,7 +117,6 @@ void TitleScene::render(void)
     }
 
     IMAGEMANAGER->alphaRender("TitleMenu", getMemDC(), 0, 560, 0, 24, IMAGEMANAGER->findImage("TitleMenu")->getWidth(), 16, 150);
-
 
     for (int i = 0; i < 3; i++)
     {
@@ -148,32 +134,25 @@ void TitleScene::render(void)
         }
     }
     _exPtMouse = _ptMouse;
-
     if (_isDone.test(0))
     {
         FONTMANAGER->textOut(getMemDC(), 60, 411, "배달의민족 을지로체", 35, 500, "플레이", strlen("플레이"), RGB(255, 255, 255));
         FONTMANAGER->textOut(getMemDC(), 60, 471, "배달의민족 을지로체", 35, 500, "맵 툴", strlen("맵 툴"), RGB(255, 255, 255));
         FONTMANAGER->textOut(getMemDC(), 60, 531, "배달의민족 을지로체", 35, 500, "나가기", strlen("나가기"), RGB(255, 255, 255));
     }
-
     else if (_isDone.test(1))
     {
         FONTMANAGER->textOut(getMemDC(), 60, 411, "배달의민족 을지로체", 35, 500, "새로운 캐릭터", strlen("새로운 캐릭터"), RGB(255, 255, 255));
         FONTMANAGER->textOut(getMemDC(), 60, 471, "배달의민족 을지로체", 35, 500, "캐릭터 불러오기", strlen("캐릭터 불러오기"), RGB(255, 255, 255));
         FONTMANAGER->textOut(getMemDC(), 60, 531, "배달의민족 을지로체", 35, 500, "뒤로", strlen("뒤로"), RGB(255, 255, 255));
     }
-
     IMAGEMANAGER->render("Cursor", getMemDC(), _ptMouse.x, _ptMouse.y);
-
-  
 }
 
 void TitleScene::buttonSound()
 {
     if (PtInRect(&_rc[0], _ptMouse) || PtInRect(&_rc[1], _ptMouse) || PtInRect(&_rc[2], _ptMouse))
     {
-       
-       
         _sound++;
         if (_sound == 1)
         {
@@ -195,7 +174,4 @@ void TitleScene::buttonSound()
     {
         _sound = 0;
     }
-
-   
-  
 }

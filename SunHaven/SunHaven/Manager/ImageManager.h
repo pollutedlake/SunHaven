@@ -9,7 +9,7 @@ private:
 	typedef map<string, GImage*> mapImageList;
 	typedef map<string, GImage*> ::iterator mapImageIter;
 
-	typedef map<string, GPImage*> mapGPImageList;	// char*: ´À¸®´Ù
+	typedef map<string, GPImage*> mapGPImageList;
 	typedef map<string, GPImage*>::iterator mapGPImageIter;
 
 	mapImageList _mImageList;

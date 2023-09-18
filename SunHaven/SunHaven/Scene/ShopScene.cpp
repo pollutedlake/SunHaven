@@ -1,11 +1,10 @@
-// 김성의
 #include "Stdafx.h"
 #include "ShopScene.h"
 #include "../Class/UI/UI.h"
 
 HRESULT ShopScene::init(void)
 {
-	IMAGEMANAGER->addImage("Shop_Bg_Collision", "Shop_Bg_Collision.bmp", WINSIZE_X, WINSIZE_Y);
+	IMAGEMANAGER->addImage("Shop_Bg_Collision", "Resources/Data/Map/Shop_Bg_Collision.bmp", WINSIZE_X, WINSIZE_Y);
 	_player = new Player;
 	_player->init(700,500, "Shop_Bg_Collision");
 	_player->setPlayerState(DATAMANAGER->getPlayereState());
@@ -351,7 +350,6 @@ void ShopScene::render(void)
 		PatBlt(_moveMapImg->getMemDC(), 0, 0, WINSIZE_X, WINSIZE_Y, BLACKNESS);
 		HBRUSH magenta = CreateSolidBrush(RGB(255, 0, 255));
 		HBRUSH oldBrush = (HBRUSH)SelectObject(_moveMapImg->getMemDC(), magenta);
-		//EllipseMakeCenter(_moveMapImg->getMemDC(), WINSIZE_X / 2, WINSIZE_Y / 2, _clippingRaius, _clippingRaius);
 		EllipseMakeCenter(_moveMapImg->getMemDC(), (CAMERA->worldToCameraRect(_player->getPlayerRC()).right + CAMERA->worldToCameraRect(_player->getPlayerRC()).left) / 2.0f,
 			(CAMERA->worldToCameraRect(_player->getPlayerRC()).bottom + CAMERA->worldToCameraRect(_player->getPlayerRC()).top) / 2.0f, _clippingRaius, _clippingRaius);
 		SelectObject(_moveMapImg->getMemDC(), oldBrush);
@@ -387,7 +385,6 @@ void ShopScene::shopSlot()
 		IMAGEMANAGER->render(_vShopList[i]._name.c_str(), getMemDC(), _vShopList[i]._rc.left + 20, _vShopList[i]._rc.top + 40);
 
 		IMAGEMANAGER->render("UI_icon_coin", getMemDC(), _vShopList[i]._rc.right - 15, _vShopList[i]._rc.top + 5);
-		//FONTMANAGER->textOut(getMemDC(), _playerStat[0].left + 15, _playerStat[0].top, "배달의민족 을지로체", 12, 5, "체력", strlen("체력"), RGB(255, 255, 255));
 		FONTMANAGER->textOut(getMemDC(), _vShopList[i]._rc.left + 5, _vShopList[i]._rc.top + 6, "배달의민족 을지로체", 12, 5, const_cast <char*> (_vShopList[i]._name.c_str()), strlen(_vShopList[i]._name.c_str()), RGB(255, 255, 255));
 		char showGold[2000];
 		

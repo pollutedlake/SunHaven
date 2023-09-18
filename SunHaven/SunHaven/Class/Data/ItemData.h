@@ -110,7 +110,6 @@ struct tagConsumable
 class ItemData
 {
 private:
-	//queue<Item*> _item;
 	queue<tagTool*> _tool;
 	queue<tagWeapon*> _weapon;
 	queue<tagArmor*> _armor;
@@ -121,7 +120,6 @@ private:
 
 public:
 	void init(void);
-	//void itemSetUp(Item* qItem = nullptr);
 	void toolSetUp(tagTool* qTool = nullptr);
 	void weaponSetUp(tagWeapon* qWeapon = nullptr);
 	void armorSetUp(tagArmor* qArmor = nullptr);

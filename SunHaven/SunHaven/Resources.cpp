@@ -12,7 +12,7 @@ HRESULT Resources::init(void)
 		0, 0,
 		1, 1,
 		false, NULL, RotateNoneFlipNone);   // 타이틀 로고
-	IMAGEMANAGER->addImage("TitleBG", "Resources/Images/BackGround/TitleBG.bmp",
+	IMAGEMANAGER->addImage("TitleBG", "Resources/Images/Title/Title.bmp",
 		873 * 2, 360 * 2);	// 배경
 
 	IMAGEMANAGER->addImage("TitleMenu", "Resources/Images/UI/TitleMenu.bmp",
@@ -48,17 +48,6 @@ HRESULT Resources::init(void)
 				24, 24, true, RGB(255, 255, 255));
 		}
 	}
-	IMAGEMANAGER->addImage("FarmLayer2", "Resources/Images/Tile/FarmLayer2.bmp", 2184, 2400, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("FarmLayer3", "Resources/Images/Tile/FarmLayer3.bmp", 2184, 2400, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("FarmLayer4", "Resources/Images/Tile/FarmLayer4.bmp", 2184, 2400, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("FarmLayer5", "Resources/Images/Tile/FarmLayer5.bmp", 2184, 2400, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("MineLayer3", "Resources/Images/Tile/MineLayer3.bmp", 1704, 1032, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("MineLayer5", "Resources/Images/Tile/MineLayer5.bmp", 1704, 1032, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("Wall", "Resources/Images/UI/Wall.bmp", 10, 81);
-	IMAGEMANAGER->addFrameImage("ScrollUpButton", "Resources/Images/UI/ScrollUpButton.bmp", 48, 16, 3, 1, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("ScrollDownButton", "Resources/Images/UI/ScrollUpButton.bmp", 48, 16, 3, 1, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("ScrollBar", "Resources/Images/UI/ScrollBar.bmp", 15, 40, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("ScrollBarTrack", "Resources/Images/UI/ScrollBarTrack.bmp", 10, 232, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("LeftButton", "Resources/Images/UI/LeftButton.bmp", 60, 20, 3, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("RightButton", "Resources/Images/UI/RightButton.bmp", 60, 20, 3, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("Button1", "Resources/Images/UI/Button1.bmp", 300, 22, 3, 1, true, RGB(255, 0, 255));
@@ -92,13 +81,6 @@ HRESULT Resources::init(void)
 		1320, 816,
 		true, RGB(255, 0, 255));	// 레이어
 
-	IMAGEMANAGER->addImage("StarShader", "Resources/Images/Layer/StarShader.bmp",
-		960, 400);	// 별 배경 테스트
-
-	IMAGEMANAGER->addImage("StarShaderTest", "Resources/Images/Layer/StarShaderTest.bmp",
-		960, 720,
-		true, RGB(255, 0, 255));	// 별 배경 테스트
-
 	IMAGEMANAGER->addImage("BlueStarFill", "Resources/Images/Layer/BlueStarFill.bmp",
 		402, 402);	// 파란 별
 
@@ -115,32 +97,10 @@ HRESULT Resources::init(void)
 		1, 1,
 		false, NULL, RotateNoneFlipNone);   // 다이너스 탄
 
-	IMAGEMANAGER->addImage("DynusOrb2", "Resources/Images/Boss/DynusOrb.bmp",
-		10 * 2, 10 * 2,
-		true, RGB(255, 0, 255));	// 다이너스 탄 (알파 X)
-
 	IMAGEMANAGER->addGPFrameImage("DynusBeam", "Resources/Images/Boss/DynusBeam.png",
 		0, 0,
 		1, 1,
 		false, NULL, RotateNoneFlipNone);   // 다이너스 빔
-
-	IMAGEMANAGER->addFrameImage("Shadeclow_Idle", "Resources/Images/Enemy/Ghost/Ghost_Idle.bmp",
-		0, 0,
-		160 * 2, 80 * 2,
-		4, 2,
-		true, RGB(255, 0, 255));	// 다이너스 소환 몬스터 고스트
-
-	IMAGEMANAGER->addFrameImage("Shadeclow_Attack", "Resources/Images/Enemy/Ghost/Ghost_Attack.bmp",
-		0, 0,
-		440 * 2, 80 * 2,
-		11, 2,
-		true, RGB(255, 0, 255));	// 다이너스 소환 몬스터 고스트
-
-	IMAGEMANAGER->addFrameImage("Shadeclow_Die", "Resources/Images/Enemy/Ghost/Ghost_Die.bmp",
-		0, 0,
-		560 * 2, 80 * 2,
-		14, 2,
-		true, RGB(255, 0, 255));	// 다이너스 소환 몬스터 고스트
 
 	IMAGEMANAGER->addImage("DynusJumpPlatform", "Resources/Images/Boss/DynusJumpPlatform.bmp",
 		38 * 2, 54 * 2,
@@ -173,10 +133,6 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addImage("GuardMine", "Resources/Images/Boss/GuardMine.bmp",
 		47, 44,
 		true, RGB(255, 0, 255));	// 프로그래스 바 배경 가로
-
-	//IMAGEMANAGER->addImage("DynusJumpPlatform", "Resources/Images/Boss/DynusJumpPlatform.bmp",
-	//	38 * 2, 54 * 2,
-	//	true, RGB(255, 0, 255));	// 다이너스 점프 플랫폼
 
 	// Sound   
 	SOUNDMANAGER->addSound("dynus_battle_v7", "Resources/Sound/dynus_battle_v7.wav", true, true);
@@ -238,8 +194,6 @@ HRESULT Resources::init(void)
 
 	// ====================FarmScene====================
 	// Image
-	IMAGEMANAGER->addImage("경작지", "Resources/Images/Object/Farm_dirt.bmp", 36, 36, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("젖은 경작지", "Resources/Images/Object/Farm_wetdirt.bmp", 36, 36, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("HitEffect", "Resources/Images/Player/HitEffect.bmp", 288, 48, 6, 1, true, RGB(255, 0, 255));
 
 	// Sound 
@@ -273,13 +227,11 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addImage("아다만트 갑옷 (하의)", "Resources/Images/Item/icon_adamant_legs2.bmp", 32, 32, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("아다만트 장갑", "Resources/Images/Item/icon_adamant_gloves2.bmp", 32, 32, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("아다만트 쇠뇌", "Resources/Images/Item/icon_adamant_crossbow2.bmp", 32, 32, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("연애 증표", "Resources/Images/Item/icon_Romance_Keepsake2.bmp", 32, 32, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("통나무", "Resources/Images/Item/icon_log2.bmp", 32, 32, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("돌", "Resources/Images/Item/icon_stone2.bmp", 32, 32, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("나무 판자", "Resources/Images/Item/icon_woodplank2.bmp", 32, 32, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("밀", "Resources/Images/Item/icon_wheat2.bmp", 32, 32, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("밀 씨앗", "Resources/Images/Item/icon_wheat_seed_bag2.bmp", 32, 32, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("일반 물고기", "Resources/Images/Item/icon_fish_sunhaven_10.bmp", 32, 32, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("아다만트 광석", "Resources/Images/Item/icon_adamant_ore2.bmp", 32, 32, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("아다만트 바", "Resources/Images/Item/icon_adamant_bar2.bmp", 32, 32, true, RGB(255, 0, 255));
 	
@@ -289,10 +241,6 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addImage("bg_backpack_items", "Resources/Images/Inventory/bg_backpack_items.bmp", WINSIZE_X/4 + 20, WINSIZE_Y/2 - 80);
 	IMAGEMANAGER->addImage("player_bg_name_banner", "Resources/Images/Inventory/player_bg_name_banner.bmp", WINSIZE_X/6, 20,true,RGB(255,0,255));
 	IMAGEMANAGER->addImage("item_bg", "Resources/Images/Inventory/item_bg.bmp", 32, 32, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("ironBoots", "Resources/Images/Inventory/ironBoots.bmp", 32, 32, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("ironChestPlate", "Resources/Images/Inventory/ironChestPlate.bmp", 32, 32, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("ironGloves", "Resources/Images/Inventory/ironGloves.bmp", 32, 32, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("ironSword", "Resources/Images/Inventory/ironSword.bmp", 32, 32, true, RGB(255, 0, 255));
 
 	IMAGEMANAGER->addImage("cosmetics_slot1", "Resources/Images/Inventory/cosmetics_slot1.bmp", 32, 32, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("cosmetics_slot2", "Resources/Images/Inventory/cosmetics_slot2.bmp", 32, 32, true, RGB(255, 0, 255));
@@ -329,10 +277,6 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addImage("combat_skill_tree_icons_0", "Resources/Images/Inventory/combat_skill_tree_icons_0.bmp", 32, 32, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("combat_skill_tree_icons_6", "Resources/Images/Inventory/combat_skill_tree_icons_6.bmp", 32, 32, true, RGB(255, 0, 255));
 
-	//CraftingImage
-	//IMAGEMANAGER->addImage("cooking_bg1" , "Resources/Images/CraftingTable/cooking_bg1.bmp",)
-
-
 	// shopImage 
 	IMAGEMANAGER->addImage("Shop_Bg", "Resources/Images/Shop/Shop_Bg.bmp", WINSIZE_X, WINSIZE_Y,true,RGB(255,0,255));
 	IMAGEMANAGER->addImage("store_bg", "Resources/Images/Shop/store_bg.bmp", 522, 654, true, RGB(255, 0, 255));
@@ -340,11 +284,8 @@ HRESULT Resources::init(void)
 	IMAGEMANAGER->addImage("store_upper_icon_wip", "Resources/Images/Shop/store_upper_icon_wip.bmp", 56, 54, true, RGB(255, 0, 255));
 
 	IMAGEMANAGER->addImage("x1_button", "Resources/Images/Shop/x1_button.bmp", 22, 20, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("x1_button_normal", "Resources/Images/Shop/x1_button_normal.bmp", 22, 20, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("x5_button", "Resources/Images/Shop/x5_button.bmp", 23, 20, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("x5_button_normal", "Resources/Images/Shop/x5_button_normal.bmp", 23, 20, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("x20_button", "Resources/Images/Shop/x20_button.bmp", 28, 20, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("x20_button_normal", "Resources/Images/Shop/x20_button_normal.bmp", 28, 20, true, RGB(255, 0, 255));
 
 	IMAGEMANAGER->addImage("UI_icon_coin", "Resources/Images/Shop/UI_icon_coin.bmp", 10, 9, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("goldbanner", "Resources/Images/Shop/goldbanner.bmp", 133, 35, true, RGB(255, 0, 255));

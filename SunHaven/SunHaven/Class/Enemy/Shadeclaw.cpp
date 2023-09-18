@@ -357,8 +357,6 @@ void Shadeclaw::targetOn(void)
 
 void Shadeclaw::attack(void)
 {
-	//DrawRectMake(getMemDC(), CAMERA->worldToCameraRect(_rcAttack));
-
 	if (_x < _playerX)
 	{
 		_isLeft = false;

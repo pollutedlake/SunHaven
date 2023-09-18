@@ -101,11 +101,6 @@ void MiningSkill::render()
 	for (int i = 0; i < 40; i++)
 	{
 		_borderImg[i].borderImg->render(getMemDC(), _borderImg[i].borderRC.left, _borderImg[i].borderRC.top);
-		/*
-		if (PtInRect(&_borderImg[i].iconRC, _ptMouse))
-		{
-			_isDescription = true;
-		}*/
 	}
 
 	if (_isDescription)

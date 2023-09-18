@@ -1,15 +1,11 @@
 #pragma once
 #include "../FrameWork/SingletonBase/SingletonBase.h"
 
-
-
 // »ç¿îµå °¹¼ö
 constexpr auto soundBuffer = 40;
 
-
 // ¿©ºÐÀÇ Ã¤³Î °¹¼ö (¹öÆÛ)
 constexpr auto extraSoundChannel = 40;
-
 
 // ÃÑ »ç¿îµå °¹¼ö
 constexpr auto totalSoundChannel = soundBuffer + extraSoundChannel;

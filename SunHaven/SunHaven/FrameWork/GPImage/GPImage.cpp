@@ -42,31 +42,6 @@ HRESULT GPImage::init(char* fileName, int destX, int destY, int maxFrameX, int m
 
 	_isTrans = isTrans;
 
-	//Gdiplus::InterpolationMode imode = InterpolationModeNearestNeighbor;
-
-	//Gdiplus::ImageAttributes imageAttr;
-	//if (_isTrans) imageAttr.SetColorKey(lowColor, highColor);
-
-	//_gdiRender = new Gdiplus::Graphics(_gdiInfo->hMemDC);
-
-	//_gdiRender->SetInterpolationMode(imode);
-	//_gdiRender->DrawImage
-	//(
-	//	_gdiImg,
-	//	Gdiplus::Rect
-	//	(
-	//		0, 0,
-	//		_gdiInfo->width,
-	//		_gdiInfo->height
-	//	),
-	//	0, 0,
-	//	_gdiInfo->width, _gdiInfo->height,
-	//	Gdiplus::UnitPixel, &imageAttr);
-
-	//SAFE_DELETE(_gdiRender);
-
-
-	//ReleaseDC(_hWnd, hdc);
 	return S_OK;
 }
 
@@ -96,21 +71,6 @@ void GPImage::GPFrameRender(HDC hdc, int destX, int destY, float wRatio, float h
 		_gdiInfo->currentFrameY = _gdiInfo->maxFrameY;
 	}
 
-	/*GdiTransparentBlt
-	(
-		hdc,
-		destX,
-		destY,
-		_gdiInfo->frameWidth * wRatio,
-		_gdiInfo->frameHeight * hRatio,
-		_gdiInfo->hMemDC,
-		_gdiInfo->currentFrameX * _gdiInfo->frameWidth,
-		_gdiInfo->currentFrameY * _gdiInfo->frameHeight,
-		_gdiInfo->frameWidth,
-		_gdiInfo->frameHeight,
-		RGB(0, 0, 0)
-	);*/
-
 	Gdiplus::InterpolationMode imode = InterpolationModeNearestNeighbor;
 
 	Gdiplus::ImageAttributes imageAttr;
@@ -137,28 +97,10 @@ void GPImage::GPFrameRender(HDC hdc, int destX, int destY, float wRatio, float h
 		Gdiplus::UnitPixel, &imageAttr);
 
 	SAFE_DELETE(_gdiRender);
-
-
-	//ReleaseDC(_hWnd, hdc);
 }
 
 void GPImage::GPRender(HDC hdc, int destX, int destY, float wRatio, float hRatio, int sourX, int sourY, int sourWith, int sourHeight, Gdiplus::InterpolationMode _imode, int angle)
 {
-
-	/*GdiTransparentBlt
-	(
-		hdc,
-		destX,
-		destY,
-		_gdiInfo->frameWidth * wRatio,
-		_gdiInfo->frameHeight * hRatio,
-		_gdiInfo->hMemDC,
-		_gdiInfo->currentFrameX * _gdiInfo->frameWidth,
-		_gdiInfo->currentFrameY * _gdiInfo->frameHeight,
-		_gdiInfo->frameWidth,
-		_gdiInfo->frameHeight,
-		RGB(0, 0, 0)
-	);*/
 
 	Gdiplus::InterpolationMode imode = InterpolationModeNearestNeighbor;
 

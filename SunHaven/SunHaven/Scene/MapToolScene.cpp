@@ -1,4 +1,3 @@
-// ¹Ú»óÇö
 #include "Stdafx.h"
 #include "MapToolScene.h"
 #include "../Class/UI/Buttons.h"
@@ -435,7 +434,6 @@ void MapToolScene::render(void)
 		LineMake(_tileMapBuffer->getMemDC(), 0, TILEHEIGHT * i,	TILEWIDTH * _tileMapSize, TILEHEIGHT * i);
 		LineMake(_tileMapBuffer->getMemDC(), TILEWIDTH * i, 0, TILEWIDTH * i, TILEHEIGHT * _tileMapSize);
 	}
-	//ZeroMemory(&_tileMap[5], sizeof(_tileMap[0]));
 	for(int k = 0; k < 5; k++)
 	{
 		if (!_showLayer[k])

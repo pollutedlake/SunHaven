@@ -19,6 +19,7 @@ GImage* ImageManager::addImage(string strKey, int width, int height, bool isTran
 	img = new GImage;
 	if (FAILED(img->init(width, height, isTrans, transColor)))
 	{
+		cout << strKey << endl;
 		SAFE_DELETE(img);
 		return NULL;
 	}
@@ -36,6 +37,7 @@ GImage* ImageManager::addImage(string strKey, const char* fileName, int width, i
 	img = new GImage;
 	if (FAILED(img->init(fileName, width, height, isTrans, transColor)))
 	{
+		cout << strKey << endl;
 		SAFE_DELETE(img);
 		return NULL;
 	}
@@ -53,6 +55,7 @@ GImage* ImageManager::addImage(string strKey, const char* fileName, float x, flo
 	img = new GImage;
 	if (FAILED(img->init(fileName, x, y, width, height, isTrans, transColor)))
 	{
+		cout << strKey << endl;
 		SAFE_DELETE(img);
 		return NULL;
 	}
@@ -70,6 +73,7 @@ GImage* ImageManager::addFrameImage(string strKey, const char* fileName, int wid
 	img = new GImage;
 	if (FAILED(img->init(fileName, width, height, maxFrameX, maxFrameY, isTrans, transColor)))
 	{
+		cout << strKey << endl;
 		SAFE_DELETE(img);
 		return NULL;
 	}
@@ -87,6 +91,7 @@ GImage* ImageManager::addFrameImage(string strKey, const char* fileName, float x
 	img = new GImage;
 	if (FAILED(img->init(fileName, x, y, width, height, maxFrameX, maxFrameY, isTrans, transColor)))
 	{
+		cout << strKey << endl;
 		SAFE_DELETE(img);
 		return NULL;
 	}
@@ -104,6 +109,7 @@ GPImage* ImageManager::addGPFrameImage(string strKey, char* fileName, int destX,
 
 	if (FAILED(img->init(fileName, destX, destY, maxFrameX, maxFrameY, isTrans, color, rotateFlipType)))
 	{
+		cout << strKey << endl;
 		SAFE_DELETE(img);
 
 		return NULL;
@@ -129,7 +135,6 @@ GPImage* ImageManager::findGPImage(string strKey)
 {
 	auto key = _mGPImageList.find(strKey);
 
-	// 검색한 키를 찾은 경우
 	if (key != _mGPImageList.end())
 	{
 		return key->second;

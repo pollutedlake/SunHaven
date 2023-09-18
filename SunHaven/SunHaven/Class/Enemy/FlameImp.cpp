@@ -429,7 +429,6 @@ void FlameImp::render(void)
 	{
 		draw();
 		_fireBall->render();
-		//_hpBar->render();
 	}
 }
 

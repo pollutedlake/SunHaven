@@ -1,7 +1,6 @@
 #include "Stdafx.h"
 #include "Inventory.h"
 #include "../Player/Player.h"
-//#include <string>
 
 
 HRESULT Inventory::init(void)
@@ -194,18 +193,6 @@ void Inventory::render(void)
 			case 5:
 				IMAGEMANAGER->render("¼è³ú", getMemDC(), _vItemUseSlot[i]._rc.left, _vItemUseSlot[i]._rc.top);
 				break;
-			/*case 6:
-				IMAGEMANAGER->render("combat_skill_tree_icons_0", getMemDC(), _vItemUseSlot[i]._rc.left, _vItemUseSlot[i]._rc.top);
-				break;
-			case 7:
-				IMAGEMANAGER->render("combat_skill_tree_icons_6", getMemDC(), _vItemUseSlot[i]._rc.left, _vItemUseSlot[i]._rc.top);
-				break;
-			case 8:
-				IMAGEMANAGER->render("ÄíÅ°", getMemDC(), _vItemUseSlot[i]._rc.left, _vItemUseSlot[i]._rc.top);
-				break;
-			case 9:
-				IMAGEMANAGER->render("±âº» ³¬½Ë´ë", getMemDC(), _vItemUseSlot[i]._rc.left, _vItemUseSlot[i]._rc.top);
-				break;*/
 			}
 			
 		}

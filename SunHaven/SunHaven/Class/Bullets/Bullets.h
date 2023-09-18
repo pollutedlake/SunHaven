@@ -164,7 +164,6 @@ private:
 	vector<tagBullet>::iterator _viBullet;
 
 	typedef vector<tagBullet>::iterator iterBullet;
-	//tagBullet bullet;
 	float _range;
 	float _bulletMax;
 

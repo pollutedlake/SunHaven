@@ -43,25 +43,6 @@
 #define _USE_MATH_DEFINES
 #include <math.h>
 using namespace std;
-/*
-//! D2D/D3D 헤더파일
-#include <D2D1.h>
-#include <d2d1helper.h>
-#include <d3dx9.h>
-#include <D3DX11.h>
-#include <d3d11shader.h>
-#include <dinput.h>
-
-#pragma comment(lib, "d2d1.lib")
-#pragma comment(lib, "d3d9.lib")
-#pragma comment(lib, "d3dx9.lib")
-#pragma comment(lib, "d3d11.lib")
-#pragma comment(lib, "d3dx11.lib")
-#pragma comment(lib, "dinput8.lib")
-#pragma comment(lib, "dxguid.lib")
-
-ID2D1Factory* _ID2DFactory = nullptr;
-ID2D1HwndRenderTarget* _ID2DRanderTarget = nullptr;*/
 
 // # 사용자 정의 헤더 파일 #
 #include "../Utility/CommonMacroFunction.h"

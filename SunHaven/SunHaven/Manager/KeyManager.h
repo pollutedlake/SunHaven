@@ -1,15 +1,12 @@
 #pragma once
 #include "../FrameWork/SingletonBase/SingletonBase.h"
 
-// 객체 지향 젼환 -> 설계 방식 / 방법론
 
 #define KEY_MAX 256
 
 class KeyManager : public SingletonBase<KeyManager>
 {
 private:
-	//BOOL _keyUp[KEY_MAX];
-	//BOOL _keyDown[KEY_MAX];
 	bitset<KEY_MAX> _keyUp;
 	bitset<KEY_MAX> _keyDown;
 

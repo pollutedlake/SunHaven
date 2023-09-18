@@ -44,7 +44,6 @@ HRESULT Dizzy::init(void)
 
 	_curImg = _wakeImg;
 	_curAni = _wakeAni;
-	//_curAni->AniStart();
 
 	_x = CENTER_X + 500;
 	_y = CENTER_Y + 250;
@@ -224,8 +223,6 @@ void Dizzy::update(void)
 		break;
 
 	case EDizzyState::WAKE:
-		// SD: WAKE
-
 		if (_curAni->getNowPlayIdx() >= _curImg->getMaxFrameX())
 		{
 			_state = EDizzyState::IDLE;
@@ -421,8 +418,6 @@ void Dizzy::update(void)
 		{
 			SOUNDMANAGER->play("DizzyDeath1", 1.0f);
 		}
-		// SD: Á×À½
-		//_curAni->AniStop();
 		_afterDeathTime++;
 		soundTime++;
 		if (soundTime > 100)
@@ -497,7 +492,6 @@ void Dizzy::meteorFire(void)
 	if (_meteorCount < meteorCountMax && meteorCountFire())
 	{
 		_meteor->fire(_meteorFireX, _meteorFireY, getAngle(_meteorFireX, _meteorFireY, _meteorFireX + 10, _meteorFireY + 10), 10.0f);
-		//_meteor->fire(0, 0, getAngle(0, 0, 1000, 600), 3.0f);
 
 		_meteorCount++;
 	}

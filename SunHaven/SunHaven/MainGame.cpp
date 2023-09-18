@@ -1,6 +1,7 @@
 #include "Stdafx.h"
 #include "MainGame.h"
 
+// 36∫Ò∆Æ
 HRESULT MainGame::init(void)
 {
 	GameNode::init(true);

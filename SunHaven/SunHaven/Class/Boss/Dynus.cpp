@@ -521,10 +521,6 @@ void Dynus::update(void)
 				switch (_rndPattern)
 				{
 				case 0:
-					//if (_curAni->getNowPlayIdx() == 20)
-					//{
-					//	// SD: Ä³½ºÆÃ
-					//}
 					bulletFire();
 					
 					if (_pa1StartPosIdx < 0)
@@ -852,14 +848,12 @@ void Dynus::drawGuardMine(void)
 {
 	if (!_isGM1Remove)
 	{
-		//DrawRectMake(getMemDC(), CAMERA->worldToCameraRect(_rcGuardMine1));
 		IMAGEMANAGER->render("GuardMine", getMemDC(), CAMERA->worldToCameraX(_rcGuardMine1.left),
 			CAMERA->worldToCameraY(_rcGuardMine1.top));
 	}
 
 	if (!_isGM2Remove)
 	{
-		//DrawRectMake(getMemDC(), CAMERA->worldToCameraRect(_rcGuardMine2));
 		IMAGEMANAGER->render("GuardMine", getMemDC(), CAMERA->worldToCameraX(_rcGuardMine2.left),
 			CAMERA->worldToCameraY(_rcGuardMine2.top));
 	}

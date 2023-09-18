@@ -3,7 +3,6 @@
 #include "../FrameWork/GameNode/GameNode.h"
 #include "../Scene/TitleScene.h"
 #include "../Scene/MapToolScene.h"
-#include "../Scene/TownScene.h"
 #include "../Scene/FarmScene.h"
 #include "../Scene/DynusScene.h"
 #include "../Scene/DizzyScene.h"
@@ -15,7 +14,6 @@ HRESULT SceneManager::init(void)
 {
     SCENEMANAGER->addScene("Title", new TitleScene);
     SCENEMANAGER->addScene("MapTool", new MapToolScene);
-    SCENEMANAGER->addScene("Town", new TownScene);
     SCENEMANAGER->addScene("Shop", new ShopScene);
     SCENEMANAGER->addScene("Farm", new FarmScene);
     SCENEMANAGER->addScene("Dynus", new DynusScene);

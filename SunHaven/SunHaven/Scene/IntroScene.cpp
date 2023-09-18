@@ -128,7 +128,7 @@ HRESULT IntroScene::init(void)
 	_nextActionTiming.push(33);
 	_nextActionTiming.push(38);
 	FILE* fp;
-	fopen_s(&fp, "IntroText.txt", "r");
+	fopen_s(&fp, "Resources/Data/Text/IntroText.txt", "r");
 	if (fp != nullptr)
 	{
 		for (int i = 0; i < 67; i++)

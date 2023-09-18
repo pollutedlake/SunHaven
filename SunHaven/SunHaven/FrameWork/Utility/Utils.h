@@ -19,6 +19,6 @@ namespace MY_UTIL
 	// 두점 사이 거리
 	float getDistance(float startX, float startY, float endX, float endY);
 
-	// 스타트 -> 엔드 -> 각을 라디안으로
+	// 각을 라디안으로
 	float getAngle(float startX, float startY, float endX, float endY);
 }

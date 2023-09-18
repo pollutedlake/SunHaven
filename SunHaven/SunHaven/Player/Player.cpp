@@ -69,13 +69,6 @@ HRESULT Player::init(float x, float y, string collisionMapKey)
 
 	_fireballAnim->setPlayFrame(0, 5, false, true);
 
-
-
-
-	/*IMAGEMANAGER->addImage("Ä® À§¾Æ·¡ ÈÖµÎ¸£±â",
-		"Resources/Images/Player/IronSwordSlashUpDown.bmp",
-		330, 90, true, RGB(255, 0, 255));*/
-
 	_swordSlash = IMAGEMANAGER->addImage("Ä®ÈÖµÎ¸£±â",
 		"Resources/Images/Player/iron_sword_slash.bmp",
 		4032, 168, true, RGB(255, 0, 255));
@@ -92,13 +85,7 @@ HRESULT Player::init(float x, float y, string collisionMapKey)
 	_swordSwingAnim->setFPS(18);
 	_swordSwingAnim->setPlayFrame(0, 5, false, false);
 
-	
-
-
-
 	//=============================================//
-
-
 
 	_axeSwing = IMAGEMANAGER->addImage("µµ³¢ÈÖµÎ¸£±â",
 		"Resources/Images/Player/rustyaxeswing.bmp",
@@ -152,7 +139,6 @@ HRESULT Player::init(float x, float y, string collisionMapKey)
 		_hoeSwingAnim->getFrameWidth(),
 		_hoeSwingAnim->getFrameHeight());
 
-
 	//=============================================//
 
 	_scytheSwing = IMAGEMANAGER->addImage("³´ÈÖµÎ¸£±â",
@@ -171,7 +157,6 @@ HRESULT Player::init(float x, float y, string collisionMapKey)
 		_scytheSwingAnim->getFrameWidth(),
 		_scytheSwingAnim->getFrameHeight());
 
-
 	//=============================================//
 
 	_fishingLod = IMAGEMANAGER->addImage("³¬½ÃÇÏ±â",
@@ -189,7 +174,6 @@ HRESULT Player::init(float x, float y, string collisionMapKey)
 	_fishingLodRC = RectMakeCenter(_x, _y,
 		_fishingLodAnim->getFrameWidth(),
 		_fishingLodAnim->getFrameHeight());
-
 
 	//=============================================//
 
@@ -267,7 +251,6 @@ HRESULT Player::init(float x, float y, string collisionMapKey)
 
 void Player::release(void)
 {
-	//_inven->release();
 	_fireBall->release();
 	SAFE_DELETE(_fireBall);
 
@@ -289,8 +272,6 @@ void Player::release(void)
 
 void Player::update(void)
 {
-	//_inven->update();
-
 	if (KEYMANAGER->isOnceKeyDown('W') ||
 		KEYMANAGER->isOnceKeyDown('S') ||
 		KEYMANAGER->isOnceKeyDown('A') ||
@@ -837,7 +818,6 @@ list<POINT> Player::UseTool(ObjectManager* object, POINT point)
 				&_toolAnimRC)
 				&& _toolAnim->getNowPlayIdx() >= 0)
 			{
-				// SD : Ç®º£´Â ¼Ò¸®
 				if (!SOUNDMANAGER->isPlaySound("ScytheCuttingCrops1"))
 				{
 					SOUNDMANAGER->play("ScytheCuttingCrops1", 1.0f);
@@ -856,9 +836,7 @@ list<POINT> Player::UseTool(ObjectManager* object, POINT point)
 				&& _toolAnim->getNowPlayIdx() >= 0
 				&& getDistance(_cx, _cy, point.x, point.y) < OBJECT_RANGE)
 			{
-				// SD : ³ª¹« º£´Â ¼Ò¸®
-				
-					SOUNDMANAGER->play("TreeHit1", 1.0f);
+				SOUNDMANAGER->play("TreeHit1", 1.0f);
 				
 				object->getObjectList()[i]->setHP(10, _x);
 				collisionList.push_back(object->getObjectList()[i]->getTilePos());
@@ -873,10 +851,7 @@ list<POINT> Player::UseTool(ObjectManager* object, POINT point)
 				point)
 				&& _toolAnim->getNowPlayIdx() >= 0)
 			{
-				// SD : µ¹Ä³´Â ¼Ò¸®
-				
-					SOUNDMANAGER->play("RockHit1", 1.0f);
-				
+				SOUNDMANAGER->play("RockHit1", 1.0f);
 				
 				object->getObjectList()[i]->setHP(5);
 				collisionList.push_back(object->getObjectList()[i]->getTilePos());
