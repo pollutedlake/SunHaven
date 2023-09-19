@@ -166,6 +166,7 @@ HRESULT MapToolScene::init(void)
 	_mapToolRC = RectMake(50, 50, MapToolWidth, MapToolHeight);
 	_selectTilesRow = 1;
 	_selectTilesCol = 1;
+	SOUNDMANAGER->play("인트로 기차안 브금", 0.5f);
 	return S_OK;
 }
 
@@ -702,6 +703,7 @@ void MapToolScene::copyTiles(void)
 
 void MapToolScene::Exit(void)
 {
+	SOUNDMANAGER->stop("인트로 기차안 브금");
 	SCENEMANAGER->changeScene("Title");
 }
 

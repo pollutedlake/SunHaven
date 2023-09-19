@@ -291,7 +291,9 @@
     <None Include="INIData\tempINIFile.ini" />
     <None Include="Schema\Item.json" />
     <None Include="Schema\Player.json" />
-    <None Include="Stdafx.pch" />
+    <None Include="Stdafx.pch">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Debug\SunHaven.log" />
@@ -320,7 +322,6 @@
     <Object Include="Debug\TimeManager.obj" />
     <Object Include="Debug\Timer.obj" />
     <Object Include="Debug\TitleScene.obj" />
-    <Object Include="Debug\TownScene.obj" />
     <Object Include="Debug\UI.obj" />
     <Object Include="Debug\Utils.obj" />
     <Object Include="Debug\WinMain.obj" />
